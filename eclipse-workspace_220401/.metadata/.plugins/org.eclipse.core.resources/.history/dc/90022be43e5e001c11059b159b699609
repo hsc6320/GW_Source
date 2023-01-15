@@ -1,0 +1,74 @@
+/*
+ * SocketHandler.h
+ *
+ *  Created on: 2021. 12. 6.
+ *      Author: hong
+ */
+
+#ifndef SOCKET_SOCKETHANDLER_H_
+#define SOCKET_SOCKETHANDLER_H_
+
+
+#include "../pch.h"
+#include "Socket.h"
+#include "SocketMsgQueue.h"
+
+typedef struct _Packet {
+	WORD PanID;
+	WORD ServerID;
+	WORD Length;
+	BYTE* Data;
+	BYTE ext[3] = {0xA5, 0x5A, 0x7E};
+}Common_Packet;
+
+class SocketHandler {
+public:
+	SocketHandler();
+	virtual ~SocketHandler();
+
+	Common_Packet		packet;
+
+	BYTE GetChecksum(BYTE* puData, int len);
+	void SetSocketQueue(Socket_MsgQueue* soc);
+	void SetSocketHwnd(Socket* soc);
+	int SendMessage(int msg);
+	void GetPanID(WORD panid);
+	void GetServerID(WORD severid);
+	bool PutByte(uint8_t* b);
+	int Registration_Request();
+	int Connect_Request();
+};
+
+#if 0
+namespace SENDPACKET {
+
+#pragma pack(push, 1)
+	typedef struct _HEADER {
+		BYTE	stx;
+		WORD	panID;
+		WORD	dAddr;
+		WORD	sAddr;
+		BYTE	type;
+		WORD	length;
+		_HEADER() {stx = 0xAA;}
+	}SEND_HEADER, *PS_SOCKET_HEADER;
+
+	typedef struct _TAIL {
+		BYTE	checksum;
+		BYTE	ext[3];
+	}SEND_TAIL, *PS_SOCKET_TAIL;
+
+	typedef struct _SOCKET_PACKET {
+		S_HEADER		header;
+		S_TAIL			tail;
+		BYTE* 			pu8Data;
+	}SOCKET_PACKET, *PS_SOCKET_PACKET;
+
+#pragma pack(pop)
+}
+
+
+using namespace SENDPACKET;
+#endif
+
+#endif /* SOCKET_SOCKETHANDLER_H_ */

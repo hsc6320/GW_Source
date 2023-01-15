@@ -1,0 +1,61 @@
+/*
+ * SocketMsgQueue.cpp
+ *
+ *  Created on: 2021. 12. 9.
+ *      Author: hong
+ */
+
+#include "SocketMsgQueue.h"
+
+
+BYTE ext[3] = {0xA5, 0x5A, 0x7E};
+
+Socket_MsgQueue::Socket_MsgQueue() {
+}
+
+Socket_MsgQueue::~Socket_MsgQueue() {
+	// TODO Auto-generated destructor stub
+}
+
+int Socket_MsgQueue::GetSocketMsg(uint8_t* p8Data, int len)
+{
+	WORD uDataLength;
+	int DataLen, msgtype = p8Data[MSGTYPE];
+	int retVal =0;
+	DataLen = len;
+	printf("\nGetSocketQueue msgtype: %x ", msgtype);
+
+	for(int i =0; i< DataLen; i++) {
+		printf("%x ", p8Data[i]);
+	}
+	printf("\n");
+	switch(msgtype)
+	{
+	case REGISTRATION_CONFIRM:
+		QuquePacket.ServerID = ByteToWord(p8Data[MSG_SADDRONE], p8Data[MSG_SADDRZERO]);
+		break;
+	case SERVICESTART_REQUEST:
+		retVal = SERVICESTART_REQUEST;
+		break;
+	}
+
+	return retVal;
+}
+
+WORD Socket_MsgQueue::ByteToWord(BYTE puData, BYTE puData1)
+{
+	WORD p16Tempdata_HIGH, p16Tempdata_LOW;
+
+	p16Tempdata_HIGH = (puData << 8);
+	p16Tempdata_LOW = puData1;
+
+	return p16Tempdata_HIGH|p16Tempdata_LOW;
+
+}
+
+void Socket_MsgQueue::SetSockethandler(SocketHandler* soc)
+{
+	//m_pSocketHandler = soc;
+}
+
+

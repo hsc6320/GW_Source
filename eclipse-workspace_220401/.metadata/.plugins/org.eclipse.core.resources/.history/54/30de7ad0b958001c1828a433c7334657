@@ -1,0 +1,401 @@
+/*
+ * Main.cpp
+ *
+ *  Created on: 2021. 10. 22.
+ *      Author: hong
+ */
+
+#include "pch.h"
+#include "uart/uart.h"
+#include "MsgHandler.h"
+#include "Socket/Socket.h"
+#include "Socket/SocketHandler.h"
+
+using namespace std;
+#define SETPANID(u8data)
+
+UartComThread* m_MainComport;
+MsgQueue* m_pMsgQueue;
+MsgHandler* m_pMsgHandler;
+Socket*	m_pSocket;
+SocketHandler*	m_pSocketHandle;
+
+PRE_DEFINE::S_PACKET	m_GetInforPacket;
+#define BUF_MAX 512
+
+template <typename T>
+
+std::map<std::string, double> pitcher_list;
+
+std::list<int> lst;
+Vector<uint8_t> mVec;
+
+int nlsChecksum =0;
+int nflagRegistration_Req =0;
+int GetUartMsg();
+BYTE GetChecksum(BYTE* puData, int len);
+WORD ByteToWord(BYTE puData, BYTE puData1);
+BYTE GetMsgType(Vector<uint8_t> get_vec);
+void convrt_mac(const char *data, char *cvrt_str, int sz);
+int getMacAddress(char *mac, char *getnic);
+int getNIC();
+int getIPAddress(char *ip_addr);
+int Socket_Init();
+int Socket_Registration_Req();
+
+
+int main(int argc, char *argv[])
+{
+
+	m_MainComport->uart_init();
+
+	if(Socket_Init() != 1) return 0;
+	while(1)
+	{
+	//char *macaddr = NULL;
+	//char *ipaddr = NULL;
+	//getNIC();
+	//getMacAddress(macaddr);
+	//getIPAddress(ipaddr);
+		if(!nflagRegistration_Req) {
+			Socket_Registration_Req();
+			nflagRegistration_Req =1;
+		}
+	//m_pSocketHandle->SendMessage(CONNECT_REQUEST);
+
+//	if(m_pMsgHandler->ServiceStart() > 0) {
+	//	m_pSocketHandle->SendMessage(REGISTRATION_REQUEST);
+//	}
+	}
+	printf("Init end \n");
+
+	return 0;
+}
+
+BYTE GetMsgType(Vector<uint8_t> get_vec)
+{
+	return get_vec[MSGTYPE];
+}
+
+int Socket_Registration_Req()
+{
+	int status;
+	m_pSocketHandle->SendMessage(REGISTRATION_REQUEST);
+	wait(&status);
+
+	return 1;
+}
+
+int Socket_Init()
+{
+	int status =0, Ret = 0;;
+
+	m_MainComport->m_grun = 1;
+	m_pMsgHandler->ServiceIdle();
+	wait(&status);
+
+	while(1) {
+		if(m_pMsgQueue->m_bReadEnd_UartMessage) {
+			if(GetUartMsg()) {
+				m_pSocket->Socket_Init();
+				m_MainComport->m_grun = 0;
+				m_pMsgQueue->m_bReadEnd_UartMessage =0;
+				Ret =1;
+				break;
+			}
+			else {
+				printf("main server init fail\n");
+				m_pMsgQueue->m_bReadEnd_UartMessage =0;
+				break;
+			}
+		}
+	}
+	return Ret;
+}
+
+int GetUartMsg()
+{
+	Vector<uint8_t> vec = m_pMsgQueue->m_vcemsg.m_UartMsg_vec;
+	PRE_DEFINE::S_PACKET	Getpacket;
+	int size =0;
+	int ipos =0;
+	int loopEnd =0;
+	printf("GetUartMsg\n");
+
+	while(!loopEnd) {
+		switch(ipos)
+		{
+		case 0:
+			if(vec[MSG_STX] != STX) {
+				return 0;
+				break;
+			}
+			else {
+				Getpacket.header.stx = vec[MSG_STX];
+				ipos++;
+			}
+			break;
+		case 1:
+			Getpacket.header.panID = ByteToWord(vec[MSG_PANIDONE], vec[MSG_PANIDZERO]);
+			printf("panID [%x], ", Getpacket.header.panID);
+			ipos = ipos +2;
+			break;
+		case 3:
+			Getpacket.header.dAddr = ByteToWord(vec[MSG_DADDRZERO], vec[MSG_DADDRONE]);
+			printf("Daddr[%x] , ",Getpacket.header.dAddr);
+			ipos = ipos +2;
+			break;
+		case 5:
+			Getpacket.header.sAddr = ByteToWord(vec[MSG_SADDRZERO], vec[MSG_SADDRONE]);
+			printf("Saddr[%x], ", Getpacket.header.sAddr);
+			ipos = ipos +2;
+			break;
+		case 7:
+			Getpacket.header.type = vec[MSGTYPE];
+			printf("MsgType[%x], ", Getpacket.header.type);
+			ipos++;
+			break;
+		case 8:
+			Getpacket.header.length = ByteToWord(vec[MSG_LENGTHONE], vec[MSG_LENGTHZERO]);
+			printf("DataLen[%x], ", Getpacket.header.length);
+			ipos = ipos +2;
+			break;
+		case 10:
+			Getpacket.pu8Data = new BYTE[Getpacket.header.length];
+			for(int i =0; i< Getpacket.header.length; i++) {
+				Getpacket.pu8Data[i] = vec[MSG_LENGTHONE+1+i];
+				printf("pu8Data [%x] ", Getpacket.pu8Data[i]);
+			}
+			ipos = ipos + (int)Getpacket.header.length;
+			break;
+		default:
+			if(!nlsChecksum) {
+				Getpacket.tail.checksum = vec[ipos];
+				printf("checksum Val :%x ", Getpacket.tail.checksum);
+				nlsChecksum =1;
+			//	GetChecksum((BYTE *)&Getpacket.header.panID, (int)Getpacket.header.length);
+				ipos++;
+				break;
+			}
+			else {
+				Getpacket.tail.ext[0] = vec[ipos];
+				Getpacket.tail.ext[1] = vec[++ipos];
+				Getpacket.tail.ext[2] = vec[++ipos];
+
+				if((Getpacket.tail.ext[0] != 0xA5) || (Getpacket.tail.ext[1] != 0x5A) || (Getpacket.tail.ext[2] != 0x7E)) {
+					printf("etx error return 0\n");
+					size = m_pMsgQueue->m_vcemsg.m_UartMsg_vec.size();
+					m_pMsgQueue->m_vcemsg.m_UartMsg_vec.remove(size+1);
+					return 0;
+				}
+				else {
+					printf("pos[%d]etx : %x %x %x\n", ipos, Getpacket.tail.ext[0], Getpacket.tail.ext[1], Getpacket.tail.ext[2]);
+					loopEnd =1;
+					nlsChecksum =0;
+					size = m_pMsgQueue->m_vcemsg.m_UartMsg_vec.size();
+					m_pMsgQueue->m_vcemsg.m_UartMsg_vec.remove(size+1);
+					break;
+				}
+			}
+
+		}		//END SWITCH
+	}		//END WHILE
+	m_GetInforPacket = Getpacket;
+	if(Getpacket.header.type == 0x02) {
+		m_pSocketHandle->GetPanID(Getpacket.header.sAddr);
+	}
+	if(Getpacket.header.type == 0x11) {
+		m_pSocketHandle->GetPanID(Getpacket.header.panID);
+	}
+	printf("return 1\n");
+	return 1;
+}
+
+WORD ByteToWord(BYTE puData, BYTE puData1)
+{
+	WORD p16Tempdata_HIGH, p16Tempdata_LOW;
+
+	p16Tempdata_HIGH = (puData << 8);
+	p16Tempdata_LOW = puData1;
+
+	return p16Tempdata_HIGH|p16Tempdata_LOW;
+
+}
+
+BYTE GetChecksum(BYTE* puData, int len)
+{
+	uint8_t sum =0;
+	int cnt =0;
+	printf("checksum len :%d\n", len);
+	len += (sizeof(PRE_DEFINE::S_HEADER)-1);
+	printf("sizeof(%d) len %d\n",sizeof(PRE_DEFINE::S_HEADER), len);
+	printf("chceck sum () len %d \n", len);
+	for(;  0 < len; len--) {
+		printf("[%d] %x\n", len, *puData);
+		sum+= *(puData++);
+		printf("sum : %x\n", sum);
+	}
+	return sum;
+}
+
+
+int getIPAddress(char *ip_addr)
+{
+	int sock = *m_pSocket->m_ServerRecieveData.serv_sock;
+	struct ifreq ifr;
+	struct sockaddr_in *sin;
+
+	if (sock < 0) {
+		printf("getIPAddress() return 0\n");
+	//	dp(4, "socket");
+		return 0;
+	}
+
+	strcpy(ifr.ifr_name, "wlan0");
+	if (ioctl(sock, SIOCGIFADDR, &ifr)< 0) {
+		printf("getIPAddress() return 0\n");
+	//	dp(4, "ioctl() - get ip");
+		close(sock);
+		return 0;
+	}
+
+	sin = (struct sockaddr_in*)&ifr.ifr_addr;
+
+	strcpy(ip_addr, inet_ntoa(sin->sin_addr));
+
+	return 1;
+}
+
+
+int getMacAddress(char *mac, char *getnic)
+{
+	int sock = *m_pSocket->m_ServerRecieveData.serv_sock;
+	struct ifreq ifr;
+	char mac_adr[18] = {0,};
+	//Recieve_Data
+
+	//sock = socket(AF_INET, SOCK_STREAM, 0);
+	printf("getMacAddress sock : %d\n", sock);
+	if (sock < 0) {
+		printf("getMacAddress() return 0\n");
+	//	dp(4, "socket");
+		return 0;
+	}
+
+	strcpy(ifr.ifr_name, getnic);
+
+	if (ioctl(sock, SIOCGIFHWADDR, &ifr)< 0) {
+	//	dp(4, "ioctl() - get mac");
+		printf("getMacAddress() return 0\n");
+		close(sock);
+		return 0;
+	}
+	//convert format ex) 00:00:00:00:00:00
+
+	convrt_mac( ether_ntoa((struct ether_addr *)(ifr.ifr_hwaddr.sa_data)), mac_adr, sizeof(mac_adr) -1 );
+	strcpy(mac, mac_adr);
+
+	printf("Mac Address : %s \n", mac);
+
+	return 1;
+
+}
+
+int getNIC() //eth0와 같은 NIC을 가져온다.
+{
+	int sock = *m_pSocket->m_ServerRecieveData.serv_sock;
+	char *g_NIC = NULL;
+	char *ipa = NULL;
+	struct ifconf ifconf;
+	struct ifreq ifr[50];
+	int ifs;
+	int i;
+
+	if (sock < 0) {
+		//dp(4, "socket");
+		return 0;
+	}
+
+	ifconf.ifc_buf = (char *) ifr;
+	ifconf.ifc_len = sizeof ifr;
+
+	if (ioctl(sock, SIOCGIFCONF, &ifconf) == -1) {
+//		dp(4, "ioctl");
+		return 0;
+	}
+
+	ifs = ifconf.ifc_len / sizeof(ifr[0]);
+//printf("interfaces = %d:\n", ifs);
+
+	for (i = 0; i < ifs; i++) {
+		if(strcmp(ifr[i].ifr_name, "lo") != 0) { //'lo'를 제외한 나머지 NIC을 가져온다.
+			strcpy(g_NIC, ifr[i].ifr_name);
+			break;
+		}
+	}
+	printf("Get NIC [%s]", g_NIC);
+	getMacAddress(ipa, g_NIC);
+	return 1;
+
+}
+
+void convrt_mac(const char *data, char *cvrt_str, int sz)
+{
+
+     char buf[128] = {0,};
+     char t_buf[8];
+     char *stp = strtok( (char *)data , ":" );
+     int temp=0;
+
+     do {
+
+          memset( t_buf, 0, sizeof(t_buf) );
+          sscanf( stp, "%x", &temp );
+          snprintf( t_buf, sizeof(t_buf)-1, "%02X", temp );
+          strncat( buf, t_buf, sizeof(buf)-1 );
+          strncat( buf, ":", sizeof(buf)-1 );
+
+     } while( (stp = strtok( NULL , ":" )) != NULL );
+
+     buf[strlen(buf) -1] = '\0';
+     strncpy( cvrt_str, buf, sz );
+
+}
+
+
+void __attribute__((constructor)) NewObject()
+{
+	m_MainComport = new UartComThread;
+	m_pMsgQueue = new MsgQueue;
+	m_pMsgHandler = new MsgHandler;
+	m_pSocket = new Socket;
+	m_pSocketHandle = new SocketHandler;
+
+	m_MainComport->SetUartComm(m_MainComport);
+	m_MainComport->SetMsgQueue(m_pMsgQueue);
+	m_pMsgHandler->SetHandle(m_MainComport);
+
+	m_pSocket->SetMsgHandler(m_pMsgHandler);
+	m_pSocket->SetMsgQueue(m_pMsgQueue);
+	m_pSocket->SetMsgHwnd(m_pSocket);
+	m_pSocketHandle->SetSocketHwnd(m_pSocket);
+
+	printf("NewObject\n");
+}
+
+void __attribute__((destructor)) DeleteObject()
+{
+	m_MainComport->Uart_Close(m_MainComport->m_uartd);
+	printf("uart Close\n");
+
+	m_pSocket->Exit_Socket_Thread();
+
+	delete m_MainComport;
+	delete m_pMsgQueue;
+	delete m_pMsgHandler;
+	delete m_pSocket;
+	delete m_pSocketHandle;
+
+	printf("DeleteObject\n");
+	printf("Close\n");
+}

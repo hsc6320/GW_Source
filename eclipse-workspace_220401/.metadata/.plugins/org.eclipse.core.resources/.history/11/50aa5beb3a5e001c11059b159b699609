@@ -1,0 +1,28 @@
+/*
+ * MsgHandler.h
+ *
+ *  Created on: 2021. 11. 30.
+ *      Author: hong
+ */
+
+#ifndef MSGHANDLER_H_
+#define MSGHANDLER_H_
+
+#include "pch.h"
+#include "uart/uart.h"
+#include "Vector_queue.h"
+
+class MsgHandler {
+
+public:
+	MsgHandler();
+	virtual ~MsgHandler();
+
+	UartComThread* m_pCommUart;
+	void SetHandle(UartComThread* msg);
+	void ServiceIdle();
+	int ServiceStart();
+	void BypassSocketToUart(BYTE* p8Data, int DataLen, int msgtype);
+};
+
+#endif /* MSGHANDLER_H_ */

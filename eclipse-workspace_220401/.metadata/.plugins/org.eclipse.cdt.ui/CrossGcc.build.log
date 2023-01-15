@@ -1,0 +1,11 @@
+09:33:52 **** Rebuild of configuration Debug for project CrossGcc ****
+Info: Internal Builder is used for build
+arm-linux-gnueabihf-arm-linux-gnueabihf-gcc -I/usr/arm-linux-gnueabihf/include -O0 -g3 -Wall -c -fmessage-length=0 -o src/main.o ../src/main.cpp 
+Cannot run program "arm-linux-gnueabihf-arm-linux-gnueabihf-gcc": Unknown reason
+
+Error: Program "arm-linux-gnueabihf-arm-linux-gnueabihf-gcc" not found in PATH
+PATH=[/usr/arm-linux-gnueabi/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin]
+
+
+09:33:52 Build Finished. 0 errors, 0 warnings. (took 35ms)
+

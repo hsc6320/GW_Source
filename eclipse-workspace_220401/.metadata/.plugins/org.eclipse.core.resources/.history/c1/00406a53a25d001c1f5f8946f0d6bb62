@@ -1,0 +1,165 @@
+/*
+ * SocketMsgQueue.cpp
+ *
+ *  Created on: 2021. 12. 9.
+ *      Author: hong
+ */
+
+#include "SocketMsgQueue.h"
+
+BYTE ext[3] = {0xA5, 0x5A, 0x7E};
+
+Socket_MsgQueue::Socket_MsgQueue() {
+	//m_iSocketReceiveEnd =0;
+
+}
+
+Socket_MsgQueue::~Socket_MsgQueue() {
+	// TODO Auto-generated destructor stub
+}
+
+#if 1
+int Socket_MsgQueue::GetSocketMsg(uint8_t* p8Data, int len)
+{
+	WORD uDataLength;
+	int iSetData=0, bEtx =0, bChecksum =0;
+	int ipos =0;
+	int DataLen;
+	DataLen = len;
+	//p8Data = pSocket->m_ServerRecieveData.message;
+
+	printf("\nGetSocketMsg\n");
+//	printf("%d ", len);
+
+	/*for(int i =0; i< pSocket->m_ReceiveData_len+1; i++) {
+		printf("%x ", pSocket->m_ServerRecieveData.message[i]);
+	}*/
+	for(int i =0; i< DataLen+1; i++) {
+		printf("%x ", p8Data[i]);
+	}
+#if 0
+	while(1)
+	{
+		//printf("\nGetSocketMsg111111111111\n");
+		switch(ipos)
+		{
+		case 0:
+			if(p8Data[0] != STX)
+				return 0;
+			else {
+				m_SocketMsg_vec.push_back(p8Data[ipos]);
+				printf("Socket Read : [%x] ", m_SocketMsg_vec[ipos]);
+				ipos++;
+			}
+			break;
+		case 1:
+			m_SocketMsg_vec.push_back(p8Data[ipos]);
+			printf("%x ", m_SocketMsg_vec[ipos]);
+			ipos++;
+			break;
+		case 2:
+			m_SocketMsg_vec.push_back(p8Data[ipos]);
+			printf("%x ", m_SocketMsg_vec[ipos]);
+			ipos++;
+			break;
+		case 3:
+			m_SocketMsg_vec.push_back(p8Data[ipos]);
+			printf("%x ", m_SocketMsg_vec[ipos]);
+			ipos++;
+			break;
+		case 4:
+			m_SocketMsg_vec.push_back(p8Data[ipos]);
+			printf("%x ", m_SocketMsg_vec[ipos]);
+			ipos++;
+			break;
+		case 5:
+			m_SocketMsg_vec.push_back(p8Data[ipos]);
+			printf("%x ", m_SocketMsg_vec[ipos]);
+			ipos++;
+			break;
+		case 6:
+			m_SocketMsg_vec.push_back(p8Data[ipos]);
+			printf("%x ", m_SocketMsg_vec[ipos]);
+			ipos++;
+			break;
+		case 7:
+			m_SocketMsg_vec.push_back(p8Data[ipos]);
+			printf("%x ", m_SocketMsg_vec[ipos]);
+			ipos++;
+			break;
+		case 8:
+			m_SocketMsg_vec.push_back(p8Data[ipos]);
+			printf("%x ", m_SocketMsg_vec[ipos]);
+			ipos++;
+			break;
+		case 9:
+			m_SocketMsg_vec.push_back(p8Data[ipos]);
+			uDataLength = ByteToWord(m_SocketMsg_vec[MSG_LENGTHONE], m_SocketMsg_vec[MSG_LENGTHZERO]);
+			printf("%x ", m_SocketMsg_vec[ipos]);
+			ipos++;
+			break;
+		default :
+			if(iSetData <= (uDataLength)) {
+				m_SocketMsg_vec.push_back(p8Data[ipos]);
+				printf("%x ", m_SocketMsg_vec[ipos]);
+				ipos++;
+				iSetData++;
+				break;
+			}
+			else if(iSetData == (uDataLength)) {
+				m_SocketMsg_vec.push_back(p8Data[ipos]);
+				printf("%x ", m_SocketMsg_vec[ipos]);
+				ipos++;
+				bChecksum =1;
+				break;
+			}
+			if(bChecksum) {
+				bChecksum =0;
+				m_SocketMsg_vec.push_back(p8Data[ipos]);
+				printf("%x ", m_SocketMsg_vec[ipos]);
+				ipos++;
+				break;
+			}
+			if(!bEtx)
+			{
+				m_SocketMsg_vec.push_back(p8Data[ipos]);
+				if(m_SocketMsg_vec[ipos] == ext[0]) {
+					printf("%x ", m_SocketMsg_vec[ipos]);
+					m_SocketMsg_vec.push_back(p8Data[++ipos]);
+					if(m_SocketMsg_vec[ipos] == ext[1]) {
+						printf("%x ", m_SocketMsg_vec[ipos]);
+						m_SocketMsg_vec.push_back(p8Data[++ipos]);
+					}
+					m_SocketMsg_vec.push_back(p8Data[++ipos]);
+					if(m_SocketMsg_vec[ipos] == ext[2]) {
+						printf("%x \n", m_SocketMsg_vec[ipos]);
+						bEtx =1;
+						break;
+					}
+					else
+						break;
+				}
+				else
+					break;
+			}
+		}			//switch end
+		if(bEtx) {
+			m_iSocketReceiveEnd =1;
+			break;		//while break;
+		}
+	}				//while end
+#endif
+	return 1;
+}
+#endif
+WORD Socket_MsgQueue::ByteToWord(BYTE puData, BYTE puData1)
+{
+	WORD p16Tempdata_HIGH, p16Tempdata_LOW;
+
+	p16Tempdata_HIGH = (puData << 8);
+	p16Tempdata_LOW = puData1;
+
+	return p16Tempdata_HIGH|p16Tempdata_LOW;
+
+}
+

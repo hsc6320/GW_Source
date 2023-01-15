@@ -1,0 +1,17 @@
+/*
+ * Main.cpp
+ *
+ *  Created on: 2021. 10. 22.
+ *      Author: hong
+ */
+
+
+#include <iostream>
+#include <stdio.h>
+using namespace std;
+
+int main() {
+	//cout << "!!!Hello World!!!" << endl; // prints !!!Hello World!!!
+	printf("!!!Hello World~~!!!");
+	return 0;
+}

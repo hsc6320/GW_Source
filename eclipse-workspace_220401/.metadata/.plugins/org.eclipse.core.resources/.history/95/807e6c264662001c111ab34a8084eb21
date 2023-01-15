@@ -1,0 +1,213 @@
+/*
+ * MsgQueue.cpp
+ *
+ *  Created on: 2021. 11. 29.
+ *      Author: hong
+ */
+
+#include "MsgQueue.h"
+#include "Socket/Socket.h"
+
+int m_uiPos =0;
+int nLengthCnt =0;
+int nDatalength =0;
+
+msgform* m_pMsg;
+
+MsgQueue:: MsgQueue(void)
+{
+	m_bReadEnd_UartMessage =0;
+	m_pMsg = NULL;
+}
+MsgQueue::~MsgQueue(void)
+{
+	Clear();
+}
+
+bool MsgQueue::PutByte(uint8_t* b)
+{
+
+	int nLen =0, size =0;
+	Vector<uint8_t> vec;
+
+	Socket* m_pUart_Socket = NULL;
+	m_pUart_Socket = (Socket *)m_pUart_Socket;
+
+	if(m_pMsg == NULL)
+	{
+		m_pMsg = new msgform;
+		m_pMsg->data = NULL;
+		m_uiPos =0;
+		m_bReadEnd_UartMessage =0;
+	}
+
+	printf("PutByte\n");
+	while(1) {
+
+		switch (m_uiPos)
+		{
+		case 0:
+			if(b[0] != STX) {
+			//	printf("STX ERROR return 0\n");
+				break;
+			}
+			else {
+				m_pMsg->stx = b[m_uiPos];
+				vec.push_back(b[m_uiPos]);
+				printf("uart Read message(PUT BYTE) %x ", vec[m_uiPos]);
+				nLengthCnt = 0;
+			}
+			m_uiPos++;
+			break;
+		case 1:
+			m_pMsg->PanId[0] = b[m_uiPos];
+			vec.push_back(b[m_uiPos]);
+			printf("%x ", vec[m_uiPos]);
+			m_uiPos++;
+			break;
+		case 2:
+			m_pMsg->PanId[1] = b[m_uiPos];
+			vec.push_back(b[m_uiPos]);
+			printf("%x ", vec[m_uiPos]);
+			m_uiPos++;
+			break;
+		case 3:
+			m_pMsg->Daddr[0] = b[m_uiPos];
+			vec.push_back(b[m_uiPos]);
+			printf("%x ", vec[m_uiPos]);
+			m_uiPos++;
+			break;
+		case 4:
+			m_pMsg->Daddr[1] = b[m_uiPos];
+			vec.push_back(b[m_uiPos]);
+			printf("%x ", vec[m_uiPos]);
+			m_uiPos++;
+			break;
+		case 5:
+			m_pMsg->Saddr[0] = b[m_uiPos];
+			vec.push_back(b[m_uiPos]);
+			printf("%x ", vec[m_uiPos]);
+			m_uiPos++;
+			break;
+		case 6:
+			m_pMsg->Saddr[1] = b[m_uiPos];
+			vec.push_back(b[m_uiPos]);
+			printf("%x ", vec[m_uiPos]);
+			m_uiPos++;
+			break;
+		case 7:
+			m_pMsg->MsgType = b[m_uiPos];
+			vec.push_back(b[m_uiPos]);
+			printf("%x ", vec[m_uiPos]);
+			m_uiPos++;
+			break;
+		case 8:
+			m_pMsg->Length[0] = b[m_uiPos];
+			vec.push_back(b[m_uiPos]);
+			printf("%x ", vec[m_uiPos]);
+			m_uiPos++;
+			break;
+		case 9:
+			m_pMsg->Length[1] = b[m_uiPos];
+			vec.push_back(b[m_uiPos]);
+			printf("%x ", vec[m_uiPos]);
+			m_uiPos++;
+			break;
+		default :
+			if(m_pMsg->data == NULL)
+			{
+				nDatalength = (int)ByteToWord(m_pMsg->Length[1], m_pMsg->Length[0]);
+				printf("[DataLen : %d] ", nDatalength);
+				//nDatalength= (int)(m_pMsg->Length[0] | m_pMsg->Length[1]);
+				m_pMsg->data = new uint8_t[nDatalength];
+
+				m_pMsg->data[nLengthCnt]= b[m_uiPos];
+				vec.push_back(b[m_uiPos]);
+				printf("%x ", vec[m_uiPos]);
+				nLengthCnt++;
+				m_uiPos++;
+				break;
+			}
+			else if(nLengthCnt < nDatalength) {
+				m_pMsg->data[nLengthCnt] = b[m_uiPos];
+				vec.push_back(b[m_uiPos]);
+				printf("%x ", vec[m_uiPos]);
+				nLengthCnt++;
+				m_uiPos++;
+				break;
+			}
+
+			if(nLengthCnt == nDatalength)
+			{
+				m_pMsg->Checksum = b[m_uiPos];
+				vec.push_back(b[m_uiPos]);
+				printf("%x ", vec[m_uiPos]);
+				nDatalength =0;
+				m_uiPos++;
+				break;
+			}
+
+			if(m_pMsg->ext[0] == b[m_uiPos]) {
+				vec.push_back(b[m_uiPos]);
+				printf("%x ", vec[m_uiPos]);
+				m_uiPos++;
+				break;
+			}
+			else if(m_pMsg->ext[1] == b[m_uiPos]) {
+				vec.push_back(b[m_uiPos]);
+				printf("%x ", vec[m_uiPos]);
+				m_uiPos++;
+				break;
+			}
+			else if(m_pMsg->ext[2] == b[m_uiPos]) {
+				vec.push_back(b[m_uiPos]);
+				printf("%x \r\n", vec[m_uiPos]);
+				size = vec.size();
+				for(int i=0; i<size; i++) {
+					m_vcemsg.m_UartMsg_vec.push_back(vec[i]);
+				}
+				m_bReadEnd_UartMessage =1;
+				break;
+			}
+
+		}
+
+		if(m_bReadEnd_UartMessage)	{
+			nLen = m_vcemsg.m_UartMsg_vec.size();
+			Clear();
+			break;
+		}
+
+	}
+	return 1;
+
+}
+
+WORD MsgQueue::ByteToWord(BYTE puData, BYTE puData1)
+{
+	WORD p16Tempdata_HIGH, p16Tempdata_LOW;
+
+	p16Tempdata_HIGH = (puData << 8);
+	p16Tempdata_LOW = puData1;
+
+	return p16Tempdata_HIGH|p16Tempdata_LOW;
+
+}
+
+
+void MsgQueue::Clear()
+{
+	if(m_pMsg)
+	{
+		printf("Clear\n");
+		if(m_pMsg->data)
+			delete[] m_pMsg->data;
+		delete m_pMsg;
+		m_pMsg = NULL;
+	}
+	m_uiPos =0;
+}
+
+
+
+

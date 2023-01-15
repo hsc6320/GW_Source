@@ -1,0 +1,22 @@
+/*
+ * SocketTemp.cpp
+ *
+ *  Created on: 2021. 12. 16.
+ *      Author: hong
+ */
+
+#include "SocketTemp.h"
+
+SocketTemp::SocketTemp() {
+	// TODO Auto-generated constructor stub
+
+}
+
+SocketTemp::~SocketTemp() {
+	// TODO Auto-generated destructor stub
+}
+
+void SetSocketHandler(SocketHandler* soc)
+{
+	m_pSocketHandler = soc;
+}

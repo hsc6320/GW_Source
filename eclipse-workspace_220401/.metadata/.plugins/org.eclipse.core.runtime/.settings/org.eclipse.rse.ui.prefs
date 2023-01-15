@@ -1,0 +1,7 @@
+eclipse.preferences.version=1
+org.eclipse.rse.internal.processes.ui.view.SystemViewRemoteProcessAdapter\:org.eclipse.rse.ui.view.SystemTableView=org.eclipse.rse.ui.process.pid;org.eclipse.rse.ui.process.name;org.eclipse.rse.ui.process.state;org.eclipse.rse.ui.process.uid;org.eclipse.rse.ui.process.username;org.eclipse.rse.ui.process.ppid;org.eclipse.rse.ui.process.gid;org.eclipse.rse.ui.process.tgid;org.eclipse.rse.ui.process.tracerpid;org.eclipse.rse.ui.process.vmsize;org.eclipse.rse.ui.process.vmrss
+org.eclipse.rse.internal.ui.view.SystemViewFilterReferenceAdapter\:org.eclipse.rse.ui.view.SystemTableView=org.eclipse.rse.ui.filterParentPool;org.eclipse.rse.ui.filterParent;org.eclipse.rse.ui.filterstringsCount;org.eclipse.rse.ui.filterConnectionPrivate
+org.eclipse.rse.preferences.alert.nonssl=false
+org.eclipse.rse.preferences.order.connections=hong-PC.Local;hong-PC.172.16.20.79;hong-PC.172.30.1.33;hong-PC.debiandd_home
+org.eclipse.rse.shells.ui.view.SystemViewRemoteOutputAdapter\:org.eclipse.rse.shells.ui.view.SystemCommandsView=null
+ssh.files.filterStringDialog=.

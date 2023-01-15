@@ -1,0 +1,42 @@
+/*
+ * Msg_Define.h
+ *
+ *  Created on: 2021. 11. 29.
+ *      Author: hong
+ */
+
+#ifndef MSG_DEFINE_H_
+#define MSG_DEFINE_H_
+
+
+typedef uint8_t	BYTE;
+typedef uint16_t WORD;
+
+#define STX	0xAA
+
+#define MSG_STX 		0
+#define MSG_PANIDZERO 			1
+#define MSG_PANIDONE 			2
+#define MSG_DADDRZERO			3
+#define MSG_DADDRONE			4
+#define MSG_SADDRZERO			5
+#define MSG_SADDRONE			6
+#define MSGTYPE					7
+#define MSG_LENGTHZERO			8
+#define MSG_LENGTHONE			9
+
+#define REGISTRATION_REQUEST				0x01
+#define REGISTRATION_CONFIRM				0x02
+#define CONNECT_REQUEST					0x03
+#define CONNECT_CONFIRM					0x04
+#define SERVICESTART_REQUEST  			0x05
+#define SERVICESTART_CONFIRM 				0x06
+#define SERVICESTOP_REQUEST				0x07
+#define SERVICESTOP_CONFIRM				0x08
+#define GATEWAYID_REQUEST					0x10
+#define GATEWAYID_RESPONSE					0x11
+#define TAG_ASSOCIATION					0x21
+#define COORDINATOR_RESET_REQ				0x60
+#define COORDINATOR_RESET_CONFIRM		0x61
+
+#endif /* MSG_DEFINE_H_ */

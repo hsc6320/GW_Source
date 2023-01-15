@@ -1,0 +1,52 @@
+/*
+ * MsgQueue.h
+ *
+ *  Created on: 2021. 11. 29.
+ *      Author: hong
+ */
+
+
+#ifndef MSGQUEUE_H_
+#define MSGQUEUE_H_
+
+#include "pch.h"
+#include "Vector_queue.h"
+#include "MsgHandler.h"
+
+#pragma pack(push, 1)
+typedef struct _msgform {
+	uint8_t stx;
+	uint8_t PanId[2];
+	uint8_t Daddr[2];
+	uint8_t Saddr[2];
+	uint8_t MsgType;
+	uint8_t Length[2];
+	uint8_t* data;
+	uint8_t Checksum;
+	uint8_t ext[3] = { 0xA5, 0x5A, 0x7E };
+} msgform;
+
+#pragma pack(pop)
+
+typedef struct _msgvecform {
+	Vector<uint8_t> m_UartMsg_vec;
+	int iMsgExcep;
+}vecmsgform;
+
+
+class MsgQueue
+{
+public :
+	MsgQueue(void);
+	~MsgQueue(void);
+public:
+
+	vecmsgform m_vcemsg;
+	int m_bReadEnd_UartMessage;
+
+	bool PutByte(uint8_t* b);
+	void Clear();
+
+
+};
+#endif /* MSGQUEUE_H_ */

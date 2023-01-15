@@ -1,0 +1,43 @@
+/*
+ * SocketHandler.h
+ *
+ *  Created on: 2021. 12. 6.
+ *      Author: hong
+ */
+
+#ifndef SOCKET_SOCKETHANDLER_H_
+#define SOCKET_SOCKETHANDLER_H_
+
+
+#include "../pch.h"
+#include "Socket.h"
+
+typedef struct _Packet {
+	WORD PanID;
+	WORD ServerID;
+	WORD Length;
+	BYTE* Data;
+	BYTE ext[3] = {0xA5, 0x5A, 0x7E};
+}Common_Packet;
+
+class SocketHandler {
+public:
+	SocketHandler();
+	virtual ~SocketHandler();
+
+	Common_Packet		packet;
+	int testest;
+
+	BYTE GetChecksum(BYTE* puData, int len);
+	void SetSocketHwnd(Socket* soc);
+	int SendMessage(int msg);
+	void GetPanID(WORD panid);
+	void GetServerID(WORD severid);
+	bool PutByte(uint8_t* b);
+	int Registration_Request();
+	WORD ByteToWord(BYTE puData, BYTE puData1);
+	int SetUartMsg(Vector<uint8_t> vec, int Len);
+	int Connect_Request();
+};
+
+#endif /* SOCKET_SOCKETHANDLER_H_ */

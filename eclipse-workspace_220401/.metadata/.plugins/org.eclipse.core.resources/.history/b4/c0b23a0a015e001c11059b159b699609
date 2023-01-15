@@ -1,0 +1,46 @@
+/*
+ * SocketMsgQueue.cpp
+ *
+ *  Created on: 2021. 12. 9.
+ *      Author: hong
+ */
+
+#include "SocketMsgQueue.h"
+
+BYTE ext[3] = {0xA5, 0x5A, 0x7E};
+
+Socket_MsgQueue::Socket_MsgQueue() {
+}
+
+Socket_MsgQueue::~Socket_MsgQueue() {
+	// TODO Auto-generated destructor stub
+}
+
+int Socket_MsgQueue::GetSocketMsg(uint8_t* p8Data, int len)
+{
+	WORD uDataLength;
+	int DataLen;
+	DataLen = len;
+	//p8Data = pSocket->m_ServerRecieveData.message;
+
+	printf("\nGetSocketMsg\n");
+
+	for(int i =0; i< DataLen; i++) {
+		printf("%x\n", p8Data[i]);
+	}
+
+	if()
+	return 1;
+}
+
+WORD Socket_MsgQueue::ByteToWord(BYTE puData, BYTE puData1)
+{
+	WORD p16Tempdata_HIGH, p16Tempdata_LOW;
+
+	p16Tempdata_HIGH = (puData << 8);
+	p16Tempdata_LOW = puData1;
+
+	return p16Tempdata_HIGH|p16Tempdata_LOW;
+
+}
+

@@ -1,0 +1,403 @@
+/*
+ * socket.cpp
+ *
+ *  Created on: 2021. 11. 29.
+ *      Author: hong
+ */
+
+
+#include "Socket.h"
+
+#define PORT 5037
+void *Recieve_Function(void* rcvDt);
+
+pthread_mutex_t Socket_mutex;
+MsgHandler* m_pHandlerMsg;
+MsgQueue* m_pQueueMsg;
+Socket* m_pSoc;
+
+pthread_t p_thread;
+
+int nDataLen=0;
+int serv_sockfd;
+void* pHandler;
+
+Socket::Socket()
+{
+	m_p8uData = NULL;
+	m_p8uSendData = NULL;
+	m_nServerMessge_End =0;
+	m_iBypassSocketToUart =0;
+	m_ReceiveData_len =0;
+	m_iSocketReceiveEnd =0;
+	bWorkingThread =0;
+	m_serv_sock = NULL;
+	m_pSocMsgqueue = NULL;
+
+}
+Socket::~Socket()
+{
+	delete m_pSocMsgqueue;
+}
+
+
+void Socket::Socket_Init(/*int argc, char *argv[]*/)
+{
+	struct sockaddr_in serv_addr;
+	m_pSocMsgqueue = new Socket_MsgQueue;
+
+	serv_sockfd = socket(PF_INET, SOCK_STREAM, 0);
+
+	if(serv_sockfd == -1) {
+		printf("Socket Error\n");
+	}
+	else {
+		printf("Socket Val : %d\n", serv_sockfd);
+	}
+
+	memset(&serv_addr, 0, sizeof(serv_addr));
+	serv_addr.sin_family = AF_INET;
+	serv_addr.sin_addr.s_addr = inet_addr("172.16.20.17");
+	serv_addr.sin_port = htons(PORT/*atoi(argv[2])*/);
+
+	printf("ip : %d port : %d\n", serv_addr.sin_addr.s_addr,  htons(PORT/*atoi(argv[2])*/) );
+	if(connect(serv_sockfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) == -1) {
+		printf("Connect Error\n");
+		exit(0);
+	}
+	m_serv_sock = &serv_sockfd;
+	printf("serv_sockfd : %d, %p %d\n", *m_serv_sock, &serv_sockfd, serv_sockfd);
+
+	Create_Socket_Thread(serv_sockfd);
+	printf("Socket Init\n");
+
+}
+
+void Socket::Create_Socket_Thread(int sockfd)
+{
+
+	pthread_mutex_init(&Socket_mutex, NULL);
+
+	//	if(t==0) pthread_create(&p_thread[t],NULL,Send_Function,(void*)&sockfd);
+	//printf("Create_Socket_Thread m_serv_sock :%d\n", *m_serv_sock);
+	if(pthread_create(&p_thread, NULL, Recieve_Function,(void* )&m_serv_sock) < 0) {
+		printf("thread Create Error\n");
+		exit(0);
+	}
+	printf("Create_Socket_Thread sock %d\n\n", *m_serv_sock);
+}
+
+void Socket::Exit_Socket_Thread()
+{
+	void *status;
+	int ret =0;
+	ret = pthread_join(p_thread,&status);
+
+	printf("Socket Exit Thread , ");
+	if(status == PTHREAD_CANCELED)
+		printf("The thread was canceled - \n");
+	else
+		printf("Returned value %d - ", (int)status);
+
+	switch(ret)
+	{
+	case 0:
+		printf("The thread joined successfully\n");
+		break;
+	case EDEADLK:
+		printf("Deadlock detected\n");
+		break;
+	case EINVAL:
+		printf("The thread is not joinable\n");
+		break;
+	case ESRCH:
+		printf("No thread with given ID is found\n");
+		break;
+	default:
+		printf("Error occurred when joining the thread\n");
+		break;
+	}
+
+	bWorkingThread = 0;
+
+	//pthread_exit(NULL);
+	printf("Exit_Socket_Thread() : [%d] \n", (int)status);
+}
+
+void Socket::Send_Message(BYTE* msg, int len)
+{
+	m_p8uSendData = new BYTE[len+1];
+
+	memcpy(m_p8uSendData, msg, len+1);
+	nDataLen = len+1;
+
+	m_pQueueMsg->m_vcemsg.iMsgExcep =1;
+	Send_Function(m_serv_sock);
+}
+
+void Socket::Send_Function(void* serv_sock)
+{
+	//vecmsgform vcemsg = m_pQueueMsg->m_vcemsg;
+	int* cs=(int*)serv_sock;
+	int status ;
+
+	printf("socket Send_Function() ");
+	for(int i=0; i < nDataLen; i++) {
+		printf("%x ", m_p8uSendData[i]);
+	}
+
+	while(m_pQueueMsg->m_vcemsg.iMsgExcep) {
+		m_pQueueMsg->m_vcemsg.iMsgExcep =0;
+		printf("<--SERVER\n");
+		write(*cs,m_p8uSendData,nDataLen/*sizeof(m_p8uData)*/);
+		wait(&status);
+		break;
+	}
+	delete[] m_p8uSendData;
+}
+
+int Socket::Read_Message(BYTE* msg)
+{
+	//printf("Socket Read_Message sock() %d\n", *m_serv_sock);
+	int str_len = read(*m_serv_sock,msg,sizeof(BYTE)*1024);
+
+	return str_len;
+}
+
+void *Recieve_Function(void* rcvDt)
+{
+	Socket* pSoc = NULL;
+	pSoc = (Socket* )m_pSoc;
+
+	int str_len, status;
+
+	pSoc->m_p8uData = new BYTE[1024];
+	while(1)
+	{
+		printf("\n*********Socket Read Thread ********\n");
+		pthread_mutex_lock(&Socket_mutex);
+		str_len = pSoc->Read_Message(pSoc->m_p8uData);
+		wait(&status);
+
+
+		if(str_len!= -1) {
+			pSoc->m_ReceiveData_len = str_len;
+			pSoc->m_ServerRecieveData.message = pSoc->m_p8uData;
+			//printf("<- m_nServerMessge_End : %x %x %x %x %x %x %x %x \n",pSoc->m_p8uData[0], pSoc->m_p8uData[1], pSoc->m_p8uData[2], pSoc->m_p8uData[3],
+			//		pSoc->m_p8uData[4], pSoc->m_p8uData[5], pSoc->m_p8uData[6], pSoc->m_p8uData[7]);
+			printf("Socket Receive MSG -> ");
+			for(int i=0; i<str_len; i++) {
+				printf("%x ", pSoc->m_p8uData[i]);
+			}
+			printf("\n");
+		//	memcpy(pSoc->m_p8uData, p8uData, str_len);
+			pSoc->GetSocketMsg(str_len);
+
+		}
+		else if(str_len == 0){
+			printf("Socket Read string Length = %d\n",pSoc->m_ReceiveData_len);
+			if(pSoc->m_p8uData != NULL) {
+				delete[] pSoc->m_p8uData;
+				pSoc->m_p8uData = NULL
+			}
+		}
+		usleep(0);
+		pthread_mutex_unlock(&Socket_mutex);
+	}
+	return 0;
+}
+
+bool Socket::GetSocketMsg(int Len)
+{
+	WORD uDataLength;
+	int iSetData=0, bEtx =0;
+	int ipos =0, isubPos =0;
+	int DataLen =0;
+	int size =0;
+	BYTE p8udata[1024]= {0, };
+
+	BYTE ext[3] = {0xA5, 0x5A, 0x7E};
+
+	DataLen = Len;
+	memcpy(p8udata, m_p8uData, m_ReceiveData_len);
+
+
+	for(int i =0; i< DataLen; i++) {
+		printf("%x ", p8udata[i]);
+	}
+	printf("\n");
+
+	size = m_SocketMsg_vec.size();
+	for(int i=0; i < size; i++) {
+		m_SocketMsg_vec.remove(i);
+	}
+
+	printf("\nSocket GetSocketMsg ReceiveData_len %d\n", Len);
+
+	while(1)
+	{
+		switch(ipos)
+		{
+		case 0:
+			if(p8udata[ipos] != STX) {
+				printf("return 0\n");
+				return 0;
+			}
+			else {
+				m_SocketMsg_vec.push_back(m_p8uData[ipos]);
+				printf("Socket queue Read : [%x] ", m_SocketMsg_vec[ipos]);
+				ipos++;
+			}
+			break;
+		case 1:
+			m_SocketMsg_vec.push_back(m_p8uData[ipos]);
+			printf("%x ", m_SocketMsg_vec[ipos]);
+			ipos++;
+			break;
+		case 2:
+			m_SocketMsg_vec.push_back(m_p8uData[ipos]);
+			printf("%x ", m_SocketMsg_vec[ipos]);
+			ipos++;
+			break;
+		case 3:
+			m_SocketMsg_vec.push_back(m_p8uData[ipos]);
+			printf("%x ", m_SocketMsg_vec[ipos]);
+			ipos++;
+			break;
+		case 4:
+			m_SocketMsg_vec.push_back(m_p8uData[ipos]);
+			printf("%x ", m_SocketMsg_vec[ipos]);
+			ipos++;
+			break;
+		case 5:
+			m_SocketMsg_vec.push_back(m_p8uData[ipos]);
+			printf("%x ", m_SocketMsg_vec[ipos]);
+			ipos++;
+			break;
+		case 6:
+			m_SocketMsg_vec.push_back(m_p8uData[ipos]);
+			printf("%x ", m_SocketMsg_vec[ipos]);
+			ipos++;
+			break;
+		case 7:
+			m_SocketMsg_vec.push_back(m_p8uData[ipos]);
+			printf("%x ", m_SocketMsg_vec[ipos]);
+			ipos++;
+			break;
+		case 8:
+			m_SocketMsg_vec.push_back(m_p8uData[ipos]);
+			printf("%x ", m_SocketMsg_vec[ipos]);
+			ipos++;
+			break;
+		case 9:
+			m_SocketMsg_vec.push_back(m_p8uData[ipos]);
+			printf("%x ", m_SocketMsg_vec[ipos]);
+			uDataLength = ByteToWord(m_SocketMsg_vec[MSG_LENGTHONE], m_SocketMsg_vec[MSG_LENGTHZERO]);
+			printf("[DataLen %x] ",uDataLength);
+			ipos++;
+			break;
+		default :
+			while(1)
+			{
+				switch (isubPos)
+				{
+				case 0:
+					if(uDataLength != 0){
+						m_SocketMsg_vec.push_back(m_p8uData[ipos]);
+						printf("[data %x] ", m_SocketMsg_vec[ipos]);
+						iSetData++;
+						ipos++;
+						if(iSetData == uDataLength) {
+							isubPos++;
+						}
+					}
+					else {
+						isubPos++;
+					}
+					break;
+				case 1:
+					m_SocketMsg_vec.push_back(m_p8uData[ipos]);
+					printf("Checksum [%x] ", m_SocketMsg_vec[ipos]);
+					ipos++;
+					isubPos++;
+					break;
+				case 2:
+					m_SocketMsg_vec.push_back(m_p8uData[ipos]);
+					if(m_SocketMsg_vec[ipos] == ext[0]) {
+						printf("etx0 [%x] ", m_SocketMsg_vec[ipos]);
+
+						m_SocketMsg_vec.push_back(m_p8uData[++ipos]);
+						if(m_SocketMsg_vec[ipos] == ext[1]) {
+							printf("etx1 [%x] ", m_SocketMsg_vec[ipos]);
+
+							m_SocketMsg_vec.push_back(m_p8uData[++ipos]);
+							if(m_SocketMsg_vec[ipos] == ext[2]) {
+								bEtx =1;
+								printf("etx2 [%x] bEtx : %d, \n",m_SocketMsg_vec[ipos], bEtx);
+								break;
+							}
+						}
+					}
+				}
+				if(bEtx) {
+					break;	//while end
+				}
+			}
+
+		}			//switch end
+		if(bEtx) {
+			m_iSocketReceiveEnd =1;
+			printf("Socket Receive End, Size :%d\n\n", m_SocketMsg_vec.size());
+
+		//	memcpy(m_p8uData, p8udata, DataLen);
+			//m_pSocMsgqueue->GetSocketMsg(m_SocketMsg_vec, DataLen);
+
+			if(m_SocketMsg_vec[MSGTYPE] != 0x01 &&
+				m_SocketMsg_vec[MSGTYPE] != 0x02 &&
+				m_SocketMsg_vec[MSGTYPE] != 0x03 &&
+				m_SocketMsg_vec[MSGTYPE]!= 0x04 &&
+				m_SocketMsg_vec[MSGTYPE] != 0x06 &&
+				m_SocketMsg_vec[MSGTYPE] != 0x10 &&
+				m_SocketMsg_vec[MSGTYPE] != 0x11)
+			{
+				m_iBypassSocketToUart = 1;
+
+			}
+			break;		//while break;
+		}
+	}				//while end
+
+	return 1;
+}
+
+
+WORD Socket::ByteToWord(BYTE puData, BYTE puData1)
+{
+	WORD p16Tempdata_HIGH, p16Tempdata_LOW;
+
+	p16Tempdata_HIGH = (puData << 8);
+	p16Tempdata_LOW = puData1;
+
+	return p16Tempdata_HIGH|p16Tempdata_LOW;
+
+}
+
+void Socket::SetMsgHandler(MsgHandler* msgqueue)
+{
+	m_pHandlerMsg = msgqueue;
+}
+
+void Socket::SetMsgQueue(MsgQueue* msgqueue)
+{
+	m_pQueueMsg = msgqueue;
+}
+
+void Socket::SetSocketQueue(Socket_MsgQueue* socketqueue)
+{
+	m_pSocMsgqueue = socketqueue;
+}
+
+void Socket::SetMsgHwnd(Socket* soc)
+{
+	m_pSoc = soc;
+}

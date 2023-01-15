@@ -1,0 +1,273 @@
+/*
+ * SocketHandler.cpp
+ *
+ *  Created on: 2021. 12. 6.
+ *      Author: hong
+ */
+
+#include "SocketHandler.h"
+
+Socket* pSocket;
+Socket_MsgQueue* pSocketQueue;
+
+BYTE* m_p8uData11;
+
+SocketHandler::SocketHandler()
+{
+}
+
+SocketHandler::~SocketHandler() {
+	// TODO Auto-generated destructor stub
+}
+
+int SocketHandler::SendMessage(int msg)
+{
+	int msgtype =0;
+	//uint8_t pu8data[15] = {0xaa, 0, 0xfc, 0x01, 0, 0x01, 0, 0x05, 0x01, 0, 0, 0x04, 0xa5, 0x5a, 0x7e};
+	msgtype = msg;
+
+	switch(msgtype)
+	{
+	case REGISTRATION_REQUEST:
+		printf("Socket SendMsg : REGISTRATION_REQUEST\n");
+		Registration_Request();
+		break;
+	case CONNECT_REQUEST:
+		printf("Socket SendMsg : CONNECT_REQUEST\n");
+		Connect_Request();
+		break;
+	}
+
+
+	return 1;
+}
+
+int SocketHandler::Connect_Request()
+{
+	BYTE pu8data[30];
+	BYTE u8Checksum;
+	int iBufcnt =0;
+
+	pu8data[iBufcnt] = STX;
+	pu8data[++iBufcnt] = packet.PanID << 8;
+	pu8data[++iBufcnt] = packet.PanID >> 8;
+	pu8data[++iBufcnt] = packet.ServerID;
+	pu8data[++iBufcnt] = packet.ServerID >> 8;
+	pu8data[++iBufcnt] = 0x01;		//gateway ID
+	pu8data[++iBufcnt] = 0xfb;		//gateway ID
+	pu8data[++iBufcnt] = CONNECT_REQUEST;	//msg type
+	pu8data[++iBufcnt] = 0x0a;
+	pu8data[++iBufcnt] = 0;
+	pu8data[++iBufcnt] = 0x01;
+
+	pu8data[++iBufcnt] = 0;
+	pu8data[++iBufcnt] = 0;
+	pu8data[++iBufcnt] = 0;
+	pu8data[++iBufcnt] = 0;
+	pu8data[++iBufcnt] = 0;
+	pu8data[++iBufcnt] = 0;
+	pu8data[++iBufcnt] = 0;
+	pu8data[++iBufcnt] = 0;
+	pu8data[++iBufcnt] = 0;
+	pu8data[++iBufcnt] = 0;
+
+	u8Checksum = GetChecksum(pu8data, iBufcnt);
+	pu8data[++iBufcnt] = u8Checksum; //0x07;
+
+	pu8data[++iBufcnt] = packet.ext[0];
+	pu8data[++iBufcnt] = packet.ext[1];
+	pu8data[++iBufcnt] = packet.ext[2];
+
+	pSocket->Send_Message(pu8data, iBufcnt);
+
+	return 1;
+}
+
+int SocketHandler::Registration_Request()
+{
+	uint8_t pu8data[23];
+	int iBufcnt =0;
+
+	pu8data[iBufcnt] = STX;
+	pu8data[++iBufcnt] = packet.PanID << 8;
+	pu8data[++iBufcnt] = packet.PanID >> 8;
+	pu8data[++iBufcnt] = 0xff;
+	pu8data[++iBufcnt] = 0xff;
+	pu8data[++iBufcnt] = 0x01;
+	pu8data[++iBufcnt] = 0xfb;
+	pu8data[++iBufcnt] = REGISTRATION_REQUEST;	//msg type
+	pu8data[++iBufcnt] = 0x07;
+	pu8data[++iBufcnt] = 0;
+	pu8data[++iBufcnt] = 0;
+	pu8data[++iBufcnt] = 0;
+	pu8data[++iBufcnt] = 1;
+	pu8data[++iBufcnt] = 0;
+	pu8data[++iBufcnt] = 0;
+	pu8data[++iBufcnt] = 0;
+	pu8data[++iBufcnt] = 0;
+	pu8data[++iBufcnt] = 0;
+
+	pu8data[++iBufcnt] = 1;
+	pu8data[++iBufcnt] = 0;
+
+	pu8data[++iBufcnt] = packet.ext[0];
+	pu8data[++iBufcnt] = packet.ext[1];
+	pu8data[++iBufcnt] = packet.ext[2];
+
+	/*for(int i=0; i<iBufcnt+1; i++ ) {
+		printf("%x ", pu8data[i]);
+	}*/
+	printf("\n");
+	pSocket->Send_Message(pu8data, iBufcnt);
+	return 1;
+}
+
+void SocketHandler::BypassUartToSocket(BYTE type, int Len)
+{
+	int msgtype = 0;
+	switch(msgtype)
+	{
+	case COORDINATOR_RESET_CONFIRM:
+		pSocket->Send_Message(m_p8uData11, Len);
+		delete[] m_p8uData11;
+		break;
+
+	}
+
+}
+
+int SocketHandler::SetUartMsg(Vector<uint8_t> vec, int Len)
+{
+	int size =0;
+	int ipos =0;
+	int loopEnd =0;
+	int nlsChecksum =0;
+	int loop =0;
+	printf("SetUartMsg\n");
+
+	m_p8uData11 = new BYTE[Len];
+
+	while(!loopEnd) {
+		switch(ipos)
+		{
+		case 0:
+			if(vec[MSG_STX] != STX) {
+				return 0;
+				break;
+			}
+			else {
+				m_p8uData11[ipos] = vec[MSG_STX];
+				ipos++;
+			}
+			break;
+		case 1:
+			m_p8uData11[ipos] = vec[MSG_PANIDZERO];
+			m_p8uData11[++ipos] = vec[MSG_PANIDONE];
+
+			m_p8uData11[++ipos] = vec[MSG_DADDRZERO];
+			m_p8uData11[++ipos] = vec[MSG_DADDRONE];
+
+			m_p8uData11[++ipos] = vec[MSG_SADDRZERO];
+			m_p8uData11[++ipos] = vec[MSG_SADDRONE];
+
+			m_p8uData11[++ipos] = vec[MSGTYPE];
+
+			m_p8uData11[++ipos] = vec[MSG_LENGTHZERO];
+			m_p8uData11[++ipos] = vec[MSG_LENGTHONE];
+
+			loop = (int)ByteToWord(vec[MSG_LENGTHONE], vec[MSG_LENGTHZERO]);
+			for(int i =0; i< loop; i++) {
+				m_p8uData11[++ipos] = vec[MSG_LENGTHONE+1+i];
+				printf("pu8Data [%x] ", m_p8uData11[ipos]);
+			}
+			ipos = ipos + loop;
+			printf("ipos %d", ipos);
+			break;
+		default:
+			if(!nlsChecksum) {
+				m_p8uData11[++ipos] = vec[ipos];
+				printf("checksum Val :%x ", m_p8uData11[ipos]);
+				nlsChecksum =1;
+			//	GetChecksum((BYTE *)&Getpacket.header.panID, (int)Getpacket.header.length);
+				ipos++;
+				break;
+			}
+			else {
+				m_p8uData11[++ipos] = vec[ipos];
+				if(m_p8uData11[ipos] == 0xA5) {
+					m_p8uData11[++ipos] = vec[++ipos];
+
+					if(m_p8uData11[ipos] == 0x5A) {
+						m_p8uData11[++ipos] = vec[++ipos];
+
+						if(m_p8uData11[ipos] == 0x7E) {
+							loopEnd =1;
+							break;
+						}
+						else {
+							printf("ETX 0x7E Error\n");
+							return 0;
+						}
+					}
+					else {
+						printf("ETX 0x5A Error\n");
+						return 0;
+					}
+				}
+				else {
+					printf("ETX 0xA5 Error\n");
+					return 0;
+				}
+			}
+
+		}		//END SWITCH
+	}		//END WHILE
+
+	printf("return 1\n");
+	return 1;
+}
+
+WORD SocketHandler::ByteToWord(BYTE puData, BYTE puData1)
+{
+	WORD p16Tempdata_HIGH, p16Tempdata_LOW;
+
+	p16Tempdata_HIGH = (puData << 8);
+	p16Tempdata_LOW = puData1;
+
+	return p16Tempdata_HIGH|p16Tempdata_LOW;
+
+}
+
+void SocketHandler::GetPanID(WORD panid)
+{
+	packet.PanID = panid;
+}
+
+void SocketHandler::GetServerID(WORD severid)
+{
+	packet.ServerID = severid;
+	printf("GetServerID %x %x\n", packet.ServerID, severid);
+}
+
+bool SocketHandler::PutByte(uint8_t* b)
+{
+	int nLen =0;
+}
+
+BYTE SocketHandler::GetChecksum(BYTE* puData, int len)
+{
+	BYTE sum =0;
+
+	for(int i=1; i< len; i++) {
+	//	printf("%x ", puData[i]);
+		sum += puData[i];
+	}
+	printf("check nsum : %x\n", sum);
+
+	return sum;
+}
+
+void SocketHandler::SetSocketHwnd(Socket* soc)
+{
+	pSocket = soc;
+}

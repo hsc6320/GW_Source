@@ -1,0 +1,64 @@
+/*
+ * MsgHandler.cpp
+ *
+ *  Created on: 2021. 11. 30.
+ *      Author: hong
+ */
+
+#include "MsgHandler.h"
+
+
+MsgHandler::MsgHandler()
+{
+	m_pCommUart = NULL;
+}
+
+MsgHandler::~MsgHandler()
+{
+	// TODO Auto-generated destructor stub
+}
+
+int MsgHandler::ServiceStart()
+{
+	int ret =0;
+	uint8_t pu8data[15] = {0xaa, 0, 0xfc, 0x01, 0, 0x01, 0, 0x05, 0x01, 0, 0, 0x04, 0xa5, 0x5a, 0x7e};
+	printf("ServiceStart\n");
+	ret = m_pCommUart->Uart_Write(m_pCommUart->m_uartd, pu8data, 16);
+
+	return ret;
+}
+
+void MsgHandler::ServiceIdle()
+{
+	uint8_t pu8data[14] = {0xaa, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x10, 0, 0, 0x0a, 0xa5, 0x5a, 0x7e};
+	printf("ServiceIdle\n");
+	m_pCommUart->Uart_Write(m_pCommUart->m_uartd, pu8data, 16);
+}
+
+void MsgHandler::BypassSocketToUart(BYTE* p8Data, int DataLen, int msgtype)
+{
+	int status;
+	printf("msgtype: %d, DataLen: %d \n", msgtype, DataLen);
+
+	switch(msgtype)
+	{
+	case SERVICESTART_REQUEST:
+		printf("SERVICESTART_REQUEST UART_WRITE\n");
+		m_pCommUart->m_grun =1;
+		m_pCommUart->Uart_Write(m_pCommUart->m_uartd, p8Data, DataLen);
+		wait(&status);
+		break;
+	case COORDINATOR_RESET_REQ:
+		m_pCommUart->m_grun =1;
+		m_pCommUart->Create_Uart_thread();
+		m_pCommUart->Uart_Write(m_pCommUart->m_uartd, p8Data, DataLen);
+		wait(&status);
+		break;
+	}
+
+}
+
+void MsgHandler::SetHandle(UartComThread* msg)
+{
+	m_pCommUart = msg;
+}

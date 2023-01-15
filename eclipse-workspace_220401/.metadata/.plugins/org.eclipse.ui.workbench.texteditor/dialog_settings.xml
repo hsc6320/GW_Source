@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item key="selection" value="Main_TagVal_SortAndArrange2"/>
+		<item key="wrap" value="true"/>
+		<item key="casesensitive" value="false"/>
+		<item key="wholeword" value="true"/>
+		<item key="incremental" value="false"/>
+		<item key="isRegEx" value="false"/>
+		<list key="findhistory">
+			<item value="Main_TagVal_SortAndArrange2"/>
+			<item value="Main_TagVal_SortAndArrange"/>
+			<item value="Insert Zero"/>
+			<item value="m_ArrayDataAcknowledge"/>
+			<item value="Before Sort2"/>
+			<item value="before sort2"/>
+			<item value="before sort"/>
+			<item value="Main_Check_TagVal"/>
+			<item value="Redown"/>
+			<item value="m_ArrayDataAcknowledge.erase"/>
+			<item value="SORT"/>
+			<item value="CHECK"/>
+			<item value="Main_TagSort_Arrange"/>
+			<item value="check"/>
+			<item value="Before Sort"/>
+		</list>
+		<list key="replacehistory">
+			<item value="m_serv_sock"/>
+			<item value="Socket_mutex"/>
+			<item value="ctx-&gt;Socket_mutex"/>
+			<item value="serv_sockfd"/>
+			<item value="m_nDownloadedSuccessCnt"/>
+			<item value="V_ArrayData"/>
+			<item value="m_ArrayDataAcknowledge"/>
+			<item value="m_m_MsgQueueArrayDataAcknowledge"/>
+			<item value="BEACON_MAX"/>
+			<item value="Beacon_Max"/>
+			<item value="nToTalLen"/>
+			<item value="m_DataFlag"/>
+			<item value="m_UartArrayDataIndicateMsg"/>
+			<item value="m_UartArrayDataDownMsg"/>
+			<item value="CheckbsnFlag"/>
+		</list>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item key="DIALOG_X_ORIGIN" value="1135"/>
+		<item key="DIALOG_Y_ORIGIN" value="518"/>
+		<item key="DIALOG_WIDTH" value="420"/>
+		<item key="DIALOG_HEIGHT" value="511"/>
+		<item key="DIALOG_FONT_NAME" value="1|Ubuntu|11.0|0|GTK|1|"/>
+	</section>
+</section>

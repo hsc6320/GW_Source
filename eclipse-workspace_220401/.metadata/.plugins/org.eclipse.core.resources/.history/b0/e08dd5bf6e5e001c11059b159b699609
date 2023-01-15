@@ -1,0 +1,55 @@
+/*
+ * Socket.h
+ *
+ *  Created on: 2021. 11. 29.
+ *      Author: hong
+ */
+
+#ifndef SOCKET_SOCKET_H_
+#define SOCKET_SOCKET_H_
+
+#include "../pch.h"
+#include "sys/socket.h"
+#include "sys/types.h"
+#include <arpa/inet.h>
+#include "netinet/in.h"
+#include "SocketMsgQueue.h"
+#include "../MsgHandler.h"
+#include "../MsgQueue.h"
+#include "../Vector_SocketQueue.h"
+
+typedef struct recieve_data{
+	uint8_t* message;
+//	Vector<uint8_t> m_SocketMsg_vec;
+}Recieve_Data;
+
+
+class Socket {
+public:
+	Socket();
+	virtual ~Socket();
+	int* m_serv_sock;
+	Recieve_Data	m_ServerRecieveData;
+	Socket_MsgQueue* m_pSocMsgqueue;
+
+	int m_iSocketReceiveEnd;
+
+	int m_nServerMessge_End;
+	int m_ReceiveData_len;
+	void SetSocketQueue(Socket_MsgQueue* socketqueue);
+	void Socket_Init(/*int argc, char *argv[]*/);
+	void Create_Socket_Thread(int sockfd);
+	void Send_Function(void* serv_sock);
+	void Send_Message(BYTE* msg, int len);
+	int Read_Message(BYTE* msg);
+	void SetMsgHandler(MsgHandler* msgqueue);
+	void SetMsgQueue(MsgQueue* msgqueue);
+	void SetMsgHwnd(Socket* soc);
+	void Exit_Socket_Thread();
+	bool GetSocketMsg(int len);
+	int SendSocketMsgToUart(int msgtype);
+	int SendUartMsgToSocket(Vector<uint8_t> vec, int Len);
+	WORD ByteToWord(BYTE puData, BYTE puData1);
+
+};
+#endif /* SOCKET_SOCKET_H_ */

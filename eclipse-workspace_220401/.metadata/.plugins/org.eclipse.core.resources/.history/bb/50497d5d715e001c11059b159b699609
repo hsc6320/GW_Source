@@ -1,0 +1,26 @@
+/*
+ * SocketTemp.h
+ *
+ *  Created on: 2021. 12. 16.
+ *      Author: hong
+ */
+
+#ifndef SOCKET_SOCKETTEMP_H_
+#define SOCKET_SOCKETTEMP_H_
+
+#include "../pch.h"
+#include "SocketHandler.h"
+#include "Vector_queue.h"
+
+class SocketTemp {
+public:
+	SocketTemp();
+	virtual ~SocketTemp();
+
+public:
+	SocketHandler*	m_pSocketHandler;
+
+	void SetSocketHandler(SocketHandler* soc, int Len);
+};
+
+#endif /* SOCKET_SOCKETTEMP_H_ */

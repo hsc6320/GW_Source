@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<item key="LastUsedSourceTemplate" value="Default C++ source template"/>
+	<item key="LastUsedHeaderTemplate" value="Default C++ header template"/>
+	<section name="completion_proposal_size">
+		<item key="size.x" value="1087"/>
+		<item key="size.y" value="246"/>
+	</section>
+	<section name="org.eclipse.cdt.ui.text.hover.CMacroExpansionExploration">
+	</section>
+	<section name="OptionalMessageDialog.hide.">
+		<item key="askReindex.detail" value="0"/>
+	</section>
+	<section name="org.eclipse.cdt.ui.OPEN_ACTION_SELECTION_DIALOG_SECTION">
+		<item key="DIALOG_X_ORIGIN" value="122"/>
+		<item key="DIALOG_Y_ORIGIN" value="359"/>
+		<item key="DIALOG_WIDTH" value="1412"/>
+		<item key="DIALOG_HEIGHT" value="586"/>
+		<item key="DIALOG_FONT_NAME" value="1|Ubuntu|11.0|0|GTK|1|"/>
+	</section>
+	<section name="NewClassWizardPage">
+		<item key="namespaceSelected" value="false"/>
+		<item key="testFileSelected" value="false"/>
+		<item key="finalSelected" value="false"/>
+		<item key="stubImpl0" value="DEFINITION"/>
+		<item key="stubSelected0" value="true"/>
+		<item key="stubVirtual1" value="true"/>
+		<item key="stubImpl1" value="DEFINITION"/>
+		<item key="stubSelected1" value="true"/>
+		<item key="stubImpl2" value="DEFINITION"/>
+		<item key="stubSelected2" value="false"/>
+		<item key="stubImpl3" value="DEFINITION"/>
+		<item key="stubSelected3" value="false"/>
+		<item key="stubImpl4" value="DEFINITION"/>
+		<item key="stubSelected4" value="false"/>
+		<item key="stubImpl5" value="DEFINITION"/>
+		<item key="stubSelected5" value="false"/>
+	</section>
+	<section name="org.eclipse.cdt.internal.ui.wizards.classwizard.NewBaseClassSelectionDialogSettings">
+		<item key="show_namespaces" value="false"/>
+		<item key="show_classes" value="true"/>
+		<item key="show_structs" value="true"/>
+		<item key="show_typedefs" value="false"/>
+		<item key="show_enums" value="false"/>
+		<item key="show_unions" value="false"/>
+		<item key="show_functions" value="false"/>
+		<item key="show_variables" value="false"/>
+		<item key="show_enumerators" value="false"/>
+		<item key="show_macros" value="false"/>
+		<item key="show_lowlevel" value="true"/>
+		<item key="x" value="1133"/>
+		<item key="y" value="79"/>
+		<item key="width" value="372"/>
+		<item key="height" value="879"/>
+	</section>
+</section>

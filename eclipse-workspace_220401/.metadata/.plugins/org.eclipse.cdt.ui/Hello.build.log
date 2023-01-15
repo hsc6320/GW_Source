@@ -1,0 +1,15 @@
+13:33:01 **** Incremental Build of configuration Debug for project Hello ****
+make all 
+Building file: ../Hello.cpp
+Invoking: GCC C++ Compiler
+g++ -I/usr/arm-linux-gnueabi/include -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Hello.d" -MT"Hello.o" -o "Hello.o" "../Hello.cpp"
+../Hello.cpp: In function ‘int main()’:
+../Hello.cpp:15:2: error: ‘print’ was not declared in this scope; did you mean ‘printf’?
+   15 |  print("hello World\n");
+      |  ^~~~~
+      |  printf
+make: *** [subdir.mk:20: Hello.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+
+13:33:02 Build Failed. 2 errors, 0 warnings. (took 835ms)
+

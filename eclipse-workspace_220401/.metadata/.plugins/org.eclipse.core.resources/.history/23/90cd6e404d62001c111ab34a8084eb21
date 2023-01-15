@@ -1,0 +1,798 @@
+/*
+ * Main.cpp
+ *
+ *  Created on: 2021. 10. 22.
+ *      Author: hong
+ */
+
+#include "pch.h"
+#include "uart/uart.h"
+#include "MsgHandler.h"
+#include "Socket/Socket.h"
+#include "Socket/SocketHandler.h"
+#include "Socket/SocketMsgQueue.h"
+
+using namespace std;
+#define SETPANID(u8data)
+
+Socket*	m_pSocket;
+MsgHandler* m_pMsgHandler;
+UartComThread* m_MainComport;
+MsgQueue* m_pMsgQueue;
+SocketHandler*	m_pSocketHandle;
+
+
+
+PRE_DEFINE::S_PACKET	m_GetInforPacket;
+#define BUF_MAX 512
+
+//template <typename T>
+//std::map<std::string, double> pitcher_list;
+//std::list<int> lst;
+
+int nlsChecksum =0;
+int nflagRegistration_Req =0;
+int nTagCnt =0;
+int GetUartMsg();
+BYTE GetChecksum(BYTE* puData, int len);
+WORD ByteToWord(BYTE puData, BYTE puData1);
+BYTE GetMsgType(Vector<uint8_t> get_vec);
+
+#if 0
+void convrt_mac(const char *data, char *cvrt_str, int sz);
+int getMacAddress(char *mac, char *getnic);
+int getNIC();
+int getIPAddress(char *ip_addr);
+#endif
+
+int Main_Socket_Init();
+int Socket_Registration_Req();
+int Socket_Connect_Req();
+int ServiceStart_Cfm();
+int Main_SendSocketMsgToUart(int msgtype);
+int Main_ServiceStart_TagAssociation_Init();
+int UartToSocket_Coordinator_Reset_Cfm();
+void UartToSocket_TagAssociation(int i);
+int UartToSocket_Service_cfm();
+int UartToSocket_Bsnstart_Cfm();
+int Main_ByPass_SocketToUart();
+int Main_ByPass_UartToSocket();
+int UartToSocket_DownStart_Req();
+int UartToSocket_DownStart_Ack();
+int UartToSocket_DataIndication_Req();
+int UartToSocket_DataIndication_Cfm();
+int UartToSocket_InforUpdate();
+int UartToSocket_InforUpdate_Req();
+int UartToSocket_InforUpdate_Ack();
+int UartToSocket_BsnEnd_Cfm();
+uint32_t Set_WaitTimer(timer_t* timerID, uint32_t seconds);
+void PrintfHello();
+
+int Main_ServiceStart_TagAssociation_Init()
+{
+	int msg =0, loopEnd =0;
+	printf("Main_ServiceStart_TagAssociation_Init\n");
+
+	while(1) {
+		switch(msg) {
+			case 0:
+				Socket_Registration_Req();
+				msg++;
+				break;
+			case 1:
+				if(m_pSocket->m_iSocketReceiveEnd) {
+					m_pSocket->m_iSocketReceiveEnd =0;
+					m_pSocketHandle->GetServerID(0x01);
+					msg++;
+					break;
+				}
+				break;
+			case 2:
+				Socket_Connect_Req();
+				msg++;
+				break;
+			case 3:
+				if(m_pSocket->m_iSocketReceiveEnd) {
+					if(m_pSocket->m_SocketMsg_vec[MSGTYPE] == CONNECT_CONFIRM) {
+						m_pSocket->m_iSocketReceiveEnd =0;
+					//	printf("main switch 3-1 SERVICESTART_msgtype: 0x%x\n", pMallocObject.m_pSocket->m_SocketMsg_vec[MSGTYPE]);
+						break;
+					}
+					else if(m_pSocket->m_SocketMsg_vec[MSGTYPE] == SERVICESTART_REQUEST) {
+						Main_SendSocketMsgToUart(m_pSocket->m_SocketMsg_vec[MSGTYPE]);
+						printf("main switch 3-2 SERVICESTART_REQUEST 0x%x\n", m_pSocket->m_SocketMsg_vec[MSGTYPE]);
+						msg++;
+					}
+				}
+				break;
+			case 4:
+				if(ServiceStart_Cfm()) {
+					msg++;
+					break;
+				}
+				break;
+			default :
+				m_pSocket->m_iBypassSocketToUart =0;
+				loopEnd =1;
+				break;
+
+		}
+		if(loopEnd) {
+		//	m_MainComport->m_grun=1;
+			break;
+		}
+	}
+	printf("Main_ServiceStart_TagAssociation_Init() END \n");
+
+	return 1;
+}
+
+int Main_ByPass_UartToSocket()
+{
+	int msg = 0, val =0;;
+	timer_t* timerID;
+
+	if(GetUartMsg())
+	{
+		printf("Main_ByPass_UartToSocket()\n");
+		msg = m_GetInforPacket.header.type;
+
+		switch(msg)
+		{
+		case SERVICESTART_CONFIRM:
+			UartToSocket_Service_cfm();
+			break;
+		case TAG_ASSOCIATION:
+			val = Set_WaitTimer(timerID, 100);
+			printf("timer val : %d\n", val);
+			//UartToSocket_TagAssociation();
+			break;
+		case COORDINATOR_RESET_CONFIRM:
+			UartToSocket_Coordinator_Reset_Cfm();
+			break;
+		case BSN_START_ACK:
+			UartToSocket_Bsnstart_Cfm();
+			break;
+		case BSN_DATA_END_ACK:
+			UartToSocket_BsnEnd_Cfm();
+			break;
+		case DOWNLOAD_START_REQ:
+			UartToSocket_DownStart_Req();
+			break;
+		case DOWNLOAD_START_ACK:
+			UartToSocket_DownStart_Ack();
+			break;
+		case DATAINDICATION_REQ:
+			UartToSocket_DataIndication_Req();
+			break;
+		case DATAINDICATION_ACK:
+			UartToSocket_DataIndication_Cfm();
+			break;
+		case TAG_INFOR_UPDATE:
+			UartToSocket_InforUpdate();
+			break;
+		case TAG_INFOR_UPDATE_REQ:
+			UartToSocket_InforUpdate_Req();
+			break;
+		case TAG_INFOR_UPDATE_ACK:
+			UartToSocket_InforUpdate_Ack();
+			break;
+
+		}
+	}
+
+	return 1;
+}
+int Main_ByPass_SocketToUart()
+{
+
+	if(m_pSocket->m_iBypassSocketToUart && m_pSocket->m_iSocketReceiveEnd) {
+
+		printf("Main_ByPass_SocketToUart() : \n");
+		for(int i=0; i<m_pSocket->m_ReceiveData_len; i++) {
+			printf("%x ", m_pSocket->m_p8uData[i]);
+		}
+		printf("\n");
+		m_pMsgHandler->BypassSocketToUart(m_pSocket->m_p8uData,	m_pSocket->m_ReceiveData_len, m_pSocket->m_SocketMsg_vec[MSGTYPE]);
+
+		m_pSocket->m_iBypassSocketToUart =0;
+		m_pSocket->m_iSocketReceiveEnd =0;
+
+		delete[] m_pSocket->m_p8uData;
+		m_pSocket->m_p8uData = NULL;
+
+	}
+	//printf("Main_ByPass_SocketToUart() End\n");
+	return 1;
+}
+
+int Main_SendSocketMsgToUart(int msgtype)
+{
+	if(!msgtype) {
+		printf("msgtype %d return\n", msgtype);
+		return 0;
+	}
+	printf("Main_SendSocketMsgToUart() : ");
+
+	if(/*m_pSocket->m_iBypassSocketToUart ||*/ m_pSocket->m_iSocketReceiveEnd) {
+		m_pSocket->m_iSocketReceiveEnd =0;
+
+		for(int i=0; i<m_pSocket->m_ReceiveData_len; i++) {
+			printf("%x ", m_pSocket->m_p8uData[i]);
+		}
+		printf("\n");
+		m_pMsgHandler->BypassSocketToUart(m_pSocket->m_p8uData, m_pSocket->m_ReceiveData_len, msgtype);
+			delete[] m_pSocket->m_p8uData;
+			m_pSocket->m_p8uData = NULL;
+	}
+
+	return 1;
+}
+
+int Main_Socket_Init()
+{
+	int Ret =0;
+
+	m_pMsgHandler->ServiceIdle();
+
+	while(1) {
+		if(m_pMsgQueue->m_bReadEnd_UartMessage) {
+			if(GetUartMsg()) {
+				m_pSocket->Socket_Init();
+				m_pSocket->bWorkingThread = 1;
+				m_pMsgQueue->m_bReadEnd_UartMessage =0;
+				Ret =1;
+				break;
+			}
+			else {
+				printf("main server init fail\n");
+				m_pMsgQueue->m_bReadEnd_UartMessage =0;
+				break;
+			}
+		}
+	}
+	return Ret;
+}
+
+BYTE GetMsgType(Vector<uint8_t> get_vec)
+{
+	return get_vec[MSGTYPE];
+}
+
+int UartToSocket_Service_cfm()
+{
+	printf("Service_Start()\n");
+		m_pSocketHandle->SendMessage(SERVICESTART_CONFIRM, m_GetInforPacket);
+		m_pMsgQueue->m_bReadEnd_UartMessage =0;
+
+	return 1;
+}
+
+int UartToSocket_Coordinator_Reset_Cfm()
+{
+
+	printf("UartToSocket_Coordinator_Reset_Cfm()\n");
+	m_pSocketHandle->SendMessage(TAG_ASSOCIATION, m_GetInforPacket);
+	m_pMsgQueue->m_bReadEnd_UartMessage =0;
+
+	return 1;
+}
+
+void UartToSocket_TagAssociation(int i)
+{
+	int status;
+
+	printf("TagAssociation() TagID : 0x%x\n", m_GetInforPacket.header.sAddr);
+	m_pSocketHandle->SendMessage(TAG_ASSOCIATION, m_GetInforPacket);
+	m_pMsgQueue->m_bReadEnd_UartMessage =0;
+	return ;
+}
+
+int UartToSocket_Bsnstart_Cfm()
+{
+	printf("UartToSocket_Bsnstart_Cfm()\n");
+	m_pSocketHandle->SendMessage(BSN_START_ACK, m_GetInforPacket);
+	m_pMsgQueue->m_bReadEnd_UartMessage =0;
+
+	return 1;
+}
+
+int UartToSocket_BsnEnd_Cfm()
+{
+	printf("UartToSocket_BsnEnd_Cfm()\n");
+	m_pSocketHandle->SendMessage(BSN_DATA_END_ACK, m_GetInforPacket);
+	m_pMsgQueue->m_bReadEnd_UartMessage =0;
+
+	return 1;
+}
+
+int UartToSocket_DownStart_Req()
+{
+	printf("UartToSocket_DownStart_Req()\n");
+	m_pSocketHandle->SendMessage(DOWNLOAD_START_REQ, m_GetInforPacket);
+	m_pMsgQueue->m_bReadEnd_UartMessage =0;
+
+	return 1;
+}
+
+int UartToSocket_DownStart_Ack()
+{
+	printf("UartToSocket_DownStart_Ack()\n");
+	m_pSocketHandle->SendMessage(DOWNLOAD_START_ACK, m_GetInforPacket);
+	m_pMsgQueue->m_bReadEnd_UartMessage =0;
+
+	return 1;
+}
+
+int UartToSocket_DataIndication_Req()
+{
+	printf("UartToSocket_DataIndication_Req()\n");
+	m_pSocketHandle->SendMessage(DATAINDICATION_REQ, m_GetInforPacket);
+	m_pMsgQueue->m_bReadEnd_UartMessage =0;
+
+	return 1;
+}
+
+int UartToSocket_DataIndication_Cfm()
+{
+	printf("UartToSocket_DataIndication_Cfm()\n");
+	m_pSocketHandle->SendMessage(DATAINDICATION_ACK, m_GetInforPacket);
+	m_pMsgQueue->m_bReadEnd_UartMessage =0;
+
+	return 1;
+}
+
+int UartToSocket_InforUpdate()
+{
+	printf("UartToSocket_InforUpdate()\n");
+	m_pSocketHandle->SendMessage(TAG_INFOR_UPDATE, m_GetInforPacket);
+	m_pMsgQueue->m_bReadEnd_UartMessage =0;
+
+	return 1;
+}
+
+int UartToSocket_InforUpdate_Req()
+{
+	printf("UartToSocket_InforUpdate_Req()\n");
+	m_pSocketHandle->SendMessage(TAG_INFOR_UPDATE_REQ, m_GetInforPacket);
+	m_pMsgQueue->m_bReadEnd_UartMessage =0;
+
+	return 1;
+}
+
+int UartToSocket_InforUpdate_Ack()
+{
+	printf("UartToSocket_InforUpdate_Ack()\n");
+	m_pSocketHandle->SendMessage(TAG_INFOR_UPDATE_ACK, m_GetInforPacket);
+	m_pMsgQueue->m_bReadEnd_UartMessage =0;
+
+	return 1;
+}
+
+int ServiceStart_Cfm()
+{
+	int Ret =0;
+
+	while(m_pMsgQueue->m_bReadEnd_UartMessage) {
+		if(GetUartMsg()) {
+			m_pSocketHandle->SendMessage(SERVICESTART_CONFIRM, m_GetInforPacket);
+			m_pMsgQueue->m_bReadEnd_UartMessage =0;
+			Ret =1;
+			break;
+		}
+		else {
+			printf("main ServiceStart_Cfm\n");
+			m_pMsgQueue->m_bReadEnd_UartMessage =0;
+			break;
+		}
+	}
+
+	return Ret;
+}
+
+int Socket_Registration_Req()
+{
+	int status;
+	m_pSocketHandle->SendMessage(REGISTRATION_REQUEST, m_GetInforPacket);
+	printf("main_Socket_Registration_Req()\n");
+	wait(&status);
+
+	return 1;
+}
+
+int Socket_Connect_Req()
+{
+	m_pSocketHandle->SendMessage(CONNECT_REQUEST, m_GetInforPacket);
+	printf("main_Socket_Connect_Req(), bWorkingThread : %d\n", m_pSocket->bWorkingThread);
+
+	return 1;
+}
+
+int GetUartMsg()
+{
+	Vector<uint8_t> vec;// = m_pMsgQueue->m_vcemsg.m_UartMsg_vec;
+	PRE_DEFINE::S_PACKET	Getpacket;
+	int size =0;
+	int ipos =0;
+	int loopEnd =0;
+
+	size = m_pMsgQueue->m_vcemsg.m_UartMsg_vec.size();
+	if(size <= 0)	{
+	//	printf("GetUartMsg() return 0\n");
+		return 0;
+	}
+	printf("Main GetUartMsg()\n");
+	printf("\nMain GetUartMsg Data Size : %d\n", size);
+
+	for(int i =0; i< size; i++) {
+		vec.push_back(m_pMsgQueue->m_vcemsg.m_UartMsg_vec[i]);
+	//	printf("%x ", vec[i]);
+	}
+	//printf("\n");
+	for(int i =0; i< size; i++) {
+		m_pMsgQueue->m_vcemsg.m_UartMsg_vec.remove(i);
+	}
+
+	while(!loopEnd) {
+		switch(ipos)
+		{
+		case 0:
+			if(vec[MSG_STX] != STX) {
+				printf("\nSTX error %x\n", vec[MSG_STX]);
+				return 0;
+			}
+			else {
+				Getpacket.header.stx = vec[MSG_STX];
+				printf("STX : %x ", Getpacket.header.stx);
+				ipos++;
+			}
+			break;
+		case 1:
+			Getpacket.header.panID = ByteToWord(vec[MSG_PANIDONE], vec[MSG_PANIDZERO]);
+			printf("panID [%x], ", Getpacket.header.panID);
+			ipos = ipos +2;
+			break;
+		case 3:
+			Getpacket.header.dAddr = ByteToWord(vec[MSG_DADDRZERO], vec[MSG_DADDRONE]);
+			printf("Daddr[%x] , ",Getpacket.header.dAddr);
+			ipos = ipos +2;
+			break;
+		case 5:
+			Getpacket.header.sAddr = ByteToWord(vec[MSG_SADDRZERO], vec[MSG_SADDRONE]);
+			printf("Saddr[%x], ", Getpacket.header.sAddr);
+			ipos = ipos +2;
+			break;
+		case 7:
+			Getpacket.header.type = vec[MSGTYPE];
+			printf("MsgType[%x], ", Getpacket.header.type);
+			ipos++;
+			break;
+		case 8:
+			Getpacket.header.length = ByteToWord(vec[MSG_LENGTHONE], vec[MSG_LENGTHZERO]);
+			printf("DataLen[%x], ", Getpacket.header.length);
+			ipos = ipos +2;
+			break;
+		case 10:
+			Getpacket.pu8Data = new BYTE[Getpacket.header.length];
+			for(int i =0; i< Getpacket.header.length; i++) {
+				Getpacket.pu8Data[i] = vec[MSG_LENGTHONE+1+i];
+				printf("pu8Data [%x] ", Getpacket.pu8Data[i]);
+			}
+			ipos = ipos + (int)Getpacket.header.length;
+			break;
+		default:
+			if(!nlsChecksum) {
+				Getpacket.tail.checksum = vec[ipos];
+				printf("checksum Val :%x ", Getpacket.tail.checksum);
+				nlsChecksum =1;
+				ipos++;
+				break;
+			}
+			else {
+				Getpacket.tail.ext[0] = vec[ipos];
+				Getpacket.tail.ext[1] = vec[++ipos];
+				Getpacket.tail.ext[2] = vec[++ipos];
+
+				if((Getpacket.tail.ext[0] != 0xA5) || (Getpacket.tail.ext[1] != 0x5A) || (Getpacket.tail.ext[2] != 0x7E)) {
+					printf("etx error return 0\n");
+					return 0;
+				}
+				else {
+					printf("etx : %x %x %x\n", Getpacket.tail.ext[0], Getpacket.tail.ext[1], Getpacket.tail.ext[2]);
+					loopEnd =1;
+					nlsChecksum =0;
+
+					Getpacket.header.DataLength = vec.size();
+					break;
+				}
+			}
+
+		}		//END SWITCH
+	}		//END WHILE
+	m_GetInforPacket = Getpacket;
+
+	if(Getpacket.header.type == 0x02) {
+		m_pSocketHandle->GetPanID(Getpacket.header.sAddr);
+	}
+	if(Getpacket.header.type == 0x11) {
+		m_pSocketHandle->GetPanID(Getpacket.header.panID);
+	}
+
+	printf("Main GetUartMsg return 1\n");
+	return 1;
+}
+
+WORD ByteToWord(BYTE puData, BYTE puData1)
+{
+	WORD p16Tempdata_HIGH, p16Tempdata_LOW;
+
+	p16Tempdata_HIGH = (puData << 8);
+	p16Tempdata_LOW = puData1;
+
+	return p16Tempdata_HIGH|p16Tempdata_LOW;
+}
+
+//m_pSocketHandle->SendMessage(TAG_ASSOCIATION, m_GetInforPacket);
+
+uint32_t Set_WaitTimer(timer_t* timerID, uint32_t seconds)
+{
+#if 0
+	struct itimerval newer, old;
+
+	newer.it_interval.tv_sec =0;
+	newer.it_interval.tv_usec =0;
+	newer.it_value.tv_sec =0;
+	newer.it_value.tv_usec = seconds*1000;
+
+	if(setitimer(ITIMER_REAL, &newer, &old) == -1) {
+		printf("Failed to set virtual timer!!\n");
+		return 0;
+	}
+	else {
+		return old.it_value.tv_usec =0;
+		printf("timer\n\n");
+	}
+
+
+	struct itimerspec Set_timerVal;
+
+	Set_timerVal.it_interval.tv_sec = 0;
+	Set_timerVal.it_interval.tv_nsec = 0;
+
+	Set_timerVal.it_value.tv_sec = 0;
+	Set_timerVal.it_value.tv_nsec = seconds*1000;
+
+	timer_settime(*timerID, 0, &Set_timerVal, NULL);
+#endif
+
+	struct itimerval Set_timerVal, Get_timerVal;
+	sigset(SIGALRM, *UartToSocket_TagAssociation);
+
+	Set_timerVal.it_interval.tv_sec = 0;
+	Set_timerVal.it_interval.tv_usec = seconds;
+
+	Set_timerVal.it_value.tv_sec = 0;
+	Set_timerVal.it_value.tv_usec = seconds*1000;
+
+	if(setitimer(/*CLOCK_REALTIME*/ITIMER_REAL, &Set_timerVal, NULL) == -1) {
+		printf("Failed to set virtual timer!!\n");
+		return 0;
+	}
+
+	while(getitimer(/*CLOCK_REALTIME*/ITIMER_REAL, &Get_timerVal) != -1) {
+		printf("get_time_val.it_value.tv_sec : %d\n", Get_timerVal.it_interval.tv_usec);
+
+		if(Get_timerVal.it_value.tv_usec == (Set_timerVal.it_interval.tv_usec-1000)) {
+			signal(SIGALRM, SIG_IGN);
+			printf("Cancel Timer\n");
+		}
+		sleep(1);
+	}
+	return 1;
+}
+
+void PrintfHello()
+{
+	printf("Hello World!!!! !!!\n");
+}
+
+BYTE GetChecksum(BYTE* puData, int len)
+{
+	uint8_t sum =0;
+
+	len += (sizeof(PRE_DEFINE::S_HEADER)-1);
+	printf("sizeof(%d) len %d\n",sizeof(PRE_DEFINE::S_HEADER), len);
+	printf("chceck sum () len %d \n", len);
+	for(;  0 < len; len--) {
+	//	printf("[%d] %x\n", len, *puData);
+		sum+= *(puData++);
+		printf("sum : %x\n", sum);
+	}
+	return sum;
+}
+
+int main(int argc, char *argv[])
+{
+
+	m_MainComport->uart_init();
+	m_MainComport->Create_Uart_thread();
+
+	if(Main_Socket_Init() != 1) return 0;
+
+	Main_ServiceStart_TagAssociation_Init();
+
+	while(1)
+	{
+		Main_ByPass_SocketToUart();
+
+		Main_ByPass_UartToSocket();
+	}
+
+	return 0;
+}
+
+
+void __attribute__((constructor)) NewObject()
+{
+	m_MainComport = new UartComThread;
+	m_pMsgQueue = new MsgQueue;
+	m_pMsgHandler = new MsgHandler;
+	m_pSocket = new Socket;
+	m_pSocketHandle = new SocketHandler;
+
+	m_MainComport->SetUartComm(m_MainComport);
+	m_MainComport->SetMsgQueue(m_pMsgQueue);
+	m_pMsgHandler->SetHandle(m_MainComport);
+
+	m_pSocket->SetMsgHwnd(m_pSocket);
+	m_pSocket->SetMsgHandler(m_pMsgHandler);
+	m_pSocket->SetMsgQueue(m_pMsgQueue);
+
+	m_pSocketHandle->SetSocketHwnd(m_pSocket);
+
+	printf("NewObject\n");
+}
+
+void __attribute__((destructor)) DeleteObject()
+{
+	m_MainComport->Uart_Close(m_MainComport->m_uartd);
+	printf("Main Function Exit\n uart Close\n");
+
+	m_pSocket->Exit_Socket_Thread();
+
+	delete m_MainComport;
+	delete m_pMsgQueue;
+	delete m_pMsgHandler;
+	delete m_pSocket;
+	delete m_pSocketHandle;
+
+	printf("DeleteObject\n");
+	printf("Close\n");
+}
+
+
+#if 0
+int getIPAddress(char *ip_addr)
+{
+	int sock = *m_pSocket->m_ServerRecieveData.serv_sock;
+	struct ifreq ifr;
+	struct sockaddr_in *sin;
+
+	if (sock < 0) {
+		printf("getIPAddress() return 0\n");
+	//	dp(4, "socket");
+		return 0;
+	}
+
+	strcpy(ifr.ifr_name, "wlan0");
+	if (ioctl(sock, SIOCGIFADDR, &ifr)< 0) {
+		printf("getIPAddress() return 0\n");
+	//	dp(4, "ioctl() - get ip");
+		close(sock);
+		return 0;
+	}
+
+	sin = (struct sockaddr_in*)&ifr.ifr_addr;
+
+	strcpy(ip_addr, inet_ntoa(sin->sin_addr));
+
+	return 1;
+}
+
+
+int getMacAddress(char *mac, char *getnic)
+{
+
+	int sock = *m_pSocket->m_ServerRecieveData.serv_sock;
+	struct ifreq ifr;
+	char mac_adr[18] = {0,};
+	//Recieve_Data
+
+	//sock = socket(AF_INET, SOCK_STREAM, 0);
+	printf("getMacAddress sock : %d\n", sock);
+	if (sock < 0) {
+		printf("getMacAddress() return 0\n");
+	//	dp(4, "socket");
+		return 0;
+	}
+
+	strcpy(ifr.ifr_name, getnic);
+
+	if (ioctl(sock, SIOCGIFHWADDR, &ifr)< 0) {
+	//	dp(4, "ioctl() - get mac");
+		printf("getMacAddress() return 0\n");
+		close(sock);
+		return 0;
+	}
+	//convert format ex) 00:00:00:00:00:00
+
+	convrt_mac( ether_ntoa((struct ether_addr *)(ifr.ifr_hwaddr.sa_data)), mac_adr, sizeof(mac_adr) -1 );
+	strcpy(mac, mac_adr);
+
+	printf("Mac Address : %s \n", mac);
+	return 1;
+
+}
+
+int getNIC() //eth0와 같은 NIC을 가져온다.
+{
+	int sock = m_pSocket->m_ServerRecieveData.m_serv_sock;
+	char *g_NIC = NULL;
+	char *ipa = NULL;
+	struct ifconf ifconf;
+	struct ifreq ifr[50];
+	int ifs;
+	int i;
+
+	if (sock < 0) {
+		//dp(4, "socket");
+		return 0;
+	}
+
+	ifconf.ifc_buf = (char *) ifr;
+	ifconf.ifc_len = sizeof ifr;
+
+	if (ioctl(sock, SIOCGIFCONF, &ifconf) == -1) {
+//		dp(4, "ioctl");
+		return 0;
+	}
+
+	ifs = ifconf.ifc_len / sizeof(ifr[0]);
+//printf("interfaces = %d:\n", ifs);
+
+	for (i = 0; i < ifs; i++) {
+		if(strcmp(ifr[i].ifr_name, "lo") != 0) { //'lo'를 제외한 나머지 NIC을 가져온다.
+			strcpy(g_NIC, ifr[i].ifr_name);
+			break;
+		}
+	}
+	printf("Get NIC [%s]", g_NIC);
+	getMacAddress(ipa, g_NIC);
+
+	return 1;
+
+}
+
+void convrt_mac(const char *data, char *cvrt_str, int sz)
+{
+
+     char buf[128] = {0,};
+     char t_buf[8];
+     char *stp = strtok( (char *)data , ":" );
+     int temp=0;
+
+     do {
+
+          memset( t_buf, 0, sizeof(t_buf) );
+          sscanf( stp, "%x", &temp );
+          snprintf( t_buf, sizeof(t_buf)-1, "%02X", temp );
+          strncat( buf, t_buf, sizeof(buf)-1 );
+          strncat( buf, ":", sizeof(buf)-1 );
+
+     } while( (stp = strtok( NULL , ":" )) != NULL );
+
+     buf[strlen(buf) -1] = '\0';
+     strncpy( cvrt_str, buf, sz );
+
+}
+#endif
