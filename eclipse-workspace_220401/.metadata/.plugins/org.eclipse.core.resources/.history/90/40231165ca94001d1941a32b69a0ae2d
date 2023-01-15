@@ -83,12 +83,12 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 
 				m_nMapParity++;
 				if(Redown) {
-					printf("MsgQueue Redown m_nMapParity : %d m_MsgQueueDataAcknowledge: %d\n", m_nMapParity, m_MsgQueueDataAcknowledge.at(0));
+					printf("MsgQueue Redown m_DataAckCnt : %d m_MsgQueueDataAcknowledge: %d\n", m_DataAckCnt, m_MsgQueueDataAcknowledge.at(0));
 					m_ArrayDataAcknowledge.push_back(m_MsgQueueDataAcknowledge);
 			//		m_ArrayDataAcknowledge[(int)(ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO]))][0] = m_MsgQueueDataAcknowledge.at(0);
 			//		printf("m_ArrayDataAcknowledge[%d][0]: %d\n", (int)(ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO])), m_ArrayDataAcknowledge[(int)(ByteToWord(u8Data[MSG_SADDRONE],
 			//				u8Data[MSG_SADDRZERO]))][0]);
-					for(int i=0; i<m_nMapParity; i++) {
+					for(int i=0; i<m_DataAckCnt; i++) {
 						for(int j=0; j<(int)m_ArrayDataAcknowledge[i].size(); i++) {
 							printf("%x ", m_ArrayDataAcknowledge[i][j]);
 						}
@@ -162,7 +162,6 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 			}
 		}
 		else if( (u8Data[MSGTYPE] == 0) && (u8Data[MSGTYPE] == BSN_DATA_END_ACK) ) {
-			Redown =0;
 			return 1;
 		}
 		else {

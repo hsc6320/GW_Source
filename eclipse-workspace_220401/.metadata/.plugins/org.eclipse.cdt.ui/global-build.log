@@ -1,4 +1,4 @@
-23:12:23 **** Build of configuration Debug for project Demo ****
+23:51:27 **** Build of configuration Debug for project Demo ****
 make all 
 Building file: ../uart/uart.cpp
 Invoking: Cross G++ Compiler
@@ -27,8 +27,8 @@ Finished building: ../Socket/socket.cpp
 Building file: ../Main.cpp
 Invoking: Cross G++ Compiler
 arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
-../Main.cpp: In function ‘int Main_Check_TagVal2(int*, int*)’:
-../Main.cpp:688:7: warning: variable ‘temp2’ set but not used [-Wunused-but-set-variable]
+../Main.cpp: In function ‘int Main_Check_TagPassFail2(int*, int*)’:
+../Main.cpp:747:7: warning: variable ‘temp2’ set but not used [-Wunused-but-set-variable]
   BYTE temp2 =0;
        ^~~~~
 Finished building: ../Main.cpp
@@ -48,6 +48,3 @@ Invoking: Cross G++ Linker
 arm-linux-gnueabihf-g++  -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
 Finished building target: Demo
  
-23:12:46 **** Incremental Build of configuration Debug for project Demo ****
-make all 
-make: 'all'을(를) 위해 할 일이 없습니다.
