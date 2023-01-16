@@ -440,8 +440,10 @@ int Main_ByPass_SocketToUart()
 					if(AckFail_Redown) {
 						nTemp2BeaconCnt++;
 						printf("AckFail_Redown nTemp2BeaconCnt : %d\n", nTemp2BeaconCnt);
-						if(nTemp2BeaconCnt > 2) {
+						if(nTemp2BeaconCnt > 3) {
+							th_delay(3);
 							Main_Service_Stop();
+							break;
 						}
 				//		if(bDataAckFlag) {
 				//			Main_MsgQueue_Sort_dataAck(0);
@@ -560,6 +562,7 @@ void Main_Service_Stop()
 	m_pMsgQueue->m_MsgQueueArrayDataAcknowledge.clear();
 	m_pMsgQueue->m_MsgQueueDataAcknowledge.clear();
 	m_pMsgQueue->m_nMapParity =0;
+	m_pMsgQueue->Redown =0;
 	m_pMsgQueue->Map_dataAcknowParityCheck.clear();
 	m_pMsgQueue->m_ArrayDataAcknowledge.clear();
 
