@@ -525,58 +525,26 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 				}
 
 				if(m_SocketQueue_vec[MSGTYPE] == DOWNLOAD_START_REQ) {
-					/*for(int i=0; i<DataLen; i++) {
-						printf("%x ", p8udata[i]);
-					}
-					printf("\n m_nSocketArrayDataDownCnt [%d]\n", m_nSocketArrayDataDownCnt);*/
 					m_SocketArrayDataDownMsg.push_back(m_SocketQueue_vec);
+					
+					m_SocketArrayDataDownMsg.erase(unique(m_SocketArrayDataDownMsg.begin(), m_SocketArrayDataDownMsg.end()),
+															m_SocketArrayDataDownMsg.end()); 	//Delete overlap
 
-					/*printf("m_SocketQueue_vec : ");
-					printf("[ ");
-					for(int i=0; i<DataLen; i++) {
-						printf("%x ", m_SocketArrayDataDownMsg[m_nSocketArrayDataDownCnt].at(i));
-					}
-					printf(" ]\n");*/
+				
 					m_pSocMsgqueue->DownLoad_MSG_Start_ACK(p8udata);
 					Send_Message(p8udata, 15);
 					m_nSocketArrayDataDownCnt++;
 				}
 				else if(m_SocketQueue_vec[MSGTYPE] == DATAINDICATION_REQ) {
-				/*	for(int i=0; i<DataLen; i++) {
-						printf("%x ", p8udata[i]);
-					}
-					printf("\n m_nSocketArrayDataIndicateCnt [%d]\n", m_nSocketArrayDataIndicateCnt);*/
 					m_SocketArrayDataIndicateMsg.push_back(m_SocketQueue_vec);
 
-				/*	printf("m_SocketQueue_vec : ");
-					printf("[ ");
-					for(int i=0; i<DataLen; i++) {
-						printf("%x ", m_SocketArrayDataIndicateMsg[m_nSocketArrayDataIndicateCnt].at(i));
-					}
-					printf(" ]\n");*/
+					m_SocketArrayDataIndicateMsg.erase(unique(m_SocketArrayDataIndicateMsg.begin(), m_SocketArrayDataIndicateMsg.end()),
+															m_SocketArrayDataIndicateMsg.end()); 	//Delete overlap
+															
 					m_pSocMsgqueue->DataIndication_MSG_Start_ACK(p8udata);
 					Send_Message(p8udata, 17);
 					m_nSocketArrayDataIndicateCnt++;
-				}
-
-			/*	if(m_nSocketArrayDataDownCnt == 11) {
-					for(int j=0; j<m_nSocketArrayDataDownCnt; j++) {
-						printf("[%d] : ", j);
-						for(int i=0; i<(int)m_SocketQueue_vec.size(); i++) {
-							printf("%x ", m_SocketArrayDataDownMsg[j].at(i));
-						}
-						printf("\n");
-					}
-				}*/
-		/*		for(int i =0; i < m_nSocketArrayDataDownCnt; i++) {
-					printf("<<<<<[%d]>>>>>>\n",m_SocketArrayDataDownMsg[i].size());
-
-				}
-
-				for(int i =0; i < m_nSocketArrayDataIndicateCnt; i++) {
-					printf("<<<<<[%d]>>>>>>\n",m_SocketArrayDataIndicateMsg[i].size());
-
-				}*/
+				}		
 			}
 		}
 		else if ((p8udata[MSGTYPE] == COORDINATOR_RESET_REQ) || (p8udata[MSGTYPE] == TAG_INFOR_UPDATE_REQ) || (p8udata[MSGTYPE] == MULTI_GATEWAY_SCAN_REQ)) {

@@ -50,7 +50,7 @@ public:
 	int m_nUartArrayReDataIndicateCnt;
 	int m_nDownloadedSuccessCnt;
 	void SetHandle(UartComThread* msg);
-	void SetSocketArray(std::vector<std::vector<BYTE>> DataDownmsg, std::vector<std::vector<BYTE>> DataIndimsg, int Downcnt, int Indicnt, std::map<std::vector<BYTE>, int > MapAck);
+	void SetSocketArray(std::vector<std::vector<BYTE>> DataDownmsg, std::vector<std::vector<BYTE>> DataIndimsg);
 	void SetMapValueArray(std::vector<std::vector<BYTE>> vec, int Len);
 	void ServiceIdle();
 	int ServiceStart();

@@ -56,7 +56,7 @@ static void *uart_Rx_Thread(void *param)
 	uint8_t* rx_sto2 = (uint8_t *)malloc(sizeof(uint8_t)*1024);
 	int sto_count2 =0;
 
-	while(1/*pComm->m_grun*/) {
+	while(1) {
 		if(pComm->Ready_to_Read(uartd,5)) {
 			printf("\n***************uart_Rx_Thread uart *******************\n");
 
@@ -64,7 +64,6 @@ static void *uart_Rx_Thread(void *param)
 			len = pComm->Uart_Read(uartd, rx2, 1024);
 			pthread_mutex_unlock(&ctx->mutex);
 
-			printf("Read Len : %d\n", len);
 			nToTalLen += len;
 			if((len < 15) && (underflowcnt == 0) ) {
 				printf("Read Buffer underflow... Retry\n");
@@ -404,12 +403,8 @@ int UartComThread::Uart_Read(int uartd, uint8_t* data, int size)
 	uart_ctx_t* ctx = (uart_ctx_t *)uartd;
 
 	if(!ctx || ctx->fd <= 0 || !data || size <= 0) return 0;
-
-	printf("Uart_Read()");
-	//pthread_mutex_lock(&ctx->mutex);
 	readlen = read(ctx->fd, data, size*sizeof(uint8_t));
-	//pthread_mutex_unlock(&ctx->mutex);
-	printf(" End \n");
+
 	iTimerFlag =1;
 	return readlen;
 }

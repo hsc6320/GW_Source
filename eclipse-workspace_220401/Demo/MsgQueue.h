@@ -72,6 +72,8 @@ public:
 	int uart_DelaySend();
 	WORD ByteToWord(BYTE puData, BYTE puData1);
 	bool PutByte(uint8_t* b, int len);
+	int DataSort();
+	void GetDataDown(int cnt);
 
 
 };

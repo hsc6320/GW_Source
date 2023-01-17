@@ -13,6 +13,7 @@ using namespace std;
 int m_uiPos =0;
 int nLengthCnt =0;
 int nDatalength =0;
+int nDataDown =0;
 BYTE m_u8SendData[1024];
 
 std::vector<uint8_t*> vec;
@@ -50,25 +51,25 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 
 	if(u8Data[MSG_STX] == STX) {
 		if(u8Data[MSGTYPE] == DATA_ACKNOWLEDGEMENT) {
+			int nCount =0;
 			m_MsgQueueDataAcknowledge.clear();
-			/*for(int i=0; i<len; i++) {
-				if(i == MSG_SADDRZERO) {
-					m_MsgQueueDataAcknowledge.push_back(ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO]));
-					i++;
-					continue;
-				}
-				m_MsgQueueDataAcknowledge.push_back(u8Data[i]);
-			}*/
-			//m_MsgQueueDataAcknowledge.push_back(ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO]));
-
+			
 			if(u8Data[MSG_ACKNOWLEDGE_STATUS] == PAYLOAD_STATUS_SUCCESS) {
 				Cnt = m_nMapParity;
 				for(int i=0; i< Cnt; i++) {
 					for(int j=0; j< (int)m_MsgQueueArrayDataAcknowledge[i].size(); j++) {
 					//	printf("m_nMapParity Overlap Parity %x , %x\n", m_MsgQueueArrayDataAcknowledge[i][j], ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO]));
-						if(m_MsgQueueArrayDataAcknowledge[i][j] == (BYTE)(ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO])) ) {
-							printf("m_nMapParity Overlap Parity [%d][%d]%x == %x\n", i, j, m_MsgQueueArrayDataAcknowledge[i][j], ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO]));
-							return 0;
+						if( !Redown ) {
+							if(m_MsgQueueArrayDataAcknowledge[i][j] == (BYTE)(ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO])) ) {
+								printf("m_nMapParity Overlap Parity [%d][%d]%x == %x\n", i, j, m_MsgQueueArrayDataAcknowledge[i][j], ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO]));
+								return 0;
+							}
+						}
+						else {								
+							if(m_ArrayDataAcknowledge[i][j] == (BYTE)(ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO])) ) {
+								printf("m_ArrayDataAcknowledge m_nMapParity Overlap Parity [%d][%d]%x == %x\n", i, j, m_ArrayDataAcknowledge[i][j], ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO]));
+								return 0;
+							}
 						}
 					}
 				}
@@ -76,28 +77,20 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 				m_MsgQueueDataAcknowledge.push_back(ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO]));
 				m_MsgQueueArrayDataAcknowledge.push_back(m_MsgQueueDataAcknowledge);
 
+				sort(m_MsgQueueArrayDataAcknowledge.begin(), m_MsgQueueArrayDataAcknowledge.end());
+
 				printf("DataAck TagID : ");
 				printf("%x\n",(BYTE)(ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO])) );
 
 
-
-				m_nMapParity++;
 				if(Redown) {
 					printf("MsgQueue Redown m_nMapParity : %d m_MsgQueueDataAcknowledge: %d\n", m_nMapParity, m_MsgQueueDataAcknowledge.at(0));
-					m_ArrayDataAcknowledge.push_back(m_MsgQueueDataAcknowledge);
-			//		m_ArrayDataAcknowledge[(int)(ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO]))][0] = m_MsgQueueDataAcknowledge.at(0);
-			//		printf("m_ArrayDataAcknowledge[%d][0]: %d\n", (int)(ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO])), m_ArrayDataAcknowledge[(int)(ByteToWord(u8Data[MSG_SADDRONE],
-			//				u8Data[MSG_SADDRZERO]))][0]);
-					for(int i=0; i<m_nMapParity; i++) {
-						for(int j=0; j<(int)m_ArrayDataAcknowledge[i].size(); i++) {
-							printf("%x ", m_ArrayDataAcknowledge[i][j]);
-						}
-					}
+					m_ArrayDataAcknowledge.push_back(m_MsgQueueDataAcknowledge);				
+					DataSort();					
 				}
-				printf("\n");
+				m_nMapParity++;				
 				printf("m_nMapParity : %d\n", m_nMapParity);
 
-				sort(m_MsgQueueArrayDataAcknowledge.begin(), m_MsgQueueArrayDataAcknowledge.end());
 			}
 			m_GetSocket->Send_Message(u8Data, len);
 		}
@@ -181,6 +174,51 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 	}
 
 	return 1;
+}
+
+int MsgQueue::DataSort()
+{
+	int nSize =0;
+	
+	printf("DataSort()\n");
+	nSize = (int)m_ArrayDataAcknowledge.size();
+	printf("Sort Ago m_ArrayDataAcknowledge.size %d\n", (int)m_ArrayDataAcknowledge.size());
+	for(int j=0; j<(int)m_ArrayDataAcknowledge.size(); j++) {
+		for(int i=0; i<(int)m_ArrayDataAcknowledge[j].size(); i++) {
+			printf("[%x] ", m_ArrayDataAcknowledge[j].at(i));
+		}
+	}
+	printf("\n");
+	sort(m_ArrayDataAcknowledge.begin(), m_ArrayDataAcknowledge.end());
+	m_ArrayDataAcknowledge.erase(unique(m_ArrayDataAcknowledge.begin(), m_ArrayDataAcknowledge.end()),
+																			m_ArrayDataAcknowledge.end()); 	//Delete overlap
+	printf("Sort , Delete 0 and Overlap after\n");
+	for(int j=0; j<nDataDown; j++) {
+		for(int i=0; i<(int)m_ArrayDataAcknowledge[j].size(); i++) {
+			if(m_ArrayDataAcknowledge[j].at(i) == 0) {
+				printf("Erase %x[%d] ", m_ArrayDataAcknowledge[j].at(i), j);
+				m_ArrayDataAcknowledge.erase(m_ArrayDataAcknowledge.begin()+j, m_ArrayDataAcknowledge.begin()+j+1);
+			}
+		}
+	}
+	sort(m_ArrayDataAcknowledge.begin(), m_ArrayDataAcknowledge.end());
+
+	printf("Final Sort after m_ArrayDataAcknowledge.size %d\n", (int)m_ArrayDataAcknowledge.size());
+	for(int j=0; j<nDataDown; j++) {
+		for(int i=0; i<(int)m_ArrayDataAcknowledge[j].size(); i++) {
+			printf("[%x] ", m_ArrayDataAcknowledge[j].at(i));
+		}
+		
+	}
+	printf("\n");
+
+	return 1;
+
+}
+
+void MsgQueue::GetDataDown(int cnt)
+{
+	nDataDown = cnt;
 }
 
 WORD MsgQueue::ByteToWord(BYTE puData, BYTE puData1)
