@@ -152,11 +152,8 @@ int Socket::Socket_Init(/*int argc, char *argv[]*/)
 
 	for(int i=0; i<15; i++) {
 		if(pAddr->sa_data[i] != NULL) {
-		//	printf("%d ", pAddr->sa_data[i]);
 			m_IP_String += std::to_string(pAddr->sa_data[i]);
 			m_IP_String.append(" ");
-		//	m_IP_String.append(i, pAddr->sa_data[i]);
-		//	m_IP_String += pAddr->sa_data[i];
 		}
 	}
 

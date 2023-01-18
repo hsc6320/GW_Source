@@ -1,4 +1,4 @@
-15:46:38 **** Build of configuration Debug for project Demo ****
+18:45:55 **** Build of configuration Debug for project Demo ****
 make all 
 Building file: ../uart/uart.cpp
 Invoking: Cross G++ Compiler
@@ -27,88 +27,8 @@ Finished building: ../Socket/socket.cpp
 Building file: ../Main.cpp
 Invoking: Cross G++ Compiler
 arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
-../Main.cpp: In function ‘int Main_ByPass_SocketToUart()’:
-../Main.cpp:281:128: error: no matching function for call to ‘MsgHandler::SetSocketArray(std::vector<std::vector<unsigned char> >&, std::vector<std::vector<unsigned char> >&, int&, int&, int)’
-     m_pSocket->m_nSocketArrayDataDownCnt, m_pSocket->m_nSocketArrayDataIndicateCnt, /*m_pMsgQueue->Map_dataAcknowParityCheck*/0);
-                                                                                                                                ^
-In file included from ../Main.cpp:10:0:
-../MsgHandler.h:53:7: note: candidate: void MsgHandler::SetSocketArray(std::vector<std::vector<unsigned char> >, std::vector<std::vector<unsigned char> >, int, int, std::map<std::vector<unsigned char>, int>)
-  void SetSocketArray(std::vector<std::vector<BYTE>> DataDownmsg, std::vector<std::vector<BYTE>> DataIndimsg, int Downcnt, int Indicnt, std::map<std::vector<BYTE>, int > MapAck);
-       ^~~~~~~~~~~~~~
-../MsgHandler.h:53:7: note:   no known conversion for argument 5 from ‘int’ to ‘std::map<std::vector<unsigned char>, int>’
-../Main.cpp:330:114: error: expected ‘;’ before ‘)’ token
-        m_pMsgHandler->Map_dataParityCheck[m_pMsgHandler->m_UartArrayDataDownMsg[m_pMsgHandler->m_nDataDownCount]]);
-                                                                                                                  ^
-../Main.cpp: In function ‘int Main_TagVal_CheckParity2(std::vector<std::vector<unsigned char> >)’:
-../Main.cpp:864:1: error: a function-definition is not allowed here before ‘{’ token
- {
- ^
-../Main.cpp:872:1: error: a function-definition is not allowed here before ‘{’ token
- {
- ^
-../Main.cpp:1241:1: error: expected ‘}’ at end of input
- }
- ^
-../Main.cpp:1241:1: warning: control reaches end of non-void function [-Wreturn-type]
- }
- ^
-make: *** [subdir.mk:26: Main.o] 오류 1
-"make all" terminated with exit code 2. Build might be incomplete.
-15:47:32 **** Incremental Build of configuration Debug for project Demo ****
-make all 
-Building file: ../Main.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
-../Main.cpp: In function ‘int Main_ByPass_SocketToUart()’:
-../Main.cpp:330:114: error: expected ‘;’ before ‘)’ token
-        m_pMsgHandler->Map_dataParityCheck[m_pMsgHandler->m_UartArrayDataDownMsg[m_pMsgHandler->m_nDataDownCount]]);
-                                                                                                                  ^
-../Main.cpp: In function ‘int Main_TagVal_CheckParity2(std::vector<std::vector<unsigned char> >)’:
-../Main.cpp:864:1: error: a function-definition is not allowed here before ‘{’ token
- {
- ^
-../Main.cpp:872:1: error: a function-definition is not allowed here before ‘{’ token
- {
- ^
-../Main.cpp:1241:1: error: expected ‘}’ at end of input
- }
- ^
-../Main.cpp:1241:1: warning: control reaches end of non-void function [-Wreturn-type]
- }
- ^
-make: *** [subdir.mk:26: Main.o] 오류 1
-"make all" terminated with exit code 2. Build might be incomplete.
-15:59:41 **** Incremental Build of configuration Debug for project Demo ****
-make all 
-Building file: ../Main.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
 ../Main.cpp: In function ‘int Main_Check_TagPassFail2(int*, int*)’:
-../Main.cpp:702:7: warning: variable ‘temp2’ set but not used [-Wunused-but-set-variable]
-  BYTE temp2 =0;
-       ^~~~~
-../Main.cpp: In function ‘int Main_TagVal_CheckParity2(std::vector<std::vector<unsigned char> >)’:
-../Main.cpp:864:1: error: a function-definition is not allowed here before ‘{’ token
- {
- ^
-../Main.cpp:872:1: error: a function-definition is not allowed here before ‘{’ token
- {
- ^
-../Main.cpp:1241:1: error: expected ‘}’ at end of input
- }
- ^
-../Main.cpp:1241:1: warning: control reaches end of non-void function [-Wreturn-type]
- }
- ^
-make: *** [subdir.mk:26: Main.o] 오류 1
-"make all" terminated with exit code 2. Build might be incomplete.
-16:01:30 **** Incremental Build of configuration Debug for project Demo ****
-make all 
-Building file: ../Main.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
-../Main.cpp: In function ‘int Main_Check_TagPassFail2(int*, int*)’:
-../Main.cpp:702:7: warning: variable ‘temp2’ set but not used [-Wunused-but-set-variable]
+../Main.cpp:670:7: warning: variable ‘temp2’ set but not used [-Wunused-but-set-variable]
   BYTE temp2 =0;
        ^~~~~
 Finished building: ../Main.cpp
@@ -126,7 +46,7 @@ arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"MsgQueu
     int nCount =0;
         ^~~~~~
 ../MsgQueue.cpp: In member function ‘int MsgQueue::DataSort()’:
-../MsgQueue.cpp:188:6: warning: variable ‘nSize’ set but not used [-Wunused-but-set-variable]
+../MsgQueue.cpp:182:6: warning: variable ‘nSize’ set but not used [-Wunused-but-set-variable]
   int nSize =0;
       ^~~~~
 Finished building: ../MsgQueue.cpp
@@ -136,93 +56,15 @@ Invoking: Cross G++ Linker
 arm-linux-gnueabihf-g++  -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
 Finished building target: Demo
  
-16:53:34 **** Incremental Build of configuration Debug for project Demo ****
+19:11:03 **** Incremental Build of configuration Debug for project Demo ****
 make all 
 Building file: ../uart/uart.cpp
 Invoking: Cross G++ Compiler
 arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"uart/uart.d" -MT"uart/uart.o" -o "uart/uart.o" "../uart/uart.cpp"
 Finished building: ../uart/uart.cpp
  
-Building file: ../Main.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
-../Main.cpp: In function ‘int Main_Check_TagPassFail2(int*, int*)’:
-../Main.cpp:693:7: warning: variable ‘temp2’ set but not used [-Wunused-but-set-variable]
-  BYTE temp2 =0;
-       ^~~~~
-Finished building: ../Main.cpp
- 
-Building file: ../MsgHandler.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"MsgHandler.d" -MT"MsgHandler.o" -o "MsgHandler.o" "../MsgHandler.cpp"
-../MsgHandler.cpp: In member function ‘int MsgHandler::UartPacket_DataDownStart(BYTE)’:
-../MsgHandler.cpp:203:94: error: expected primary-expression before ‘)’ token
-  printf("UartPacket_DataDownStart() %d of %d \n", m_nDataDownCount, m_nUartArrayDataDownCnt, );
-                                                                                              ^
-make: *** [subdir.mk:26: MsgHandler.o] 오류 1
-"make all" terminated with exit code 2. Build might be incomplete.
-16:53:54 **** Incremental Build of configuration Debug for project Demo ****
-make all 
-Building file: ../MsgHandler.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"MsgHandler.d" -MT"MsgHandler.o" -o "MsgHandler.o" "../MsgHandler.cpp"
-Finished building: ../MsgHandler.cpp
- 
 Building target: Demo
 Invoking: Cross G++ Linker
 arm-linux-gnueabihf-g++  -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
 Finished building target: Demo
  
-17:12:17 **** Incremental Build of configuration Debug for project Demo ****
-make all 
-Building file: ../Main.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
-../Main.cpp: In function ‘int Main_Check_TagPassFail2(int*, int*)’:
-../Main.cpp:672:7: warning: variable ‘temp2’ set but not used [-Wunused-but-set-variable]
-  BYTE temp2 =0;
-       ^~~~~
-Finished building: ../Main.cpp
- 
-Building target: Demo
-Invoking: Cross G++ Linker
-arm-linux-gnueabihf-g++  -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
-Finished building target: Demo
- 
-17:43:56 **** Incremental Build of configuration Debug for project Demo ****
-make all 
-Building file: ../Main.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
-../Main.cpp: In function ‘int Main_Check_TagPassFail2(int*, int*)’:
-../Main.cpp:673:7: warning: variable ‘temp2’ set but not used [-Wunused-but-set-variable]
-  BYTE temp2 =0;
-       ^~~~~
-Finished building: ../Main.cpp
- 
-Building file: ../MsgHandler.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"MsgHandler.d" -MT"MsgHandler.o" -o "MsgHandler.o" "../MsgHandler.cpp"
-Finished building: ../MsgHandler.cpp
- 
-Building file: ../MsgQueue.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"MsgQueue.d" -MT"MsgQueue.o" -o "MsgQueue.o" "../MsgQueue.cpp"
-../MsgQueue.cpp: In member function ‘bool MsgQueue::PutByte(uint8_t*, int)’:
-../MsgQueue.cpp:54:8: warning: unused variable ‘nCount’ [-Wunused-variable]
-    int nCount =0;
-        ^~~~~~
-../MsgQueue.cpp: In member function ‘int MsgQueue::DataSort()’:
-../MsgQueue.cpp:181:6: warning: variable ‘nSize’ set but not used [-Wunused-but-set-variable]
-  int nSize =0;
-      ^~~~~
-Finished building: ../MsgQueue.cpp
- 
-Building target: Demo
-Invoking: Cross G++ Linker
-arm-linux-gnueabihf-g++  -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
-Finished building target: Demo
- 
-17:44:34 **** Incremental Build of configuration Debug for project Demo ****
-make all 
-make: 'all'을(를) 위해 할 일이 없습니다.

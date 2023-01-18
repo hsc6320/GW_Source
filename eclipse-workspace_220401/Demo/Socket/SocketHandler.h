@@ -40,7 +40,7 @@ public:
 	int Connect_Request();
 	int DownLoad_Start_Ack();
 	int SendSocket_Data(PRE_DEFINE::S_PACKET packet);
-	void SetMsg_StartCfm_Remalloc();
+	void SetMsg_StartCfm_Remalloc(int OnOff);
 	void TagData(std::vector<std::vector<BYTE>> vec);
 };
 

@@ -514,7 +514,7 @@ int MsgHandler::UartPacket_ReDataAcknowledge_DownStart(BYTE u8data)
 				//		m_nDataDownCount--;
 						m_nDataDownCount = Map_AcknowCnt;
 
-						printf("vMsgDataAcknowledge[Map_AcknowCnt(%d}].at(0) : %d\n", Map_AcknowCnt, vMsgDataAcknowledge[Map_AcknowCnt].at(0));
+						printf("DataDown Tag Number [%x] : %d\n", Map_AcknowCnt, vMsgDataAcknowledge[Map_AcknowCnt].at(0)+1);
 
 						m_nDownloadedSuccessCnt++;
 						Map_AcknowOverlap = Map_AcknowCnt;

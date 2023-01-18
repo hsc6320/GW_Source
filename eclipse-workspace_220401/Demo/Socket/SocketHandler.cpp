@@ -175,7 +175,6 @@ int SocketHandler::Connect_Request()
 	pu8data[++iBufcnt] = 0;
 	pu8data[++iBufcnt] = 0;
 	pu8data[++iBufcnt] = 0;
-	pu8data[++iBufcnt] = 0;
 
 	u8Checksum = GetChecksum(pu8data, iBufcnt);
 	pu8data[++iBufcnt] = u8Checksum; //0x07;
@@ -254,9 +253,12 @@ void SocketHandler::GetServerID(WORD severid)
 	printf("GetServerID %x\n", packet.ServerID);
 }
 
-void SocketHandler::SetMsg_StartCfm_Remalloc()
+void SocketHandler::SetMsg_StartCfm_Remalloc(int OnOff)
 {
-	nServiceStart_Confirm =1;
+	if(OnOff)
+		nServiceStart_Confirm =1;
+	else
+		nServiceStart_Confirm =0;
 	printf("SetMsg_StartCfm_Remalloc()");
 }
 
@@ -269,6 +271,7 @@ void SocketHandler::TagData(std::vector<std::vector<BYTE>> vec)
 
 	printf("TagData\n");
 	for(int k=m_nTagDataCount; k<pUartQueue->m_nSendTagCount; k++) {
+		printf("m_nTagDataCount : %d, m_nSendTagCount :%d\n", m_nTagDataCount, pUartQueue->m_nSendTagCount);
 		for(int i=0; i<(int)vTagData[k].size(); i++) {
 			printf("%x ", vTagData[k][i]);
 			pu8data[iBufcnt] = vTagData[k][i];
@@ -276,28 +279,27 @@ void SocketHandler::TagData(std::vector<std::vector<BYTE>> vec)
 		}
 		printf("\n");
 
-		while(1) {
-			if(pSocket->Send_Message(pu8data, iBufcnt) > 0 ) {
-				printf("Socket Write Sucess\n");
-				break;
-			}
-			else
-				printf("Socket Re-Write\n");
+		if(pSocket->Send_Message(pu8data, iBufcnt) > 0 ) {
+			printf("Socket Write Sucess\n");
 		}
+		else
+			printf("Socket Re-Write\n");
 
 		iBufcnt =0;
 		memset(pu8data, 0, 1024);
 		m_nTagDataCount++;
+	
 	}
 	vTagData.clear();
 	printf("TagData END()\n");
+	
 }
 
 BYTE SocketHandler::GetChecksum(BYTE* puData, int len)
 {
 	BYTE sum =0;
 
-	for(int i=1; i< len; i++) {
+	for(int i=1; i<= len; i++) {
 	//	printf("%x ", puData[i]);
 		sum += puData[i];
 	}

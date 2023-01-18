@@ -108,17 +108,18 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 		{
 
 			if(u8Data[MSGTYPE] == TAG_ASSOCIATION) {
+				m_MsgQueueDataAssocation.clear();
 				memcpy(m_u8SendData, u8Data, len);
 				for(int i=0; i<len; i++) {
 					m_MsgQueueDataAssocation.push_back(u8Data[i]);
 					printf("%x ", m_MsgQueueDataAssocation[i]);
 				}
-				printf("\n");
+				printf("\n");						
 				m_MsgQueueTagData.push_back(m_MsgQueueDataAssocation);
 				m_MsgQueueDataAssocation.clear();
-			//	m_GetSocket->Send_Message(u8Data, len);
 				m_nSendTagCount++;
 				m_bReadEnd_UartMessage =1;
+				return 1;
 			}
 			else if((u8Data[MSGTYPE] == COORDINATOR_RESET_CONFIRM) || (u8Data[MSGTYPE] == TAG_INFOR_UPDATE) || (u8Data[MSGTYPE] == TAG_INFOR_UPDATE_ACK)
 					|| (u8Data[MSGTYPE] == TAG_ALARM_INDICATION) || (u8Data[MSGTYPE] == MULTI_GATEWAY_SCAN_CONFIRM) || (u8Data[MSGTYPE] == MULTI_GATEWAY_SCAN_RESPONESE)
@@ -182,7 +183,7 @@ int MsgQueue::DataSort()
 	
 	printf("DataSort()\n");
 	nSize = (int)m_ArrayDataAcknowledge.size();
-	printf("Sort Ago m_ArrayDataAcknowledge.size %d\n", (int)m_ArrayDataAcknowledge.size());
+	printf("Before Sort  m_ArrayDataAcknowledge.size %d\n", (int)m_ArrayDataAcknowledge.size());
 	for(int j=0; j<(int)m_ArrayDataAcknowledge.size(); j++) {
 		for(int i=0; i<(int)m_ArrayDataAcknowledge[j].size(); i++) {
 			printf("[%x] ", m_ArrayDataAcknowledge[j].at(i));
@@ -192,11 +193,11 @@ int MsgQueue::DataSort()
 	sort(m_ArrayDataAcknowledge.begin(), m_ArrayDataAcknowledge.end());
 	m_ArrayDataAcknowledge.erase(unique(m_ArrayDataAcknowledge.begin(), m_ArrayDataAcknowledge.end()),
 																			m_ArrayDataAcknowledge.end()); 	//Delete overlap
-	printf("Sort , Delete 0 and Overlap after\n");
+	//printf("Sort , Delete 0 and Overlap after\n");
 	for(int j=0; j<nDataDown; j++) {
 		for(int i=0; i<(int)m_ArrayDataAcknowledge[j].size(); i++) {
 			if(m_ArrayDataAcknowledge[j].at(i) == 0) {
-				printf("Erase %x[%d] ", m_ArrayDataAcknowledge[j].at(i), j);
+			//	printf("Erase %x[%d] ", m_ArrayDataAcknowledge[j].at(i), j);
 				m_ArrayDataAcknowledge.erase(m_ArrayDataAcknowledge.begin()+j, m_ArrayDataAcknowledge.begin()+j+1);
 			}
 		}

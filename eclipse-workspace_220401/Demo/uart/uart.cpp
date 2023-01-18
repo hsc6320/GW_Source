@@ -243,7 +243,7 @@ int UartComThread::uart_SetTimer()
 }
 int UartComThread::uart_init()
 {
-	m_uartd = Uart_Open("/dev/ttyS1", 230400);
+	m_uartd = Uart_Open("/dev/ttyS1", 115200);
 
 	if(m_uartd <= 0)
 		return 0;

@@ -179,7 +179,7 @@ BYTE Socket_MsgQueue::GetChecksum(BYTE* puData, int len)
 {
 	BYTE sum =0;
 
-	for(int i=1; i< len; i++) {
+	for(int i=1; i<= len; i++) {
 	//	printf("%x ", puData[i]);
 		sum += puData[i];
 	}
