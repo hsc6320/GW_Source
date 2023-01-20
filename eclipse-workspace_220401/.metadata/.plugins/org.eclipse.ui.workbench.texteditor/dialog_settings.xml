@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="Main_TagVal_CheckParity2"/>
+		<item key="selection" value="115200"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
-		<item key="wholeword" value="true"/>
+		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="115200"/>
+			<item value="230400"/>
+			<item value="GetChecksum"/>
+			<item value="checksum"/>
 			<item value="Main_TagVal_CheckParity2"/>
 			<item value="Redown"/>
 			<item value="delay"/>
@@ -19,10 +23,6 @@
 			<item value="Main_TagVal_SortAndArrange"/>
 			<item value="Insert Zero"/>
 			<item value="m_ArrayDataAcknowledge"/>
-			<item value="Before Sort2"/>
-			<item value="before sort2"/>
-			<item value="before sort"/>
-			<item value="Main_Check_TagVal"/>
 		</list>
 		<list key="replacehistory">
 			<item value="m_serv_sock"/>

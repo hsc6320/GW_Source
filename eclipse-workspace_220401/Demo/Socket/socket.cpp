@@ -448,11 +448,11 @@ void *Recieve_Function(void* rcvDt)
 	{
 		if(pSoc->Ready_to_Read(Socketd,10)) {
 			pthread_mutex_lock(&pSoc->Socket_mutex);
-			str_len = pSoc->Read_Message(u8data/*pSoc->m_p8uData*/);
+			str_len = pSoc->Read_Message(u8data/*pSoc->m_p8uData*/);		
 
 			printf("\n*********Socket Read Thread ******** %d\n", str_len);
 			if(str_len > 0) {
-				pSoc->m_ReceiveData_len = str_len;
+				pSoc->m_ReceiveData_len = str_len;				
 				pSoc->GetSocketMsg(u8data, str_len);
 				memset(u8data, 0, 1024);
 			}
@@ -515,6 +515,11 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 				m_iSocketReceiveQueue =1;
 			}
 			else if((p8udata[MSGTYPE] == DOWNLOAD_START_REQ) || (p8udata[MSGTYPE] == DATAINDICATION_REQ)) {
+
+				for(int i=0; i<Len; i++) {
+					printf("%x ", p8udata[i]);
+				}
+				printf("\n");
 
 				m_SocketQueue_vec.clear();
 				for(int i=0; i< DataLen; i++) {

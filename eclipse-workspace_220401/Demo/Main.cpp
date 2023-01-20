@@ -222,7 +222,6 @@ int Main_ServiceStart_TagAssociation_Init()
 				}
 				break;
 			case 4:
-				printf("SERVICESTART_CONFIRM\n");				
 				if(ServiceStart_Cfm()) {
 					msg = msg+2;
 					break;

@@ -361,7 +361,7 @@ int MsgHandler::UartPacket_ReDataDownStart(BYTE u8data)
 					else if(Map_dataParityCheck[m_UartArrayDataDownMsg[i]] != PASS) {
 						m_nDataDownCount = (int)m_UartArrayDataDownMsg[i].at(MSG_DADDRZERO);
 						m_nDataDownCount--;
-
+						
 					//	printf("\nReDown E_BEACON_BSN_NUMBER6:\n");
 						m_nDownloadedSuccessCnt++;
 						break;
