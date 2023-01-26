@@ -1,4 +1,4 @@
-Fri Jan 20 15:21:57 KST 2023
+Thu Jan 26 15:14:26 KST 2023
 ERROR org.eclipse.rse.ui  RSEG1058
 java.lang.Exception
 	at org.eclipse.rse.ui.messages.SystemMessageDialog.logMessage(SystemMessageDialog.java:451)
@@ -30,7 +30,4 @@ java.lang.Exception
 	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:596)
 	at org.eclipse.equinox.launcher.Main.run(Main.java:1467)
 	at org.eclipse.equinox.launcher.Main.main(Main.java:1440)
---------------------------------------------
-Fri Jan 20 15:23:21 KST 2023
-ERROR org.eclipse.rse.ui  RSEF1002: SUB#0:Sftp: 4: Failure
 --------------------------------------------

@@ -405,6 +405,7 @@ int Socket::Send_Function()
 {
 	//socket_ctx_t* ctx = (socket_ctx_t *)m_serv_sock;
 	int ret =0;
+	int failcnt =0;
 	BYTE p8Data[1024];
 
 	memset(p8Data, 0, 1024);
@@ -417,7 +418,19 @@ int Socket::Send_Function()
 	delete[] m_p8uSendData;
 	m_p8uSendData = NULL;
 
-	ret = write(m_serv_sock,p8Data,nDataLen);
+
+	while(1)
+ 	{
+ 		ret = write(m_serv_sock,p8Data,nDataLen);
+		if(ret > 0 ) {
+			break;
+		}
+		else {
+			th_Socket_delay(1000);
+		}
+		
+	}
+		
 	printf(" ret :%d <--SERVER\n\n", ret);
 
 	return ret;
@@ -705,6 +718,28 @@ int Socket::Socket_fd_Select(int fd, int timeout_ms)
 	return -1;
 #endif
 }
+
+
+
+
+void Socket::th_Socket_delay(int millsec)
+{
+	double time;
+	double timedelay = millsec;
+	struct timeval start1 = {};
+	struct timeval end1 = {};
+
+	clock_t end = timedelay* 1000;
+	clock_t start = clock();
+
+	//printf("th_dealy %.2f msec\n", timedelay*2);
+	gettimeofday(&start1 , NULL);
+	while(clock()-start < end) {;}
+	gettimeofday(&end1 , NULL);
+	time = end1.tv_sec + end1.tv_usec / 1000000.0 - start1.tv_sec - start1.tv_usec / 1000000.0;
+	printf("%.2f sec\n", time);
+}
+
 
 void Socket::SetMutex(pthread_mutex_t mutex, int fd)
 {

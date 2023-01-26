@@ -239,10 +239,10 @@ int MsgHandler::UartPacket_DataDownStart(BYTE u8data)
 		return 0;
 	}
 	pu8data[iBufcnt] = STX;
-	pu8data[++iBufcnt] = m_UartArrayDataDownMsg[m_nDataDownCount][++nTagidCOunt];
-	pu8data[++iBufcnt] = m_UartArrayDataDownMsg[m_nDataDownCount][++nTagidCOunt];
-	pu8data[++iBufcnt] = m_UartArrayDataDownMsg[m_nDataDownCount][++nTagidCOunt];
-	pu8data[++iBufcnt] = m_UartArrayDataDownMsg[m_nDataDownCount][++nTagidCOunt];
+	pu8data[++iBufcnt] = m_UartArrayDataDownMsg[m_nDataDownCount][++nTagidCOunt];		//PanID
+	pu8data[++iBufcnt] = m_UartArrayDataDownMsg[m_nDataDownCount][++nTagidCOunt];		//panID
+	pu8data[++iBufcnt] = m_UartArrayDataDownMsg[m_nDataDownCount][++nTagidCOunt];		//TagID
+	pu8data[++iBufcnt] = m_UartArrayDataDownMsg[m_nDataDownCount][++nTagidCOunt];		//TagID
 	pu8data[++iBufcnt] = m_UartArrayDataDownMsg[m_nDataDownCount][++nTagidCOunt];		//Server ID
 	pu8data[++iBufcnt] = m_UartArrayDataDownMsg[m_nDataDownCount][++nTagidCOunt];		//Server ID
 	pu8data[++iBufcnt] = m_UartArrayDataDownMsg[m_nDataDownCount][++nTagidCOunt];		//msg type
@@ -252,6 +252,7 @@ int MsgHandler::UartPacket_DataDownStart(BYTE u8data)
 	pu8data[++iBufcnt] = m_UartArrayDataDownMsg[m_nDataDownCount][++nTagidCOunt];		//Total Data Length
 
 	pu8data[++iBufcnt] = m_UartArrayDataDownMsg[m_nDataDownCount][++nTagidCOunt];		//Fragment Number
+	pu8data[++iBufcnt] = m_UartArrayDataDownMsg[m_nDataDownCount][++nTagidCOunt];		//Flash Number
 
 
 	pu8data[++iBufcnt] = m_UartArrayDataDownMsg[m_nDataDownCount][++nTagidCOunt]; 		//Check Sum
@@ -408,7 +409,8 @@ int MsgHandler::UartPacket_ReDataDownStart(BYTE u8data)
 	pu8data[++iBufcnt] = m_UartArrayDataDownMsg[m_nDataDownCount][++nTagidCOunt];		//Total Data Length
 	pu8data[++iBufcnt] = m_UartArrayDataDownMsg[m_nDataDownCount][++nTagidCOunt];		//Total Data Length
 
-	pu8data[++iBufcnt] = m_UartArrayDataDownMsg[m_nDataDownCount][++nTagidCOunt];		//Fragment Number
+	pu8data[++iBufcnt] = m_UartArrayDataDownMsg[m_nDataDownCount][++nTagidCOunt];		//Fragment Number	
+	pu8data[++iBufcnt] = m_UartArrayDataDownMsg[m_nDataDownCount][++nTagidCOunt];		//Flash Number
 
 
 	pu8data[++iBufcnt] = m_UartArrayDataDownMsg[m_nDataDownCount][++nTagidCOunt]; 		//Check Sum
@@ -593,7 +595,8 @@ int MsgHandler::UartPacket_ReDataAcknowledge_DownStart(BYTE u8data)
 	pu8data[++iBufcnt] = m_UartArrayDataDownMsg[m_nDataDownCount][++nTagidCOunt];		//Total Data Length
 	pu8data[++iBufcnt] = m_UartArrayDataDownMsg[m_nDataDownCount][++nTagidCOunt];		//Total Data Length
 
-	pu8data[++iBufcnt] = m_UartArrayDataDownMsg[m_nDataDownCount][++nTagidCOunt];		//Fragment Number
+	pu8data[++iBufcnt] = m_UartArrayDataDownMsg[m_nDataDownCount][++nTagidCOunt];		//Fragment Number	
+	pu8data[++iBufcnt] = m_UartArrayDataDownMsg[m_nDataDownCount][++nTagidCOunt];		//Flash Number
 
 
 	pu8data[++iBufcnt] = m_UartArrayDataDownMsg[m_nDataDownCount][++nTagidCOunt]; 		//Check Sum

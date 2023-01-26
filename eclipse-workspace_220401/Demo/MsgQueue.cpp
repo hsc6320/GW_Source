@@ -51,7 +51,7 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 
 	if(u8Data[MSG_STX] == STX) {
 		if(u8Data[MSGTYPE] == DATA_ACKNOWLEDGEMENT) {
-			int nCount =0;
+
 			m_MsgQueueDataAcknowledge.clear();
 			
 			if(u8Data[MSG_ACKNOWLEDGE_STATUS] == PAYLOAD_STATUS_SUCCESS) {
@@ -179,10 +179,8 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 
 int MsgQueue::DataSort()
 {
-	int nSize =0;
 	
 	printf("DataSort()\n");
-	nSize = (int)m_ArrayDataAcknowledge.size();
 	printf("Before Sort  m_ArrayDataAcknowledge.size %d\n", (int)m_ArrayDataAcknowledge.size());
 	for(int j=0; j<(int)m_ArrayDataAcknowledge.size(); j++) {
 		for(int i=0; i<(int)m_ArrayDataAcknowledge[j].size(); i++) {

@@ -425,9 +425,9 @@ int UartComThread::Uart_Write(int uartd, uint8_t* data, int size)
 			ret = write(ctx->fd, ptr, towritelen*sizeof(uint8_t));
 			if(ret > 0) {
 				printf("Uart_Write ");
-				//for(int i=0; i<size; i++) {
-				//	printf("%x ", ptr[i]);
-			//	}
+				for(int i=0; i<size; i++) {
+					printf("%x ", ptr[i]);
+				}
 				printf(" End\n");
 				wrotelen += ret;
 			}

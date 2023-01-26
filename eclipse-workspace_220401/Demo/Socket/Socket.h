@@ -62,6 +62,7 @@ public:
 	int Read_Message(BYTE* msg);
 	void SetMsgHwnd(Socket* soc);
 	void Exit_Socket_Thread();
+	void th_Socket_delay(int millsec);
 	bool GetSocketMsg(BYTE* p8udata, int Len);
 	WORD ByteToWord(BYTE puData, BYTE puData1);
 };
