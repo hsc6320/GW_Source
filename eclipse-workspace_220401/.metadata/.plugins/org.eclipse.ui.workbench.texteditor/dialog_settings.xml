@@ -1,52 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="115200"/>
+		<item key="selection" value="SERVICESTART_CONFIRM"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
-			<item value="115200"/>
-			<item value="230400"/>
-			<item value="GetChecksum"/>
-			<item value="checksum"/>
-			<item value="Main_TagVal_CheckParity2"/>
-			<item value="Redown"/>
-			<item value="delay"/>
-			<item value="m_pMsgQueue-&gt;Redown"/>
-			<item value="bDataAckFlag"/>
-			<item value="Main_TagSort_Arrange"/>
-			<item value="Before Sort:"/>
-			<item value="Main_TagVal_SortAndArrange2"/>
-			<item value="Main_TagVal_SortAndArrange"/>
-			<item value="Insert Zero"/>
-			<item value="m_ArrayDataAcknowledge"/>
+			<item value="SERVICESTART_CONFIRM"/>
+			<item value="nBeaconValue"/>
 		</list>
 		<list key="replacehistory">
-			<item value="m_serv_sock"/>
-			<item value="Socket_mutex"/>
-			<item value="ctx-&gt;Socket_mutex"/>
-			<item value="serv_sockfd"/>
-			<item value="m_nDownloadedSuccessCnt"/>
-			<item value="V_ArrayData"/>
-			<item value="m_ArrayDataAcknowledge"/>
-			<item value="m_m_MsgQueueArrayDataAcknowledge"/>
-			<item value="BEACON_MAX"/>
-			<item value="Beacon_Max"/>
-			<item value="nToTalLen"/>
-			<item value="m_DataFlag"/>
-			<item value="m_UartArrayDataIndicateMsg"/>
-			<item value="m_UartArrayDataDownMsg"/>
-			<item value="CheckbsnFlag"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="660"/>
-		<item key="DIALOG_Y_ORIGIN" value="497"/>
-		<item key="DIALOG_WIDTH" value="420"/>
-		<item key="DIALOG_HEIGHT" value="511"/>
+		<item key="DIALOG_X_ORIGIN" value="753"/>
+		<item key="DIALOG_Y_ORIGIN" value="192"/>
+		<item key="DIALOG_WIDTH" value="348"/>
+		<item key="DIALOG_HEIGHT" value="437"/>
 		<item key="DIALOG_FONT_NAME" value="1|Ubuntu|11.0|0|GTK|1|"/>
 	</section>
 </section>

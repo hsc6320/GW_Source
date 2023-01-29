@@ -427,6 +427,10 @@ int Socket::Send_Function()
 		}
 		else {
 			th_Socket_delay(1000);
+			failcnt++;
+		
+			if(failcnt > 5)
+				break;
 		}
 		
 	}

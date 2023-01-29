@@ -44,7 +44,7 @@ int SocketHandler::SendMessage(int msg, PRE_DEFINE::S_PACKET packet)
 		printf("Socket SendMsg : TAG_ASSOCIATION\n");
 		break;
 	default :
-		printf("Socket SendMsg : default msgtype :0x%x\n", packet.header.type);
+		printf("Socket SendMsg : SERVICESTART_CONFIRM :0x%x\n", packet.header.type);
 		SendSocket_Data(packet);
 		break;
 	}
@@ -257,9 +257,12 @@ void SocketHandler::SetMsg_StartCfm_Remalloc(int OnOff)
 {
 	if(OnOff)
 		nServiceStart_Confirm =1;
-	else
+	else {
 		nServiceStart_Confirm =0;
-	printf("SetMsg_StartCfm_Remalloc()");
+		m_nTagDataCount = 0; 
+		pUartQueue->m_nSendTagCount = 0;
+	}
+	printf("SetMsg_StartCfm_Remalloc(%d)\n", nServiceStart_Confirm);
 }
 
 void SocketHandler::TagData(std::vector<std::vector<BYTE>> vec)

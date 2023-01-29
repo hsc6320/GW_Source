@@ -129,6 +129,7 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 				if(u8Data[MSGTYPE] == COORDINATOR_RESET_CONFIRM)	{
 					memcpy(m_u8SendData, u8Data, len);
 					m_bUartCommuniFlag = 0;
+					m_bReadEnd_UartMessage=1;
 					printf("m_bUartCommuniFlag %d\n", m_bUartCommuniFlag);
 				}
 				m_GetSocket->Send_Message(u8Data, len);

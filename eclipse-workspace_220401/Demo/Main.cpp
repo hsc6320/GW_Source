@@ -157,12 +157,14 @@ int Main_ByPass_UartToSocket()
 			memset(m_pMsgHandler->m_GetDownTagID, 0, 512);
 			break;
 
-		case SERVICESTART_CONFIRM:
-			printf("SERVICESTART_CONFIRM\n");			
+		case SERVICESTART_CONFIRM:			
 			ServiceStart_Cfm();
 			break;
 		case TAG_ASSOCIATION:
 			printf("TAG_ASSOCIATION\n");
+			if(m_pMsgQueue->m_nSendTagCount > 0) {
+				m_pSocketHandle->SetMsg_StartCfm_Remalloc(1);
+			}
 			UartToSocket_TagAssociation();
 			break;
 		default :
@@ -184,20 +186,17 @@ int Main_ServiceStart_TagAssociation_Init()
 	while(1) {
 		switch(msg) {
 			case 0:
-				printf("case0\n");
 				Socket_Registration_Req();
 				msg++;
 				break;
 			case 1:
 				if(m_pSocket->m_iSocketReceiveEnd) {
-					printf("case 1:\n");
 					m_pSocket->m_iSocketReceiveEnd =0;
 					m_pSocketHandle->GetServerID(ByteToWord(m_pSocket->m_SocketMsg_vec[MSG_SADDRONE], m_pSocket->m_SocketMsg_vec[MSG_SADDRZERO]));
 					msg++;
 				}
 				break;
 			case 2:
-				printf("case 2\n");
 				Socket_Connect_Req();
 				msg++;
 				break;
@@ -214,7 +213,6 @@ int Main_ServiceStart_TagAssociation_Init()
 			//	printf("MESSAGE TYPE : 0x%x(%d)\n", m_pSocket->m_SocketMsg_vec[MSGTYPE]);
 				if(m_pSocket->m_iSocketReceiveEnd || m_pSocket->m_iBypassSocketToUart) {
 					if(m_pSocket->m_SocketMsg_vec[MSGTYPE] == SERVICESTART_REQUEST) {
-						printf("main switch 3-2 SERVICESTART_REQUEST 0x%x\n", m_pSocket->m_SocketMsg_vec[MSGTYPE]);
 						Main_SendSocketMsgToUart(m_pSocket->m_SocketMsg_vec[MSGTYPE]);
 					//	m_pSocket->m_iBypassSocketToUart =0;
 						msg++;
@@ -357,7 +355,9 @@ int Main_ByPass_SocketToUart()
 			break;
 
 		case BSN_START_ACK:
-			nBeaconValue = m_pMsgQueue->m_vcemsg.MsgPacket.data[0];
+			char ch[100] = "FF";
+//			nBeaconValue = m_pMsgQueue->m_vcemsg.MsgPacket.data[0];
+			nBeaconValue = (int)strtol(ch, NULL, 16);
 			m_pMsgHandler->m_DataFlag =0;
 			m_pMsgHandler->m_DataCnt =0;
 			m_pMsgHandler->Map_AcknowCnt =0;
@@ -840,18 +840,14 @@ int ServiceStart_Cfm()
 {
 	int Ret =0;
 
-	while(m_pMsgQueue->m_bReadEnd_UartMessage) {
-		if(GetUartMsg()) {			
-			m_pSocketHandle->SendMessage(SERVICESTART_CONFIRM, m_GetInforPacket);
-			m_pMsgQueue->m_bReadEnd_UartMessage =0;
-			Ret =1;
-			break;
-		}
-		else {
-			printf("main ServiceStart_Cfm\n");
-			m_pMsgQueue->m_bReadEnd_UartMessage =0;
-			break;
-		}
+	if(GetUartMsg()) {			
+		m_pSocketHandle->SendMessage(SERVICESTART_CONFIRM, m_GetInforPacket);
+		m_pMsgQueue->m_bReadEnd_UartMessage =0;
+		Ret =1;
+	}
+	else {
+		m_pMsgQueue->m_bReadEnd_UartMessage =0;
+
 	}
 
 	return Ret;
@@ -860,7 +856,6 @@ int ServiceStart_Cfm()
 int Socket_Registration_Req()
 {
 	m_pSocketHandle->SendMessage(REGISTRATION_REQUEST, m_GetInforPacket);
-	printf("main_Socket_Registration_Req()\n");
 
 	return 1;
 }
@@ -987,7 +982,6 @@ int GetUartMsg()
 	//	m_pSocket->m_pSocMsgqueue->GetPanID(Getpacket.header.panID);
 	}
 
-	printf("return 1\n");
 	return 1;
 }
 
