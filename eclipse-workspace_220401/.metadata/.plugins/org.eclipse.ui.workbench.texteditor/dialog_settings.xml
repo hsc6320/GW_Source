@@ -1,15 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+<<<<<<< Updated upstream
 		<item key="selection" value="SERVICESTART_CONFIRM"/>
+=======
+		<item key="selection" value="th_Socket_delay"/>
+>>>>>>> Stashed changes
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+<<<<<<< Updated upstream
 			<item value="SERVICESTART_CONFIRM"/>
 			<item value="nBeaconValue"/>
+=======
+			<item value="th_Socket_delay"/>
+			<item value="delay"/>
+			<item value="th_delay"/>
+			<item value="Send_Function"/>
+			<item value="p_thread"/>
+			<item value="230400"/>
+			<item value="temp2"/>
+			<item value="nSize"/>
+			<item value="nCount"/>
+			<item value="115200"/>
+			<item value="GetChecksum"/>
+			<item value="checksum"/>
+			<item value="Main_TagVal_CheckParity2"/>
+			<item value="Redown"/>
+			<item value="m_pMsgQueue-&gt;Redown"/>
+>>>>>>> Stashed changes
 		</list>
 		<list key="replacehistory">
 		</list>

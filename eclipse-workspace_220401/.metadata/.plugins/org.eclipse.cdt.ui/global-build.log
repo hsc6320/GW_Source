@@ -1,4 +1,4 @@
-16:15:52 **** Build of configuration Debug for project Demo ****
+15:02:31 **** Build of configuration Debug for project Demo ****
 make all 
 Building file: ../uart/uart.cpp
 Invoking: Cross G++ Compiler
@@ -22,17 +22,13 @@ arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Socket/
 ../Socket/socket.cpp:154:27: warning: NULL used in arithmetic [-Wpointer-arith]
    if(pAddr->sa_data[i] != NULL) {
                            ^~~~
-../Socket/socket.cpp: In member function ‘int Socket::Send_Function()’:
-../Socket/socket.cpp:408:6: warning: unused variable ‘failcnt’ [-Wunused-variable]
-  int failcnt =0;
-      ^~~~~~~
 Finished building: ../Socket/socket.cpp
  
 Building file: ../Main.cpp
 Invoking: Cross G++ Compiler
 arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
 ../Main.cpp: In function ‘int Main_Check_TagPassFail2(int*, int*)’:
-../Main.cpp:669:7: warning: variable ‘temp2’ set but not used [-Wunused-but-set-variable]
+../Main.cpp:659:7: warning: variable ‘temp2’ set but not used [-Wunused-but-set-variable]
   BYTE temp2 =0;
        ^~~~~
 Finished building: ../Main.cpp
@@ -52,42 +48,6 @@ Invoking: Cross G++ Linker
 arm-linux-gnueabihf-g++  -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
 Finished building target: Demo
  
-16:26:43 **** Incremental Build of configuration Debug for project Demo ****
-make all 
-Building file: ../Socket/SocketHandler.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
-Finished building: ../Socket/SocketHandler.cpp
- 
-Building file: ../Socket/socket.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
-../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
-../Socket/socket.cpp:154:27: warning: NULL used in arithmetic [-Wpointer-arith]
-   if(pAddr->sa_data[i] != NULL) {
-                           ^~~~
-Finished building: ../Socket/socket.cpp
- 
-Building target: Demo
-Invoking: Cross G++ Linker
-arm-linux-gnueabihf-g++  -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
-Finished building target: Demo
- 
-16:37:08 **** Incremental Build of configuration Debug for project Demo ****
-make all 
-Building file: ../MsgQueue.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"MsgQueue.d" -MT"MsgQueue.o" -o "MsgQueue.o" "../MsgQueue.cpp"
-Finished building: ../MsgQueue.cpp
- 
-Building target: Demo
-Invoking: Cross G++ Linker
-arm-linux-gnueabihf-g++  -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
-Finished building target: Demo
- 
-16:37:38 **** Incremental Build of configuration Debug for project Demo ****
-make all 
-make: 'all'을(를) 위해 할 일이 없습니다.
-17:06:30 **** Incremental Build of configuration Debug for project Demo ****
+15:07:10 **** Incremental Build of configuration Debug for project Demo ****
 make all 
 make: 'all'을(를) 위해 할 일이 없습니다.

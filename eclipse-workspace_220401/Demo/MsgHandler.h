@@ -67,7 +67,7 @@ public:
 	int UartPacket_ReDataIndicateStart(BYTE u8data);
 	int UartPacket_ReDataAcknowledge_DownStart(BYTE u8data);
 	int UartPacket_ReDataAcknowledge_DataIndicateStart(BYTE u8data);
-	int Send_BeaconData(int ibeaconvalue);
+	int Send_BeaconData(BYTE ibeaconvalue);
 	WORD ByteToWord(BYTE puData, BYTE puData1);
 	int bClear();
 };

@@ -48,7 +48,7 @@ int nflagRegistration_Req =0;
 int nTagCnt =0;
 int socket_fd =0;
 int nBeaconCnt =0, nTempBeaconCnt =0, nTemp2BeaconCnt = 0;
-int nBeaconValue =0;
+BYTE nBeaconValue =0;
 int bReDownloadFlag =0, bDataAckFlag =0;
 int GetUartMsg();
 BYTE GetChecksum(BYTE* puData, int len);
@@ -200,17 +200,7 @@ int Main_ServiceStart_TagAssociation_Init()
 				Socket_Connect_Req();
 				msg++;
 				break;
-			case 3:
-			/*	if(m_pSocket->m_iSocketReceiveEnd) {
-					if(m_pSocket->m_SocketMsg_vec[MSGTYPE] == CONNECT_CONFIRM) {
-						m_pSocket->m_iSocketReceiveEnd =0;
-						printf("main switch 3-1 SERVIadCESTART_msgtype: 0x%x\n", m_pSocket->m_SocketMsg_vec[MSGTYPE]);
-						msg++;
-					}
-				}
-				break;
-			case 4:*/
-			//	printf("MESSAGE TYPE : 0x%x(%d)\n", m_pSocket->m_SocketMsg_vec[MSGTYPE]);
+			case 3:	
 				if(m_pSocket->m_iSocketReceiveEnd || m_pSocket->m_iBypassSocketToUart) {
 					if(m_pSocket->m_SocketMsg_vec[MSGTYPE] == SERVICESTART_REQUEST) {
 						Main_SendSocketMsgToUart(m_pSocket->m_SocketMsg_vec[MSGTYPE]);
@@ -355,13 +345,13 @@ int Main_ByPass_SocketToUart()
 			break;
 
 		case BSN_START_ACK:
-			char ch[100] = "FF";
-//			nBeaconValue = m_pMsgQueue->m_vcemsg.MsgPacket.data[0];
-			nBeaconValue = (int)strtol(ch, NULL, 16);
+//			char ch[100] = "FF";
+			nBeaconValue = (BYTE)m_pMsgQueue->m_vcemsg.MsgPacket.data[0];
+//			nBeaconValue = (int)strtol(ch, NULL, 16);
 			m_pMsgHandler->m_DataFlag =0;
 			m_pMsgHandler->m_DataCnt =0;
 			m_pMsgHandler->Map_AcknowCnt =0;
-			m_pMsgHandler->Map_AcknowCnt2 = (16 * (nBeaconValue+1))-1;
+			m_pMsgHandler->Map_AcknowCnt2 = (16 * ((int)(nBeaconValue)+1))-1;
 
 			if(m_pMsgHandler->m_nUartArrayDataDownCnt == m_pMsgQueue->m_nMapParity) {
 				Main_Service_Stop();
@@ -1127,12 +1117,11 @@ int main(int argc, char *argv[])
 	th_delay(30);
 	th_delay(40);
 	th_delay(50);
-	th_delay(100);
-	th_delay(200);
-	th_delay(700);
 
 	Main_Socket_Init();
-	TagAssociation_Init();
+	th_delay(100);
+	th_delay(200);
+	TagAssociation_Init();	
 
 	while(1)
 	{
