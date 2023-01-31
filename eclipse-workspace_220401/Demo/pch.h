@@ -56,7 +56,7 @@
 #define PASS 	1
 #define FAIL 	0
 
-#define BEACON_MAX 129
+#define BEACON_MAX 9
 
 #ifdef  DEBUG_LEVEL_
 #define dp(n, fmt, args...)	if (DEBUG_LEVEL_ <= n) fprintf(stderr, "%s:%d,", fmt, __FILE__, __LINE__, ## args)
