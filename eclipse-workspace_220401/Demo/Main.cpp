@@ -778,6 +778,17 @@ int Main_TagVal_CheckParity2(std::vector<std::vector<BYTE>> V_ArrayData)
 	printf("\nAfter Sort2 %d: \n", (int)m_pMsgQueue->m_ArrayDataAcknowledge[0].size());
 
 	for(int i=0; i<m_pMsgHandler->m_nUartArrayDataDownCnt; i++) {
+		if(i+1 == m_pMsgHandler->m_nUartArrayDataDownCnt) {
+			if(m_pMsgQueue->m_ArrayDataAcknowledge[i].size() == 0 ) {
+				TempVec.clear();
+				temp2 = 0;
+				TempVec.push_back(temp2);
+
+				m_pMsgQueue->m_ArrayDataAcknowledge.push_back(TempVec);
+				printf("End(%d == %d) of vector Data is Zero \n", i+1, m_pMsgHandler->m_nUartArrayDataDownCnt);
+				break;
+			}
+		}
 		if( ((i == 0) && (m_pMsgQueue->m_ArrayDataAcknowledge[i].at(0) != i+1)) ) {
 			TempVec.clear();
 			temp2 = 0;
