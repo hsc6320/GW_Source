@@ -418,24 +418,12 @@ int Socket::Send_Function()
 	delete[] m_p8uSendData;
 	m_p8uSendData = NULL;
 
+	ret = write(m_serv_sock,p8Data,nDataLen);		
 
-	while(1)
- 	{
- 		ret = write(m_serv_sock,p8Data,nDataLen);
-		if(ret > 0 ) {
-			break;
-		}
-		else {
-			th_Socket_delay(1000);
-			failcnt++;
-		
-			if(failcnt > 5)
-				break;
-		}
-		
-	}
-		
-	printf(" ret :%d <--SERVER\n\n", ret);
+	if(ret == 0) {
+		printf("SendFail\n");
+	else 
+		printf(" ret :%d <--SERVER\n\n", ret);
 
 	return ret;
 }
