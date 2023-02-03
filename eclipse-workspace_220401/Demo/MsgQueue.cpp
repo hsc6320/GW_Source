@@ -108,6 +108,7 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 		{
 
 			if(u8Data[MSGTYPE] == TAG_ASSOCIATION) {
+
 				m_MsgQueueDataAssocation.clear();
 				memcpy(m_u8SendData, u8Data, len);
 				for(int i=0; i<len; i++) {

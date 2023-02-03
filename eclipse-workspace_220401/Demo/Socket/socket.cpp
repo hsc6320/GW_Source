@@ -422,6 +422,7 @@ int Socket::Send_Function()
 
 	if(ret == 0) {
 		printf("SendFail\n");
+	}
 	else 
 		printf(" ret :%d <--SERVER\n\n", ret);
 
