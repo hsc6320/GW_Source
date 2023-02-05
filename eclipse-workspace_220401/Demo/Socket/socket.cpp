@@ -420,7 +420,7 @@ int Socket::Send_Function()
 
 	ret = write(m_serv_sock,p8Data,nDataLen);		
 
-	if(ret == 0) {
+	if(ret == 0)
 		printf("SendFail\n");
 	else 
 		printf(" ret :%d <--SERVER\n\n", ret);

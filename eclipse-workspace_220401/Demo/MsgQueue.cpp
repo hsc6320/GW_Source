@@ -114,10 +114,12 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 					m_MsgQueueDataAssocation.push_back(u8Data[i]);
 					printf("%x ", m_MsgQueueDataAssocation[i]);
 				}
-				printf("\n");						
-				m_MsgQueueTagData.push_back(m_MsgQueueDataAssocation);
+				printf("\n");
+				m_Queue.push(m_MsgQueueDataAssocation);
+			//	m_MsgQueueTagData.push_back(m_MsgQueueDataAssocation);
 				m_MsgQueueDataAssocation.clear();
 				m_nSendTagCount++;
+				printf("m_nSendTagCount : %d\n", m_nSendTagCount );
 				m_bReadEnd_UartMessage =1;
 				return 1;
 			}

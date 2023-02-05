@@ -11,6 +11,7 @@
 
 #include "../pch.h"
 #include "Socket.h"
+#include <queue>
 #include "../MsgQueue.h"
 
 typedef struct _Packet {
@@ -41,7 +42,7 @@ public:
 	int DownLoad_Start_Ack();
 	int SendSocket_Data(PRE_DEFINE::S_PACKET packet);
 	void SetMsg_StartCfm_Remalloc(int OnOff);
-	void TagData(std::vector<std::vector<BYTE>> vec);
+	void TagData(std::queue<std::vector<BYTE>> que);
 };
 
 #endif /* SOCKET_SOCKETHANDLER_H_ */

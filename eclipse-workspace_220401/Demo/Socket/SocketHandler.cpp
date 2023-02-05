@@ -10,7 +10,9 @@
 Socket* pSocket;
 MsgQueue* pUartQueue;
 int nServiceStart_Confirm =0;
-std::vector<std::vector<BYTE>> vTagData;
+//std::vector<std::vector<BYTE>> vTagData;
+std::queue<std::vector<BYTE>> vTagData;
+
 SocketHandler::SocketHandler()
 {
 	m_nTagDataCount =0;
@@ -262,17 +264,20 @@ void SocketHandler::SetMsg_StartCfm_Remalloc(int OnOff)
 		m_nTagDataCount = 0; 
 		pUartQueue->m_nSendTagCount = 0;
 	}
-	printf("SetMsg_StartCfm_Remalloc(%d)\n", nServiceStart_Confirm);
+//	printf("SetMsg_StartCfm_Remalloc(%d)\n", nServiceStart_Confirm);
 }
-
-void SocketHandler::TagData(std::vector<std::vector<BYTE>> vec)
+//std::queue<std::vector<BYTE>> m_Queue;
+//void SocketHandler::TagData(std::vector<std::vector<BYTE>> vec)
+void SocketHandler::TagData(std::queue<std::vector<BYTE>> que)
 {
 	BYTE pu8data[1024];
 	int iBufcnt =0;
+	std::vector<std::vector<BYTE>> vec;
 
-	vTagData = vec;
+	vTagData = que;
 
 	printf("TagData\n");
+	/*
 	for(int k=m_nTagDataCount; k<pUartQueue->m_nSendTagCount; k++) {
 		printf("m_nTagDataCount : %d, m_nSendTagCount :%d\n", m_nTagDataCount, pUartQueue->m_nSendTagCount);
 		for(int i=0; i<(int)vTagData[k].size(); i++) {
@@ -293,7 +298,26 @@ void SocketHandler::TagData(std::vector<std::vector<BYTE>> vec)
 		m_nTagDataCount++;
 	
 	}
-	vTagData.clear();
+	*/
+	vec.push_back(vTagData.front());
+	for(int i=0; i<(int)vec.size(); i++) {
+		for(int k=0; k<(int)vec[i].size(); k++) {
+			printf("%x ", vec[i][k]);
+			pu8data[iBufcnt] = vec[i][k];
+			iBufcnt++;
+		}
+	}
+	printf("\n");
+
+	if(pSocket->Send_Message(pu8data, iBufcnt) > 0 ) {	
+		vTagData.pop();
+	}
+	else
+		printf("Socket Write Fail\n");
+
+	iBufcnt =0;
+	memset(pu8data, 0, 1024);
+
 	printf("TagData END()\n");
 	
 }

@@ -1,44 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-<<<<<<< Updated upstream
-		<item key="selection" value="SERVICESTART_CONFIRM"/>
-=======
-		<item key="selection" value="th_Socket_delay"/>
->>>>>>> Stashed changes
+		<item key="selection" value="TagData"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
-<<<<<<< Updated upstream
-			<item value="SERVICESTART_CONFIRM"/>
-			<item value="nBeaconValue"/>
-=======
-			<item value="th_Socket_delay"/>
-			<item value="delay"/>
-			<item value="th_delay"/>
-			<item value="Send_Function"/>
-			<item value="p_thread"/>
-			<item value="230400"/>
-			<item value="temp2"/>
-			<item value="nSize"/>
-			<item value="nCount"/>
-			<item value="115200"/>
-			<item value="GetChecksum"/>
-			<item value="checksum"/>
-			<item value="Main_TagVal_CheckParity2"/>
-			<item value="Redown"/>
-			<item value="m_pMsgQueue-&gt;Redown"/>
->>>>>>> Stashed changes
+			<item value="TagData"/>
+			<item value="Main_TagSort_Arrange2"/>
+			<item value="aa"/>
 		</list>
 		<list key="replacehistory">
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item key="DIALOG_X_ORIGIN" value="753"/>
-		<item key="DIALOG_Y_ORIGIN" value="192"/>
+		<item key="DIALOG_Y_ORIGIN" value="179"/>
 		<item key="DIALOG_WIDTH" value="348"/>
 		<item key="DIALOG_HEIGHT" value="437"/>
 		<item key="DIALOG_FONT_NAME" value="1|Ubuntu|11.0|0|GTK|1|"/>

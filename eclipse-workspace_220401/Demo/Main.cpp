@@ -161,7 +161,6 @@ int Main_ByPass_UartToSocket()
 			ServiceStart_Cfm();
 			break;
 		case TAG_ASSOCIATION:
-			printf("TAG_ASSOCIATION\n");
 			if(m_pMsgQueue->m_nSendTagCount > 0) {
 				m_pSocketHandle->SetMsg_StartCfm_Remalloc(1);
 			}
@@ -819,8 +818,13 @@ int Main_TagVal_CheckParity2(std::vector<std::vector<BYTE>> V_ArrayData)
 
 int UartToSocket_TagAssociation()
 {
-	printf("UartToSocket_TagAssociation\n");
-	m_pSocketHandle->TagData(m_pMsgQueue->m_MsgQueueTagData);
+	//printf("UartToSocket_TagAssociation\n");
+	while(!m_pMsgQueue->m_Queue.empty()) {
+		m_pSocketHandle->TagData(m_pMsgQueue->m_Queue);
+		m_pMsgQueue->m_Queue.pop();	
+		m_pMsgQueue->m_nSendTagCount--;
+		printf("m_pMsgQueue->m_nSendTagCount : %d\n", m_pMsgQueue->m_nSendTagCount );
+	}
 	//m_pSocketHandle->SendMessage(TAG_ASSOCIATION, m_GetInforPacket);
 	return 1;
 }
@@ -1143,7 +1147,13 @@ int main(int argc, char *argv[])
 			ServerReConn();
 			TagAssociation_Init();
 			printf("Main TagData\n");
-			m_pSocketHandle->TagData(m_pMsgQueue->m_MsgQueueTagData);
+			while(!m_pMsgQueue->m_Queue.empty()) {
+				m_pSocketHandle->TagData(m_pMsgQueue->m_Queue);
+				m_pMsgQueue->m_Queue.pop();	
+				m_pMsgQueue->m_nSendTagCount--;
+				printf("m_pMsgQueue->m_nSendTagCount : %d\n", m_pMsgQueue->m_nSendTagCount );
+			}
+			
 		}
 		usleep(100);
 	}
