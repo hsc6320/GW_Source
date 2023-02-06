@@ -56,7 +56,7 @@ public:
 	int m_nSendTagCount;
 	int m_DataAckCnt;
 
-	std::queue<std::vector<BYTE*>> m_Queue;
+	std::queue<std::vector<BYTE>> m_Queue;
 	std::vector<std::vector<BYTE>> m_MsgQueueArrayDataAcknowledge;
 	std::vector<std::vector<BYTE>> m_ArrayDataAcknowledge;
 	std::vector<BYTE> m_MsgQueueDataAcknowledge;

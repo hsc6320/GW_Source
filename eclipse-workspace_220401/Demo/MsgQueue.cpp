@@ -55,6 +55,10 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 			m_MsgQueueDataAcknowledge.clear();
 			
 			if(u8Data[MSG_ACKNOWLEDGE_STATUS] == PAYLOAD_STATUS_SUCCESS) {
+			/*	if((BYTE)(ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO])) == 0x16) {
+					printf("End Ack Pass\n");
+					return 1;
+				}*/
 				Cnt = m_nMapParity;
 				for(int i=0; i< Cnt; i++) {
 					for(int j=0; j< (int)m_MsgQueueArrayDataAcknowledge[i].size(); j++) {
@@ -65,7 +69,7 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 								return 0;
 							}
 						}
-						else {								
+						else {
 							if(m_ArrayDataAcknowledge[i][j] == (BYTE)(ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO])) ) {
 								printf("m_ArrayDataAcknowledge m_nMapParity Overlap Parity [%d][%d]%x == %x\n", i, j, m_ArrayDataAcknowledge[i][j], ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO]));
 								return 0;
@@ -115,10 +119,12 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 					m_MsgQueueDataAssocation.push_back(u8Data[i]);
 					printf("%x ", m_MsgQueueDataAssocation[i]);
 				}
-				printf("\n");						
-				m_MsgQueueTagData.push_back(m_MsgQueueDataAssocation);
+				printf("\n");
+				m_Queue.push(m_MsgQueueDataAssocation);
+			//	m_MsgQueueTagData.push_back(m_MsgQueueDataAssocation);
 				m_MsgQueueDataAssocation.clear();
 				m_nSendTagCount++;
+				printf("m_nSendTagCount : %d\n", m_nSendTagCount );
 				m_bReadEnd_UartMessage =1;
 				return 1;
 			}

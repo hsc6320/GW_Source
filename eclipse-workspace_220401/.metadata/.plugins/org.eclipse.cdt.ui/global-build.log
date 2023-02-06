@@ -154,3 +154,624 @@ Invoking: Cross G++ Linker
 arm-linux-gnueabihf-g++  -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
 Finished building target: Demo
  
+21:45:39 **** Build of configuration Debug for project Demo ****
+make all 
+Building file: ../uart/uart.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"uart/uart.d" -MT"uart/uart.o" -o "uart/uart.o" "../uart/uart.cpp"
+Finished building: ../uart/uart.cpp
+ 
+Building file: ../Socket/SocketHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
+Finished building: ../Socket/SocketHandler.cpp
+ 
+Building file: ../Socket/SocketMsgQueue.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Socket/SocketMsgQueue.d" -MT"Socket/SocketMsgQueue.o" -o "Socket/SocketMsgQueue.o" "../Socket/SocketMsgQueue.cpp"
+Finished building: ../Socket/SocketMsgQueue.cpp
+ 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:154:27: warning: NULL used in arithmetic [-Wpointer-arith]
+   if(pAddr->sa_data[i] != NULL) {
+                           ^~~~
+../Socket/socket.cpp: In member function ‘int Socket::Send_Function()’:
+../Socket/socket.cpp:425:2: error: expected ‘}’ before ‘else’
+  else
+  ^~~~
+../Socket/socket.cpp:408:6: warning: unused variable ‘failcnt’ [-Wunused-variable]
+  int failcnt =0;
+      ^~~~~~~
+make: *** [Socket/subdir.mk:26: Socket/socket.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+21:46:01 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:154:27: warning: NULL used in arithmetic [-Wpointer-arith]
+   if(pAddr->sa_data[i] != NULL) {
+                           ^~~~
+../Socket/socket.cpp: In member function ‘int Socket::Send_Function()’:
+../Socket/socket.cpp:425:2: error: expected ‘}’ before ‘else’
+  else
+  ^~~~
+../Socket/socket.cpp:408:6: warning: unused variable ‘failcnt’ [-Wunused-variable]
+  int failcnt =0;
+      ^~~~~~~
+make: *** [Socket/subdir.mk:26: Socket/socket.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+21:46:12 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:154:27: warning: NULL used in arithmetic [-Wpointer-arith]
+   if(pAddr->sa_data[i] != NULL) {
+                           ^~~~
+../Socket/socket.cpp: In member function ‘int Socket::Send_Function()’:
+../Socket/socket.cpp:408:6: warning: unused variable ‘failcnt’ [-Wunused-variable]
+  int failcnt =0;
+      ^~~~~~~
+Finished building: ../Socket/socket.cpp
+ 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘int Main_Check_TagPassFail2(int*, int*)’:
+../Main.cpp:659:7: warning: variable ‘temp2’ set but not used [-Wunused-but-set-variable]
+  BYTE temp2 =0;
+       ^~~~~
+Finished building: ../Main.cpp
+ 
+Building file: ../MsgHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"MsgHandler.d" -MT"MsgHandler.o" -o "MsgHandler.o" "../MsgHandler.cpp"
+Finished building: ../MsgHandler.cpp
+ 
+Building file: ../MsgQueue.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"MsgQueue.d" -MT"MsgQueue.o" -o "MsgQueue.o" "../MsgQueue.cpp"
+Finished building: ../MsgQueue.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++  -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+23:04:22 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/SocketHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
+../Socket/SocketHandler.cpp:271:6: error: prototype for ‘void SocketHandler::TagData(std::queue<std::vector<unsigned char> >)’ does not match any in class ‘SocketHandler’
+ void SocketHandler::TagData(std::queue<std::vector<BYTE>> que)
+      ^~~~~~~~~~~~~
+In file included from ../Socket/SocketHandler.cpp:8:0:
+../Socket/SocketHandler.h:44:7: error: candidate is: void SocketHandler::TagData(std::vector<std::vector<unsigned char> >)
+  void TagData(std::vector<std::vector<BYTE>> vec);
+       ^~~~~~~
+make: *** [Socket/subdir.mk:26: Socket/SocketHandler.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+23:04:38 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/SocketHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
+../Socket/SocketHandler.cpp:271:6: error: prototype for ‘void SocketHandler::TagData(std::queue<std::vector<unsigned char> >)’ does not match any in class ‘SocketHandler’
+ void SocketHandler::TagData(std::queue<std::vector<BYTE>> que)
+      ^~~~~~~~~~~~~
+In file included from ../Socket/SocketHandler.cpp:8:0:
+../Socket/SocketHandler.h:44:7: error: candidate is: void SocketHandler::TagData(std::vector<std::vector<unsigned char> >)
+  void TagData(std::vector<std::vector<BYTE>> vec);
+       ^~~~~~~
+make: *** [Socket/subdir.mk:26: Socket/SocketHandler.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+23:05:01 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/SocketHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
+../Socket/SocketHandler.cpp:271:59: error: template argument 1 is invalid
+ void SocketHandler::TagData(std::queue<std::vector<BYTE*> que)
+                                                           ^~~
+../Socket/SocketHandler.cpp:271:59: error: template argument 2 is invalid
+../Socket/SocketHandler.cpp:271:59: error: template argument 1 is invalid
+../Socket/SocketHandler.cpp:271:59: error: template argument 2 is invalid
+../Socket/SocketHandler.cpp:271:59: error: template argument 1 is invalid
+../Socket/SocketHandler.cpp:271:59: error: template argument 2 is invalid
+../Socket/SocketHandler.cpp:271:34: error: variable or field ‘TagData’ declared void
+ void SocketHandler::TagData(std::queue<std::vector<BYTE*> que)
+                                  ^~~~~
+../Socket/SocketHandler.cpp:271:59: error: template argument 1 is invalid
+ void SocketHandler::TagData(std::queue<std::vector<BYTE*> que)
+                                                           ^~~
+../Socket/SocketHandler.cpp:271:59: error: template argument 2 is invalid
+make: *** [Socket/subdir.mk:26: Socket/SocketHandler.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+23:05:07 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/SocketHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
+../Socket/SocketHandler.cpp:271:6: error: prototype for ‘void SocketHandler::TagData(std::queue<std::vector<unsigned char*> >)’ does not match any in class ‘SocketHandler’
+ void SocketHandler::TagData(std::queue<std::vector<BYTE*>> que)
+      ^~~~~~~~~~~~~
+In file included from ../Socket/SocketHandler.cpp:8:0:
+../Socket/SocketHandler.h:44:7: error: candidate is: void SocketHandler::TagData(std::vector<std::vector<unsigned char> >)
+  void TagData(std::vector<std::vector<BYTE>> vec);
+       ^~~~~~~
+make: *** [Socket/subdir.mk:26: Socket/SocketHandler.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+23:05:13 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/SocketHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
+../Socket/SocketHandler.cpp:271:6: error: prototype for ‘void SocketHandler::TagData(std::queue<std::vector<unsigned char> >)’ does not match any in class ‘SocketHandler’
+ void SocketHandler::TagData(std::queue<std::vector<BYTE>> que)
+      ^~~~~~~~~~~~~
+In file included from ../Socket/SocketHandler.cpp:8:0:
+../Socket/SocketHandler.h:44:7: error: candidate is: void SocketHandler::TagData(std::vector<std::vector<unsigned char> >)
+  void TagData(std::vector<std::vector<BYTE>> vec);
+       ^~~~~~~
+make: *** [Socket/subdir.mk:26: Socket/SocketHandler.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+23:07:36 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/SocketHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
+../Socket/SocketHandler.cpp:271:6: error: prototype for ‘void SocketHandler::TagData(std::queue<std::vector<unsigned char> >)’ does not match any in class ‘SocketHandler’
+ void SocketHandler::TagData(std::queue<std::vector<BYTE>> que)
+      ^~~~~~~~~~~~~
+In file included from ../Socket/SocketHandler.cpp:8:0:
+../Socket/SocketHandler.h:44:7: error: candidate is: void SocketHandler::TagData(std::vector<std::vector<unsigned char> >)
+  void TagData(std::vector<std::vector<BYTE>> vec);
+       ^~~~~~~
+make: *** [Socket/subdir.mk:26: Socket/SocketHandler.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+23:09:00 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/SocketHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
+../Socket/SocketHandler.cpp:271:6: error: prototype for ‘void SocketHandler::TagData(std::queue<std::vector<unsigned char> >)’ does not match any in class ‘SocketHandler’
+ void SocketHandler::TagData(std::queue<std::vector<BYTE>> que)
+      ^~~~~~~~~~~~~
+In file included from ../Socket/SocketHandler.cpp:8:0:
+../Socket/SocketHandler.h:45:7: error: candidate is: void SocketHandler::TagData(std::vector<std::vector<unsigned char> >)
+  void TagData(std::vector<std::vector<BYTE>> vec);
+       ^~~~~~~
+make: *** [Socket/subdir.mk:26: Socket/SocketHandler.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+23:10:17 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/SocketHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
+../Socket/SocketHandler.cpp:271:6: error: prototype for ‘void SocketHandler::TagData(std::queue<std::vector<unsigned char> >)’ does not match any in class ‘SocketHandler’
+ void SocketHandler::TagData(std::queue<std::vector<BYTE>> que)
+      ^~~~~~~~~~~~~
+In file included from ../Socket/SocketHandler.cpp:8:0:
+../Socket/SocketHandler.h:45:7: error: candidate is: void SocketHandler::TagData(std::vector<std::vector<unsigned char> >)
+  void TagData(std::vector<std::vector<BYTE>> vec);
+       ^~~~~~~
+make: *** [Socket/subdir.mk:26: Socket/SocketHandler.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+23:10:37 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/SocketHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
+../Socket/SocketHandler.cpp: In member function ‘void SocketHandler::TagData(std::queue<std::vector<unsigned char> >)’:
+../Socket/SocketHandler.cpp:304:23: warning: format ‘%x’ expects argument of type ‘unsigned int’, but argument 2 has type ‘__gnu_cxx::__alloc_traits<std::allocator<std::vector<unsigned char> > >::value_type {aka std::vector<unsigned char>}’ [-Wformat=]
+   printf("%x ", vec[i]);
+                       ^
+../Socket/SocketHandler.cpp:305:27: error: cannot convert ‘__gnu_cxx::__alloc_traits<std::allocator<std::vector<unsigned char> > >::value_type {aka std::vector<unsigned char>}’ to ‘BYTE {aka unsigned char}’ in assignment
+   pu8data[iBufcnt] = vec[i];
+                           ^
+make: *** [Socket/subdir.mk:26: Socket/SocketHandler.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+23:12:49 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/SocketHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
+../Socket/SocketHandler.cpp: In member function ‘void SocketHandler::TagData(std::queue<std::vector<unsigned char> >)’:
+../Socket/SocketHandler.cpp:273:7: warning: variable ‘pu8data’ set but not used [-Wunused-but-set-variable]
+  BYTE pu8data[1024];
+       ^~~~~~~
+Finished building: ../Socket/SocketHandler.cpp
+ 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘int Main_Check_TagPassFail2(int*, int*)’:
+../Main.cpp:659:7: warning: variable ‘temp2’ set but not used [-Wunused-but-set-variable]
+  BYTE temp2 =0;
+       ^~~~~
+../Main.cpp: In function ‘int main(int, char**)’:
+../Main.cpp:1146:59: error: no matching function for call to ‘SocketHandler::TagData(std::vector<std::vector<unsigned char> >&)’
+    m_pSocketHandle->TagData(m_pMsgQueue->m_MsgQueueTagData);
+                                                           ^
+In file included from ../Main.cpp:12:0:
+../Socket/SocketHandler.h:45:7: note: candidate: void SocketHandler::TagData(std::queue<std::vector<unsigned char> >)
+  void TagData(std::queue<std::vector<BYTE>> que);
+       ^~~~~~~
+../Socket/SocketHandler.h:45:7: note:   no known conversion for argument 1 from ‘std::vector<std::vector<unsigned char> >’ to ‘std::queue<std::vector<unsigned char> >’
+make: *** [subdir.mk:26: Main.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+23:13:57 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/SocketHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
+../Socket/SocketHandler.cpp:321:8: error: expected constructor, destructor, or type conversion before ‘(’ token
+  printf("TagData END()\n");
+        ^
+../Socket/SocketHandler.cpp:323:1: error: expected declaration before ‘}’ token
+ }
+ ^
+make: *** [Socket/subdir.mk:26: Socket/SocketHandler.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+23:14:13 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/SocketHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
+Finished building: ../Socket/SocketHandler.cpp
+ 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘int Main_Check_TagPassFail2(int*, int*)’:
+../Main.cpp:659:7: warning: variable ‘temp2’ set but not used [-Wunused-but-set-variable]
+  BYTE temp2 =0;
+       ^~~~~
+../Main.cpp: In function ‘int main(int, char**)’:
+../Main.cpp:1146:59: error: no matching function for call to ‘SocketHandler::TagData(std::vector<std::vector<unsigned char> >&)’
+    m_pSocketHandle->TagData(m_pMsgQueue->m_MsgQueueTagData);
+                                                           ^
+In file included from ../Main.cpp:12:0:
+../Socket/SocketHandler.h:45:7: note: candidate: void SocketHandler::TagData(std::queue<std::vector<unsigned char> >)
+  void TagData(std::queue<std::vector<BYTE>> que);
+       ^~~~~~~
+../Socket/SocketHandler.h:45:7: note:   no known conversion for argument 1 from ‘std::vector<std::vector<unsigned char> >’ to ‘std::queue<std::vector<unsigned char> >’
+make: *** [subdir.mk:26: Main.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+23:14:52 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘int Main_Check_TagPassFail2(int*, int*)’:
+../Main.cpp:659:7: warning: variable ‘temp2’ set but not used [-Wunused-but-set-variable]
+  BYTE temp2 =0;
+       ^~~~~
+Finished building: ../Main.cpp
+ 
+Building file: ../MsgQueue.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"MsgQueue.d" -MT"MsgQueue.o" -o "MsgQueue.o" "../MsgQueue.cpp"
+Finished building: ../MsgQueue.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++  -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+23:43:28 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/SocketHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
+Finished building: ../Socket/SocketHandler.cpp
+ 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘int Main_Check_TagPassFail2(int*, int*)’:
+../Main.cpp:659:7: warning: variable ‘temp2’ set but not used [-Wunused-but-set-variable]
+  BYTE temp2 =0;
+       ^~~~~
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++  -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+23:54:58 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘int Main_Check_TagPassFail2(int*, int*)’:
+../Main.cpp:659:7: warning: variable ‘temp2’ set but not used [-Wunused-but-set-variable]
+  BYTE temp2 =0;
+       ^~~~~
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++  -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+23:55:15 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+make: 'all'을(를) 위해 할 일이 없습니다.
+00:07:27 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/SocketHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
+Finished building: ../Socket/SocketHandler.cpp
+ 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘int Main_Check_TagPassFail2(int*, int*)’:
+../Main.cpp:658:7: warning: variable ‘temp2’ set but not used [-Wunused-but-set-variable]
+  BYTE temp2 =0;
+       ^~~~~
+../Main.cpp: In function ‘int UartToSocket_TagAssociation()’:
+../Main.cpp:827:2: error: expected ‘;’ before ‘}’ token
+  }
+  ^
+make: *** [subdir.mk:26: Main.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+00:07:46 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘int Main_Check_TagPassFail2(int*, int*)’:
+../Main.cpp:658:7: warning: variable ‘temp2’ set but not used [-Wunused-but-set-variable]
+  BYTE temp2 =0;
+       ^~~~~
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++  -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+00:30:14 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘int Main_Check_TagPassFail2(int*, int*)’:
+../Main.cpp:658:7: warning: variable ‘temp2’ set but not used [-Wunused-but-set-variable]
+  BYTE temp2 =0;
+       ^~~~~
+Finished building: ../Main.cpp
+ 
+Building file: ../MsgQueue.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"MsgQueue.d" -MT"MsgQueue.o" -o "MsgQueue.o" "../MsgQueue.cpp"
+Finished building: ../MsgQueue.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++  -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+13:13:53 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../uart/uart.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"uart/uart.d" -MT"uart/uart.o" -o "uart/uart.o" "../uart/uart.cpp"
+Finished building: ../uart/uart.cpp
+ 
+Building file: ../Socket/SocketHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
+Finished building: ../Socket/SocketHandler.cpp
+ 
+Building file: ../Socket/SocketMsgQueue.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Socket/SocketMsgQueue.d" -MT"Socket/SocketMsgQueue.o" -o "Socket/SocketMsgQueue.o" "../Socket/SocketMsgQueue.cpp"
+Finished building: ../Socket/SocketMsgQueue.cpp
+ 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:154:27: warning: NULL used in arithmetic [-Wpointer-arith]
+   if(pAddr->sa_data[i] != NULL) {
+                           ^~~~
+../Socket/socket.cpp: In member function ‘int Socket::Send_Function()’:
+../Socket/socket.cpp:408:6: warning: unused variable ‘failcnt’ [-Wunused-variable]
+  int failcnt =0;
+      ^~~~~~~
+../Socket/socket.cpp:425:2: warning: no return statement in function returning non-void [-Wreturn-type]
+  }
+  ^
+../Socket/socket.cpp: At global scope:
+../Socket/socket.cpp:426:2: error: expected unqualified-id before ‘else’
+  else
+  ^~~~
+../Socket/socket.cpp:429:2: error: expected unqualified-id before ‘return’
+  return ret;
+  ^~~~~~
+../Socket/socket.cpp:430:1: error: expected declaration before ‘}’ token
+ }
+ ^
+make: *** [Socket/subdir.mk:26: Socket/socket.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+13:14:16 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:154:27: warning: NULL used in arithmetic [-Wpointer-arith]
+   if(pAddr->sa_data[i] != NULL) {
+                           ^~~~
+../Socket/socket.cpp: In member function ‘int Socket::Send_Function()’:
+../Socket/socket.cpp:408:6: warning: unused variable ‘failcnt’ [-Wunused-variable]
+  int failcnt =0;
+      ^~~~~~~
+Finished building: ../Socket/socket.cpp
+ 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘int Main_Check_TagPassFail2(int*, int*)’:
+../Main.cpp:658:7: warning: variable ‘temp2’ set but not used [-Wunused-but-set-variable]
+  BYTE temp2 =0;
+       ^~~~~
+Finished building: ../Main.cpp
+ 
+Building file: ../MsgHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"MsgHandler.d" -MT"MsgHandler.o" -o "MsgHandler.o" "../MsgHandler.cpp"
+Finished building: ../MsgHandler.cpp
+ 
+Building file: ../MsgQueue.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"MsgQueue.d" -MT"MsgQueue.o" -o "MsgQueue.o" "../MsgQueue.cpp"
+Finished building: ../MsgQueue.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++  -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+13:22:11 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘int Main_Check_TagPassFail2(int*, int*)’:
+../Main.cpp:658:7: warning: variable ‘temp2’ set but not used [-Wunused-but-set-variable]
+  BYTE temp2 =0;
+       ^~~~~
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++  -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+13:59:06 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../MsgQueue.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"MsgQueue.d" -MT"MsgQueue.o" -o "MsgQueue.o" "../MsgQueue.cpp"
+Finished building: ../MsgQueue.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++  -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+14:00:07 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../uart/uart.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"uart/uart.d" -MT"uart/uart.o" -o "uart/uart.o" "../uart/uart.cpp"
+Finished building: ../uart/uart.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++  -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+14:02:21 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../uart/uart.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"uart/uart.d" -MT"uart/uart.o" -o "uart/uart.o" "../uart/uart.cpp"
+Finished building: ../uart/uart.cpp
+ 
+Building file: ../Socket/SocketHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
+Finished building: ../Socket/SocketHandler.cpp
+ 
+Building file: ../Socket/SocketMsgQueue.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Socket/SocketMsgQueue.d" -MT"Socket/SocketMsgQueue.o" -o "Socket/SocketMsgQueue.o" "../Socket/SocketMsgQueue.cpp"
+Finished building: ../Socket/SocketMsgQueue.cpp
+ 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:154:27: warning: NULL used in arithmetic [-Wpointer-arith]
+   if(pAddr->sa_data[i] != NULL) {
+                           ^~~~
+../Socket/socket.cpp: In member function ‘int Socket::Send_Function()’:
+../Socket/socket.cpp:408:6: warning: unused variable ‘failcnt’ [-Wunused-variable]
+  int failcnt =0;
+      ^~~~~~~
+Finished building: ../Socket/socket.cpp
+ 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘int Main_Check_TagPassFail2(int*, int*)’:
+../Main.cpp:658:7: warning: variable ‘temp2’ set but not used [-Wunused-but-set-variable]
+  BYTE temp2 =0;
+       ^~~~~
+Finished building: ../Main.cpp
+ 
+Building file: ../MsgHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"MsgHandler.d" -MT"MsgHandler.o" -o "MsgHandler.o" "../MsgHandler.cpp"
+Finished building: ../MsgHandler.cpp
+ 
+Building file: ../MsgQueue.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"MsgQueue.d" -MT"MsgQueue.o" -o "MsgQueue.o" "../MsgQueue.cpp"
+Finished building: ../MsgQueue.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++  -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+14:12:04 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../MsgQueue.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"MsgQueue.d" -MT"MsgQueue.o" -o "MsgQueue.o" "../MsgQueue.cpp"
+Finished building: ../MsgQueue.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++  -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+14:14:29 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../MsgQueue.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"MsgQueue.d" -MT"MsgQueue.o" -o "MsgQueue.o" "../MsgQueue.cpp"
+Finished building: ../MsgQueue.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++  -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+15:02:38 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../MsgQueue.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"MsgQueue.d" -MT"MsgQueue.o" -o "MsgQueue.o" "../MsgQueue.cpp"
+Finished building: ../MsgQueue.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++  -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
