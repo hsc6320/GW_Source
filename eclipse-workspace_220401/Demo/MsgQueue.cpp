@@ -146,7 +146,7 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 					m_vcemsg.MsgPacket.u8MsgType = u8Data[MSGTYPE];
 					m_vcemsg.MsgPacket.data[0] = u8Data[MSG_DATA];
 				//	printf("BSN_START_ACK msgtype : %x, becondata : %x \n", m_vcemsg.MsgPacket.u8MsgType, m_vcemsg.MsgPacket.data[0]);
-					m_bUartCommuniFlag = 1;
+					m_bUartCommuniFlag = 1;				
 					return 1;
 				}
 				else if( (u8Data[MSGTYPE] == DATAINDICATION_ACK) || (u8Data[MSGTYPE] == DOWNLOAD_START_ACK) ) {

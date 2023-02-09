@@ -272,7 +272,9 @@ int Main_ByPass_SocketToUart()
 		switch((int)m_pMsgQueue->m_vcemsg.MsgPacket.u8MsgType)
 		{
 		case DOWNLOAD_START_ACK:
-		//	printf("DOWNLOAD_START_ACK Compare Tag ID : %x, %x\n", m_pMsgQueue->m_vcemsg.MsgPacket.Saddr[0]| m_pMsgQueue->m_vcemsg.MsgPacket.Saddr[1], m_pMsgHandler->m_UartArrayDataDownMsg[m_pMsgHandler->m_nDataDownCount].at(MSG_DADDRZERO)|m_pMsgHandler->m_UartArrayDataDownMsg[m_pMsgHandler->m_nDataDownCount].at(MSG_DADDRONE));
+//	printf("DOWNLOAD_START_ACK Compare Tag ID : %x, %x\n", 
+//m_pMsgQueue->m_vcemsg.MsgPacket.Saddr[0]| m_pMsgQueue->m_vcemsg.MsgPacket.Saddr[1], 
+//m_pMsgHandler->m_UartArrayDataDownMsg[m_pMsgHandler->m_nDataDownCount].at(MSG_DADDRZERO) |m_pMsgHandler->m_UartArrayDataDownMsg[m_pMsgHandler->m_nDataDownCount].at(MSG_DADDRONE));
 
 			if(!bReDownloadFlag) {
 				if( (m_pMsgQueue->m_vcemsg.MsgPacket.Saddr[0]| m_pMsgQueue->m_vcemsg.MsgPacket.Saddr[1])
@@ -344,9 +346,7 @@ int Main_ByPass_SocketToUart()
 			break;
 
 		case BSN_START_ACK:
-//			char ch[100] = "FF";
 			nBeaconValue = (BYTE)m_pMsgQueue->m_vcemsg.MsgPacket.data[0];
-//			nBeaconValue = (int)strtol(ch, NULL, 16);
 			m_pMsgHandler->m_DataFlag =0;
 			m_pMsgHandler->m_DataCnt =0;
 			m_pMsgHandler->Map_AcknowCnt =0;
@@ -518,7 +518,9 @@ void Main_Service_Stop()
 	m_pMsgQueue->m_nMapParity =0;
 	m_pMsgQueue->Redown =0;
 	m_pMsgQueue->Map_dataAcknowParityCheck.clear();
-	m_pMsgQueue->m_ArrayDataAcknowledge.clear();
+	m_pMsgQueue->m_ArrayDataAcknowledge.clear();	
+	m_pMsgHandler->m_DataFlag =0;
+	m_pMsgHandler->m_DataCnt =0;
 
 	m_pMsgHandler->bClear();
 	memset(m_pMsgHandler->m_GetDownTagID, 0, 512);
@@ -697,11 +699,23 @@ int Main_TagVal_CheckParity(std::vector<std::vector<BYTE>> V_ArrayData)
 	BYTE temp2 =0;
 
 	for(int i=0; i<m_pMsgHandler->m_nUartArrayDataDownCnt; i++) {
-		if(m_pMsgQueue->m_MsgQueueArrayDataAcknowledge[i].size() <= 0) {
+		/*if(m_pMsgQueue->m_MsgQueueArrayDataAcknowledge[i].size() <= 0) {
 			TempVec.clear();
 			temp2 = 0xff;
 			TempVec.push_back(temp2);
 			m_pMsgQueue->m_MsgQueueArrayDataAcknowledge.insert(m_pMsgQueue->m_MsgQueueArrayDataAcknowledge.begin()+i,TempVec);
+		}*/
+		if(i+1 == m_pMsgHandler->m_nUartArrayDataDownCnt) {
+			printf("(%d == %d) of vector Data is Zero \n", i+1, m_pMsgHandler->m_nUartArrayDataDownCnt);
+			if(m_pMsgQueue->m_MsgQueueArrayDataAcknowledge[i].size() == 0 ) {
+				TempVec.clear();
+				temp2 = 0;
+				TempVec.push_back(temp2);
+
+				m_pMsgQueue->m_MsgQueueArrayDataAcknowledge.push_back(TempVec);
+				printf("End(%d == %d) of vector Data is Zero \n", i+1, m_pMsgHandler->m_nUartArrayDataDownCnt);
+				break;
+			}
 		}
 		if( (i == 0) && (m_pMsgQueue->m_MsgQueueArrayDataAcknowledge[i].at(0) != i+1) ) {
 			TempVec.clear();
@@ -774,7 +788,7 @@ int Main_TagVal_CheckParity2(std::vector<std::vector<BYTE>> V_ArrayData)
 	Main_MsgQueue_Sort_dataAck(1);
 	th_delay(10);
 	
-	printf("\nAfter Sort2 %d: \n", (int)m_pMsgQueue->m_ArrayDataAcknowledge[0].size());
+	printf("\nAfter Sort2 %d: \n", (int)m_pMsgQueue->m_ArrayDataAcknowledge.size());
 
 	for(int i=0; i<m_pMsgHandler->m_nUartArrayDataDownCnt; i++) {
 		if(i+1 == m_pMsgHandler->m_nUartArrayDataDownCnt) {

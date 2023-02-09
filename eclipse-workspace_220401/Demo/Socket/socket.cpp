@@ -23,6 +23,8 @@ struct epoll_event	ev, *events;
 
 extern UartComThread* m_MainComport;
 
+std::vector<std::vector<BYTE>> vecTagData;
+
 Socket::Socket()
 {
 	m_p8uData = NULL;
@@ -418,7 +420,8 @@ int Socket::Send_Function()
 	delete[] m_p8uSendData;
 	m_p8uSendData = NULL;
 
-	ret = write(m_serv_sock,p8Data,nDataLen);		
+	ret = write(m_serv_sock,p8Data,nDataLen);
+	//ret = write(m_serv_sock,&vecTagData,sizeof(vecTagData));
 
 	if(ret == 0)
 		printf("SendFail\n");

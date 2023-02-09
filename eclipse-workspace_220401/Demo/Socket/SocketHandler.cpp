@@ -10,7 +10,6 @@
 Socket* pSocket;
 MsgQueue* pUartQueue;
 int nServiceStart_Confirm =0;
-//std::vector<std::vector<BYTE>> vTagData;
 std::queue<std::vector<BYTE>> vTagData;
 
 SocketHandler::SocketHandler()

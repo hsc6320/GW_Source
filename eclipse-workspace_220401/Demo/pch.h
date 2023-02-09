@@ -56,7 +56,9 @@
 #define PASS 	1
 #define FAIL 	0
 
-#define BEACON_MAX 19
+#define BEACON_MAX 2
+
+#define BUILD_UINT16(loByte, hiByte)	((unsigned int )(((loByte) & 0x00FF) + (((hiByte) & 0x00FF) << 8)))
 
 #ifdef  DEBUG_LEVEL_
 #define dp(n, fmt, args...)	if (DEBUG_LEVEL_ <= n) fprintf(stderr, "%s:%d,", fmt, __FILE__, __LINE__, ## args)

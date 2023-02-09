@@ -329,7 +329,7 @@ int UartComThread::Uart_Config(uart_ctx_t* ctx, int baudrate)
 	case 230400:
 		ctx->newtio.c_cflag = B230400;
 		break;
-	case 460800:
+	case  460800:
 		ctx->newtio.c_cflag = B460800;
 		break;
 	case 921600:
@@ -416,7 +416,7 @@ int UartComThread::Uart_Write(int uartd, uint8_t* data, int size)
 	uart_ctx_t* ctx = (uart_ctx_t *)uartd;
 	if(!ctx || ctx->fd <= 0 || !data || size <= 0) return 0;
 
-	printf("Uart() ");
+	printf("Uart");
 	pthread_mutex_lock(&ctx->mutex);
 	while(wrotelen < size && failcnt < 5) {
 		int ret  =0;
@@ -424,10 +424,10 @@ int UartComThread::Uart_Write(int uartd, uint8_t* data, int size)
 		uint8_t* ptr = data + wrotelen;
 			ret = write(ctx->fd, ptr, towritelen*sizeof(uint8_t));
 			if(ret > 0) {
-				printf("Uart_Write ");
-				for(int i=0; i<size; i++) {
-					printf("%x ", ptr[i]);
-				}
+				printf("_Write ");
+		//		for(int i=0; i<size; i++) {
+		//			printf("%x ", ptr[i]);
+		//		}
 				printf(" End\n");
 				wrotelen += ret;
 			}
