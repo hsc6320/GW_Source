@@ -37,6 +37,7 @@ public:
 	void GetPanID(WORD panid);
 	void GetServerID(WORD severid);
 	int Registration_Request();
+	int Server_BSN_Stop_Packet();
 	WORD ByteToWord(BYTE puData, BYTE puData1);
 	int Connect_Request();
 	int DownLoad_Start_Ack();

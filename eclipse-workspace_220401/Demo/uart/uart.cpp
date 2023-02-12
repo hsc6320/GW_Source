@@ -215,7 +215,8 @@ void UartComThread::Exit_Uart_Thread()
 	printf("Exit_Uart_Thread() : [%d] \n", (int)status);
 
 }
-static void timer_handler(int signum)
+
+void timer_handler(int signum)
 {
     printf("Uart Read expired \t");
 

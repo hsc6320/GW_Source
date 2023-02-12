@@ -14,6 +14,7 @@ int iBeaconFlag2 =0;
 int CheckbsnFlag =0;
 int Map_AcknowOverlap =0;
 int Map_AcknowOverlap2 =0;
+int iSmallDataDown =0;
 
 MsgHandler::MsgHandler()
 {
@@ -213,7 +214,7 @@ int MsgHandler::UartPacket_DataDownStart(BYTE u8data)
 			printf("m_DataCnt : %d return 1\n", m_DataCnt);
 			return 1;
 		}
-		if(m_DataCnt == 0) {
+		if( (m_DataCnt == 0) && (m_nDataDownCount  == 0) ) {
 			m_nDataDownCount = 0;
 			m_DataFlag =1;
 			m_DataCnt++;
@@ -228,7 +229,7 @@ int MsgHandler::UartPacket_DataDownStart(BYTE u8data)
 		}
 	}
 	else {
-		if(Send_BeaconData(ibeaconvalue) == 0) {
+		if(!iSmallDataDown && (Send_BeaconData(ibeaconvalue) == 0) ) {
 			printf("UartPacket_DataDownStart() return 0\n");
 			return 0;
 		}
@@ -744,6 +745,12 @@ void MsgHandler::SetSocketArray(std::vector<std::vector<BYTE>> DataDownmsg, std:
 	m_nUartArrayDataDownCnt = (int)DataDownmsg.size();
 	m_nUartArrayDataIndicateCnt = (int)DataIndimsg.size();
 
+	if(m_nUartArrayDataDownCnt <= 15){
+		iSmallDataDown =1;
+	}
+	else {
+		iSmallDataDown =0;
+	}
 	printf("m_nUartArrayDataDownCnt : %d\n", m_nUartArrayDataDownCnt);
 	BSN_Start_Packet();
 }

@@ -67,7 +67,7 @@ int UartToSocket_Service_cfm();
 int Main_ByPass_SocketToUart();
 int Main_ByPass_UartToSocket();
 int uart_SetTimer();
-uint32_t Set_WaitTimer(timer_t *timerID, int expireMS, int intervalMS);
+int Set_WaitTimer(timer_t *timerID, int expireMS, int intervalMS);
 void PrintfHello(int sig, siginfo_t* si, void* uc);
 void th_delay(int millsec);
 int ServerReConn();
@@ -83,38 +83,39 @@ int Main_TagSort_Arrange2(int* iTemp, int* iTemp2);
 void Main_MsgQueue_Sort_dataAck(int iCheckZero);
 int Main_DownDataSort();
 
-static void timer_handler(int signum)
+void timer_handler()
 {
-
-	printf("Send Timer %d\n\n", signum);
+	printf("Send Timer \n\n");
 }
 
 
 int uart_SetTimer()
 {
-	struct sigaction sa;
+	/*struct sigaction sa;
 	struct itimerval timer;
 
 	memset(&sa, 0, sizeof(sa));
-	sa.sa_handler = &timer_handler;
-	sigaction(/*SIGVTALRM*/SIGRTMIN, &sa, NULL);
+	sa.sa_handler = timer_handler;*/
+//	sigaction(/*SIGVTALRM*/SIGRTMIN, &sa, NULL);
 
-	timer.it_interval.tv_sec = 1;
+/*	timer.it_interval.tv_sec = 1;
 	timer.it_interval.tv_usec = 0;
 
 	timer.it_value.tv_sec = 5;
 	timer.it_value.tv_usec = 0;
+*/
+//	setitimer(/*ITIMER_REAL*/CLOCK_REALTIME, &timer, NULL);
 
-	setitimer(/*ITIMER_REAL*/CLOCK_REALTIME, &timer, NULL);
 
-	while(1) {
-		if(getitimer(/*ITIMER_REAL*/CLOCK_REALTIME, &timer) == -1) {
-			printf("timer error\n");
-			exit(1);
-		}
-		printf("%d sec, %d msec.\n", (int)timer.it_value.tv_sec, (int)timer.it_value.tv_usec);
-		sleep(1);
-	}
+
+//	while(1) {
+//		if(getitimer(/*ITIMER_REAL*/CLOCK_REALTIME, &timer) == -1) {
+//			printf("timer error\n");
+//			exit(1);
+//		}
+//		printf("%d sec, %d msec.\n", (int)timer.it_value.tv_sec, (int)timer.it_value.tv_usec);
+//		sleep(1);
+//	}
 
 	return 1;
 }
@@ -504,6 +505,7 @@ void Main_Service_Stop()
 {
 	printf("Beacon Stop\n");
 	m_pMsgHandler->BSN_Stop_Packet();
+	m_pSocketHandle->Server_BSN_Stop_Packet();
 	nBeaconCnt = 0;
 	for(int i=0; i<m_pSocket->m_nSocketArrayDataDownCnt; i++) {
 		m_pSocket->m_SocketArrayDataDownMsg[i].clear();
@@ -990,7 +992,7 @@ int GetUartMsg()
 	m_GetInforPacket = Getpacket;
 
 	if(Getpacket.header.type == 0x21) {
-		uart_SetTimer();
+	//	uart_SetTimer();
 	}
 
 	if(Getpacket.header.type == REGISTRATION_CONFIRM) {
@@ -1033,7 +1035,7 @@ void th_delay(int millsec)
 	printf("%.2f sec\n", time);
 }
 
-uint32_t Set_WaitTimer(timer_t *timerID, int expireMS, int intervalMS)
+int Set_WaitTimer(timer_t *timerID, int expireMS, int intervalMS)
 {
 
 #if 1
@@ -1044,7 +1046,7 @@ uint32_t Set_WaitTimer(timer_t *timerID, int expireMS, int intervalMS)
 
 	/* Set up signal handler. */
 	sa.sa_flags = SA_SIGINFO;
-	sa.sa_sigaction = &PrintfHello;
+	sa.sa_sigaction = PrintfHello;
 	sigemptyset(&sa.sa_mask);
 	if (sigaction(sigNo, &sa, NULL) == -1) {
 		perror("sigaction");
@@ -1056,10 +1058,10 @@ uint32_t Set_WaitTimer(timer_t *timerID, int expireMS, int intervalMS)
 	te.sigev_value.sival_ptr = timerID;
 	timer_create(CLOCK_REALTIME, &te, timerID);
 
-	its.it_interval.tv_sec = 1;
+	its.it_interval.tv_sec = 5;
 	its.it_interval.tv_nsec = 0;
 	its.it_value.tv_sec = expireMS;
-	its.it_value.tv_nsec = 0;//expireMS * 1000;// * 1000000;
+	its.it_value.tv_nsec = 0;//expireMS * 1000;
 	timer_settime(*timerID, 0, &its, NULL);
 
 #endif
@@ -1073,7 +1075,11 @@ void PrintfHello(int sig, siginfo_t* si, void* uc)
 	tidp = (void**)(si->si_value.sival_ptr);
 
 	if(*tidp == firstTimerID) {
-		printf("2ms\n");
+		if(!m_pMsgQueue->m_bReadEnd_UartMessage && !m_pMsgQueue->m_bUartCommuniFlag &&
+			!m_pSocket->m_iBypassSocketToUart && !m_pSocket->m_iSocketReceiveEnd) {
+			
+			printf("1 S\n");
+		}
 	}
 	else if(*tidp == secondTimerID) {
 			printf("10ms\n");
@@ -1147,6 +1153,8 @@ int main(int argc, char *argv[])
 	th_delay(30);
 	th_delay(40);
 	th_delay(50);
+	
+	Set_WaitTimer(&firstTimerID, 5, 0);
 
 	Main_Socket_Init();
 	th_delay(100);

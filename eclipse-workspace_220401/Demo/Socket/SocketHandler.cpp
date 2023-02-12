@@ -231,6 +231,38 @@ int SocketHandler::Registration_Request()
 	return 1;
 }
 
+
+int SocketHandler::Server_BSN_Stop_Packet()
+{
+	BYTE pu8data[30];
+	BYTE u8Checksum;
+	int iBufcnt =0;
+
+	pu8data[iBufcnt] = STX;
+	pu8data[++iBufcnt] = (BYTE)packet.PanID;
+	pu8data[++iBufcnt] = packet.PanID>> 8;
+	pu8data[++iBufcnt] = (BYTE)packet.GateWayID << 8;		//gateway ID
+	pu8data[++iBufcnt] = packet.GateWayID >> 8;		//gateway ID
+	pu8data[++iBufcnt] = 0;
+	pu8data[++iBufcnt] = 0x01;
+	pu8data[++iBufcnt] = BSN_DATA_END_REQ;	//msg type
+	pu8data[++iBufcnt] = 0x01;
+	pu8data[++iBufcnt] = 0;
+	pu8data[++iBufcnt] = 0;
+
+	u8Checksum = GetChecksum(pu8data, iBufcnt);
+	pu8data[++iBufcnt] = u8Checksum; //0x07;
+
+	pu8data[++iBufcnt] = packet.ext[0];
+	pu8data[++iBufcnt] = packet.ext[1];
+	pu8data[++iBufcnt] = packet.ext[2];
+
+	pSocket->Send_Message(pu8data, iBufcnt+1);
+
+	return 1;
+}
+
+
 WORD SocketHandler::ByteToWord(BYTE puData, BYTE puData1)
 {
 	WORD p16Tempdata_HIGH, p16Tempdata_LOW;
