@@ -31,6 +31,8 @@ MsgHandler::MsgHandler()
 	m_nReDownCnt =0;
 	m_nUartArrayDataIndicateCnt =0;
 	m_nUartArrayReDataIndicateCnt =0;
+	m_UartArrayDataIndicateMsg.resize(5000);
+	m_UartArrayDataDownMsg.resize(5000);
 
 	memset(m_GetDownTagID, 0, 512);
 }

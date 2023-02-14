@@ -82,12 +82,22 @@ int Main_TagSort_Arrange(int* iTemp, int* iTemp2);
 int Main_TagSort_Arrange2(int* iTemp, int* iTemp2);
 void Main_MsgQueue_Sort_dataAck(int iCheckZero);
 int Main_DownDataSort();
+void crit_err_hdlr(int sig_num, siginfo_t * info, void * ucontext);
+void installSignal(int __sig);
+
+typedef struct _sig_ucontext {
+  unsigned long uc_flags;
+  struct ucontext *uc_link;
+  stack_t uc_stack;
+  struct sigcontext uc_mcontext;
+  sigset_t uc_sigmask;
+} sig_ucontext_t;
+
 
 void timer_handler()
 {
 	printf("Send Timer \n\n");
 }
-
 
 int uart_SetTimer()
 {
@@ -1142,10 +1152,24 @@ BYTE GetChecksum(BYTE* puData, int len)
 
 int main(int argc, char *argv[])
 {
+	installSignal(SIGSEGV);
 	pthread_mutex_init(&Main_mutex, NULL);
 	pthread_mutex_init(&Main_Uartmutex, NULL);
 	pthread_mutex_init(&Main_Tagmutex, NULL);
 	setpriority(PRIO_PROCESS, getpid(), -10);
+
+	struct rlimit rlim,rlim2;
+	int ret =0;
+	getrlimit(RLIMIT_STACK, &rlim);
+	printf("CurrentStack Size : [%d] Max Current Stack Size : [%d]\n", rlim.rlim_cur, rlim.rlim_max);
+	rlim.rlim_cur = (1024 * 1024 * 100);
+	rlim.rlim_max = (1024 * 1024 * 100);
+	//ret = setrlimit(RLIMIT_STACK, &rlim);
+	//printf("CurrentStack Size : %d [%d] Max Current Stack Size : [%d]\n", ret, rlim.rlim_cur, rlim.rlim_max);
+	
+	getrlimit(RLIMIT_DATA, &rlim2);
+	printf("Current data Size : [%d] Max Current Stack Size : [%d]\n", rlim2.rlim_cur, rlim2.rlim_max);
+
 
 	m_MainComport->uart_init();
 
@@ -1160,8 +1184,9 @@ int main(int argc, char *argv[])
 	th_delay(100);
 	th_delay(200);
 	TagAssociation_Init();	
+	printf("vector Max size %d, %d\n", m_pSocket->m_SocketArrayDataDownMsg.max_size(), m_pSocket->m_SocketArrayDataIndicateMsg.max_size());
 
-	while(1)
+ 	while(1)
 	{
 		Main_ByPass_SocketToUart();
 		Main_ByPass_UartToSocket();
@@ -1184,6 +1209,86 @@ int main(int argc, char *argv[])
 	return 0;
 }
 
+void crit_err_hdlr(int sig_num, siginfo_t * info, void * ucontext) {
+  void * array[50];
+  void * caller_address;
+  char ** messages;
+  int size, i;
+  sig_ucontext_t * uc;
+
+  uc = (sig_ucontext_t *) ucontext;
+
+  /* Get the address at the time the signal was raised */
+  caller_address = (void *) uc->uc_mcontext.arm_pc;  // RIP: x86_64 specific     arm_pc: ARM
+
+  fprintf(stderr, "\n");
+
+  if (sig_num == SIGSEGV)
+    printf("signal %d (%s), address is %p from %p\n", sig_num, strsignal(sig_num), info->si_addr,
+           (void *) caller_address);
+  else
+    printf("signal %d (%s)\n", sig_num, strsignal(sig_num));
+
+  size = backtrace(array, 50);
+  /* overwrite sigaction with caller's address */
+  array[1] = caller_address;
+  messages = backtrace_symbols(array, size);
+
+  /* skip first stack frame (points here) */
+  for (i = 1; i < size && messages != NULL; ++i) {
+    printf("[bt]: (%d) %s\n", i, messages[i]);
+  }
+  free(messages);
+  th_delay(1000);
+  th_delay(1000);
+  th_delay(1000);
+  th_delay(1000);
+  th_delay(1000);
+  th_delay(1000);
+  th_delay(1000);
+   th_delay(1000);
+   th_delay(1000);
+   th_delay(1000);
+   th_delay(1000);
+   th_delay(1000);
+   th_delay(1000);
+    th_delay(1000);
+    th_delay(1000);
+    th_delay(1000);
+    th_delay(1000);
+    th_delay(1000);
+    th_delay(1000);
+     th_delay(1000);
+     th_delay(1000);
+     th_delay(1000);
+     th_delay(1000);
+     th_delay(1000);
+     th_delay(1000);
+      th_delay(1000);
+      th_delay(1000);
+      th_delay(1000);
+      th_delay(1000);
+      th_delay(1000);
+      th_delay(1000);
+       th_delay(1000);
+       th_delay(1000);
+       th_delay(1000);
+       th_delay(1000);
+       th_delay(1000);
+       for(int i=0; i<100; i++)
+    	   th_delay(1000);
+  exit(EXIT_FAILURE);
+}
+
+void installSignal(int __sig) {
+  struct sigaction sigact;
+  sigact.sa_sigaction = crit_err_hdlr;
+  sigact.sa_flags = SA_RESTART | SA_SIGINFO;
+  if (sigaction(__sig, &sigact, (struct sigaction *) NULL) != 0) {
+    fprintf(stderr, "error setting signal handler for %d (%s)\n", __sig, strsignal(__sig));
+    exit(EXIT_FAILURE);
+  }
+}
 
 void __attribute__((constructor)) NewObject()
 {

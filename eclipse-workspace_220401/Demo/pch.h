@@ -35,6 +35,7 @@
 #include <signal.h>
 #include <queue>
 #include <algorithm>
+#include <execinfo.h>
 
 //#include <linux/time.h>
 //#include <linux/kernel.h>
@@ -56,7 +57,7 @@
 #define PASS 	1
 #define FAIL 	0
 
-#define BEACON_MAX 2
+#define BEACON_MAX 19
 
 #define BUILD_UINT16(loByte, hiByte)	((unsigned int )(((loByte) & 0x00FF) + (((hiByte) & 0x00FF) << 8)))
 

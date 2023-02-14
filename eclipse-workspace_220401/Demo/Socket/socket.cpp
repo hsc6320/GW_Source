@@ -25,8 +25,13 @@ extern UartComThread* m_MainComport;
 
 std::vector<std::vector<BYTE>> vecTagData;
 
+std::vector<std::vector<BYTE>> vec1 (2000);
+std::vector<std::vector<BYTE>> vec2 (2000);
+int vectorCnt = 0;
+
 Socket::Socket()
 {
+	p_thread = NULL;
 	m_p8uData = NULL;
 	m_p8uSendData = NULL;
 	m_nServerMessge_End =0;
@@ -38,6 +43,8 @@ Socket::Socket()
 	m_Main_ServiceStart_TagAssociation_InitFlag = 0;
 	m_iSocketReceiveEnd =0;
 	bWorkingThread =0;
+	m_SocketArrayDataDownMsg.resize(3000);
+	m_SocketArrayDataIndicateMsg.resize(3000);	
 
 	m_serv_sock = 0;
 	m_pSocMsgqueue = NULL;
@@ -58,6 +65,7 @@ int Socket::Socket_Init(/*int argc, char *argv[]*/)
 	struct sockaddr_in serv_addr;
 
 	struct sockaddr*	pAddr(NULL);
+
 
 	size_t	nNIC;
 	int nRet =0, retEpoll = 0;
@@ -472,7 +480,7 @@ void *Recieve_Function(void* rcvDt)
 			}
 			pthread_mutex_unlock(&pSoc->Socket_mutex);
 		}
-		usleep(200);
+		usleep(500);
 	}
 
 	return 0;
@@ -483,6 +491,7 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 	int DataLen =0;
 	std::vector<BYTE> Vecc;
 	DataLen = Len;
+
 
 	printf("GetSocketMsg()\n");
 
@@ -525,34 +534,42 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 			else if((p8udata[MSGTYPE] == DOWNLOAD_START_REQ) || (p8udata[MSGTYPE] == DATAINDICATION_REQ)) {
 
 				for(int i=0; i<Len; i++) {
-					printf("%x ", p8udata[i]);
+				//	printf("%x ", p8udata[i]);
 				}
 				printf("\n");
 
 				m_SocketQueue_vec.clear();
+				m_SocketQueue_vec.shrink_to_fit();
 				for(int i=0; i< DataLen; i++) {
 					m_SocketQueue_vec.push_back(p8udata[i]);
 				}
 
 				if(m_SocketQueue_vec[MSGTYPE] == DOWNLOAD_START_REQ) {
-					m_SocketArrayDataDownMsg.push_back(m_SocketQueue_vec);
+				//	vec1.push_back(m_SocketQueue_vec);
+					vec1[vectorCnt] = m_SocketQueue_vec;
+//					m_SocketArrayDataDownMsg.push_back(m_SocketQueue_vec);
 					
-					m_SocketArrayDataDownMsg.erase(unique(m_SocketArrayDataDownMsg.begin(), m_SocketArrayDataDownMsg.end()),
-															m_SocketArrayDataDownMsg.end()); 	//Delete overlap
-
+//					m_SocketArrayDataDownMsg.erase(unique(m_SocketArrayDataDownMsg.begin(), m_SocketArrayDataDownMsg.end()),
+//															m_SocketArrayDataDownMsg.end()); 	//Delete overlap
+					
+				
 				
 					m_pSocMsgqueue->DownLoad_MSG_Start_ACK(p8udata);
 					Send_Message(p8udata, 15);
 					m_nSocketArrayDataDownCnt++;
 				}
 				else if(m_SocketQueue_vec[MSGTYPE] == DATAINDICATION_REQ) {
-					m_SocketArrayDataIndicateMsg.push_back(m_SocketQueue_vec);
+				//	vec2.push_back(m_SocketQueue_vec);
+					vec2[vectorCnt] = m_SocketQueue_vec;
+//					m_SocketArrayDataIndicateMsg.push_back(m_SocketQueue_vec);
 
-					m_SocketArrayDataIndicateMsg.erase(unique(m_SocketArrayDataIndicateMsg.begin(), m_SocketArrayDataIndicateMsg.end()),
-															m_SocketArrayDataIndicateMsg.end()); 	//Delete overlap
-															
+//					m_SocketArrayDataIndicateMsg.erase(unique(m_SocketArrayDataIndicateMsg.begin(), m_SocketArrayDataIndicateMsg.end()),
+//															m_SocketArrayDataIndicateMsg.end()); 	//Delete overlap
+					printf("m_SocketArrayDataIndicateMsg size : %d %d %d\n", vec2.size(), vec2.capacity(),
+							sizeof(m_SocketArrayDataIndicateMsg));
 					m_pSocMsgqueue->DataIndication_MSG_Start_ACK(p8udata);
 					Send_Message(p8udata, 17);
+					vectorCnt++;
 					m_nSocketArrayDataIndicateCnt++;
 				}		
 			}
