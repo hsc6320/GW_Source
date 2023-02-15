@@ -17,7 +17,7 @@ CPP_DEPS += \
 uart/%.o: ../uart/%.cpp uart/subdir.mk
 	@echo 'Building file: $<'
 	@echo 'Invoking: Cross G++ Compiler'
-	arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" -o "$@" "$<"
+	arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 

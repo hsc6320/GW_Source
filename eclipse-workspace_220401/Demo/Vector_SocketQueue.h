@@ -55,50 +55,6 @@ public:
 
 };
 #else
-
-template <typename T>
-class DataArrayVector
-{
-public:
-	DataArrayVector(unsigned int maxSizeX
-    		, unsigned int maxSizeY
-			, std::vector<T> dataArray)
-        : m_isInit(false)
-        , m_dataArray(dataArray)
-        , m_maxSizeX(maxSizeX)
-        , m_maxSizeY(maxSizeY)
-    {
-        if (m_dataArray.size() == (m_maxSizeX * m_maxSizeY))
-            m_isInit = true;
-    }
-    ~DataArrayVector()
-    {
-        m_isInit = false;
-    }
-
-    // 제대로 세팅 되었는지 여부^M
-    bool IsInit() { return m_isInit; }
-    const int GetMaxSizeX() { return m_maxSizeX; }
-    const int GetMaxSizeY() { return m_maxSizeY; }
-
-    T operator()(unsigned int x, unsigned int y)
-    {
-        return m_dataArray.at((y * m_maxSizeX) + x);
-    }
-    /*const T operator()(unsigned int x, unsigned int y) const
-    {
-        return m_dataArray.at((y * m_maxSizeX) + x);
-    }*/
-
-
-public:
-    bool m_isInit;
-
-	const unsigned int m_maxSizeX;
-	const unsigned int m_maxSizeY;
-    std::vector<BYTE>& m_dataArray;
-
-};
 #endif
 
 #endif /* VECTOR_SOCKETQUEUE_H_ */

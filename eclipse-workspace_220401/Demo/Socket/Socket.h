@@ -23,6 +23,14 @@ typedef struct _socket_ctx_t
 	int fd;
 }socket_ctx_t;
 
+typedef struct _sig_ucontext2 {
+  unsigned long uc_flags;
+  struct ucontext *uc_link;
+  stack_t uc_stack;
+  struct sigcontext uc_mcontext;
+  sigset_t uc_sigmask;
+} sig_ucontext_t2;
+
 
 class Socket {
 public:
@@ -65,6 +73,8 @@ public:
 	void th_Socket_delay(int millsec);
 	bool GetSocketMsg(BYTE* p8udata, int Len);
 	WORD ByteToWord(BYTE puData, BYTE puData1);
+	//void crit_err_hdlr(int sig_num, siginfo_t * info, void * ucontext);
+	void installSignal2(int __sig);
 };
 
 #endif /* SOCKET_SOCKET_H_ */

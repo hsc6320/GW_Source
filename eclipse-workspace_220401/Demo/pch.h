@@ -70,6 +70,9 @@
 #define dp0(n, fmt)
 #define _dp(n, fmt, args...)
 #endif	/* DEBUG_LEVEL_ */
+void crit_err_hdlr(int sig_num, siginfo_t * info, void * ucontext);
+void installSignal(int __sig);
+
 
 
 #endif /* PCH_H_ */

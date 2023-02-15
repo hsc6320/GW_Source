@@ -669,12 +669,10 @@ int Main_Check_TagPassFail2(int* iTemp, int* iTemp2)
 	int icnt =0, cnt =1;
 	int j = 0;
 	int AckFail_Redown =0;
-	BYTE temp2 =0;
 	printf("Main_Check_TagPass_Fail2()\n");
 	while(icnt <= m_pMsgHandler->m_nUartArrayDataDownCnt) {
 
 		if(cnt != ((int)m_pMsgQueue->m_ArrayDataAcknowledge[icnt].at(0))) {
-			temp2 = cnt;
 
 			m_pMsgHandler->Map_AcknowParityCheck[m_pMsgQueue->m_ArrayDataAcknowledge[icnt]] = FAIL;
 			j++;
@@ -711,12 +709,7 @@ int Main_TagVal_CheckParity(std::vector<std::vector<BYTE>> V_ArrayData)
 	BYTE temp2 =0;
 
 	for(int i=0; i<m_pMsgHandler->m_nUartArrayDataDownCnt; i++) {
-		/*if(m_pMsgQueue->m_MsgQueueArrayDataAcknowledge[i].size() <= 0) {
-			TempVec.clear();
-			temp2 = 0xff;
-			TempVec.push_back(temp2);
-			m_pMsgQueue->m_MsgQueueArrayDataAcknowledge.insert(m_pMsgQueue->m_MsgQueueArrayDataAcknowledge.begin()+i,TempVec);
-		}*/
+		printf("*************iiii %d size : %d********************\n",i, m_pMsgQueue->m_MsgQueueArrayDataAcknowledge[i].size());
 		if(i+1 == m_pMsgHandler->m_nUartArrayDataDownCnt) {
 			printf("(%d == %d) of vector Data is Zero \n", i+1, m_pMsgHandler->m_nUartArrayDataDownCnt);
 			if(m_pMsgQueue->m_MsgQueueArrayDataAcknowledge[i].size() == 0 ) {
@@ -729,7 +722,16 @@ int Main_TagVal_CheckParity(std::vector<std::vector<BYTE>> V_ArrayData)
 				break;
 			}
 		}
-		if( (i == 0) && (m_pMsgQueue->m_MsgQueueArrayDataAcknowledge[i].at(0) != i+1) ) {
+		if( m_pMsgQueue->m_MsgQueueArrayDataAcknowledge[i].size() <= 0) {
+			printf("m_MsgQueueArrayDataAcknowledge Size[%d]  = %d\n",i, (int)m_pMsgQueue->m_MsgQueueArrayDataAcknowledge[i].size());
+			
+			TempVec.clear();
+			temp2 = 0;
+			TempVec.push_back(temp2);
+			m_pMsgQueue->m_MsgQueueArrayDataAcknowledge.insert(m_pMsgQueue->m_MsgQueueArrayDataAcknowledge.begin()+i,TempVec);
+			printf("insert value : %d\n", m_pMsgQueue->m_MsgQueueArrayDataAcknowledge[i].at(0));
+		}		
+		else if( (i == 0) && (m_pMsgQueue->m_MsgQueueArrayDataAcknowledge[i].at(0) != i+1) ) {
 			TempVec.clear();
 			temp2 = 0;
 			TempVec.push_back(temp2);
@@ -1161,15 +1163,14 @@ int main(int argc, char *argv[])
 	struct rlimit rlim,rlim2;
 	int ret =0;
 	getrlimit(RLIMIT_STACK, &rlim);
-	printf("CurrentStack Size : [%d] Max Current Stack Size : [%d]\n", rlim.rlim_cur, rlim.rlim_max);
-	rlim.rlim_cur = (1024 * 1024 * 100);
-	rlim.rlim_max = (1024 * 1024 * 100);
-	//ret = setrlimit(RLIMIT_STACK, &rlim);
-	//printf("CurrentStack Size : %d [%d] Max Current Stack Size : [%d]\n", ret, rlim.rlim_cur, rlim.rlim_max);
+	printf("CurrentStack Size : [%ld] Max Current Stack Size : [%ld]\n", rlim.rlim_cur, rlim.rlim_max);
+	rlim.rlim_cur = (1024 * 1024 * 300);
+	rlim.rlim_max = (1024 * 1024 * 300);
+	ret = setrlimit(RLIMIT_STACK, &rlim);
+	printf("CurrentStack Size : %d [%ld] Max Current Stack Size : [%ld]\n", ret, rlim.rlim_cur, rlim.rlim_max);
 	
 	getrlimit(RLIMIT_DATA, &rlim2);
-	printf("Current data Size : [%d] Max Current Stack Size : [%d]\n", rlim2.rlim_cur, rlim2.rlim_max);
-
+	printf("Current data Size : [%ld] Max Current Stack Size : [%ld]\n", rlim2.rlim_cur, rlim2.rlim_max);
 
 	m_MainComport->uart_init();
 
@@ -1178,7 +1179,7 @@ int main(int argc, char *argv[])
 	th_delay(40);
 	th_delay(50);
 	
-	Set_WaitTimer(&firstTimerID, 5, 0);
+	Set_WaitTimer(&firstTimerID, 60, 0);
 
 	Main_Socket_Init();
 	th_delay(100);
@@ -1239,44 +1240,8 @@ void crit_err_hdlr(int sig_num, siginfo_t * info, void * ucontext) {
     printf("[bt]: (%d) %s\n", i, messages[i]);
   }
   free(messages);
-  th_delay(1000);
-  th_delay(1000);
-  th_delay(1000);
-  th_delay(1000);
-  th_delay(1000);
-  th_delay(1000);
-  th_delay(1000);
-   th_delay(1000);
-   th_delay(1000);
-   th_delay(1000);
-   th_delay(1000);
-   th_delay(1000);
-   th_delay(1000);
-    th_delay(1000);
-    th_delay(1000);
-    th_delay(1000);
-    th_delay(1000);
-    th_delay(1000);
-    th_delay(1000);
-     th_delay(1000);
-     th_delay(1000);
-     th_delay(1000);
-     th_delay(1000);
-     th_delay(1000);
-     th_delay(1000);
-      th_delay(1000);
-      th_delay(1000);
-      th_delay(1000);
-      th_delay(1000);
-      th_delay(1000);
-      th_delay(1000);
-       th_delay(1000);
-       th_delay(1000);
-       th_delay(1000);
-       th_delay(1000);
-       th_delay(1000);
-       for(int i=0; i<100; i++)
-    	   th_delay(1000);
+  
+  Set_WaitTimer(&firstTimerID, 0, 0);
   exit(EXIT_FAILURE);
 }
 
@@ -1289,7 +1254,6 @@ void installSignal(int __sig) {
     exit(EXIT_FAILURE);
   }
 }
-
 void __attribute__((constructor)) NewObject()
 {
 	m_MainComport = new UartComThread;

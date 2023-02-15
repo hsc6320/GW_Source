@@ -533,6 +533,7 @@ int MsgHandler::UartPacket_ReDataAcknowledge_DownStart(BYTE u8data)
 					}
 					else if(Map_AcknowParityCheck[vMsgDataAcknowledge[Map_AcknowCnt]] == PASS) {
 						Map_AcknowOverlap =0;
+						return 0;
 					}
 					if(Map_AcknowCnt>=15) {
 						Map_AcknowOverlap =0;

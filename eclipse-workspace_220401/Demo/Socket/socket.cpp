@@ -66,7 +66,6 @@ int Socket::Socket_Init(/*int argc, char *argv[]*/)
 
 	struct sockaddr*	pAddr(NULL);
 
-
 	size_t	nNIC;
 	int nRet =0, retEpoll = 0;
 	int fd2, fd3, n;
@@ -415,7 +414,6 @@ int Socket::Send_Function()
 {
 	//socket_ctx_t* ctx = (socket_ctx_t *)m_serv_sock;
 	int ret =0;
-	int failcnt =0;
 	BYTE p8Data[1024];
 
 	memset(p8Data, 0, 1024);
@@ -456,7 +454,6 @@ void *Recieve_Function(void* rcvDt)
 
 	int str_len;
 	BYTE u8data[1024] = {0, };
-
 	printf("Recieve_Function() Socketd : %d, m_serv_sock : %d\n", Socketd, pSoc->m_serv_sock);
 
 	//socket_ctx_t* ctx = (socket_ctx_t *)pSoc->m_serv_sock;
@@ -546,11 +543,11 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 
 				if(m_SocketQueue_vec[MSGTYPE] == DOWNLOAD_START_REQ) {
 				//	vec1.push_back(m_SocketQueue_vec);
-					vec1[vectorCnt] = m_SocketQueue_vec;
-//					m_SocketArrayDataDownMsg.push_back(m_SocketQueue_vec);
+				//	vec1[vectorCnt] = m_SocketQueue_vec;
+					m_SocketArrayDataDownMsg.push_back(m_SocketQueue_vec);
 					
-//					m_SocketArrayDataDownMsg.erase(unique(m_SocketArrayDataDownMsg.begin(), m_SocketArrayDataDownMsg.end()),
-//															m_SocketArrayDataDownMsg.end()); 	//Delete overlap
+					m_SocketArrayDataDownMsg.erase(unique(m_SocketArrayDataDownMsg.begin(), m_SocketArrayDataDownMsg.end()),
+															m_SocketArrayDataDownMsg.end()); 	//Delete overlap
 					
 				
 				
@@ -560,16 +557,15 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 				}
 				else if(m_SocketQueue_vec[MSGTYPE] == DATAINDICATION_REQ) {
 				//	vec2.push_back(m_SocketQueue_vec);
-					vec2[vectorCnt] = m_SocketQueue_vec;
-//					m_SocketArrayDataIndicateMsg.push_back(m_SocketQueue_vec);
-
-//					m_SocketArrayDataIndicateMsg.erase(unique(m_SocketArrayDataIndicateMsg.begin(), m_SocketArrayDataIndicateMsg.end()),
-//															m_SocketArrayDataIndicateMsg.end()); 	//Delete overlap
-					printf("m_SocketArrayDataIndicateMsg size : %d %d %d\n", vec2.size(), vec2.capacity(),
+				//	vec2[vectorCnt] = m_SocketQueue_vec;
+					m_SocketArrayDataIndicateMsg.push_back(m_SocketQueue_vec);
+					m_SocketArrayDataIndicateMsg.erase(unique(m_SocketArrayDataIndicateMsg.begin(), m_SocketArrayDataIndicateMsg.end()),
+															m_SocketArrayDataIndicateMsg.end()); 	//Delete overlap
+					printf("m_SocketArrayDataIndicateMsg size : %d %d %d\n", m_SocketArrayDataIndicateMsg.size(), m_SocketArrayDataIndicateMsg.capacity(),
 							sizeof(m_SocketArrayDataIndicateMsg));
 					m_pSocMsgqueue->DataIndication_MSG_Start_ACK(p8udata);
 					Send_Message(p8udata, 17);
-					vectorCnt++;
+				//	vectorCnt++;
 					m_nSocketArrayDataIndicateCnt++;
 				}		
 			}
@@ -770,7 +766,51 @@ WORD Socket::ByteToWord(BYTE puData, BYTE puData1)
 	return p16Tempdata_HIGH|p16Tempdata_LOW;
 
 }
+void crit_err_hdlr2(int sig_num, siginfo_t * info, void * ucontext)
+{
+  void * array[50];
+  void * caller_address;
+  char ** messages;
+  int size, i;
+  sig_ucontext_t2 *uc;
 
+  uc = (sig_ucontext_t2 *) ucontext;
+
+  /* Get the address at the time the signal was raised */
+  caller_address = (void *) uc->uc_mcontext.arm_pc;  // RIP: x86_64 specific     arm_pc: ARM
+
+  fprintf(stderr, "\n");
+
+  if (sig_num == SIGSEGV)
+	printf("signal %d (%s), address is %p from %p\n", sig_num, strsignal(sig_num), info->si_addr,
+		   (void *) caller_address);
+  else
+	printf("signal %d (%s)\n", sig_num, strsignal(sig_num));
+
+  size = backtrace(array, 50);
+  /* overwrite sigaction with caller's address */
+  array[1] = caller_address;
+  messages = backtrace_symbols(array, size);
+
+  /* skip first stack frame (points here) */
+  for (i = 1; i < size && messages != NULL; ++i) {
+	printf("[bt]: (%d) %s\n", i, messages[i]);
+  }
+  free(messages);
+
+  exit(EXIT_FAILURE);
+}
+
+void Socket::installSignal2(int __sig)
+{
+  struct sigaction sigact;
+  sigact.sa_sigaction = crit_err_hdlr2;
+  sigact.sa_flags = SA_RESTART | SA_SIGINFO;
+  if (sigaction(__sig, &sigact, (struct sigaction *) NULL) != 0) {
+	  fprintf(stderr, "error setting signal handler for %d (%s)\n", __sig, strsignal(__sig));
+  }
+	exit(EXIT_FAILURE);
+}
 /*
 void Socket::SetMsgQueue(MsgQueue* msgqueue)
 {
