@@ -47,7 +47,7 @@ int nlsChecksum =0;
 int nflagRegistration_Req =0;
 int nTagCnt =0;
 int socket_fd =0;
-int nBeaconCnt =0, nTempBeaconCnt =0, nTemp2BeaconCnt = 0;
+int nBeaconCnt =0, nTempBeaconCnt =0, nTemp2BeaconCnt = 0, nTemp1BeaconCnt=0;
 BYTE nBeaconValue =0;
 int bReDownloadFlag =0, bDataAckFlag =0;
 int GetUartMsg();
@@ -67,7 +67,7 @@ int UartToSocket_Service_cfm();
 int Main_ByPass_SocketToUart();
 int Main_ByPass_UartToSocket();
 int uart_SetTimer();
-uint32_t Set_WaitTimer(timer_t *timerID, int expireMS, int intervalMS);
+int Set_WaitTimer(timer_t *timerID, int expireMS, int intervalMS);
 void PrintfHello(int sig, siginfo_t* si, void* uc);
 void th_delay(int millsec);
 int ServerReConn();
@@ -82,30 +82,39 @@ int Main_TagSort_Arrange(int* iTemp, int* iTemp2);
 int Main_TagSort_Arrange2(int* iTemp, int* iTemp2);
 void Main_MsgQueue_Sort_dataAck(int iCheckZero);
 int Main_DownDataSort();
+void crit_err_hdlr(int sig_num, siginfo_t * info, void * ucontext);
+void installSignal(int __sig);
 
-static void timer_handler(int signum)
+typedef struct _sig_ucontext {
+  unsigned long uc_flags;
+  struct ucontext *uc_link;
+  stack_t uc_stack;
+  struct sigcontext uc_mcontext;
+  sigset_t uc_sigmask;
+} sig_ucontext_t;
+
+
+void timer_handler()
 {
-
-	printf("Send Timer %d\n\n", signum);
+	printf("Send Timer \n\n");
 }
-
 
 int uart_SetTimer()
 {
-	struct sigaction sa;
+	/*struct sigaction sa;
 	struct itimerval timer;
 
 	memset(&sa, 0, sizeof(sa));
-	sa.sa_handler = &timer_handler;
-	sigaction(/*SIGVTALRM*/SIGRTMIN, &sa, NULL);
+	sa.sa_handler = timer_handler;*/
+//	sigaction(/*SIGVTALRM*/SIGRTMIN, &sa, NULL);
 
-	timer.it_interval.tv_sec = 1;
+/*	timer.it_interval.tv_sec = 1;
 	timer.it_interval.tv_usec = 0;
 
 	timer.it_value.tv_sec = 5;
 	timer.it_value.tv_usec = 0;
-
-	setitimer(/*ITIMER_REAL*/CLOCK_REALTIME, &timer, NULL);
+*/
+//	setitimer(/*ITIMER_REAL*/CLOCK_REALTIME, &timer, NULL);
 
 
 
@@ -393,8 +402,12 @@ int Main_ByPass_SocketToUart()
 					}
 				}
 
-				if(DataSendFail_Redown) {					
-					printf("DataSendFail_Redown\n");
+				if(DataSendFail_Redown) {
+					if(nTemp1BeaconCnt > 3) {
+						Main_Service_Stop();
+					}
+					printf("DataSendFail_Redown\n");					
+					nTemp1BeaconCnt++;
 					m_pMsgHandler->m_nReDownCnt = j;
 					nBeaconCnt =0;
 					bReDownloadFlag =1;
@@ -529,6 +542,7 @@ void Main_Service_Stop()
 	memset(m_pMsgHandler->m_GetDownTagID, 0, 512);
 	bReDownloadFlag = 0;
 	bDataAckFlag =0;
+	nTemp1BeaconCnt =0;
 	nTempBeaconCnt =0;
 	nTemp2BeaconCnt =0;
 }
@@ -660,12 +674,10 @@ int Main_Check_TagPassFail2(int* iTemp, int* iTemp2)
 	int icnt =0, cnt =1;
 	int j = 0;
 	int AckFail_Redown =0;
-	BYTE temp2 =0;
 	printf("Main_Check_TagPass_Fail2()\n");
 	while(icnt <= m_pMsgHandler->m_nUartArrayDataDownCnt) {
 
 		if(cnt != ((int)m_pMsgQueue->m_ArrayDataAcknowledge[icnt].at(0))) {
-			temp2 = cnt;
 
 			m_pMsgHandler->Map_AcknowParityCheck[m_pMsgQueue->m_ArrayDataAcknowledge[icnt]] = FAIL;
 			j++;
@@ -702,12 +714,7 @@ int Main_TagVal_CheckParity(std::vector<std::vector<BYTE>> V_ArrayData)
 	BYTE temp2 =0;
 
 	for(int i=0; i<m_pMsgHandler->m_nUartArrayDataDownCnt; i++) {
-		/*if(m_pMsgQueue->m_MsgQueueArrayDataAcknowledge[i].size() <= 0) {
-			TempVec.clear();
-			temp2 = 0xff;
-			TempVec.push_back(temp2);
-			m_pMsgQueue->m_MsgQueueArrayDataAcknowledge.insert(m_pMsgQueue->m_MsgQueueArrayDataAcknowledge.begin()+i,TempVec);
-		}*/
+		printf("*************iiii %d size : %d********************\n",i, m_pMsgQueue->m_MsgQueueArrayDataAcknowledge[i].size());
 		if(i+1 == m_pMsgHandler->m_nUartArrayDataDownCnt) {
 			printf("(%d == %d) of vector Data is Zero \n", i+1, m_pMsgHandler->m_nUartArrayDataDownCnt);
 			if(m_pMsgQueue->m_MsgQueueArrayDataAcknowledge[i].size() == 0 ) {
@@ -720,7 +727,16 @@ int Main_TagVal_CheckParity(std::vector<std::vector<BYTE>> V_ArrayData)
 				break;
 			}
 		}
-		if( (i == 0) && (m_pMsgQueue->m_MsgQueueArrayDataAcknowledge[i].at(0) != i+1) ) {
+		if( m_pMsgQueue->m_MsgQueueArrayDataAcknowledge[i].size() <= 0) {
+			printf("m_MsgQueueArrayDataAcknowledge Size[%d]  = %d\n",i, (int)m_pMsgQueue->m_MsgQueueArrayDataAcknowledge[i].size());
+			
+			TempVec.clear();
+			temp2 = 0;
+			TempVec.push_back(temp2);
+			m_pMsgQueue->m_MsgQueueArrayDataAcknowledge.insert(m_pMsgQueue->m_MsgQueueArrayDataAcknowledge.begin()+i,TempVec);
+			printf("insert value : %d\n", m_pMsgQueue->m_MsgQueueArrayDataAcknowledge[i].at(0));
+		}		
+		else if( (i == 0) && (m_pMsgQueue->m_MsgQueueArrayDataAcknowledge[i].at(0) != i+1) ) {
 			TempVec.clear();
 			temp2 = 0;
 			TempVec.push_back(temp2);
@@ -890,6 +906,13 @@ int Socket_Connect_Req()
 
 	return 1;
 }
+int Socket_AliveCheck()
+{
+	m_pSocketHandle->SendMessage(CONNECT_ALIVE_CHECK, m_GetInforPacket);
+	printf("main_Socket_AliveCheck), bWorkingThread : %d\n", m_pSocket->bWorkingThread);
+
+	return 1;
+}
 
 int GetUartMsg()
 {
@@ -1036,7 +1059,7 @@ void th_delay(int millsec)
 	printf("%.2f sec\n", time);
 }
 
-uint32_t Set_WaitTimer(timer_t *timerID, int expireMS, int intervalMS)
+int Set_WaitTimer(timer_t *timerID, int expireMS, int intervalMS)
 {
 
 #if 1
@@ -1047,19 +1070,19 @@ uint32_t Set_WaitTimer(timer_t *timerID, int expireMS, int intervalMS)
 
 	/* Set up signal handler. */
 	sa.sa_flags = SA_SIGINFO;
-	sa.sa_sigaction = &timer_handler;//PrintfHello;
+	sa.sa_sigaction = PrintfHello;
 	sigemptyset(&sa.sa_mask);
 	if (sigaction(sigNo, &sa, NULL) == -1) {
 		perror("sigaction");
 	}
 
 	/* Set and enable alarm */
-/*	te.sigev_notify = SIGEV_SIGNAL;
+	te.sigev_notify = SIGEV_SIGNAL;
 	te.sigev_signo = sigNo;
 	te.sigev_value.sival_ptr = timerID;
-	timer_create(CLOCK_REALTIME, &te, timerID);*/
+	timer_create(CLOCK_REALTIME, &te, timerID);
 
-	its.it_interval.tv_sec = 1;
+	its.it_interval.tv_sec = expireMS;
 	its.it_interval.tv_nsec = 0;
 	its.it_value.tv_sec = expireMS;
 	its.it_value.tv_nsec = 0;//expireMS * 1000;
@@ -1076,7 +1099,11 @@ void PrintfHello(int sig, siginfo_t* si, void* uc)
 	tidp = (void**)(si->si_value.sival_ptr);
 
 	if(*tidp == firstTimerID) {
-		printf("2ms\n");
+		if(!m_pMsgQueue->m_bReadEnd_UartMessage && !m_pMsgQueue->m_bUartCommuniFlag &&
+			!m_pSocket->m_iBypassSocketToUart && !m_pSocket->m_iSocketReceiveEnd) {
+			Socket_AliveCheck();
+			printf("1 S\n");
+		}
 	}
 	else if(*tidp == secondTimerID) {
 			printf("10ms\n");
@@ -1139,36 +1166,47 @@ BYTE GetChecksum(BYTE* puData, int len)
 
 int main(int argc, char *argv[])
 {
+	installSignal(SIGSEGV);
 	pthread_mutex_init(&Main_mutex, NULL);
 	pthread_mutex_init(&Main_Uartmutex, NULL);
 	pthread_mutex_init(&Main_Tagmutex, NULL);
 	setpriority(PRIO_PROCESS, getpid(), -10);
 
+	struct rlimit rlim,rlim2;
+	int ret =0;
+	getrlimit(RLIMIT_STACK, &rlim);
+	printf("CurrentStack Size : [%ld] Max Current Stack Size : [%ld]\n", rlim.rlim_cur, rlim.rlim_max);
+	rlim.rlim_cur = (1024 * 1024 * 300);
+	rlim.rlim_max = (1024 * 1024 * 300);
+	ret = setrlimit(RLIMIT_STACK, &rlim);
+	printf("CurrentStack Size : %d [%ld] Max Current Stack Size : [%ld]\n", ret, rlim.rlim_cur, rlim.rlim_max);
+	
+	getrlimit(RLIMIT_DATA, &rlim2);
+	printf("Current data Size : [%ld] Max Current Stack Size : [%ld]\n", rlim2.rlim_cur, rlim2.rlim_max);
+	th_delay(1000);
+	th_delay(40);
+	th_delay(50);
+
 	m_MainComport->uart_init();
 
 	m_MainComport->SetMutex(Main_Uartmutex);
-	th_delay(30);
-	th_delay(40);
-	th_delay(50);
-    timer_t timerID;
 	
-	Set_WaitTimer(&timerID, 5, 0);
+	
+	Set_WaitTimer(&firstTimerID, 60, 0);
 
-	//uart_SetTimer();
-	while(1){
-		sleep(1);
-	}
 	Main_Socket_Init();
 	th_delay(100);
 	th_delay(200);
 	TagAssociation_Init();	
+	printf("vector Max size %d, %d\n", m_pSocket->m_SocketArrayDataDownMsg.max_size(), m_pSocket->m_SocketArrayDataIndicateMsg.max_size());
 
-	while(1)
+ 	while(1)
 	{
 		Main_ByPass_SocketToUart();
 		Main_ByPass_UartToSocket();
 
-		if(m_pSocket->bWorkingThread == 0) {
+		if( (m_pSocket->bWorkingThread == 0) ||(m_pSocketHandle->m_iSocketArive == 0) ){
+			Set_WaitTimer(&firstTimerID, 0, 0);
 			ServerReConn();
 			TagAssociation_Init();
 			printf("Main TagData\n");
@@ -1177,8 +1215,7 @@ int main(int argc, char *argv[])
 				m_pMsgQueue->m_Queue.pop();	
 				m_pMsgQueue->m_nSendTagCount--;
 				printf("m_pMsgQueue->m_nSendTagCount : %d\n", m_pMsgQueue->m_nSendTagCount );
-			}
-			
+			}			
 		}
 		usleep(100);
 	}
@@ -1186,7 +1223,50 @@ int main(int argc, char *argv[])
 	return 0;
 }
 
+void crit_err_hdlr(int sig_num, siginfo_t * info, void * ucontext) {
+  void * array[50];
+  void * caller_address;
+  char ** messages;
+  int size, i;
+  sig_ucontext_t * uc;
 
+  uc = (sig_ucontext_t *) ucontext;
+
+  /* Get the address at the time the signal was raised */
+  caller_address = (void *) uc->uc_mcontext.arm_pc;  // RIP: x86_64 specific     arm_pc: ARM
+
+  fprintf(stderr, "\n");
+
+  if (sig_num == SIGSEGV)
+    printf("signal %d (%s), address is %p from %p\n", sig_num, strsignal(sig_num), info->si_addr,
+           (void *) caller_address);
+  else
+    printf("signal %d (%s)\n", sig_num, strsignal(sig_num));
+
+  size = backtrace(array, 50);
+  /* overwrite sigaction with caller's address */
+  array[1] = caller_address;
+  messages = backtrace_symbols(array, size);
+
+  /* skip first stack frame (points here) */
+  for (i = 1; i < size && messages != NULL; ++i) {
+    printf("[bt]: (%d) %s\n", i, messages[i]);
+  }
+  free(messages);
+  
+  Set_WaitTimer(&firstTimerID, 0, 0);
+  exit(EXIT_FAILURE);
+}
+
+void installSignal(int __sig) {
+  struct sigaction sigact;
+  sigact.sa_sigaction = crit_err_hdlr;
+  sigact.sa_flags = SA_RESTART | SA_SIGINFO;
+  if (sigaction(__sig, &sigact, (struct sigaction *) NULL) != 0) {
+    fprintf(stderr, "error setting signal handler for %d (%s)\n", __sig, strsignal(__sig));
+    exit(EXIT_FAILURE);
+  }
+}
 void __attribute__((constructor)) NewObject()
 {
 	m_MainComport = new UartComThread;

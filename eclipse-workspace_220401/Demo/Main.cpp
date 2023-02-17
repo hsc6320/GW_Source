@@ -47,7 +47,7 @@ int nlsChecksum =0;
 int nflagRegistration_Req =0;
 int nTagCnt =0;
 int socket_fd =0;
-int nBeaconCnt =0, nTempBeaconCnt =0, nTemp2BeaconCnt = 0;
+int nBeaconCnt =0, nTempBeaconCnt =0, nTemp2BeaconCnt = 0, nTemp1BeaconCnt=0;
 BYTE nBeaconValue =0;
 int bReDownloadFlag =0, bDataAckFlag =0;
 int GetUartMsg();
@@ -402,16 +402,23 @@ int Main_ByPass_SocketToUart()
 					}
 				}
 
-				if(DataSendFail_Redown) {					
-					printf("DataSendFail_Redown\n");
-					m_pMsgHandler->m_nReDownCnt = j;
-					nBeaconCnt =0;
-					bReDownloadFlag =1;
-					m_pMsgHandler->m_nDataDownCount = 0;
-					m_pMsgHandler->m_nDataIndiCount = 0;
-					m_pMsgHandler->UartPacket_ReDataDownStart(m_pMsgQueue->m_vcemsg.MsgPacket.data[0]);
+				if(DataSendFail_Redown) {
+					if(nTemp1BeaconCnt > 3) {
+						//Main_Service_Stop();
+						DataSendFail_Redown =0;
+					}
+					else {
+						printf("DataSendFail_Redown\n");
+						nTemp1BeaconCnt++;
+						m_pMsgHandler->m_nReDownCnt = j;
+						nBeaconCnt =0;
+						bReDownloadFlag =1;
+						m_pMsgHandler->m_nDataDownCount = 0;
+						m_pMsgHandler->m_nDataIndiCount = 0;
+						m_pMsgHandler->UartPacket_ReDataDownStart(m_pMsgQueue->m_vcemsg.MsgPacket.data[0]);
+					}
 				}
-				else if(!DataSendFail_Redown && (m_pMsgHandler->m_nDownloadedSuccessCnt == m_pMsgHandler->m_nReDownCnt)) {
+				if(!DataSendFail_Redown && (m_pMsgHandler->m_nDownloadedSuccessCnt == m_pMsgHandler->m_nReDownCnt)) {
 					nTempBeaconCnt++;
 					printf("nTempBeaconCnt : %d\n", nTempBeaconCnt);
 
@@ -538,6 +545,7 @@ void Main_Service_Stop()
 	memset(m_pMsgHandler->m_GetDownTagID, 0, 512);
 	bReDownloadFlag = 0;
 	bDataAckFlag =0;
+	nTemp1BeaconCnt =0;
 	nTempBeaconCnt =0;
 	nTemp2BeaconCnt =0;
 }
@@ -901,6 +909,13 @@ int Socket_Connect_Req()
 
 	return 1;
 }
+int Socket_AliveCheck()
+{
+	m_pSocketHandle->SendMessage(CONNECT_ALIVE_CHECK, m_GetInforPacket);
+	printf("main_Socket_AliveCheck), bWorkingThread : %d\n", m_pSocket->bWorkingThread);
+
+	return 1;
+}
 
 int GetUartMsg()
 {
@@ -1070,7 +1085,7 @@ int Set_WaitTimer(timer_t *timerID, int expireMS, int intervalMS)
 	te.sigev_value.sival_ptr = timerID;
 	timer_create(CLOCK_REALTIME, &te, timerID);
 
-	its.it_interval.tv_sec = 5;
+	its.it_interval.tv_sec = expireMS;
 	its.it_interval.tv_nsec = 0;
 	its.it_value.tv_sec = expireMS;
 	its.it_value.tv_nsec = 0;//expireMS * 1000;
@@ -1089,7 +1104,7 @@ void PrintfHello(int sig, siginfo_t* si, void* uc)
 	if(*tidp == firstTimerID) {
 		if(!m_pMsgQueue->m_bReadEnd_UartMessage && !m_pMsgQueue->m_bUartCommuniFlag &&
 			!m_pSocket->m_iBypassSocketToUart && !m_pSocket->m_iSocketReceiveEnd) {
-			
+			Socket_AliveCheck();
 			printf("1 S\n");
 		}
 	}
@@ -1171,13 +1186,14 @@ int main(int argc, char *argv[])
 	
 	getrlimit(RLIMIT_DATA, &rlim2);
 	printf("Current data Size : [%ld] Max Current Stack Size : [%ld]\n", rlim2.rlim_cur, rlim2.rlim_max);
+	th_delay(1000);
+	th_delay(40);
+	th_delay(50);
 
 	m_MainComport->uart_init();
 
 	m_MainComport->SetMutex(Main_Uartmutex);
-	th_delay(30);
-	th_delay(40);
-	th_delay(50);
+	
 	
 	Set_WaitTimer(&firstTimerID, 60, 0);
 
@@ -1192,7 +1208,8 @@ int main(int argc, char *argv[])
 		Main_ByPass_SocketToUart();
 		Main_ByPass_UartToSocket();
 
-		if(m_pSocket->bWorkingThread == 0) {
+		if( (m_pSocket->bWorkingThread == 0) ||(m_pSocketHandle->m_iSocketArive == 0) ){
+			Set_WaitTimer(&firstTimerID, 0, 0);
 			ServerReConn();
 			TagAssociation_Init();
 			printf("Main TagData\n");
@@ -1201,8 +1218,7 @@ int main(int argc, char *argv[])
 				m_pMsgQueue->m_Queue.pop();	
 				m_pMsgQueue->m_nSendTagCount--;
 				printf("m_pMsgQueue->m_nSendTagCount : %d\n", m_pMsgQueue->m_nSendTagCount );
-			}
-			
+			}			
 		}
 		usleep(100);
 	}

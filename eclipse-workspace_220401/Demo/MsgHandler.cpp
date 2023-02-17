@@ -319,7 +319,7 @@ int MsgHandler::Send_BeaconData(BYTE ibeaconvalue)
 						m_nDataDownCount = (16 * ((int)(beaconcnt)+1))-1;
 						m_DataFlag =1;
 						m_DataCnt++;
-					//	printf("m_nDataDownCount: %d[beacon : %d] \n", m_nDataDownCount, ibeaconvalue);
+						printf("m_nDataDownCount: %d[beacon : %d] \n", m_nDataDownCount, ibeaconvalue);
 						break;
 					}
 					else {
@@ -533,7 +533,6 @@ int MsgHandler::UartPacket_ReDataAcknowledge_DownStart(BYTE u8data)
 					}
 					else if(Map_AcknowParityCheck[vMsgDataAcknowledge[Map_AcknowCnt]] == PASS) {
 						Map_AcknowOverlap =0;
-						return 0;
 					}
 					if(Map_AcknowCnt>=15) {
 						Map_AcknowOverlap =0;
@@ -744,7 +743,11 @@ void MsgHandler::SetSocketArray(std::vector<std::vector<BYTE>> DataDownmsg, std:
 	printf("SetSocketArray()\n");
 	m_UartArrayDataDownMsg = DataDownmsg;
 	m_UartArrayDataIndicateMsg = DataIndimsg;
-
+	printf("SetSocketArray() Current m_UartArrayDataDownMsg Size : %d, m_UartArrayDataIndicateMsg Size : %d\n", m_UartArrayDataDownMsg.size(), m_UartArrayDataIndicateMsg.size());
+	m_UartArrayDataDownMsg.shrink_to_fit();
+	m_UartArrayDataIndicateMsg.shrink_to_fit();
+	printf("SetSocketArray() Fit  m_UartArrayDataDownMsg Size : %d, m_UartArrayDataIndicateMsg Size : %d\n", m_UartArrayDataDownMsg.size(), m_UartArrayDataIndicateMsg.size());
+	
 	m_nUartArrayDataDownCnt = (int)DataDownmsg.size();
 	m_nUartArrayDataIndicateCnt = (int)DataIndimsg.size();
 

@@ -991,3 +991,613 @@ Invoking: Cross G++ Linker
 arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
 Finished building target: Demo
  
+08:23:08 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In constructor ‘Socket::Socket()’:
+../Socket/socket.cpp:34:13: warning: converting to non-pointer type ‘pthread_t {aka long unsigned int}’ from NULL [-Wconversion-null]
+  p_thread = NULL;
+             ^~~~
+../Socket/socket.cpp:46:32: error: no match for call to ‘(std::vector<std::vector<unsigned char> >) (int)’
+  m_SocketArrayDataDownMsg (3000);
+                                ^
+../Socket/socket.cpp:47:36: error: no match for call to ‘(std::vector<std::vector<unsigned char> >) (int)’
+  m_SocketArrayDataIndicateMsg (3000);
+                                    ^
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:163:27: warning: NULL used in arithmetic [-Wpointer-arith]
+   if(pAddr->sa_data[i] != NULL) {
+                           ^~~~
+make: *** [Socket/subdir.mk:26: Socket/socket.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+08:23:41 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../uart/uart.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"uart/uart.d" -MT"uart/uart.o" -o "uart/uart.o" "../uart/uart.cpp"
+In file included from ../uart/../MsgQueue.h:15:0,
+                 from ../uart/uart.h:13,
+                 from ../uart/uart.cpp:8:
+../uart/../Socket/Socket.h:44:58: error: expected identifier before numeric constant
+  std::vector<std::vector<BYTE>> m_SocketArrayDataDownMsg(2000);
+                                                          ^~~~
+../uart/../Socket/Socket.h:44:58: error: expected ‘,’ or ‘...’ before numeric constant
+../uart/../Socket/Socket.h:45:62: error: expected identifier before numeric constant
+  std::vector<std::vector<BYTE>> m_SocketArrayDataIndicateMsg(2000);
+                                                              ^~~~
+../uart/../Socket/Socket.h:45:62: error: expected ‘,’ or ‘...’ before numeric constant
+make: *** [uart/subdir.mk:20: uart/uart.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+08:23:54 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../uart/uart.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"uart/uart.d" -MT"uart/uart.o" -o "uart/uart.o" "../uart/uart.cpp"
+In file included from ../uart/../MsgQueue.h:15:0,
+                 from ../uart/uart.h:13,
+                 from ../uart/uart.cpp:8:
+../uart/../Socket/Socket.h:44:58: error: expected identifier before numeric constant
+  std::vector<std::vector<BYTE>> m_SocketArrayDataDownMsg(2000);
+                                                          ^~~~
+../uart/../Socket/Socket.h:44:58: error: expected ‘,’ or ‘...’ before numeric constant
+../uart/../Socket/Socket.h:45:62: error: expected identifier before numeric constant
+  std::vector<std::vector<BYTE>> m_SocketArrayDataIndicateMsg(2000);
+                                                              ^~~~
+../uart/../Socket/Socket.h:45:62: error: expected ‘,’ or ‘...’ before numeric constant
+make: *** [uart/subdir.mk:20: uart/uart.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+08:24:20 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../uart/uart.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"uart/uart.d" -MT"uart/uart.o" -o "uart/uart.o" "../uart/uart.cpp"
+Finished building: ../uart/uart.cpp
+ 
+Building file: ../Socket/SocketHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
+Finished building: ../Socket/SocketHandler.cpp
+ 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In constructor ‘Socket::Socket()’:
+../Socket/socket.cpp:34:13: warning: converting to non-pointer type ‘pthread_t {aka long unsigned int}’ from NULL [-Wconversion-null]
+  p_thread = NULL;
+             ^~~~
+../Socket/socket.cpp:46:32: error: no match for call to ‘(std::vector<std::vector<unsigned char> >) (int)’
+  m_SocketArrayDataDownMsg (3000);
+                                ^
+../Socket/socket.cpp:47:36: error: no match for call to ‘(std::vector<std::vector<unsigned char> >) (int)’
+  m_SocketArrayDataIndicateMsg (3000);
+                                    ^
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:163:27: warning: NULL used in arithmetic [-Wpointer-arith]
+   if(pAddr->sa_data[i] != NULL) {
+                           ^~~~
+make: *** [Socket/subdir.mk:26: Socket/socket.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+09:18:32 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In constructor ‘Socket::Socket()’:
+../Socket/socket.cpp:34:13: warning: converting to non-pointer type ‘pthread_t {aka long unsigned int}’ from NULL [-Wconversion-null]
+  p_thread = NULL;
+             ^~~~
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:163:27: warning: NULL used in arithmetic [-Wpointer-arith]
+   if(pAddr->sa_data[i] != NULL) {
+                           ^~~~
+Finished building: ../Socket/socket.cpp
+ 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+Finished building: ../Main.cpp
+ 
+Building file: ../MsgHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgHandler.d" -MT"MsgHandler.o" -o "MsgHandler.o" "../MsgHandler.cpp"
+Finished building: ../MsgHandler.cpp
+ 
+Building file: ../MsgQueue.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgQueue.d" -MT"MsgQueue.o" -o "MsgQueue.o" "../MsgQueue.cpp"
+Finished building: ../MsgQueue.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+09:36:20 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../MsgHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgHandler.d" -MT"MsgHandler.o" -o "MsgHandler.o" "../MsgHandler.cpp"
+Finished building: ../MsgHandler.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+09:44:14 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+make: 'all'을(를) 위해 할 일이 없습니다.
+09:47:54 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../MsgHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgHandler.d" -MT"MsgHandler.o" -o "MsgHandler.o" "../MsgHandler.cpp"
+Finished building: ../MsgHandler.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+09:48:52 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+make: 'all'을(를) 위해 할 일이 없습니다.
+09:57:23 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../MsgHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgHandler.d" -MT"MsgHandler.o" -o "MsgHandler.o" "../MsgHandler.cpp"
+Finished building: ../MsgHandler.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+09:58:13 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+make: 'all'을(를) 위해 할 일이 없습니다.
+10:30:34 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+16:02:42 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../uart/uart.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"uart/uart.d" -MT"uart/uart.o" -o "uart/uart.o" "../uart/uart.cpp"
+Finished building: ../uart/uart.cpp
+ 
+Building file: ../Socket/SocketHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
+Finished building: ../Socket/SocketHandler.cpp
+ 
+Building file: ../Socket/SocketMsgQueue.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/SocketMsgQueue.d" -MT"Socket/SocketMsgQueue.o" -o "Socket/SocketMsgQueue.o" "../Socket/SocketMsgQueue.cpp"
+Finished building: ../Socket/SocketMsgQueue.cpp
+ 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In constructor ‘Socket::Socket()’:
+../Socket/socket.cpp:34:13: warning: converting to non-pointer type ‘pthread_t {aka long unsigned int}’ from NULL [-Wconversion-null]
+  p_thread = NULL;
+             ^~~~
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:163:27: warning: NULL used in arithmetic [-Wpointer-arith]
+   if(pAddr->sa_data[i] != NULL) {
+                           ^~~~
+Finished building: ../Socket/socket.cpp
+ 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+Finished building: ../Main.cpp
+ 
+Building file: ../MsgHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgHandler.d" -MT"MsgHandler.o" -o "MsgHandler.o" "../MsgHandler.cpp"
+Finished building: ../MsgHandler.cpp
+ 
+Building file: ../MsgQueue.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgQueue.d" -MT"MsgQueue.o" -o "MsgQueue.o" "../MsgQueue.cpp"
+Finished building: ../MsgQueue.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+17:09:57 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In constructor ‘Socket::Socket()’:
+../Socket/socket.cpp:34:13: warning: converting to non-pointer type ‘pthread_t {aka long unsigned int}’ from NULL [-Wconversion-null]
+  p_thread = NULL;
+             ^~~~
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:163:27: warning: NULL used in arithmetic [-Wpointer-arith]
+   if(pAddr->sa_data[i] != NULL) {
+                           ^~~~
+Finished building: ../Socket/socket.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+17:10:14 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+make: 'all'을(를) 위해 할 일이 없습니다.
+10:37:30 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../uart/uart.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"uart/uart.d" -MT"uart/uart.o" -o "uart/uart.o" "../uart/uart.cpp"
+Finished building: ../uart/uart.cpp
+ 
+Building file: ../Socket/SocketHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
+../Socket/SocketHandler.cpp: In constructor ‘SocketHandler::SocketHandler()’:
+../Socket/SocketHandler.cpp:18:2: error: expected ‘;’ before ‘m_nTagDataCount’
+  m_nTagDataCount =0;
+  ^~~~~~~~~~~~~~~
+../Socket/SocketHandler.cpp: In member function ‘int SocketHandler::SendMessage(int, PRE_DEFINE::S_PACKET)’:
+../Socket/SocketHandler.cpp:50:41: error: ‘GateWay_Status_Check’ was not declared in this scope
+   m_iSocketArive = GateWay_Status_Check();
+                                         ^
+../Socket/SocketHandler.cpp: At global scope:
+../Socket/SocketHandler.cpp:200:41: error: no ‘int SocketHandler::GateWay_Status_Check()’ member function declared in class ‘SocketHandler’
+ int SocketHandler::GateWay_Status_Check()
+                                         ^
+make: *** [Socket/subdir.mk:26: Socket/SocketHandler.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+10:38:10 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/SocketHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
+../Socket/SocketHandler.cpp: In member function ‘int SocketHandler::SendMessage(int, PRE_DEFINE::S_PACKET)’:
+../Socket/SocketHandler.cpp:50:41: error: ‘GateWay_Status_Check’ was not declared in this scope
+   m_iSocketArive = GateWay_Status_Check();
+                                         ^
+../Socket/SocketHandler.cpp: At global scope:
+../Socket/SocketHandler.cpp:200:41: error: no ‘int SocketHandler::GateWay_Status_Check()’ member function declared in class ‘SocketHandler’
+ int SocketHandler::GateWay_Status_Check()
+                                         ^
+make: *** [Socket/subdir.mk:26: Socket/SocketHandler.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+10:39:43 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/SocketHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
+Finished building: ../Socket/SocketHandler.cpp
+ 
+Building file: ../Socket/SocketMsgQueue.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/SocketMsgQueue.d" -MT"Socket/SocketMsgQueue.o" -o "Socket/SocketMsgQueue.o" "../Socket/SocketMsgQueue.cpp"
+Finished building: ../Socket/SocketMsgQueue.cpp
+ 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In constructor ‘Socket::Socket()’:
+../Socket/socket.cpp:34:13: warning: converting to non-pointer type ‘pthread_t {aka long unsigned int}’ from NULL [-Wconversion-null]
+  p_thread = NULL;
+             ^~~~
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:163:27: warning: NULL used in arithmetic [-Wpointer-arith]
+   if(pAddr->sa_data[i] != NULL) {
+                           ^~~~
+Finished building: ../Socket/socket.cpp
+ 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+Finished building: ../Main.cpp
+ 
+Building file: ../MsgHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgHandler.d" -MT"MsgHandler.o" -o "MsgHandler.o" "../MsgHandler.cpp"
+Finished building: ../MsgHandler.cpp
+ 
+Building file: ../MsgQueue.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgQueue.d" -MT"MsgQueue.o" -o "MsgQueue.o" "../MsgQueue.cpp"
+Finished building: ../MsgQueue.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+./Socket/SocketHandler.o: In function `SocketHandler::SendMessage(int, PRE_DEFINE::_PACKET)':
+/home/gw/GW_Source/GW_Source/eclipse-workspace_220401/Demo/Debug/../Socket/SocketHandler.cpp:36: undefined reference to `SocketHandler::Registration_Request()'
+collect2: error: ld returned 1 exit status
+make: *** [makefile:62: Demo] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+11:02:52 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/SocketHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
+../Socket/SocketHandler.cpp:207:59: warning: missing terminating ' character
+  printf("packet.GateWayID : %x\n", (BYTE)packet.GateWayID)'
+                                                           ^
+../Socket/SocketHandler.cpp:207:59: error: missing terminating ' character
+../Socket/SocketHandler.cpp:208:3: warning: missing terminating ' character
+   '
+   ^
+../Socket/SocketHandler.cpp:208:3: error: missing terminating ' character
+../Socket/SocketHandler.cpp: In member function ‘int SocketHandler::Registration_Request()’:
+../Socket/SocketHandler.cpp:209:2: error: expected ‘;’ before ‘pu8data’
+  pu8data[iBufcnt] = STX;
+  ^~~~~~~
+make: *** [Socket/subdir.mk:26: Socket/SocketHandler.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+11:03:31 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/SocketHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
+../Socket/SocketHandler.cpp:207:59: warning: missing terminating ' character
+  printf("packet.GateWayID : %x\n", (BYTE)packet.GateWayID)'
+                                                           ^
+../Socket/SocketHandler.cpp:207:59: error: missing terminating ' character
+../Socket/SocketHandler.cpp: In member function ‘int SocketHandler::Registration_Request()’:
+../Socket/SocketHandler.cpp:209:2: error: expected ‘;’ before ‘pu8data’
+  pu8data[iBufcnt] = STX;
+  ^~~~~~~
+make: *** [Socket/subdir.mk:26: Socket/SocketHandler.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+11:03:38 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/SocketHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
+Finished building: ../Socket/SocketHandler.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+11:14:39 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+make: 'all'을(를) 위해 할 일이 없습니다.
+11:17:47 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+11:19:01 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/SocketHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
+Finished building: ../Socket/SocketHandler.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+11:19:23 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+11:19:35 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+make: 'all'을(를) 위해 할 일이 없습니다.
+11:21:40 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/SocketHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
+Finished building: ../Socket/SocketHandler.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+11:38:18 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+12:16:51 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../uart/uart.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"uart/uart.d" -MT"uart/uart.o" -o "uart/uart.o" "../uart/uart.cpp"
+Finished building: ../uart/uart.cpp
+ 
+Building file: ../Socket/SocketHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
+Finished building: ../Socket/SocketHandler.cpp
+ 
+Building file: ../Socket/SocketMsgQueue.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/SocketMsgQueue.d" -MT"Socket/SocketMsgQueue.o" -o "Socket/SocketMsgQueue.o" "../Socket/SocketMsgQueue.cpp"
+Finished building: ../Socket/SocketMsgQueue.cpp
+ 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In constructor ‘Socket::Socket()’:
+../Socket/socket.cpp:34:13: warning: converting to non-pointer type ‘pthread_t {aka long unsigned int}’ from NULL [-Wconversion-null]
+  p_thread = NULL;
+             ^~~~
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:163:27: warning: NULL used in arithmetic [-Wpointer-arith]
+   if(pAddr->sa_data[i] != NULL) {
+                           ^~~~
+Finished building: ../Socket/socket.cpp
+ 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+Finished building: ../Main.cpp
+ 
+Building file: ../MsgHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgHandler.d" -MT"MsgHandler.o" -o "MsgHandler.o" "../MsgHandler.cpp"
+Finished building: ../MsgHandler.cpp
+ 
+Building file: ../MsgQueue.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgQueue.d" -MT"MsgQueue.o" -o "MsgQueue.o" "../MsgQueue.cpp"
+Finished building: ../MsgQueue.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+13:19:06 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+Finished building: ../Main.cpp
+ 
+Building file: ../MsgHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgHandler.d" -MT"MsgHandler.o" -o "MsgHandler.o" "../MsgHandler.cpp"
+Finished building: ../MsgHandler.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+13:19:20 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+make: 'all'을(를) 위해 할 일이 없습니다.
+13:29:27 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘int Main_ByPass_SocketToUart()’:
+../Main.cpp:411:6: error: expected ‘;’ before ‘m_pMsgHandler’
+      m_pMsgHandler->m_nReDownCnt = j;
+      ^~~~~~~~~~~~~
+make: *** [subdir.mk:26: Main.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+13:29:36 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+13:36:57 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+15:39:16 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../uart/uart.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"uart/uart.d" -MT"uart/uart.o" -o "uart/uart.o" "../uart/uart.cpp"
+Finished building: ../uart/uart.cpp
+ 
+Building file: ../Socket/SocketHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
+Finished building: ../Socket/SocketHandler.cpp
+ 
+Building file: ../Socket/SocketMsgQueue.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/SocketMsgQueue.d" -MT"Socket/SocketMsgQueue.o" -o "Socket/SocketMsgQueue.o" "../Socket/SocketMsgQueue.cpp"
+Finished building: ../Socket/SocketMsgQueue.cpp
+ 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In constructor ‘Socket::Socket()’:
+../Socket/socket.cpp:34:13: warning: converting to non-pointer type ‘pthread_t {aka long unsigned int}’ from NULL [-Wconversion-null]
+  p_thread = NULL;
+             ^~~~
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:163:27: warning: NULL used in arithmetic [-Wpointer-arith]
+   if(pAddr->sa_data[i] != NULL) {
+                           ^~~~
+Finished building: ../Socket/socket.cpp
+ 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+Finished building: ../Main.cpp
+ 
+Building file: ../MsgHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgHandler.d" -MT"MsgHandler.o" -o "MsgHandler.o" "../MsgHandler.cpp"
+Finished building: ../MsgHandler.cpp
+ 
+Building file: ../MsgQueue.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgQueue.d" -MT"MsgQueue.o" -o "MsgQueue.o" "../MsgQueue.cpp"
+Finished building: ../MsgQueue.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+15:39:55 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+make: 'all'을(를) 위해 할 일이 없습니다.

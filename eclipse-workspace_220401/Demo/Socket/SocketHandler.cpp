@@ -14,6 +14,7 @@ std::queue<std::vector<BYTE>> vTagData;
 
 SocketHandler::SocketHandler()
 {
+	m_iSocketArive =1;
 	m_nTagDataCount =0;
 }
 
@@ -43,6 +44,10 @@ int SocketHandler::SendMessage(int msg, PRE_DEFINE::S_PACKET packet)
 		break;
 	case TAG_ASSOCIATION:
 		printf("Socket SendMsg : TAG_ASSOCIATION\n");
+		break;
+	case CONNECT_ALIVE_CHECK:
+		printf("ocket SendMsg : CONNECT_ALIVE_CHECK\n");
+		m_iSocketArive = GateWay_Status_Check();
 		break;
 	default :
 		printf("Socket SendMsg : SERVICESTART_CONFIRM :0x%x\n", packet.header.type);
@@ -190,45 +195,81 @@ int SocketHandler::Connect_Request()
 	return 1;
 }
 
+
 int SocketHandler::Registration_Request()
 {
 	uint8_t pu8data[25];
 	BYTE u8Checksum;
-	int iBufcnt =0;
+	int iBufcnt =0, ret =0;
 
 	packet.GateWayID = packet.PanID;
 
-	printf("packet.GateWayID  : %x\n", packet.GateWayID);
+	printf("packet.GateWayID : %x\n", packet.GateWayID);
 	printf("packet.GateWayID : %x\n", (BYTE)packet.GateWayID);
 
 	pu8data[iBufcnt] = STX;
 	pu8data[++iBufcnt] = (BYTE)packet.PanID;
-	pu8data[++iBufcnt] = packet.PanID >> 8;
+	pu8data[++iBufcnt] = packet.PanID>> 8;
 	pu8data[++iBufcnt] = 0;
 	pu8data[++iBufcnt] = 0x01;
-	pu8data[++iBufcnt] = (BYTE)packet.GateWayID;
-	pu8data[++iBufcnt] = (packet.GateWayID >> 8);
+	pu8data[++iBufcnt] = (BYTE)packet.GateWayID << 8;		//gateway ID
+	pu8data[++iBufcnt] = packet.GateWayID >> 8;		//gateway ID
+	
 	pu8data[++iBufcnt] = REGISTRATION_REQUEST;	//msg type
-	pu8data[++iBufcnt] = 0x07;						//Data Length
-	pu8data[++iBufcnt] = 0;						//Data Length
-	pu8data[++iBufcnt] = 0;						//regType
-	pu8data[++iBufcnt] = 0;						//Mac addr
-	pu8data[++iBufcnt] = 1;		//Mac addr
-	pu8data[++iBufcnt] = 0;	//Mac addr
-	pu8data[++iBufcnt] = 0;	//Mac addr
-	pu8data[++iBufcnt] = 0;	//Mac addr
-	pu8data[++iBufcnt] = 0;	//Mac addr
-	u8Checksum = GetChecksum(pu8data, iBufcnt);	//check sum
+	pu8data[++iBufcnt] = 0x07;
+	pu8data[++iBufcnt] = 0;
+	
+	pu8data[++iBufcnt] = 0;
+	pu8data[++iBufcnt] = 0;
+	pu8data[++iBufcnt] = 1;
+	pu8data[++iBufcnt] = 0;
+	pu8data[++iBufcnt] = 0;
+	pu8data[++iBufcnt] = 0;
+	pu8data[++iBufcnt] = 0;
+
+	u8Checksum = GetChecksum(pu8data, iBufcnt);
 	pu8data[++iBufcnt] = u8Checksum; //0x07;
+
 	pu8data[++iBufcnt] = packet.ext[0];
 	pu8data[++iBufcnt] = packet.ext[1];
 	pu8data[++iBufcnt] = packet.ext[2];
 
-	pSocket->Send_Message(pu8data, iBufcnt+1);
+	ret = pSocket->Send_Message(pu8data, iBufcnt+1);
+	
+	return ret;
+	
+}
 
-	packet.GateWayID = packet.PanID ;
-	pSocket->m_pSocMsgqueue->GetPanID(packet.PanID);
-	return 1;
+
+int SocketHandler::GateWay_Status_Check()
+{
+	uint8_t pu8data[25];
+	BYTE u8Checksum;
+	int iBufcnt =0, ret =0;
+
+	pu8data[iBufcnt] = STX;
+	pu8data[++iBufcnt] = (BYTE)packet.PanID;
+	pu8data[++iBufcnt] = packet.PanID>> 8;
+	pu8data[++iBufcnt] = 0;
+	pu8data[++iBufcnt] = 0x01;
+	pu8data[++iBufcnt] = (BYTE)packet.GateWayID << 8;		//gateway ID
+	pu8data[++iBufcnt] = packet.GateWayID >> 8;		//gateway ID
+	
+	pu8data[++iBufcnt] = CONNECT_ALIVE_CHECK;	//msg type
+	pu8data[++iBufcnt] = 0;
+	pu8data[++iBufcnt] = 0;
+
+	u8Checksum = GetChecksum(pu8data, iBufcnt);
+	pu8data[++iBufcnt] = u8Checksum; 
+
+	pu8data[++iBufcnt] = packet.ext[0];
+	pu8data[++iBufcnt] = packet.ext[1];
+	pu8data[++iBufcnt] = packet.ext[2];
+
+	ret = pSocket->Send_Message(pu8data, iBufcnt+1);
+	
+	return ret;
+	
 }
 
 

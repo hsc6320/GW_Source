@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="signal"/>
+		<item key="selection" value="bDataAckFlag"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="bDataAckFlag"/>
+			<item value="nTemp1BeaconCnt"/>
+			<item value="m_SocketArrayDataDownMsg"/>
 			<item value="signal"/>
 			<item value="vec2"/>
 			<item value="460800"/>
@@ -20,7 +23,6 @@
 			<item value="Set_WaitTimer"/>
 			<item value="AckFail_Redown"/>
 			<item value="Main_TagVal_CheckParity2"/>
-			<item value=""/>
 		</list>
 		<list key="replacehistory">
 		</list>
