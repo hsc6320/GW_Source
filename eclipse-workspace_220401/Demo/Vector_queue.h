@@ -26,6 +26,7 @@ public:
 			T* temp = new T[capacity *2 ];
 			for(int i=0; i< length; i++) {
 				temp[i] = data[i];
+				printf("[%x]", temp[i]);
 			}
 			delete[] data;
 			data = temp;

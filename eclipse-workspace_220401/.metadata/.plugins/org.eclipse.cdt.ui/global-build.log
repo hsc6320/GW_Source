@@ -1601,3 +1601,1274 @@ Finished building target: Demo
 15:39:55 **** Incremental Build of configuration Debug for project Demo ****
 make all 
 make: 'all'을(를) 위해 할 일이 없습니다.
+09:13:09 **** Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+09:13:51 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+make: 'all'을(를) 위해 할 일이 없습니다.
+09:37:34 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In constructor ‘Socket::Socket()’:
+../Socket/socket.cpp:34:13: warning: converting to non-pointer type ‘pthread_t {aka long unsigned int}’ from NULL [-Wconversion-null]
+  p_thread = NULL;
+             ^~~~
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:163:27: warning: NULL used in arithmetic [-Wpointer-arith]
+   if(pAddr->sa_data[i] != NULL) {
+                           ^~~~
+Finished building: ../Socket/socket.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+09:50:08 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../uart/uart.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"uart/uart.d" -MT"uart/uart.o" -o "uart/uart.o" "../uart/uart.cpp"
+Finished building: ../uart/uart.cpp
+ 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In constructor ‘Socket::Socket()’:
+../Socket/socket.cpp:34:13: warning: converting to non-pointer type ‘pthread_t {aka long unsigned int}’ from NULL [-Wconversion-null]
+  p_thread = NULL;
+             ^~~~
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:163:27: warning: NULL used in arithmetic [-Wpointer-arith]
+   if(pAddr->sa_data[i] != NULL) {
+                           ^~~~
+Finished building: ../Socket/socket.cpp
+ 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+Finished building: ../Main.cpp
+ 
+Building file: ../MsgHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgHandler.d" -MT"MsgHandler.o" -o "MsgHandler.o" "../MsgHandler.cpp"
+Finished building: ../MsgHandler.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+10:05:28 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+11:40:30 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../uart/uart.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"uart/uart.d" -MT"uart/uart.o" -o "uart/uart.o" "../uart/uart.cpp"
+In file included from ../uart/../MsgQueue.h:15:0,
+                 from ../uart/uart.h:13,
+                 from ../uart/uart.cpp:8:
+../uart/../Socket/Socket.h:47:23: error: redeclaration of ‘Vector<Vector<unsigned char> > Socket::m_SocketArrayDataDownMsg’
+  Vector<Vector<BYTE>> m_SocketArrayDataDownMsg;
+                       ^~~~~~~~~~~~~~~~~~~~~~~~
+../uart/../Socket/Socket.h:46:23: note: previous declaration ‘Vector<Vector<unsigned char> > Socket::m_SocketArrayDataDownMsg’
+  Vector<Vector<BYTE>> m_SocketArrayDataDownMsg;
+                       ^~~~~~~~~~~~~~~~~~~~~~~~
+make: *** [uart/subdir.mk:20: uart/uart.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+11:41:39 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../uart/uart.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"uart/uart.d" -MT"uart/uart.o" -o "uart/uart.o" "../uart/uart.cpp"
+In file included from ../uart/../MsgQueue.h:15:0,
+                 from ../uart/uart.h:13,
+                 from ../uart/uart.cpp:8:
+../uart/../Socket/Socket.h:47:23: error: redeclaration of ‘Vector<Vector<unsigned char> > Socket::m_SocketArrayDataDownMsg’
+  Vector<Vector<BYTE>> m_SocketArrayDataDownMsg;
+                       ^~~~~~~~~~~~~~~~~~~~~~~~
+../uart/../Socket/Socket.h:46:23: note: previous declaration ‘Vector<Vector<unsigned char> > Socket::m_SocketArrayDataDownMsg’
+  Vector<Vector<BYTE>> m_SocketArrayDataDownMsg;
+                       ^~~~~~~~~~~~~~~~~~~~~~~~
+make: *** [uart/subdir.mk:20: uart/uart.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+11:42:04 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../uart/uart.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"uart/uart.d" -MT"uart/uart.o" -o "uart/uart.o" "../uart/uart.cpp"
+In file included from ../uart/../MsgQueue.h:15:0,
+                 from ../uart/uart.h:13,
+                 from ../uart/uart.cpp:8:
+../uart/../Socket/Socket.h:47:23: error: redeclaration of ‘Vector<Vector<unsigned char> > Socket::m_SocketArrayDataDownMsg’
+  Vector<Vector<BYTE>> m_SocketArrayDataDownMsg;
+                       ^~~~~~~~~~~~~~~~~~~~~~~~
+../uart/../Socket/Socket.h:46:23: note: previous declaration ‘Vector<Vector<unsigned char> > Socket::m_SocketArrayDataDownMsg’
+  Vector<Vector<BYTE>> m_SocketArrayDataDownMsg;
+                       ^~~~~~~~~~~~~~~~~~~~~~~~
+make: *** [uart/subdir.mk:20: uart/uart.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+11:42:15 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../uart/uart.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"uart/uart.d" -MT"uart/uart.o" -o "uart/uart.o" "../uart/uart.cpp"
+Finished building: ../uart/uart.cpp
+ 
+Building file: ../Socket/SocketHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
+Finished building: ../Socket/SocketHandler.cpp
+ 
+Building file: ../Socket/SocketMsgQueue.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/SocketMsgQueue.d" -MT"Socket/SocketMsgQueue.o" -o "Socket/SocketMsgQueue.o" "../Socket/SocketMsgQueue.cpp"
+Finished building: ../Socket/SocketMsgQueue.cpp
+ 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In constructor ‘Socket::Socket()’:
+../Socket/socket.cpp:34:13: warning: converting to non-pointer type ‘pthread_t {aka long unsigned int}’ from NULL [-Wconversion-null]
+  p_thread = NULL;
+             ^~~~
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:164:27: warning: NULL used in arithmetic [-Wpointer-arith]
+   if(pAddr->sa_data[i] != NULL) {
+                           ^~~~
+../Socket/socket.cpp: In member function ‘bool Socket::GetSocketMsg(BYTE*, int)’:
+../Socket/socket.cpp:546:58: error: no matching function for call to ‘Vector<Vector<unsigned char> >::push_back(std::vector<unsigned char>&)’
+      m_SocketArrayDataDownMsg.push_back(m_SocketQueue_vec);
+                                                          ^
+In file included from ../Socket/../pch.h:50:0,
+                 from ../Socket/Socket.h:11,
+                 from ../Socket/socket.cpp:9:
+../Socket/../Vector_queue.h:24:7: note: candidate: void Vector<T>::push_back(T) [with T = Vector<unsigned char>]
+  void push_back(T s) {
+       ^~~~~~~~~
+../Socket/../Vector_queue.h:24:7: note:   no known conversion for argument 1 from ‘std::vector<unsigned char>’ to ‘Vector<unsigned char>’
+../Socket/socket.cpp:548:31: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘erase’
+      m_SocketArrayDataDownMsg.erase(unique(m_SocketArrayDataDownMsg.begin(), m_SocketArrayDataDownMsg.end()),
+                               ^~~~~
+../Socket/socket.cpp:548:69: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘begin’
+      m_SocketArrayDataDownMsg.erase(unique(m_SocketArrayDataDownMsg.begin(), m_SocketArrayDataDownMsg.end()),
+                                                                     ^~~~~
+../Socket/socket.cpp:548:103: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘end’
+      m_SocketArrayDataDownMsg.erase(unique(m_SocketArrayDataDownMsg.begin(), m_SocketArrayDataDownMsg.end()),
+                                                                                                       ^~~
+../Socket/socket.cpp:548:108: error: ‘unique’ was not declared in this scope
+      m_SocketArrayDataDownMsg.erase(unique(m_SocketArrayDataDownMsg.begin(), m_SocketArrayDataDownMsg.end()),
+                                                                                                            ^
+../Socket/socket.cpp:548:108: note: suggested alternative:
+In file included from /home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/algorithm:62:0,
+                 from ../Socket/../pch.h:37,
+                 from ../Socket/Socket.h:11,
+                 from ../Socket/socket.cpp:9:
+/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_algo.h:1022:5: note:   ‘std::unique’
+     unique(_ForwardIterator __first, _ForwardIterator __last,
+     ^~~~~~
+../Socket/socket.cpp:549:41: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘end’
+                m_SocketArrayDataDownMsg.end());  //Delete overlap
+                                         ^~~
+../Socket/socket.cpp:551:36: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘begin’
+      sort(m_SocketArrayDataDownMsg.begin(), m_SocketArrayDataDownMsg.end());
+                                    ^~~~~
+../Socket/socket.cpp:551:70: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘end’
+      sort(m_SocketArrayDataDownMsg.begin(), m_SocketArrayDataDownMsg.end());
+                                                                      ^~~
+../Socket/socket.cpp:551:75: error: ‘sort’ was not declared in this scope
+      sort(m_SocketArrayDataDownMsg.begin(), m_SocketArrayDataDownMsg.end());
+                                                                           ^
+../Socket/socket.cpp:551:75: note: suggested alternative:
+In file included from /home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/algorithm:62:0,
+                 from ../Socket/../pch.h:37,
+                 from ../Socket/Socket.h:11,
+                 from ../Socket/socket.cpp:9:
+/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_algo.h:4727:5: note:   ‘std::sort’
+     sort(_RandomAccessIterator __first, _RandomAccessIterator __last,
+     ^~~~
+../Socket/socket.cpp:558:62: error: no matching function for call to ‘Vector<Vector<unsigned char> >::push_back(std::vector<unsigned char>&)’
+      m_SocketArrayDataIndicateMsg.push_back(m_SocketQueue_vec);
+                                                              ^
+In file included from ../Socket/../pch.h:50:0,
+                 from ../Socket/Socket.h:11,
+                 from ../Socket/socket.cpp:9:
+../Socket/../Vector_queue.h:24:7: note: candidate: void Vector<T>::push_back(T) [with T = Vector<unsigned char>]
+  void push_back(T s) {
+       ^~~~~~~~~
+../Socket/../Vector_queue.h:24:7: note:   no known conversion for argument 1 from ‘std::vector<unsigned char>’ to ‘Vector<unsigned char>’
+../Socket/socket.cpp:559:35: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘erase’
+      m_SocketArrayDataIndicateMsg.erase(unique(m_SocketArrayDataIndicateMsg.begin(), m_SocketArrayDataIndicateMsg.end()),
+                                   ^~~~~
+../Socket/socket.cpp:559:77: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘begin’
+      m_SocketArrayDataIndicateMsg.erase(unique(m_SocketArrayDataIndicateMsg.begin(), m_SocketArrayDataIndicateMsg.end()),
+                                                                             ^~~~~
+../Socket/socket.cpp:559:115: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘end’
+      m_SocketArrayDataIndicateMsg.erase(unique(m_SocketArrayDataIndicateMsg.begin(), m_SocketArrayDataIndicateMsg.end()),
+                                                                                                                   ^~~
+../Socket/socket.cpp:559:120: error: ‘unique’ was not declared in this scope
+      m_SocketArrayDataIndicateMsg.erase(unique(m_SocketArrayDataIndicateMsg.begin(), m_SocketArrayDataIndicateMsg.end()),
+                                                                                                                        ^
+../Socket/socket.cpp:559:120: note: suggested alternative:
+In file included from /home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/algorithm:62:0,
+                 from ../Socket/../pch.h:37,
+                 from ../Socket/Socket.h:11,
+                 from ../Socket/socket.cpp:9:
+/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_algo.h:1022:5: note:   ‘std::unique’
+     unique(_ForwardIterator __first, _ForwardIterator __last,
+     ^~~~~~
+../Socket/socket.cpp:560:45: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘end’
+                m_SocketArrayDataIndicateMsg.end());  //Delete overlap
+                                             ^~~
+../Socket/socket.cpp:561:40: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘begin’
+      sort(m_SocketArrayDataIndicateMsg.begin(), m_SocketArrayDataIndicateMsg.end());
+                                        ^~~~~
+../Socket/socket.cpp:561:78: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘end’
+      sort(m_SocketArrayDataIndicateMsg.begin(), m_SocketArrayDataIndicateMsg.end());
+                                                                              ^~~
+../Socket/socket.cpp:561:83: error: ‘sort’ was not declared in this scope
+      sort(m_SocketArrayDataIndicateMsg.begin(), m_SocketArrayDataIndicateMsg.end());
+                                                                                   ^
+../Socket/socket.cpp:561:83: note: suggested alternative:
+In file included from /home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/algorithm:62:0,
+                 from ../Socket/../pch.h:37,
+                 from ../Socket/Socket.h:11,
+                 from ../Socket/socket.cpp:9:
+/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_algo.h:4727:5: note:   ‘std::sort’
+     sort(_RandomAccessIterator __first, _RandomAccessIterator __last,
+     ^~~~
+../Socket/socket.cpp:562:129: error: ‘int Vector<Vector<unsigned char> >::capacity’ is private within this context
+      printf("m_SocketArrayDataIndicateMsg size : %d %d %d\n", m_SocketArrayDataIndicateMsg.size(), m_SocketArrayDataIndicateMsg.capacity(),
+                                                                                                                                 ^~~~~~~~
+In file included from ../Socket/../pch.h:50:0,
+                 from ../Socket/Socket.h:11,
+                 from ../Socket/socket.cpp:9:
+../Socket/../Vector_queue.h:18:6: note: declared private here
+  int capacity;
+      ^~~~~~~~
+../Socket/socket.cpp:562:138: error: expression cannot be used as a function
+      printf("m_SocketArrayDataIndicateMsg size : %d %d %d\n", m_SocketArrayDataIndicateMsg.size(), m_SocketArrayDataIndicateMsg.capacity(),
+                                                                                                                                          ^
+make: *** [Socket/subdir.mk:26: Socket/socket.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+11:42:55 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../uart/uart.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"uart/uart.d" -MT"uart/uart.o" -o "uart/uart.o" "../uart/uart.cpp"
+Finished building: ../uart/uart.cpp
+ 
+Building file: ../Socket/SocketHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
+Finished building: ../Socket/SocketHandler.cpp
+ 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In constructor ‘Socket::Socket()’:
+../Socket/socket.cpp:34:13: warning: converting to non-pointer type ‘pthread_t {aka long unsigned int}’ from NULL [-Wconversion-null]
+  p_thread = NULL;
+             ^~~~
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:164:27: warning: NULL used in arithmetic [-Wpointer-arith]
+   if(pAddr->sa_data[i] != NULL) {
+                           ^~~~
+../Socket/socket.cpp: In member function ‘bool Socket::GetSocketMsg(BYTE*, int)’:
+../Socket/socket.cpp:539:23: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘clear’
+     m_SocketQueue_vec.clear();
+                       ^~~~~
+../Socket/socket.cpp:540:23: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘shrink_to_fit’
+     m_SocketQueue_vec.shrink_to_fit();
+                       ^~~~~~~~~~~~~
+../Socket/socket.cpp:545:35: error: no match for ‘operator==’ (operand types are ‘Vector<unsigned char>’ and ‘int’)
+     if(m_SocketQueue_vec[MSGTYPE] == DOWNLOAD_START_REQ) {
+                                    
+../Socket/socket.cpp:546:58: error: no matching function for call to ‘Vector<Vector<unsigned char> >::push_back(Vector<Vector<unsigned char> >&)’
+      m_SocketArrayDataDownMsg.push_back(m_SocketQueue_vec);
+                                                          ^
+In file included from ../Socket/../pch.h:50:0,
+                 from ../Socket/Socket.h:11,
+                 from ../Socket/socket.cpp:9:
+../Socket/../Vector_queue.h:24:7: note: candidate: void Vector<T>::push_back(T) [with T = Vector<unsigned char>]
+  void push_back(T s) {
+       ^~~~~~~~~
+../Socket/../Vector_queue.h:24:7: note:   no known conversion for argument 1 from ‘Vector<Vector<unsigned char> >’ to ‘Vector<unsigned char>’
+../Socket/socket.cpp:548:31: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘erase’
+      m_SocketArrayDataDownMsg.erase(unique(m_SocketArrayDataDownMsg.begin(), m_SocketArrayDataDownMsg.end()),
+                               ^~~~~
+../Socket/socket.cpp:548:69: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘begin’
+      m_SocketArrayDataDownMsg.erase(unique(m_SocketArrayDataDownMsg.begin(), m_SocketArrayDataDownMsg.end()),
+                                                                     ^~~~~
+../Socket/socket.cpp:548:103: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘end’
+      m_SocketArrayDataDownMsg.erase(unique(m_SocketArrayDataDownMsg.begin(), m_SocketArrayDataDownMsg.end()),
+                                                                                                       ^~~
+../Socket/socket.cpp:548:108: error: ‘unique’ was not declared in this scope
+      m_SocketArrayDataDownMsg.erase(unique(m_SocketArrayDataDownMsg.begin(), m_SocketArrayDataDownMsg.end()),
+                                                                                                            ^
+../Socket/socket.cpp:548:108: note: suggested alternative:
+In file included from /home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/algorithm:62:0,
+                 from ../Socket/../pch.h:37,
+                 from ../Socket/Socket.h:11,
+                 from ../Socket/socket.cpp:9:
+/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_algo.h:1022:5: note:   ‘std::unique’
+     unique(_ForwardIterator __first, _ForwardIterator __last,
+     ^~~~~~
+../Socket/socket.cpp:549:41: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘end’
+                m_SocketArrayDataDownMsg.end());  //Delete overlap
+                                         ^~~
+../Socket/socket.cpp:551:36: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘begin’
+      sort(m_SocketArrayDataDownMsg.begin(), m_SocketArrayDataDownMsg.end());
+                                    ^~~~~
+../Socket/socket.cpp:551:70: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘end’
+      sort(m_SocketArrayDataDownMsg.begin(), m_SocketArrayDataDownMsg.end());
+                                                                      ^~~
+../Socket/socket.cpp:551:75: error: ‘sort’ was not declared in this scope
+      sort(m_SocketArrayDataDownMsg.begin(), m_SocketArrayDataDownMsg.end());
+                                                                           ^
+../Socket/socket.cpp:551:75: note: suggested alternative:
+In file included from /home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/algorithm:62:0,
+                 from ../Socket/../pch.h:37,
+                 from ../Socket/Socket.h:11,
+                 from ../Socket/socket.cpp:9:
+/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_algo.h:4727:5: note:   ‘std::sort’
+     sort(_RandomAccessIterator __first, _RandomAccessIterator __last,
+     ^~~~
+../Socket/socket.cpp:557:40: error: no match for ‘operator==’ (operand types are ‘Vector<unsigned char>’ and ‘int’)
+     else if(m_SocketQueue_vec[MSGTYPE] == DATAINDICATION_REQ) {
+                                         
+../Socket/socket.cpp:558:62: error: no matching function for call to ‘Vector<Vector<unsigned char> >::push_back(Vector<Vector<unsigned char> >&)’
+      m_SocketArrayDataIndicateMsg.push_back(m_SocketQueue_vec);
+                                                              ^
+In file included from ../Socket/../pch.h:50:0,
+                 from ../Socket/Socket.h:11,
+                 from ../Socket/socket.cpp:9:
+../Socket/../Vector_queue.h:24:7: note: candidate: void Vector<T>::push_back(T) [with T = Vector<unsigned char>]
+  void push_back(T s) {
+       ^~~~~~~~~
+../Socket/../Vector_queue.h:24:7: note:   no known conversion for argument 1 from ‘Vector<Vector<unsigned char> >’ to ‘Vector<unsigned char>’
+../Socket/socket.cpp:559:35: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘erase’
+      m_SocketArrayDataIndicateMsg.erase(unique(m_SocketArrayDataIndicateMsg.begin(), m_SocketArrayDataIndicateMsg.end()),
+                                   ^~~~~
+../Socket/socket.cpp:559:77: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘begin’
+      m_SocketArrayDataIndicateMsg.erase(unique(m_SocketArrayDataIndicateMsg.begin(), m_SocketArrayDataIndicateMsg.end()),
+                                                                             ^~~~~
+../Socket/socket.cpp:559:115: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘end’
+      m_SocketArrayDataIndicateMsg.erase(unique(m_SocketArrayDataIndicateMsg.begin(), m_SocketArrayDataIndicateMsg.end()),
+                                                                                                                   ^~~
+../Socket/socket.cpp:559:120: error: ‘unique’ was not declared in this scope
+      m_SocketArrayDataIndicateMsg.erase(unique(m_SocketArrayDataIndicateMsg.begin(), m_SocketArrayDataIndicateMsg.end()),
+                                                                                                                        ^
+../Socket/socket.cpp:559:120: note: suggested alternative:
+In file included from /home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/algorithm:62:0,
+                 from ../Socket/../pch.h:37,
+                 from ../Socket/Socket.h:11,
+                 from ../Socket/socket.cpp:9:
+/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_algo.h:1022:5: note:   ‘std::unique’
+     unique(_ForwardIterator __first, _ForwardIterator __last,
+     ^~~~~~
+../Socket/socket.cpp:560:45: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘end’
+                m_SocketArrayDataIndicateMsg.end());  //Delete overlap
+                                             ^~~
+../Socket/socket.cpp:561:40: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘begin’
+      sort(m_SocketArrayDataIndicateMsg.begin(), m_SocketArrayDataIndicateMsg.end());
+                                        ^~~~~
+../Socket/socket.cpp:561:78: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘end’
+      sort(m_SocketArrayDataIndicateMsg.begin(), m_SocketArrayDataIndicateMsg.end());
+                                                                              ^~~
+../Socket/socket.cpp:561:83: error: ‘sort’ was not declared in this scope
+      sort(m_SocketArrayDataIndicateMsg.begin(), m_SocketArrayDataIndicateMsg.end());
+                                                                                   ^
+../Socket/socket.cpp:561:83: note: suggested alternative:
+In file included from /home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/algorithm:62:0,
+                 from ../Socket/../pch.h:37,
+                 from ../Socket/Socket.h:11,
+                 from ../Socket/socket.cpp:9:
+/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_algo.h:4727:5: note:   ‘std::sort’
+     sort(_RandomAccessIterator __first, _RandomAccessIterator __last,
+     ^~~~
+../Socket/socket.cpp:562:129: error: ‘int Vector<Vector<unsigned char> >::capacity’ is private within this context
+      printf("m_SocketArrayDataIndicateMsg size : %d %d %d\n", m_SocketArrayDataIndicateMsg.size(), m_SocketArrayDataIndicateMsg.capacity(),
+                                                                                                                                 ^~~~~~~~
+In file included from ../Socket/../pch.h:50:0,
+                 from ../Socket/Socket.h:11,
+                 from ../Socket/socket.cpp:9:
+../Socket/../Vector_queue.h:18:6: note: declared private here
+  int capacity;
+      ^~~~~~~~
+../Socket/socket.cpp:562:138: error: expression cannot be used as a function
+      printf("m_SocketArrayDataIndicateMsg size : %d %d %d\n", m_SocketArrayDataIndicateMsg.size(), m_SocketArrayDataIndicateMsg.capacity(),
+                                                                                                                                          ^
+make: *** [Socket/subdir.mk:26: Socket/socket.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+11:44:04 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In constructor ‘Socket::Socket()’:
+../Socket/socket.cpp:34:13: warning: converting to non-pointer type ‘pthread_t {aka long unsigned int}’ from NULL [-Wconversion-null]
+  p_thread = NULL;
+             ^~~~
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:164:27: warning: NULL used in arithmetic [-Wpointer-arith]
+   if(pAddr->sa_data[i] != NULL) {
+                           ^~~~
+../Socket/socket.cpp: In member function ‘bool Socket::GetSocketMsg(BYTE*, int)’:
+../Socket/socket.cpp:545:35: error: no match for ‘operator==’ (operand types are ‘Vector<unsigned char>’ and ‘int’)
+     if(m_SocketQueue_vec[MSGTYPE] == DOWNLOAD_START_REQ) {
+                                    
+../Socket/socket.cpp:546:58: error: no matching function for call to ‘Vector<Vector<unsigned char> >::push_back(Vector<Vector<unsigned char> >&)’
+      m_SocketArrayDataDownMsg.push_back(m_SocketQueue_vec);
+                                                          ^
+In file included from ../Socket/../pch.h:50:0,
+                 from ../Socket/Socket.h:11,
+                 from ../Socket/socket.cpp:9:
+../Socket/../Vector_queue.h:24:7: note: candidate: void Vector<T>::push_back(T) [with T = Vector<unsigned char>]
+  void push_back(T s) {
+       ^~~~~~~~~
+../Socket/../Vector_queue.h:24:7: note:   no known conversion for argument 1 from ‘Vector<Vector<unsigned char> >’ to ‘Vector<unsigned char>’
+../Socket/socket.cpp:548:31: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘erase’
+      m_SocketArrayDataDownMsg.erase(unique(m_SocketArrayDataDownMsg.begin(), m_SocketArrayDataDownMsg.end()),
+                               ^~~~~
+../Socket/socket.cpp:548:69: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘begin’
+      m_SocketArrayDataDownMsg.erase(unique(m_SocketArrayDataDownMsg.begin(), m_SocketArrayDataDownMsg.end()),
+                                                                     ^~~~~
+../Socket/socket.cpp:548:103: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘end’
+      m_SocketArrayDataDownMsg.erase(unique(m_SocketArrayDataDownMsg.begin(), m_SocketArrayDataDownMsg.end()),
+                                                                                                       ^~~
+../Socket/socket.cpp:548:108: error: ‘unique’ was not declared in this scope
+      m_SocketArrayDataDownMsg.erase(unique(m_SocketArrayDataDownMsg.begin(), m_SocketArrayDataDownMsg.end()),
+                                                                                                            ^
+../Socket/socket.cpp:548:108: note: suggested alternative:
+In file included from /home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/algorithm:62:0,
+                 from ../Socket/../pch.h:37,
+                 from ../Socket/Socket.h:11,
+                 from ../Socket/socket.cpp:9:
+/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_algo.h:1022:5: note:   ‘std::unique’
+     unique(_ForwardIterator __first, _ForwardIterator __last,
+     ^~~~~~
+../Socket/socket.cpp:549:41: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘end’
+                m_SocketArrayDataDownMsg.end());  //Delete overlap
+                                         ^~~
+../Socket/socket.cpp:551:36: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘begin’
+      sort(m_SocketArrayDataDownMsg.begin(), m_SocketArrayDataDownMsg.end());
+                                    ^~~~~
+../Socket/socket.cpp:551:70: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘end’
+      sort(m_SocketArrayDataDownMsg.begin(), m_SocketArrayDataDownMsg.end());
+                                                                      ^~~
+../Socket/socket.cpp:551:75: error: ‘sort’ was not declared in this scope
+      sort(m_SocketArrayDataDownMsg.begin(), m_SocketArrayDataDownMsg.end());
+                                                                           ^
+../Socket/socket.cpp:551:75: note: suggested alternative:
+In file included from /home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/algorithm:62:0,
+                 from ../Socket/../pch.h:37,
+                 from ../Socket/Socket.h:11,
+                 from ../Socket/socket.cpp:9:
+/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_algo.h:4727:5: note:   ‘std::sort’
+     sort(_RandomAccessIterator __first, _RandomAccessIterator __last,
+     ^~~~
+../Socket/socket.cpp:557:40: error: no match for ‘operator==’ (operand types are ‘Vector<unsigned char>’ and ‘int’)
+     else if(m_SocketQueue_vec[MSGTYPE] == DATAINDICATION_REQ) {
+                                         
+../Socket/socket.cpp:558:62: error: no matching function for call to ‘Vector<Vector<unsigned char> >::push_back(Vector<Vector<unsigned char> >&)’
+      m_SocketArrayDataIndicateMsg.push_back(m_SocketQueue_vec);
+                                                              ^
+In file included from ../Socket/../pch.h:50:0,
+                 from ../Socket/Socket.h:11,
+                 from ../Socket/socket.cpp:9:
+../Socket/../Vector_queue.h:24:7: note: candidate: void Vector<T>::push_back(T) [with T = Vector<unsigned char>]
+  void push_back(T s) {
+       ^~~~~~~~~
+../Socket/../Vector_queue.h:24:7: note:   no known conversion for argument 1 from ‘Vector<Vector<unsigned char> >’ to ‘Vector<unsigned char>’
+../Socket/socket.cpp:559:35: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘erase’
+      m_SocketArrayDataIndicateMsg.erase(unique(m_SocketArrayDataIndicateMsg.begin(), m_SocketArrayDataIndicateMsg.end()),
+                                   ^~~~~
+../Socket/socket.cpp:559:77: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘begin’
+      m_SocketArrayDataIndicateMsg.erase(unique(m_SocketArrayDataIndicateMsg.begin(), m_SocketArrayDataIndicateMsg.end()),
+                                                                             ^~~~~
+../Socket/socket.cpp:559:115: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘end’
+      m_SocketArrayDataIndicateMsg.erase(unique(m_SocketArrayDataIndicateMsg.begin(), m_SocketArrayDataIndicateMsg.end()),
+                                                                                                                   ^~~
+../Socket/socket.cpp:559:120: error: ‘unique’ was not declared in this scope
+      m_SocketArrayDataIndicateMsg.erase(unique(m_SocketArrayDataIndicateMsg.begin(), m_SocketArrayDataIndicateMsg.end()),
+                                                                                                                        ^
+../Socket/socket.cpp:559:120: note: suggested alternative:
+In file included from /home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/algorithm:62:0,
+                 from ../Socket/../pch.h:37,
+                 from ../Socket/Socket.h:11,
+                 from ../Socket/socket.cpp:9:
+/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_algo.h:1022:5: note:   ‘std::unique’
+     unique(_ForwardIterator __first, _ForwardIterator __last,
+     ^~~~~~
+../Socket/socket.cpp:560:45: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘end’
+                m_SocketArrayDataIndicateMsg.end());  //Delete overlap
+                                             ^~~
+../Socket/socket.cpp:561:40: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘begin’
+      sort(m_SocketArrayDataIndicateMsg.begin(), m_SocketArrayDataIndicateMsg.end());
+                                        ^~~~~
+../Socket/socket.cpp:561:78: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘end’
+      sort(m_SocketArrayDataIndicateMsg.begin(), m_SocketArrayDataIndicateMsg.end());
+                                                                              ^~~
+../Socket/socket.cpp:561:83: error: ‘sort’ was not declared in this scope
+      sort(m_SocketArrayDataIndicateMsg.begin(), m_SocketArrayDataIndicateMsg.end());
+                                                                                   ^
+../Socket/socket.cpp:561:83: note: suggested alternative:
+In file included from /home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/algorithm:62:0,
+                 from ../Socket/../pch.h:37,
+                 from ../Socket/Socket.h:11,
+                 from ../Socket/socket.cpp:9:
+/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_algo.h:4727:5: note:   ‘std::sort’
+     sort(_RandomAccessIterator __first, _RandomAccessIterator __last,
+     ^~~~
+../Socket/socket.cpp:562:129: error: ‘int Vector<Vector<unsigned char> >::capacity’ is private within this context
+      printf("m_SocketArrayDataIndicateMsg size : %d %d %d\n", m_SocketArrayDataIndicateMsg.size(), m_SocketArrayDataIndicateMsg.capacity(),
+                                                                                                                                 ^~~~~~~~
+In file included from ../Socket/../pch.h:50:0,
+                 from ../Socket/Socket.h:11,
+                 from ../Socket/socket.cpp:9:
+../Socket/../Vector_queue.h:18:6: note: declared private here
+  int capacity;
+      ^~~~~~~~
+../Socket/socket.cpp:562:138: error: expression cannot be used as a function
+      printf("m_SocketArrayDataIndicateMsg size : %d %d %d\n", m_SocketArrayDataIndicateMsg.size(), m_SocketArrayDataIndicateMsg.capacity(),
+                                                                                                                                          ^
+make: *** [Socket/subdir.mk:26: Socket/socket.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+11:44:31 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../uart/uart.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"uart/uart.d" -MT"uart/uart.o" -o "uart/uart.o" "../uart/uart.cpp"
+Finished building: ../uart/uart.cpp
+ 
+Building file: ../Socket/SocketHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
+Finished building: ../Socket/SocketHandler.cpp
+ 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In constructor ‘Socket::Socket()’:
+../Socket/socket.cpp:34:13: warning: converting to non-pointer type ‘pthread_t {aka long unsigned int}’ from NULL [-Wconversion-null]
+  p_thread = NULL;
+             ^~~~
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:164:27: warning: NULL used in arithmetic [-Wpointer-arith]
+   if(pAddr->sa_data[i] != NULL) {
+                           ^~~~
+../Socket/socket.cpp: In member function ‘bool Socket::GetSocketMsg(BYTE*, int)’:
+../Socket/socket.cpp:548:31: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘erase’
+      m_SocketArrayDataDownMsg.erase(unique(m_SocketArrayDataDownMsg.begin(), m_SocketArrayDataDownMsg.end()),
+                               ^~~~~
+../Socket/socket.cpp:548:69: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘begin’
+      m_SocketArrayDataDownMsg.erase(unique(m_SocketArrayDataDownMsg.begin(), m_SocketArrayDataDownMsg.end()),
+                                                                     ^~~~~
+../Socket/socket.cpp:548:103: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘end’
+      m_SocketArrayDataDownMsg.erase(unique(m_SocketArrayDataDownMsg.begin(), m_SocketArrayDataDownMsg.end()),
+                                                                                                       ^~~
+../Socket/socket.cpp:548:108: error: ‘unique’ was not declared in this scope
+      m_SocketArrayDataDownMsg.erase(unique(m_SocketArrayDataDownMsg.begin(), m_SocketArrayDataDownMsg.end()),
+                                                                                                            ^
+../Socket/socket.cpp:548:108: note: suggested alternative:
+In file included from /home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/algorithm:62:0,
+                 from ../Socket/../pch.h:37,
+                 from ../Socket/Socket.h:11,
+                 from ../Socket/socket.cpp:9:
+/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_algo.h:1022:5: note:   ‘std::unique’
+     unique(_ForwardIterator __first, _ForwardIterator __last,
+     ^~~~~~
+../Socket/socket.cpp:549:41: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘end’
+                m_SocketArrayDataDownMsg.end());  //Delete overlap
+                                         ^~~
+../Socket/socket.cpp:551:36: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘begin’
+      sort(m_SocketArrayDataDownMsg.begin(), m_SocketArrayDataDownMsg.end());
+                                    ^~~~~
+../Socket/socket.cpp:551:70: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘end’
+      sort(m_SocketArrayDataDownMsg.begin(), m_SocketArrayDataDownMsg.end());
+                                                                      ^~~
+../Socket/socket.cpp:551:75: error: ‘sort’ was not declared in this scope
+      sort(m_SocketArrayDataDownMsg.begin(), m_SocketArrayDataDownMsg.end());
+                                                                           ^
+../Socket/socket.cpp:551:75: note: suggested alternative:
+In file included from /home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/algorithm:62:0,
+                 from ../Socket/../pch.h:37,
+                 from ../Socket/Socket.h:11,
+                 from ../Socket/socket.cpp:9:
+/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_algo.h:4727:5: note:   ‘std::sort’
+     sort(_RandomAccessIterator __first, _RandomAccessIterator __last,
+     ^~~~
+../Socket/socket.cpp:559:35: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘erase’
+      m_SocketArrayDataIndicateMsg.erase(unique(m_SocketArrayDataIndicateMsg.begin(), m_SocketArrayDataIndicateMsg.end()),
+                                   ^~~~~
+../Socket/socket.cpp:559:77: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘begin’
+      m_SocketArrayDataIndicateMsg.erase(unique(m_SocketArrayDataIndicateMsg.begin(), m_SocketArrayDataIndicateMsg.end()),
+                                                                             ^~~~~
+../Socket/socket.cpp:559:115: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘end’
+      m_SocketArrayDataIndicateMsg.erase(unique(m_SocketArrayDataIndicateMsg.begin(), m_SocketArrayDataIndicateMsg.end()),
+                                                                                                                   ^~~
+../Socket/socket.cpp:559:120: error: ‘unique’ was not declared in this scope
+      m_SocketArrayDataIndicateMsg.erase(unique(m_SocketArrayDataIndicateMsg.begin(), m_SocketArrayDataIndicateMsg.end()),
+                                                                                                                        ^
+../Socket/socket.cpp:559:120: note: suggested alternative:
+In file included from /home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/algorithm:62:0,
+                 from ../Socket/../pch.h:37,
+                 from ../Socket/Socket.h:11,
+                 from ../Socket/socket.cpp:9:
+/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_algo.h:1022:5: note:   ‘std::unique’
+     unique(_ForwardIterator __first, _ForwardIterator __last,
+     ^~~~~~
+../Socket/socket.cpp:560:45: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘end’
+                m_SocketArrayDataIndicateMsg.end());  //Delete overlap
+                                             ^~~
+../Socket/socket.cpp:561:40: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘begin’
+      sort(m_SocketArrayDataIndicateMsg.begin(), m_SocketArrayDataIndicateMsg.end());
+                                        ^~~~~
+../Socket/socket.cpp:561:78: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘end’
+      sort(m_SocketArrayDataIndicateMsg.begin(), m_SocketArrayDataIndicateMsg.end());
+                                                                              ^~~
+../Socket/socket.cpp:561:83: error: ‘sort’ was not declared in this scope
+      sort(m_SocketArrayDataIndicateMsg.begin(), m_SocketArrayDataIndicateMsg.end());
+                                                                                   ^
+../Socket/socket.cpp:561:83: note: suggested alternative:
+In file included from /home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/algorithm:62:0,
+                 from ../Socket/../pch.h:37,
+                 from ../Socket/Socket.h:11,
+                 from ../Socket/socket.cpp:9:
+/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_algo.h:4727:5: note:   ‘std::sort’
+     sort(_RandomAccessIterator __first, _RandomAccessIterator __last,
+     ^~~~
+../Socket/socket.cpp:562:129: error: ‘int Vector<Vector<unsigned char> >::capacity’ is private within this context
+      printf("m_SocketArrayDataIndicateMsg size : %d %d %d\n", m_SocketArrayDataIndicateMsg.size(), m_SocketArrayDataIndicateMsg.capacity(),
+                                                                                                                                 ^~~~~~~~
+In file included from ../Socket/../pch.h:50:0,
+                 from ../Socket/Socket.h:11,
+                 from ../Socket/socket.cpp:9:
+../Socket/../Vector_queue.h:18:6: note: declared private here
+  int capacity;
+      ^~~~~~~~
+../Socket/socket.cpp:562:138: error: expression cannot be used as a function
+      printf("m_SocketArrayDataIndicateMsg size : %d %d %d\n", m_SocketArrayDataIndicateMsg.size(), m_SocketArrayDataIndicateMsg.capacity(),
+                                                                                                                                          ^
+make: *** [Socket/subdir.mk:26: Socket/socket.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+11:44:58 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In constructor ‘Socket::Socket()’:
+../Socket/socket.cpp:34:13: warning: converting to non-pointer type ‘pthread_t {aka long unsigned int}’ from NULL [-Wconversion-null]
+  p_thread = NULL;
+             ^~~~
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:164:27: warning: NULL used in arithmetic [-Wpointer-arith]
+   if(pAddr->sa_data[i] != NULL) {
+                           ^~~~
+../Socket/socket.cpp: In member function ‘bool Socket::GetSocketMsg(BYTE*, int)’:
+../Socket/socket.cpp:562:129: error: ‘int Vector<Vector<unsigned char> >::capacity’ is private within this context
+      printf("m_SocketArrayDataIndicateMsg size : %d %d %d\n", m_SocketArrayDataIndicateMsg.size(), m_SocketArrayDataIndicateMsg.capacity(),
+                                                                                                                                 ^~~~~~~~
+In file included from ../Socket/../pch.h:50:0,
+                 from ../Socket/Socket.h:11,
+                 from ../Socket/socket.cpp:9:
+../Socket/../Vector_queue.h:18:6: note: declared private here
+  int capacity;
+      ^~~~~~~~
+../Socket/socket.cpp:562:138: error: expression cannot be used as a function
+      printf("m_SocketArrayDataIndicateMsg size : %d %d %d\n", m_SocketArrayDataIndicateMsg.size(), m_SocketArrayDataIndicateMsg.capacity(),
+                                                                                                                                          ^
+make: *** [Socket/subdir.mk:26: Socket/socket.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+11:45:35 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In constructor ‘Socket::Socket()’:
+../Socket/socket.cpp:34:13: warning: converting to non-pointer type ‘pthread_t {aka long unsigned int}’ from NULL [-Wconversion-null]
+  p_thread = NULL;
+             ^~~~
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:164:27: warning: NULL used in arithmetic [-Wpointer-arith]
+   if(pAddr->sa_data[i] != NULL) {
+                           ^~~~
+Finished building: ../Socket/socket.cpp
+ 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘int Main_ByPass_UartToSocket()’:
+../Main.cpp:152:40: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘clear’
+    m_pSocket->m_SocketArrayDataDownMsg.clear();
+                                        ^~~~~
+../Main.cpp:153:44: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘clear’
+    m_pSocket->m_SocketArrayDataIndicateMsg.clear();
+                                            ^~~~~
+../Main.cpp: In function ‘int Main_ByPass_SocketToUart()’:
+../Main.cpp:276:109: error: no matching function for call to ‘MsgHandler::SetSocketArray(Vector<Vector<unsigned char> >&, Vector<Vector<unsigned char> >&)’
+   m_pMsgHandler->SetSocketArray(m_pSocket->m_SocketArrayDataDownMsg, m_pSocket->m_SocketArrayDataIndicateMsg);
+                                                                                                             ^
+In file included from ../Main.cpp:10:0:
+../MsgHandler.h:53:7: note: candidate: void MsgHandler::SetSocketArray(std::vector<std::vector<unsigned char> >, std::vector<std::vector<unsigned char> >)
+  void SetSocketArray(std::vector<std::vector<BYTE>> DataDownmsg, std::vector<std::vector<BYTE>> DataIndimsg);
+       ^~~~~~~~~~~~~~
+../MsgHandler.h:53:7: note:   no known conversion for argument 1 from ‘Vector<Vector<unsigned char> >’ to ‘std::vector<std::vector<unsigned char> >’
+../Main.cpp: In function ‘void Main_Service_Stop()’:
+../Main.cpp:528:42: error: ‘class Vector<unsigned char>’ has no member named ‘clear’
+   m_pSocket->m_SocketArrayDataDownMsg[i].clear();
+                                          ^~~~~
+../Main.cpp:529:46: error: ‘class Vector<unsigned char>’ has no member named ‘clear’
+   m_pSocket->m_SocketArrayDataIndicateMsg[i].clear();
+                                              ^~~~~
+../Main.cpp:533:38: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘clear’
+  m_pSocket->m_SocketArrayDataDownMsg.clear();
+                                      ^~~~~
+../Main.cpp:534:42: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘clear’
+  m_pSocket->m_SocketArrayDataIndicateMsg.clear();
+                                          ^~~~~
+../Main.cpp:535:38: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘shrink_to_fit’
+  m_pSocket->m_SocketArrayDataDownMsg.shrink_to_fit();
+                                      ^~~~~~~~~~~~~
+../Main.cpp:536:42: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘shrink_to_fit’
+  m_pSocket->m_SocketArrayDataIndicateMsg.shrink_to_fit();
+                                          ^~~~~~~~~~~~~
+../Main.cpp:537:38: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘reserve’; did you mean ‘remove’?
+  m_pSocket->m_SocketArrayDataDownMsg.reserve(1000);
+                                      ^~~~~~~
+../Main.cpp:538:42: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘reserve’; did you mean ‘remove’?
+  m_pSocket->m_SocketArrayDataIndicateMsg.reserve(1000);
+                                          ^~~~~~~
+../Main.cpp: In function ‘int main(int, char**)’:
+../Main.cpp:1215:73: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘max_size’; did you mean ‘size’?
+  printf("vector Max size %d, %d\n", m_pSocket->m_SocketArrayDataDownMsg.max_size(), m_pSocket->m_SocketArrayDataIndicateMsg.max_size());
+                                                                         ^~~~~~~~
+../Main.cpp:1215:125: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘max_size’; did you mean ‘size’?
+  printf("vector Max size %d, %d\n", m_pSocket->m_SocketArrayDataDownMsg.max_size(), m_pSocket->m_SocketArrayDataIndicateMsg.max_size());
+                                                                                                                             ^~~~~~~~
+make: *** [subdir.mk:26: Main.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+11:45:55 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘int Main_ByPass_UartToSocket()’:
+../Main.cpp:152:40: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘clear’
+    m_pSocket->m_SocketArrayDataDownMsg.clear();
+                                        ^~~~~
+../Main.cpp:153:44: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘clear’
+    m_pSocket->m_SocketArrayDataIndicateMsg.clear();
+                                            ^~~~~
+../Main.cpp: In function ‘int Main_ByPass_SocketToUart()’:
+../Main.cpp:276:109: error: no matching function for call to ‘MsgHandler::SetSocketArray(Vector<Vector<unsigned char> >&, Vector<Vector<unsigned char> >&)’
+   m_pMsgHandler->SetSocketArray(m_pSocket->m_SocketArrayDataDownMsg, m_pSocket->m_SocketArrayDataIndicateMsg);
+                                                                                                             ^
+In file included from ../Main.cpp:10:0:
+../MsgHandler.h:53:7: note: candidate: void MsgHandler::SetSocketArray(std::vector<std::vector<unsigned char> >, std::vector<std::vector<unsigned char> >)
+  void SetSocketArray(std::vector<std::vector<BYTE>> DataDownmsg, std::vector<std::vector<BYTE>> DataIndimsg);
+       ^~~~~~~~~~~~~~
+../MsgHandler.h:53:7: note:   no known conversion for argument 1 from ‘Vector<Vector<unsigned char> >’ to ‘std::vector<std::vector<unsigned char> >’
+../Main.cpp: In function ‘void Main_Service_Stop()’:
+../Main.cpp:528:42: error: ‘class Vector<unsigned char>’ has no member named ‘clear’
+   m_pSocket->m_SocketArrayDataDownMsg[i].clear();
+                                          ^~~~~
+../Main.cpp:529:46: error: ‘class Vector<unsigned char>’ has no member named ‘clear’
+   m_pSocket->m_SocketArrayDataIndicateMsg[i].clear();
+                                              ^~~~~
+../Main.cpp: In function ‘int main(int, char**)’:
+../Main.cpp:1215:73: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘max_size’; did you mean ‘size’?
+  printf("vector Max size %d, %d\n", m_pSocket->m_SocketArrayDataDownMsg.max_size(), m_pSocket->m_SocketArrayDataIndicateMsg.max_size());
+                                                                         ^~~~~~~~
+../Main.cpp:1215:125: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘max_size’; did you mean ‘size’?
+  printf("vector Max size %d, %d\n", m_pSocket->m_SocketArrayDataDownMsg.max_size(), m_pSocket->m_SocketArrayDataIndicateMsg.max_size());
+                                                                                                                             ^~~~~~~~
+make: *** [subdir.mk:26: Main.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+11:46:08 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘int Main_ByPass_UartToSocket()’:
+../Main.cpp:152:40: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘clear’
+    m_pSocket->m_SocketArrayDataDownMsg.clear();
+                                        ^~~~~
+../Main.cpp:153:44: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘clear’
+    m_pSocket->m_SocketArrayDataIndicateMsg.clear();
+                                            ^~~~~
+../Main.cpp: In function ‘int Main_ByPass_SocketToUart()’:
+../Main.cpp:276:109: error: no matching function for call to ‘MsgHandler::SetSocketArray(Vector<Vector<unsigned char> >&, Vector<Vector<unsigned char> >&)’
+   m_pMsgHandler->SetSocketArray(m_pSocket->m_SocketArrayDataDownMsg, m_pSocket->m_SocketArrayDataIndicateMsg);
+                                                                                                             ^
+In file included from ../Main.cpp:10:0:
+../MsgHandler.h:53:7: note: candidate: void MsgHandler::SetSocketArray(std::vector<std::vector<unsigned char> >, std::vector<std::vector<unsigned char> >)
+  void SetSocketArray(std::vector<std::vector<BYTE>> DataDownmsg, std::vector<std::vector<BYTE>> DataIndimsg);
+       ^~~~~~~~~~~~~~
+../MsgHandler.h:53:7: note:   no known conversion for argument 1 from ‘Vector<Vector<unsigned char> >’ to ‘std::vector<std::vector<unsigned char> >’
+../Main.cpp: In function ‘int main(int, char**)’:
+../Main.cpp:1215:73: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘max_size’; did you mean ‘size’?
+  printf("vector Max size %d, %d\n", m_pSocket->m_SocketArrayDataDownMsg.max_size(), m_pSocket->m_SocketArrayDataIndicateMsg.max_size());
+                                                                         ^~~~~~~~
+../Main.cpp:1215:125: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘max_size’; did you mean ‘size’?
+  printf("vector Max size %d, %d\n", m_pSocket->m_SocketArrayDataDownMsg.max_size(), m_pSocket->m_SocketArrayDataIndicateMsg.max_size());
+                                                                                                                             ^~~~~~~~
+make: *** [subdir.mk:26: Main.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+11:46:19 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘int Main_ByPass_UartToSocket()’:
+../Main.cpp:152:40: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘clear’
+    m_pSocket->m_SocketArrayDataDownMsg.clear();
+                                        ^~~~~
+../Main.cpp:153:44: error: ‘class Vector<Vector<unsigned char> >’ has no member named ‘clear’
+    m_pSocket->m_SocketArrayDataIndicateMsg.clear();
+                                            ^~~~~
+../Main.cpp: In function ‘int Main_ByPass_SocketToUart()’:
+../Main.cpp:276:109: error: no matching function for call to ‘MsgHandler::SetSocketArray(Vector<Vector<unsigned char> >&, Vector<Vector<unsigned char> >&)’
+   m_pMsgHandler->SetSocketArray(m_pSocket->m_SocketArrayDataDownMsg, m_pSocket->m_SocketArrayDataIndicateMsg);
+                                                                                                             ^
+In file included from ../Main.cpp:10:0:
+../MsgHandler.h:53:7: note: candidate: void MsgHandler::SetSocketArray(std::vector<std::vector<unsigned char> >, std::vector<std::vector<unsigned char> >)
+  void SetSocketArray(std::vector<std::vector<BYTE>> DataDownmsg, std::vector<std::vector<BYTE>> DataIndimsg);
+       ^~~~~~~~~~~~~~
+../MsgHandler.h:53:7: note:   no known conversion for argument 1 from ‘Vector<Vector<unsigned char> >’ to ‘std::vector<std::vector<unsigned char> >’
+make: *** [subdir.mk:26: Main.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+11:46:32 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘int Main_ByPass_SocketToUart()’:
+../Main.cpp:276:109: error: no matching function for call to ‘MsgHandler::SetSocketArray(Vector<Vector<unsigned char> >&, Vector<Vector<unsigned char> >&)’
+   m_pMsgHandler->SetSocketArray(m_pSocket->m_SocketArrayDataDownMsg, m_pSocket->m_SocketArrayDataIndicateMsg);
+                                                                                                             ^
+In file included from ../Main.cpp:10:0:
+../MsgHandler.h:53:7: note: candidate: void MsgHandler::SetSocketArray(std::vector<std::vector<unsigned char> >, std::vector<std::vector<unsigned char> >)
+  void SetSocketArray(std::vector<std::vector<BYTE>> DataDownmsg, std::vector<std::vector<BYTE>> DataIndimsg);
+       ^~~~~~~~~~~~~~
+../MsgHandler.h:53:7: note:   no known conversion for argument 1 from ‘Vector<Vector<unsigned char> >’ to ‘std::vector<std::vector<unsigned char> >’
+make: *** [subdir.mk:26: Main.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+11:46:54 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+Finished building: ../Main.cpp
+ 
+Building file: ../MsgHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgHandler.d" -MT"MsgHandler.o" -o "MsgHandler.o" "../MsgHandler.cpp"
+Finished building: ../MsgHandler.cpp
+ 
+Building file: ../MsgQueue.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgQueue.d" -MT"MsgQueue.o" -o "MsgQueue.o" "../MsgQueue.cpp"
+Finished building: ../MsgQueue.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+11:54:55 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In constructor ‘Socket::Socket()’:
+../Socket/socket.cpp:34:13: warning: converting to non-pointer type ‘pthread_t {aka long unsigned int}’ from NULL [-Wconversion-null]
+  p_thread = NULL;
+             ^~~~
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:164:27: warning: NULL used in arithmetic [-Wpointer-arith]
+   if(pAddr->sa_data[i] != NULL) {
+                           ^~~~
+Finished building: ../Socket/socket.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+12:01:36 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In constructor ‘Socket::Socket()’:
+../Socket/socket.cpp:34:13: warning: converting to non-pointer type ‘pthread_t {aka long unsigned int}’ from NULL [-Wconversion-null]
+  p_thread = NULL;
+             ^~~~
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:164:27: warning: NULL used in arithmetic [-Wpointer-arith]
+   if(pAddr->sa_data[i] != NULL) {
+                           ^~~~
+../Socket/socket.cpp: At global scope:
+../Socket/socket.cpp:647:8: error: expected constructor, destructor, or type conversion before ‘(’ token
+  printf("Socket GetSocketMsg ReceiveData_len %d\n", Len);
+        ^
+../Socket/socket.cpp:649:2: error: expected unqualified-id before ‘return’
+  return 1;
+  ^~~~~~
+../Socket/socket.cpp:650:1: error: expected declaration before ‘}’ token
+ }
+ ^
+../Socket/socket.cpp: In member function ‘bool Socket::GetSocketMsg(BYTE*, int)’:
+../Socket/socket.cpp:646:2: warning: control reaches end of non-void function [-Wreturn-type]
+  }
+  ^
+make: *** [Socket/subdir.mk:26: Socket/socket.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+12:01:56 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In constructor ‘Socket::Socket()’:
+../Socket/socket.cpp:34:13: warning: converting to non-pointer type ‘pthread_t {aka long unsigned int}’ from NULL [-Wconversion-null]
+  p_thread = NULL;
+             ^~~~
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:164:27: warning: NULL used in arithmetic [-Wpointer-arith]
+   if(pAddr->sa_data[i] != NULL) {
+                           ^~~~
+Finished building: ../Socket/socket.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+12:05:12 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In constructor ‘Socket::Socket()’:
+../Socket/socket.cpp:34:13: warning: converting to non-pointer type ‘pthread_t {aka long unsigned int}’ from NULL [-Wconversion-null]
+  p_thread = NULL;
+             ^~~~
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:164:27: warning: NULL used in arithmetic [-Wpointer-arith]
+   if(pAddr->sa_data[i] != NULL) {
+                           ^~~~
+Finished building: ../Socket/socket.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+12:14:07 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../uart/uart.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"uart/uart.d" -MT"uart/uart.o" -o "uart/uart.o" "../uart/uart.cpp"
+Finished building: ../uart/uart.cpp
+ 
+Building file: ../Socket/SocketHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
+Finished building: ../Socket/SocketHandler.cpp
+ 
+Building file: ../Socket/SocketMsgQueue.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/SocketMsgQueue.d" -MT"Socket/SocketMsgQueue.o" -o "Socket/SocketMsgQueue.o" "../Socket/SocketMsgQueue.cpp"
+Finished building: ../Socket/SocketMsgQueue.cpp
+ 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In constructor ‘Socket::Socket()’:
+../Socket/socket.cpp:34:13: warning: converting to non-pointer type ‘pthread_t {aka long unsigned int}’ from NULL [-Wconversion-null]
+  p_thread = NULL;
+             ^~~~
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:164:27: warning: NULL used in arithmetic [-Wpointer-arith]
+   if(pAddr->sa_data[i] != NULL) {
+                           ^~~~
+In file included from ../Socket/../pch.h:50:0,
+                 from ../Socket/Socket.h:11,
+                 from ../Socket/socket.cpp:9:
+../Socket/../Vector_queue.h: In instantiation of ‘void Vector<T>::push_back(T) [with T = Vector<unsigned char>]’:
+../Socket/socket.cpp:549:58:   required from here
+../Socket/../Vector_queue.h:29:11: warning: format ‘%x’ expects argument of type ‘unsigned int’, but argument 2 has type ‘Vector<unsigned char>’ [-Wformat=]
+     printf("[%x]", temp[i]);
+           ^
+Finished building: ../Socket/socket.cpp
+ 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+Finished building: ../Main.cpp
+ 
+Building file: ../MsgHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgHandler.d" -MT"MsgHandler.o" -o "MsgHandler.o" "../MsgHandler.cpp"
+Finished building: ../MsgHandler.cpp
+ 
+Building file: ../MsgQueue.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgQueue.d" -MT"MsgQueue.o" -o "MsgQueue.o" "../MsgQueue.cpp"
+Finished building: ../MsgQueue.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+13:17:49 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+13:21:30 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+13:22:14 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+13:24:46 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+make: 'all'을(를) 위해 할 일이 없습니다.
+13:34:18 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/SocketHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
+Finished building: ../Socket/SocketHandler.cpp
+ 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+13:35:00 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+make: 'all'을(를) 위해 할 일이 없습니다.
+14:01:04 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../uart/uart.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"uart/uart.d" -MT"uart/uart.o" -o "uart/uart.o" "../uart/uart.cpp"
+Finished building: ../uart/uart.cpp
+ 
+Building file: ../Socket/SocketHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
+Finished building: ../Socket/SocketHandler.cpp
+ 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In constructor ‘Socket::Socket()’:
+../Socket/socket.cpp:34:13: warning: converting to non-pointer type ‘pthread_t {aka long unsigned int}’ from NULL [-Wconversion-null]
+  p_thread = NULL;
+             ^~~~
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:164:27: warning: NULL used in arithmetic [-Wpointer-arith]
+   if(pAddr->sa_data[i] != NULL) {
+                           ^~~~
+../Socket/socket.cpp: In member function ‘bool Socket::GetSocketMsg(BYTE*, int)’:
+../Socket/socket.cpp:541:19: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+     for(int i=0; i<m_SocketQueue_vec.size(); i++) {
+                  ~^~~~~~~~~~~~~~~~~~~~~~~~~
+../Socket/socket.cpp:542:24: error: ‘class std::vector<unsigned char>’ has no member named ‘remove’; did you mean ‘resize’?
+      m_SocketQueue_vec.remove(i);
+                        ^~~~~~
+make: *** [Socket/subdir.mk:26: Socket/socket.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+14:01:19 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In constructor ‘Socket::Socket()’:
+../Socket/socket.cpp:34:13: warning: converting to non-pointer type ‘pthread_t {aka long unsigned int}’ from NULL [-Wconversion-null]
+  p_thread = NULL;
+             ^~~~
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:164:27: warning: NULL used in arithmetic [-Wpointer-arith]
+   if(pAddr->sa_data[i] != NULL) {
+                           ^~~~
+Finished building: ../Socket/socket.cpp
+ 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+Finished building: ../Main.cpp
+ 
+Building file: ../MsgHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgHandler.d" -MT"MsgHandler.o" -o "MsgHandler.o" "../MsgHandler.cpp"
+Finished building: ../MsgHandler.cpp
+ 
+Building file: ../MsgQueue.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgQueue.d" -MT"MsgQueue.o" -o "MsgQueue.o" "../MsgQueue.cpp"
+Finished building: ../MsgQueue.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+14:10:13 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+14:21:55 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In constructor ‘Socket::Socket()’:
+../Socket/socket.cpp:35:13: warning: converting to non-pointer type ‘pthread_t {aka long unsigned int}’ from NULL [-Wconversion-null]
+  p_thread = NULL;
+             ^~~~
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:165:27: warning: NULL used in arithmetic [-Wpointer-arith]
+   if(pAddr->sa_data[i] != NULL) {
+                           ^~~~
+Finished building: ../Socket/socket.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+14:28:18 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In constructor ‘Socket::Socket()’:
+../Socket/socket.cpp:35:13: warning: converting to non-pointer type ‘pthread_t {aka long unsigned int}’ from NULL [-Wconversion-null]
+  p_thread = NULL;
+             ^~~~
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:165:27: warning: NULL used in arithmetic [-Wpointer-arith]
+   if(pAddr->sa_data[i] != NULL) {
+                           ^~~~
+../Socket/socket.cpp: In member function ‘bool Socket::GetSocketMsg(BYTE*, int)’:
+../Socket/socket.cpp:574:56: error: invalid conversion from ‘BYTE* {aka unsigned char*}’ to ‘BYTE {aka unsigned char}’ [-fpermissive]
+       TwoData[m_nSocketArrayDataDownCnt][i] = OneData[i];
+                                               ~~~~~~~~~^
+make: *** [Socket/subdir.mk:26: Socket/socket.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+14:28:39 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In constructor ‘Socket::Socket()’:
+../Socket/socket.cpp:35:13: warning: converting to non-pointer type ‘pthread_t {aka long unsigned int}’ from NULL [-Wconversion-null]
+  p_thread = NULL;
+             ^~~~
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:165:27: warning: NULL used in arithmetic [-Wpointer-arith]
+   if(pAddr->sa_data[i] != NULL) {
+                           ^~~~
+Finished building: ../Socket/socket.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+14:34:14 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In constructor ‘Socket::Socket()’:
+../Socket/socket.cpp:35:13: warning: converting to non-pointer type ‘pthread_t {aka long unsigned int}’ from NULL [-Wconversion-null]
+  p_thread = NULL;
+             ^~~~
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:165:27: warning: NULL used in arithmetic [-Wpointer-arith]
+   if(pAddr->sa_data[i] != NULL) {
+                           ^~~~
+Finished building: ../Socket/socket.cpp
+ 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+14:34:35 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+make: 'all'을(를) 위해 할 일이 없습니다.

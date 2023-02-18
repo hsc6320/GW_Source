@@ -47,7 +47,7 @@
 
 #include "Msg_Define.h"
 #include "PreDefine.h"
-
+#include "Vector_queue.h"
 #include <pthread.h>
 #include <cstdlib>
 #include <unistd.h>

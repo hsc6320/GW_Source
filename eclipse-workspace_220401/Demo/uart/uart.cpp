@@ -31,6 +31,7 @@ UartComThread::UartComThread()
 	m_uartd = 0;
 	m_grun =0;
 	bWorkingUart =0;
+	m_iUartRetry =0;
 	pMsgQueue = NULL;
 	m_p8uUartData = NULL;
 }
@@ -66,6 +67,7 @@ static void *uart_Rx_Thread(void *param)
 
 			nToTalLen += len;
 			if((len < 15) && (underflowcnt == 0) ) {
+				pComm->m_iUartRetry =1;
 				printf("Read Buffer underflow... Retry\n");
 				if(len <= 1) {
 					nToTalLen =0;
@@ -89,6 +91,7 @@ static void *uart_Rx_Thread(void *param)
 				}
 			}
 			else if( (len < 16) && (underflowcnt == 0) && (rx2[MSGTYPE]==DATA_ACKNOWLEDGEMENT) ) {
+				pComm->m_iUartRetry =1;
 				printf("Read Buffer underflow...DATA_ACKNOWLEDGEMENT Retry\n");
 				for(int i=0; i<len; i++) {
 					rx[underflowcnt] = rx2[i];
@@ -131,12 +134,14 @@ static void *uart_Rx_Thread(void *param)
 						if(pMsgQueue->PutByte(rx_sto,  nPutBuffCnt++) != 1) {
 							printf("putbyte return 0\n");
 						}
+						pComm->m_iUartRetry =0;
 						break;
 					}
 					else if(nPutBuffCnt == nToTalLen){
-						if(pMsgQueue->PutByte(rx_sto,  nToTalLen) != 1) {
+						if(pMsgQueue->PutByte(rx_sto, nToTalLen) != 1) {
 							printf("putbyte return 0\n");
 						}
+						pComm->m_iUartRetry =0;
 						break;
 					}
 				}
@@ -154,6 +159,7 @@ static void *uart_Rx_Thread(void *param)
 					if(pMsgQueue->PutByte(rx_sto2,  sto_count2) != 1) {
 						printf("putbyte return 0\n");
 					}
+					pComm->m_iUartRetry =0;
 				}
 			}
 

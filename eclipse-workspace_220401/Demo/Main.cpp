@@ -273,7 +273,7 @@ int Main_ByPass_SocketToUart()
 	else if(m_pSocket->m_iSocketReceiveQueue) {
 		m_pSocket->m_iSocketReceiveQueue =0;
 
-		m_pMsgHandler->SetSocketArray(m_pSocket->m_SocketArrayDataDownMsg, m_pSocket->m_SocketArrayDataIndicateMsg);																										
+		m_pMsgHandler->SetSocketArray(m_pSocket->m_SocketArrayDataDownMsg, m_pSocket->m_SocketArrayDataIndicateMsg);
 		m_pMsgQueue->GetDataDown(m_pSocket->m_nSocketArrayDataDownCnt);
 		printf("Socket Communication End\n");
 	}
@@ -531,9 +531,19 @@ void Main_Service_Stop()
 	m_pSocket->m_nSocketArrayDataDownCnt = 0;
 	m_pSocket->m_nSocketArrayDataIndicateCnt = 0;
 	m_pSocket->m_SocketArrayDataDownMsg.clear();
-	m_pSocket->m_SocketArrayDataIndicateMsg.clear();
+	m_pSocket->m_SocketArrayDataIndicateMsg.clear();	
+	m_pSocket->m_SocketArrayDataDownMsg.shrink_to_fit();
+	m_pSocket->m_SocketArrayDataIndicateMsg.shrink_to_fit();
+	m_pSocket->m_SocketArrayDataDownMsg.reserve(1000);
+	m_pSocket->m_SocketArrayDataIndicateMsg.reserve(1000);
+	
 	m_pMsgQueue->m_MsgQueueArrayDataAcknowledge.clear();
-	m_pMsgQueue->m_MsgQueueDataAcknowledge.clear();
+	m_pMsgQueue->m_MsgQueueDataAcknowledge.clear();	
+	m_pMsgQueue->m_MsgQueueArrayDataAcknowledge.shrink_to_fit();
+	m_pMsgQueue->m_MsgQueueDataAcknowledge.shrink_to_fit();
+	m_pMsgQueue->m_MsgQueueArrayDataAcknowledge.reserve(1000);
+	m_pMsgQueue->m_MsgQueueDataAcknowledge.reserve(1000);
+	
 	m_pMsgQueue->m_nMapParity =0;
 	m_pMsgQueue->Redown =0;
 	m_pMsgQueue->Map_dataAcknowParityCheck.clear();
@@ -912,7 +922,7 @@ int Socket_Connect_Req()
 int Socket_AliveCheck()
 {
 	m_pSocketHandle->SendMessage(CONNECT_ALIVE_CHECK, m_GetInforPacket);
-	printf("main_Socket_AliveCheck), bWorkingThread : %d\n", m_pSocket->bWorkingThread);
+	printf("main_Socket_AliveCheck, bWorkingThread : %d, m_iSocketArive : %d\n", m_pSocket->bWorkingThread, m_pSocketHandle->m_iSocketArive);
 
 	return 1;
 }
@@ -1103,7 +1113,8 @@ void PrintfHello(int sig, siginfo_t* si, void* uc)
 
 	if(*tidp == firstTimerID) {
 		if(!m_pMsgQueue->m_bReadEnd_UartMessage && !m_pMsgQueue->m_bUartCommuniFlag &&
-			!m_pSocket->m_iBypassSocketToUart && !m_pSocket->m_iSocketReceiveEnd) {
+			!m_pSocket->m_iBypassSocketToUart && !m_pSocket->m_iSocketReceiveEnd &&
+			m_MainComport->m_iUartRetry == 0) {
 			Socket_AliveCheck();
 			printf("1 S\n");
 		}
@@ -1195,7 +1206,7 @@ int main(int argc, char *argv[])
 	m_MainComport->SetMutex(Main_Uartmutex);
 	
 	
-	Set_WaitTimer(&firstTimerID, 60, 0);
+	//Set_WaitTimer(&firstTimerID, 60, 0);
 
 	Main_Socket_Init();
 	th_delay(100);
@@ -1209,8 +1220,11 @@ int main(int argc, char *argv[])
 		Main_ByPass_UartToSocket();
 
 		if( (m_pSocket->bWorkingThread == 0) ||(m_pSocketHandle->m_iSocketArive == 0) ){
-			Set_WaitTimer(&firstTimerID, 0, 0);
+		//	Set_WaitTimer(&firstTimerID, 0, 0);
+			timer_delete(firstTimerID);
+			printf("delete Timer\n");
 			ServerReConn();
+			Set_WaitTimer(&firstTimerID, 5, 0);
 			TagAssociation_Init();
 			printf("Main TagData\n");
 			while(!m_pMsgQueue->m_Queue.empty()) {
@@ -1218,7 +1232,7 @@ int main(int argc, char *argv[])
 				m_pMsgQueue->m_Queue.pop();	
 				m_pMsgQueue->m_nSendTagCount--;
 				printf("m_pMsgQueue->m_nSendTagCount : %d\n", m_pMsgQueue->m_nSendTagCount );
-			}			
+			}
 		}
 		usleep(100);
 	}

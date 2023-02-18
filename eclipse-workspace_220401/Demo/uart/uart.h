@@ -31,6 +31,7 @@ public:
 	int m_uartd;
 	int bWorkingUart;
 	int m_grun;
+	int m_iUartRetry;
 
 	void SetMutex(pthread_mutex_t mutex);
 	int uart_init();

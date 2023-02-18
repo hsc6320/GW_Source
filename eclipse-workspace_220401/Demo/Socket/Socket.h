@@ -43,6 +43,11 @@ public:
 	std::vector<uint8_t> m_SocketMsg_vec;
 	std::vector<std::vector<BYTE>> m_SocketArrayDataDownMsg;
 	std::vector<std::vector<BYTE>> m_SocketArrayDataIndicateMsg;
+//	Vector<Vector<BYTE>> m_SocketArrayDataDownMsg;
+//	Vector<Vector<BYTE>> m_SocketArrayDataIndicateMsg;
+
+//	Vector<BYTE> m_SocketQueue_vec;
+
 	std::vector<BYTE> m_SocketQueue_vec;
 
 	Socket_MsgQueue* m_pSocMsgqueue;
