@@ -8,6 +8,8 @@
 
 #include "Socket.h"
 #include "../uart/uart.h"
+#include "../Vector_SocketQueue.h"
+
 
 #define EPOLL_SIZE 20
 
@@ -25,8 +27,9 @@ extern UartComThread* m_MainComport;
 
 std::vector<std::vector<BYTE>> vecTagData;
 
-BYTE OneData[4096][1024] = { {0,}, {0,} };
-BYTE TwoData[4096][1024] = { {0,}, {0,} };
+BYTE OneData[4096][2048] = { {0,}, {0,} };
+BYTE TwoData[4096][2048] = { {0,}, {0,} };
+
 
 int vectorCnt = 0;
 
@@ -46,6 +49,8 @@ Socket::Socket()
 	bWorkingThread =0;
 	m_SocketArrayDataDownMsg.reserve(1000);
 	m_SocketArrayDataIndicateMsg.reserve(1000);
+	OneData1 = (BYTE**) malloc(sizeof(BYTE*) * 4096);
+	TwoData1 = (BYTE**) malloc(sizeof(BYTE*) * 4096);
 
 	m_serv_sock = 0;
 	m_pSocMsgqueue = NULL;
@@ -490,6 +495,8 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 	int DataLen =0;
 	std::vector<BYTE> Vecc;
 	DataLen = Len;
+	VectorSocket<BYTE> pMm;	
+	int index =0;
 
 
 	printf("GetSocketMsg()\n");
@@ -522,6 +529,63 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 				return 1;
 			}
 			else if(p8udata[MSGTYPE] == BSN_DATA_END_REQ) {
+				int n;
+				m_SocketQueue_vec.clear();
+				m_SocketQueue_vec.shrink_to_fit();
+				
+				for(int i=0; i<m_nSocketArrayDataDownCnt; i++) {
+					for(int j =1; j<512; j++) {
+						printf("%x ", OneData[i][j]);
+						if( (OneData[i][j-3] == 0xa5) && (OneData[i][j-2] == 0x5a) && (OneData[i][j-1] == 0x7e) ) {
+							index = j;
+							printf("Index : %d\n", index);
+							break;
+						}
+					}
+					printf("\n");
+					
+					printf("OneData[%d] size : %d\n", i, index);
+					for(int j=0; j<index; j++) {
+						m_SocketQueue_vec.push_back(OneData[i][j]);
+					}
+					printf("\n");
+				//	free(OneData[i]);
+
+					for(int i=0; i<(int)m_SocketQueue_vec.size(); i++) {
+						printf("%x ", m_SocketQueue_vec.at(i));
+					}
+					printf("\n");
+					m_SocketArrayDataDownMsg.push_back(m_SocketQueue_vec);
+					m_SocketQueue_vec.clear();
+					m_SocketQueue_vec.shrink_to_fit();
+				}
+				
+				m_SocketQueue_vec.clear();
+				m_SocketQueue_vec.shrink_to_fit();
+				for(int i=0; i<m_nSocketArrayDataDownCnt; i++) {
+					for(int j =1; j<512; j++) {
+						if( (TwoData[i][j-3] == 0xa5) && (TwoData[i][j-2] == 0x5a) && (TwoData[i][j-1] == 0x7e) ) {
+							index = j;
+							printf("\nIndex : %d\n", index);
+							break;
+						}
+					}
+					printf("\n");
+					
+					printf("TwoData[%d] size : %d\n", i, index);
+					for(int j=0; j<index; j++) {
+						m_SocketQueue_vec.push_back(TwoData[i][j]);
+					}
+				//	free(TwoData1[i]);
+					for(int i=0; i<(int)m_SocketQueue_vec.size(); i++) {
+						printf("%x ", m_SocketQueue_vec.at(i));
+					}
+					printf("\n");
+					m_SocketArrayDataIndicateMsg.push_back(m_SocketQueue_vec);
+					m_SocketQueue_vec.clear();
+					m_SocketQueue_vec.shrink_to_fit();
+				}
+
 				m_pSocMsgqueue->BSN_MSG_END_ACK(p8udata);
 				for(int i=0; i<15; i++) {
 					printf("%x ", p8udata[i]);
@@ -539,12 +603,13 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 
 				m_SocketQueue_vec.clear();
 				m_SocketQueue_vec.shrink_to_fit();
-				memset(OneData, 0, 1024);
 				for(int i=0; i< DataLen; i++) {
 					m_SocketQueue_vec.push_back(p8udata[i]);					
 				}
 
 				if(m_SocketQueue_vec[MSGTYPE] == DOWNLOAD_START_REQ) {
+					
+					memset(OneData[m_nSocketArrayDataDownCnt], 0, 1024);
 /*					m_SocketArrayDataDownMsg.push_back(m_SocketQueue_vec);
 					
 					m_SocketArrayDataDownMsg.erase(unique(m_SocketArrayDataDownMsg.begin(), m_SocketArrayDataDownMsg.end()),
@@ -553,16 +618,24 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 					sort(m_SocketArrayDataDownMsg.begin(), m_SocketArrayDataDownMsg.end());
 */
 					for(int i=0; i< DataLen; i++) {
-					//	m_SocketQueue_vec.push_back(p8udata[i]);
 						OneData[m_nSocketArrayDataDownCnt][i] = p8udata[i];
 					}
-
+					
+				//	OneData1[m_nSocketArrayDataDownCnt] = (BYTE*)malloc(sizeof(BYTE) * DataLen);
+				//	for(int i = 0; i<DataLen; i++) {
+				//		OneData1[m_nSocketArrayDataDownCnt][i] = OneData[m_nSocketArrayDataDownCnt][i];
+					//	printf("[%x] ", OneData1[m_nSocketArrayDataDownCnt][i]);
+				//	}
+					//printf("\n");
+					
 					m_pSocMsgqueue->DownLoad_MSG_Start_ACK(p8udata);
 					Send_Message(p8udata, 15);
 					printf("\nm_nSocketArrayDataDown Size : %d\n", m_nSocketArrayDataDownCnt);
 					m_nSocketArrayDataDownCnt++;
 				}
 				else if(m_SocketQueue_vec[MSGTYPE] == DATAINDICATION_REQ) {
+					
+					memset(TwoData[m_nSocketArrayDataIndicateCnt], 0, 1024);
 			/*		m_SocketArrayDataIndicateMsg.push_back(m_SocketQueue_vec);
 					m_SocketArrayDataIndicateMsg.erase(unique(m_SocketArrayDataIndicateMsg.begin(), m_SocketArrayDataIndicateMsg.end()),
 															m_SocketArrayDataIndicateMsg.end()); 	//Delete overlap
@@ -571,8 +644,15 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 					printf("m_SocketArrayDataIndicateMsg size : %d %d\n", m_SocketArrayDataIndicateMsg.size(),	sizeof(m_SocketArrayDataIndicateMsg));
 			*/
 					for(int i=0; i<DataLen; i++) {						
-						TwoData[m_nSocketArrayDataDownCnt][i] = p8udata[i];
+						TwoData[m_nSocketArrayDataIndicateCnt][i] = p8udata[i];
 					}
+					
+			//		TwoData1[m_nSocketArrayDataIndicateCnt] = (BYTE*)malloc(sizeof(BYTE) * DataLen);
+			//		for(int i = 0; i<DataLen; i++) {
+			//			TwoData1[m_nSocketArrayDataIndicateCnt][i] = TwoData[m_nSocketArrayDataIndicateCnt][i];
+					//	printf("[%x] ", OneData1[m_nSocketArrayDataIndicateCnt][i]);
+			//		}
+					//printf("\n");
 					m_pSocMsgqueue->DataIndication_MSG_Start_ACK(p8udata);
 					Send_Message(p8udata, 17);
 					printf("\nm_nSocketArrayDataIndicate Size : %d\n", m_nSocketArrayDataIndicateCnt);

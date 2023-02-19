@@ -51,7 +51,8 @@ public:
 	std::vector<BYTE> m_SocketQueue_vec;
 
 	Socket_MsgQueue* m_pSocMsgqueue;
-
+	BYTE **OneData1;
+	BYTE **TwoData1;
 
 	int m_iSocketReceiveEnd, m_iBypassSocketToUart, m_iSocketReceiveQueue;
 	int m_nSocketArrayDataDownCnt, m_nSocketArrayDataIndicateCnt;

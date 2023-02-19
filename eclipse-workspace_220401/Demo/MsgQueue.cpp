@@ -89,6 +89,7 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 
 				if(Redown) {
 					printf("MsgQueue Redown m_nMapParity : %d m_MsgQueueDataAcknowledge: %d\n", m_nMapParity, m_MsgQueueDataAcknowledge.at(0));
+				//	m_ArrayDataAcknowledge.at(0).push_back(m_MsgQueueDataAcknowledge);
 					m_ArrayDataAcknowledge.push_back(m_MsgQueueDataAcknowledge);				
 					DataSort();					
 				}

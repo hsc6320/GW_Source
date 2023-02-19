@@ -11,6 +11,7 @@
 #include "Socket/Socket.h"
 #include "Socket/SocketHandler.h"
 #include "Socket/SocketMsgQueue.h"
+#include "Vector_SocketQueue.h"
 
 #include <sys/resource.h>
 #include <sched.h>
@@ -1175,9 +1176,58 @@ BYTE GetChecksum(BYTE* puData, int len)
 	}
 	return sum;
 }
+#if 0
+void InsertArray(int idx, BYTE sz, BYTE* ar)
+{
+	BYTE arr[4096];
+	memcpy(arr, ar, 4096);
+	int size = (sizeof(arr)/sizeof(*arr));
+	memmove(ar+idx+1, ar+idx, size-idx+1);
+	ar[idx] = sz;
+	printf("Insert %x\n", ar[idx]);
+}
 
+void deleteArray(int idx, int size, BYTE* ar)
+{
+	memmove(ar+idx, ar+idx+1, size-idx);
+}
 
+void AppendArray(BYTE sz, int size1, BYTE* ar)
+{
+	InsertArray(size1, sz, ar);
+}
 
+int GetSizeArray (BYTE* ar)
+{
+	int ret =0;
+	BYTE arr[4096];
+	memcpy(arr, ar, 4096);
+	int size = (sizeof(arr)/sizeof(*arr));
+	
+	for(int i=0; i< size; i++) {
+		if(ar[i] > 0) {
+			ret++;
+		}
+	}
+	return ret;
+}
+
+void PrintArray(BYTE* ar, int size)
+{
+	for(int i=0; i< size; i++) {
+	//	if(ar[i] > 0)		
+			printf("%x ", ar[i]);
+	}	
+	printf("\n\n");
+}
+#endif
+bool ZeroCompare(int a, int b)
+{
+	if( (a != 0) && ( b !=0) )
+		return a < b;
+	else
+		return 0;
+}
 int main(int argc, char *argv[])
 {
 	installSignal(SIGSEGV);
@@ -1186,6 +1236,27 @@ int main(int argc, char *argv[])
 	pthread_mutex_init(&Main_Tagmutex, NULL);
 	setpriority(PRIO_PROCESS, getpid(), -10);
 
+/*	BYTE ar[4096] = {0x31, 0x21, 0x22, 0x32, 0x33, 0x51};
+	int size, size2;
+	VectorSocket<BYTE> pMm;
+
+	size2 = pMm.GetSizeArray(ar);
+	sort(ar, ar+size2, ZeroCompare);
+	pMm.PrintArray(ar, size2);
+
+	pMm.InsertArray(2, 0xff, ar);
+	pMm.PrintArray(ar, pMm.GetSizeArray(ar));
+
+	pMm.deleteArray(0, size,ar);
+	pMm.PrintArray(ar, pMm.GetSizeArray(ar));
+
+	pMm.AppendArray(0x0e, pMm.GetSizeArray(ar), ar);
+	pMm.PrintArray(ar, pMm.GetSizeArray(ar));
+
+	sort(ar, ar+pMm.GetSizeArray(ar), ZeroCompare);
+	pMm.PrintArray(ar, pMm.GetSizeArray(ar));
+	*/
+	
 	struct rlimit rlim,rlim2;
 	int ret =0;
 	getrlimit(RLIMIT_STACK, &rlim);
@@ -1200,7 +1271,7 @@ int main(int argc, char *argv[])
 	th_delay(1000);
 	th_delay(40);
 	th_delay(50);
-
+	
 	m_MainComport->uart_init();
 
 	m_MainComport->SetMutex(Main_Uartmutex);
