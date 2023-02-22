@@ -21,6 +21,38 @@ std::vector<uint8_t*> vec;
 msgform* m_pMsg;
 Socket* m_GetSocket;
 
+template <typename T>
+int GetSizeArray (T* ar)
+{
+	int ret =0;
+	BYTE arr[4096];
+	memcpy(arr, ar, 4096);
+	int size = (sizeof(arr)/sizeof(*arr));
+
+	for(int i=0; i< size; i++) {
+		if(ar[i] > 0) {
+			ret++;
+		}
+	}
+	return ret;
+}
+
+bool ZeroCompare2(WORD a, WORD b)
+{
+//	if( (a != 0) && ( b !=0) )
+		return a < b;
+//	else
+//		return 0;
+}
+bool ZeroCompare3(WORD a, WORD b)
+{
+	if( (a != 0) && ( b !=0) )
+		return a < b;
+	else
+		return 0;
+}
+
+
 MsgQueue:: MsgQueue(void)
 {
 	m_DataAckCnt=0;
@@ -42,7 +74,8 @@ MsgQueue::~MsgQueue(void)
 bool MsgQueue::PutByte(uint8_t* b, int len)
 {
 	BYTE u8Data[1024];
-	int Cnt =0;
+	int size =0, Cnt =0;
+	WORD wordPanID =0;
 	memset(m_u8SendData, 0, 1024);
 	memset(u8Data, 0, 1024);
 	memcpy(u8Data, b, 1024);
@@ -51,48 +84,62 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 
 	if(u8Data[MSG_STX] == STX) {
 		if(u8Data[MSGTYPE] == DATA_ACKNOWLEDGEMENT) {
-
-			m_MsgQueueDataAcknowledge.clear();
-			
-			if(u8Data[MSG_ACKNOWLEDGE_STATUS] == PAYLOAD_STATUS_SUCCESS) {
-			/*	if((BYTE)(ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO])) == 0x16) {
-					printf("End Ack Pass\n");
-					return 1;
-				}*/
+			if(u8Data[MSG_ACKNOWLEDGE_STATUS] == PAYLOAD_STATUS_SUCCESS) {	
 				Cnt = m_nMapParity;
 				for(int i=0; i< Cnt; i++) {
-					for(int j=0; j< (int)m_MsgQueueArrayDataAcknowledge[i].size(); j++) {
-					//	printf("m_nMapParity Overlap Parity %x , %x\n", m_MsgQueueArrayDataAcknowledge[i][j], ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO]));
-						if( !Redown ) {
-							if(m_MsgQueueArrayDataAcknowledge[i][j] == (BYTE)(ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO])) ) {
-								printf("m_nMapParity Overlap Parity [%d][%d]%x == %x\n", i, j, m_MsgQueueArrayDataAcknowledge[i][j], ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO]));
-								return 0;
-							}
+					if( !Redown ) {
+						if(m_pu16MsgQueueArrayDataAcknowledge[i] == (ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO])) ) {
+							printf("m_nMapParity Overlap Parity 0x%x\n", m_pu16MsgQueueArrayDataAcknowledge[i]);
+							return 0;
 						}
-						else {
-							if(m_ArrayDataAcknowledge[i][j] == (BYTE)(ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO])) ) {
-								printf("m_ArrayDataAcknowledge m_nMapParity Overlap Parity [%d][%d]%x == %x\n", i, j, m_ArrayDataAcknowledge[i][j], ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO]));
-								return 0;
-							}
+					}
+					else {
+						if(m_pu16MsgQueueArrayDataAcknowledge[i] == (ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO])) ) {
+							printf("m_pu16MsgQueueArrayDataAcknowledge, Overlap Parity 0x%x \n", m_pu16MsgQueueArrayDataAcknowledge[i]);
+							return 0;
 						}
 					}
 				}
+				size = 4096; 
+				wordPanID = ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO]);
+				printf("m_nMapParity :%d, wordPanID : %d, size : %d\n", m_nMapParity, wordPanID, size);
+				
+				int size2 =GetSizeArray1(m_Test);
+//				PrintArray1(m_Test, size2);
+				AppendArray1(wordPanID, m_nMapParity, m_Test);
+//				m_ArrayUtil.InsertArray(m_nMapParity, wordPanID, m_Test);
+//				size2 =GetSizeArray1(m_Test);
+//				PrintArray1(m_Test, size2);
 
-				m_MsgQueueDataAcknowledge.push_back(ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO]));
-				m_MsgQueueArrayDataAcknowledge.push_back(m_MsgQueueDataAcknowledge);
-
-				sort(m_MsgQueueArrayDataAcknowledge.begin(), m_MsgQueueArrayDataAcknowledge.end());
+				sort(m_Test, m_Test+size);
+				int j =0;
+				for(int i=0; i<=4096; i++) {
+					if(m_Test[i] > 0) {
+						m_pu16MsgQueueArrayDataAcknowledge[j] = m_Test[i];
+						printf("[%d] ", m_pu16MsgQueueArrayDataAcknowledge[j]);
+						j++;
+					}
+				}
+				printf("\n");
 
 				printf("DataAck TagID : ");
 				printf("%x\n",(BYTE)(ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO])) );
+				
 
-
-				if(Redown) {
-					printf("MsgQueue Redown m_nMapParity : %d m_MsgQueueDataAcknowledge: %d\n", m_nMapParity, m_MsgQueueDataAcknowledge.at(0));
-				//	m_ArrayDataAcknowledge.at(0).push_back(m_MsgQueueDataAcknowledge);
-					m_ArrayDataAcknowledge.push_back(m_MsgQueueDataAcknowledge);				
-					DataSort();					
-				}
+			/*	if(Redown) {
+					printf("MsgQueue Redown m_nMapParity : %d \n", m_nMapParity);
+					m_ArrayUtil.InsertArray(m_nMapParity, wordPanID, m_Test);
+					sort(m_pu16MsgQueueArrayDataAcknowledge, m_pu16MsgQueueArrayDataAcknowledge+size, ZeroCompare2);
+					
+					for(int i=0; i<m_nMapParity; i++) {
+						if(m_Test[i] > 0) {
+							m_pu16MsgQueueArrayDataAcknowledge[i] = m_Test[i];
+							printf("[%d] ", m_pu16MsgQueueArrayDataAcknowledge[i]);
+							}				
+						printf("\n");
+					//	DataSort();					
+					}
+				}*/
 				m_nMapParity++;				
 				printf("m_nMapParity : %d\n", m_nMapParity);
 
@@ -144,6 +191,8 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 			}
 			else {
 				if(!m_bUartCommuniFlag && (u8Data[MSGTYPE] == BSN_START_ACK)) {
+					
+				
 					m_vcemsg.MsgPacket.u8MsgType = u8Data[MSGTYPE];
 					m_vcemsg.MsgPacket.data[0] = u8Data[MSG_DATA];
 				//	printf("BSN_START_ACK msgtype : %x, becondata : %x \n", m_vcemsg.MsgPacket.u8MsgType, m_vcemsg.MsgPacket.data[0]);
@@ -246,5 +295,51 @@ void MsgQueue::GetSocket(Socket* soc)
 	m_GetSocket = soc;
 }
 
+
+void MsgQueue::deleteArray1(int idx, int size, WORD* ar)
+{
+	memmove(ar+idx, ar+idx+1, size-idx);
+}
+
+void MsgQueue::AppendArray1(WORD sz, int size1, WORD* ar)
+{
+	InsertArray1(size1, sz, ar);
+}
+
+int MsgQueue::GetSizeArray1 (WORD* ar)
+{
+	int ret =0;
+	BYTE arr[4096];
+	memcpy(arr, ar, 4096);
+	int size = (sizeof(arr)/sizeof(*arr));
+	
+	for(int i=0; i< size; i++) {
+		if(ar[i] > 0) {
+			ret++;
+		}
+	}
+	printf("GetSizeArray() ret :%d\n", ret);
+	return ret;
+}
+void MsgQueue::InsertArray1(int idx, WORD sz, WORD* ar)
+{
+	WORD arr[4096];
+	memcpy(arr, ar, 4096);
+	int size = (sizeof(arr)/sizeof(*arr));
+	memmove(ar+idx+1, ar+idx, size-idx+1);
+	ar[idx] = sz;
+	printf("Insert [%d]%x, size : %d\n", idx, ar[idx], size);
+}
+
+void MsgQueue::PrintArray1(WORD* ar, int size)
+{
+	WORD arr[4096];
+	memcpy(arr, ar, 4096);
+	for(int i=0; i<= size; i++) {
+	//	if(ar[i] > 0)		
+			printf("%x ", arr[i]);
+	}	
+	printf("\n\n");
+}
 
 

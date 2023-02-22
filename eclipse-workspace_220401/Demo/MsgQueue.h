@@ -11,6 +11,7 @@
 
 #include "pch.h"
 #include "Vector_queue.h"
+#include "Vector_SocketQueue.h"
 #include <sys/resource.h>
 #include "Socket/Socket.h"
 #include <sched.h>
@@ -38,12 +39,14 @@ typedef struct _msgvecform {
 }vecmsgform;
 
 
+
 class MsgQueue
 {
 public :
 	MsgQueue(void);
 	~MsgQueue(void);
 public:
+	VectorSocket<WORD> m_ArrayUtil;
 
 	std::vector<uint8_t> vec2;
 	std::queue<BYTE> que;
@@ -66,7 +69,10 @@ public:
 	std::vector<BYTE> m_MsgQueueDataAssocation;
 
 	BYTE m_u8SendData[1024];
-
+	WORD m_pu16MsgQueueArrayDataAcknowledge[4096];
+	WORD m_Test[4096];
+	//VectorSocket<BYTE> m_vArrayDataAcknowledge;
+	
 	void GetSocket(Socket* soc);
 	int uart_SetTimer();
 	int uart_DelaySend();
@@ -74,7 +80,11 @@ public:
 	bool PutByte(uint8_t* b, int len);
 	int DataSort();
 	void GetDataDown(int cnt);
-
+	int GetSizeArray1(WORD* ar);
+	void AppendArray1(WORD sz, int size1, WORD* ar);
+	void PrintArray1(WORD* ar, int size);
+	void InsertArray1(int idx, WORD sz, WORD* ar);
+	void deleteArray1(int idx, int size, WORD* ar);
 
 };
 #endif /* MSGQUEUE_H_ */

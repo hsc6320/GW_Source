@@ -24,11 +24,13 @@ int efd;
 struct epoll_event	ev, *events;
 
 extern UartComThread* m_MainComport;
+extern MsgQueue* m_pMsgQueue;
 
 std::vector<std::vector<BYTE>> vecTagData;
 
 BYTE OneData[4096][2048] = { {0,}, {0,} };
 BYTE TwoData[4096][2048] = { {0,}, {0,} };
+
 
 
 int vectorCnt = 0;
@@ -47,8 +49,8 @@ Socket::Socket()
 	m_Main_ServiceStart_TagAssociation_InitFlag = 0;
 	m_iSocketReceiveEnd =0;
 	bWorkingThread =0;
-	m_SocketArrayDataDownMsg.reserve(1000);
-	m_SocketArrayDataIndicateMsg.reserve(1000);
+	m_SocketArrayDataDownMsg.reserve(5000);
+	m_SocketArrayDataIndicateMsg.reserve(5000);
 	OneData1 = (BYTE**) malloc(sizeof(BYTE*) * 4096);
 	TwoData1 = (BYTE**) malloc(sizeof(BYTE*) * 4096);
 
@@ -518,6 +520,8 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 		{
 			//printf("Msg VAL : %x %x %x %x %x\n", p8udata[MSG_STX], p8udata[MSGTYPE], p8udata[DataLen-3], p8udata[DataLen-2], p8udata[DataLen-1]);
 			if(p8udata[MSGTYPE] == BSN_START) {
+				memset(m_pMsgQueue->m_Test, 0, sizeof(WORD)*4096);
+				memset(m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge, 0, sizeof(WORD)*4096);
 				m_pSocMsgqueue->BSN_MSG_ACK(p8udata);
 				for(int i=0; i<15; i++) {
 					printf("%x ", p8udata[i]);
@@ -535,26 +539,24 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 				
 				for(int i=0; i<m_nSocketArrayDataDownCnt; i++) {
 					for(int j =1; j<512; j++) {
-						printf("%x ", OneData[i][j]);
+					//	printf("%x ", OneData[i][j]);
 						if( (OneData[i][j-3] == 0xa5) && (OneData[i][j-2] == 0x5a) && (OneData[i][j-1] == 0x7e) ) {
 							index = j;
-							printf("Index : %d\n", index);
+						//	printf("Index : %d\n", index);
 							break;
 						}
 					}
-					printf("\n");
 					
-					printf("OneData[%d] size : %d\n", i, index);
+				//	printf("OneData[%d] size : %d\n", i, index);
 					for(int j=0; j<index; j++) {
 						m_SocketQueue_vec.push_back(OneData[i][j]);
 					}
-					printf("\n");
-				//	free(OneData[i]);
+				//	printf("\n");
 
-					for(int i=0; i<(int)m_SocketQueue_vec.size(); i++) {
+				/*	for(int i=0; i<(int)m_SocketQueue_vec.size(); i++) {
 						printf("%x ", m_SocketQueue_vec.at(i));
 					}
-					printf("\n");
+					printf("\n");*/
 					m_SocketArrayDataDownMsg.push_back(m_SocketQueue_vec);
 					m_SocketQueue_vec.clear();
 					m_SocketQueue_vec.shrink_to_fit();
@@ -566,21 +568,21 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 					for(int j =1; j<512; j++) {
 						if( (TwoData[i][j-3] == 0xa5) && (TwoData[i][j-2] == 0x5a) && (TwoData[i][j-1] == 0x7e) ) {
 							index = j;
-							printf("\nIndex : %d\n", index);
+					//		printf("\nIndex : %d\n", index);
 							break;
 						}
 					}
 					printf("\n");
 					
-					printf("TwoData[%d] size : %d\n", i, index);
+				//	printf("TwoData[%d] size : %d\n", i, index);
 					for(int j=0; j<index; j++) {
 						m_SocketQueue_vec.push_back(TwoData[i][j]);
 					}
 				//	free(TwoData1[i]);
-					for(int i=0; i<(int)m_SocketQueue_vec.size(); i++) {
+				/*	for(int i=0; i<(int)m_SocketQueue_vec.size(); i++) {
 						printf("%x ", m_SocketQueue_vec.at(i));
 					}
-					printf("\n");
+					printf("\n");*/
 					m_SocketArrayDataIndicateMsg.push_back(m_SocketQueue_vec);
 					m_SocketQueue_vec.clear();
 					m_SocketQueue_vec.shrink_to_fit();

@@ -37,6 +37,7 @@ public:
 	Socket();
 	virtual ~Socket();
 	int m_serv_sock;
+	
 
 	pthread_t p_thread;
 

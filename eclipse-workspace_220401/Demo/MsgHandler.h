@@ -36,19 +36,21 @@ public:
 	std::vector<std::vector<BYTE>> m_UartArrayReDataIndicateMsg;
 	std::map<std::vector<BYTE>, int > Map_dataParityCheck;
 	std::map<std::vector<BYTE>, int > Map_AcknowParityCheck;
+	std::map<WORD, int > Map_u16AcknowParityCheck;
 	std::vector<std::vector<BYTE>> vMsgDataAcknowledge;
+	WORD m_pu16MsgDataAcknowledge[4096];
 
 	Common_Packet	CommonPacket;
 	int Map_AcknowCnt,Map_AcknowCnt2;
 	int m_nDataDownCount, m_nDataIndiCount;
 	int m_DataCnt;
 	int m_DataFlag;
-	int m_nReDownCnt, m_GetDownTagID[512];
+	int DataSendFail_RedownCnt, m_GetDownTagID[512];
 	int Beacon_Max;
 	UartComThread* m_pCommUart;
 	int m_nUartArrayDataDownCnt, m_nUartArrayDataIndicateCnt;
 	int m_nUartArrayReDataIndicateCnt;
-	int m_nDownloadedSuccessCnt;
+	int m_nDataSendFail_SuccessCnt;
 	void SetHandle(UartComThread* msg);
 	void SetSocketArray(std::vector<std::vector<BYTE>> DataDownmsg, std::vector<std::vector<BYTE>> DataIndimsg);
 	void SetMapValueArray(std::vector<std::vector<BYTE>> vec, int Len);
