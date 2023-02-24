@@ -25,6 +25,7 @@ typedef struct _msgform {
 	uint8_t Saddr[2];
 	uint8_t u8MsgType;
 	BYTE    Length[2];
+	BYTE status;
 	uint8_t data[10];
 	uint8_t Checksum;
 	uint8_t ext[3] = { 0xA5, 0x5A, 0x7E };

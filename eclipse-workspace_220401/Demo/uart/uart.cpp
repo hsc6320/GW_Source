@@ -58,18 +58,19 @@ static void *uart_Rx_Thread(void *param)
 	int sto_count2 =0;
 
 	while(1) {
-		if(pComm->Ready_to_Read(uartd,5)) {
-			printf("\n***************uart_Rx_Thread uart *******************\n");
+		if(pComm->Ready_to_Read(uartd,0)) {
+			
 
 			pthread_mutex_lock(&ctx->mutex);
 			len = pComm->Uart_Read(uartd, rx2, 1024);
 			pthread_mutex_unlock(&ctx->mutex);
+			printf("\n***************uart_Rx_Thread uart **********%d*********\n", len);
 
 			nToTalLen += len;
 			if((len < 15) && (underflowcnt == 0) ) {
 				pComm->m_iUartRetry =1;
 				printf("Read Buffer underflow... Retry\n");
-				if(len <= 1) {
+				if( (len <= 1) &&(rx2[0] != 0xaa) ) {
 					nToTalLen =0;
 					memset(rx2, 0, sizeof(char)*1024);
 					printf("memset len %d == 1\n", len);
@@ -81,10 +82,11 @@ static void *uart_Rx_Thread(void *param)
 				}
 				if(rx[0] == 0) {
 					memset(rx2, 0, sizeof(char)*1024);
+					printf("(rx[0] == 0)\n");
 					underflowcnt =0;
 					continue;
 				}
-				if( (rx[underflowcnt-3] != 0xa5) || (rx[underflowcnt-2] != 0x5a) || (rx[underflowcnt-1] != 0x7e) ) {
+				if( (underflowcnt <=1) ||(rx[underflowcnt-3] != 0xa5) || (rx[underflowcnt-2] != 0x5a) || (rx[underflowcnt-1] != 0x7e) ) {
 					printf("continue\n");
 					memset(rx2, 0, sizeof(char)*1024);
 					continue;
@@ -173,7 +175,7 @@ static void *uart_Rx_Thread(void *param)
 			nToTalLen =0;
 			nSecondPutByte =0;
 		}
-		usleep(100);
+		usleep(1);
 	}
 	free(rx_sto);
 	free(rx_sto2);

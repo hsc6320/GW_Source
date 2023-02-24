@@ -148,7 +148,7 @@ int SocketHandler::DownLoad_Start_Ack()
 	pu8data[++iBufcnt] = packet.ext[1];
 	pu8data[++iBufcnt] = packet.ext[2];
 
-	pSocket->Send_Message(pu8data, iBufcnt);
+	pSocket->Send_Message(pu8data, iBufcnt+1);
 
 	return 1;
 }

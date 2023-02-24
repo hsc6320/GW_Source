@@ -282,7 +282,7 @@ int MsgHandler::Send_BeaconData(BYTE ibeaconvalue)
 					return 0;
 				}
 				else {
-					if(m_DataCnt >= 15) {
+					if(m_DataCnt > 14) {
 						printf("BEACON_MAXm_DataCnt %d > 15\n", m_DataCnt);
 						return 0;
 					}
@@ -311,7 +311,7 @@ int MsgHandler::Send_BeaconData(BYTE ibeaconvalue)
 					return 0;
 				}
 				else {
-					if(m_DataCnt >=15) {
+					if(m_DataCnt >15) {
 						printf("m_DataCnt %d > 15\n", m_DataCnt);
 						return 0;
 					}
@@ -365,7 +365,7 @@ int MsgHandler::UartPacket_ReDataDownStart(BYTE u8data)
 						return 0;
 					}
 					else if(Map_dataParityCheck[m_UartArrayDataDownMsg[i]] != PASS) {
-						m_nDataDownCount = (int)m_UartArrayDataDownMsg[i].at(MSG_DADDRZERO);
+						m_nDataDownCount = (int)m_UartArrayDataDownMsg[i].at(MSG_DADDRZERO) | (int)m_UartArrayDataDownMsg[i].at(MSG_DADDRONE);
 						m_nDataDownCount--;
 						
 					//	printf("\nReDown E_BEACON_BSN_NUMBER6:\n");
@@ -386,8 +386,10 @@ int MsgHandler::UartPacket_ReDataDownStart(BYTE u8data)
 						return 0;
 					}
 					else if(Map_dataParityCheck[m_UartArrayDataDownMsg[i]] != PASS) {
-						m_nDataDownCount = (int)m_UartArrayDataDownMsg[i].at(MSG_DADDRZERO);
+						m_nDataDownCount = ByteToWord(m_UartArrayDataDownMsg[i][MSG_DADDRONE], m_UartArrayDataDownMsg[i][MSG_DADDRZERO]);
+						//	(int)m_UartArrayDataDownMsg[i].at(MSG_DADDRZERO) | (int)m_UartArrayDataDownMsg[i].at(MSG_DADDRONE);
 						m_nDataDownCount--;
+						printf("************TAG ID : %d\n", m_nDataDownCount);
 
 						m_nDataSendFail_SuccessCnt++;
 						break;
@@ -424,6 +426,11 @@ int MsgHandler::UartPacket_ReDataDownStart(BYTE u8data)
 	pu8data[++iBufcnt] = m_UartArrayDataDownMsg[m_nDataDownCount][++nTagidCOunt];		//etx1
 	pu8data[++iBufcnt] = m_UartArrayDataDownMsg[m_nDataDownCount][++nTagidCOunt];		//etx2
 
+	for(int i=0; i< iBufcnt; i++) {
+		printf("%x ", pu8data[i]);
+	}
+	printf("\n");
+	
 	m_pCommUart->Uart_Write(m_pCommUart->m_uartd, pu8data, iBufcnt+1);
 	return 1;
 }
@@ -480,6 +487,10 @@ int MsgHandler::UartPacket_ReDataIndicateStart(BYTE u8data)
 	pu8data[++iBufcnt] = m_UartArrayDataIndicateMsg[m_nDataIndiCount][++nTagidCOunt];		//etx2
 //	printf("%x \n\n", pu8data[iBufcnt]);
 
+	for(int i=0; i<iBufcnt; i++) {
+		printf("%x ", pu8data[i]);
+	}
+	printf("\n");
 	m_pCommUart->Uart_Write(m_pCommUart->m_uartd, pu8data, iBufcnt+1);
 
 

@@ -486,7 +486,7 @@ void *Recieve_Function(void* rcvDt)
 			}
 			pthread_mutex_unlock(&pSoc->Socket_mutex);
 		}
-		usleep(500);
+		usleep(1);
 	}
 
 	return 0;
@@ -656,7 +656,7 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 			//		}
 					//printf("\n");
 					m_pSocMsgqueue->DataIndication_MSG_Start_ACK(p8udata);
-					Send_Message(p8udata, 17);
+					Send_Message(p8udata, 16);
 					printf("\nm_nSocketArrayDataIndicate Size : %d\n", m_nSocketArrayDataIndicateCnt);
 					m_nSocketArrayDataIndicateCnt++;
 				}		

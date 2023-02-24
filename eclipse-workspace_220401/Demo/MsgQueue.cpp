@@ -208,6 +208,7 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 					else if(u8Data[MSGTYPE] == DATAINDICATION_ACK) {
 						m_vcemsg.MsgPacket.Saddr[0] = u8Data[MSG_SADDRZERO];
 						m_vcemsg.MsgPacket.Saddr[1] = u8Data[MSG_SADDRONE];
+						m_vcemsg.MsgPacket.status = u8Data[MSG_CFM_DATAINDICATE_STATUS];
 					}
 					m_bUartCommuniFlag = 1;
 				}

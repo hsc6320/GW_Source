@@ -68,7 +68,7 @@ void Socket_MsgQueue::DataIndication_MSG_Start_ACK(BYTE* puData)
 	pu8data[++iBufcnt] = QuquePacket.ext[1];
 	pu8data[++iBufcnt] = QuquePacket.ext[2];
 
-	memset(puData, 0, iBufcnt);
+	memset(puData, 0, 30);
 	memcpy(puData, pu8data, iBufcnt+1);
 }
 

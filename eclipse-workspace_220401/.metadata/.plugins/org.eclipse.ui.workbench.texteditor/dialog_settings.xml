@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="bDataAckFlag"/>
+		<item key="selection" value="MSG_CFM_DATAINDICATE_STATUS"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="MSG_CFM_DATAINDICATE_STATUS"/>
+			<item value="UartPacket_ReDataDownStart"/>
+			<item value="UartPacket_DataDownStart"/>
+			<item value="Main_TagSort_Arrange2"/>
 			<item value="bDataAckFlag"/>
 			<item value="nTemp1BeaconCnt"/>
 			<item value="m_SocketArrayDataDownMsg"/>
@@ -19,10 +23,6 @@
 			<item value="RAM"/>
 			<item value="iSmallDataDown"/>
 			<item value="PrintfHello"/>
-			<item value="firstTimerID"/>
-			<item value="Set_WaitTimer"/>
-			<item value="AckFail_Redown"/>
-			<item value="Main_TagVal_CheckParity2"/>
 		</list>
 		<list key="replacehistory">
 		</list>

@@ -57,7 +57,7 @@
 #define PASS 	1
 #define FAIL 	0
 
-#define BEACON_MAX 19
+#define BEACON_MAX 31
 
 #define BUILD_UINT16(loByte, hiByte)	((unsigned int )(((loByte) & 0x00FF) + (((hiByte) & 0x00FF) << 8)))
 
