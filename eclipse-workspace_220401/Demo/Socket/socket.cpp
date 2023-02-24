@@ -40,7 +40,7 @@ Socket::Socket()
 	p_thread = NULL;
 	m_p8uData = NULL;
 	m_p8uSendData = NULL;
-	m_nServerMessge_End =0;
+	m_nServerMessge_End =1;
 	m_nSocketArrayDataDownCnt =0;
 	m_nSocketArrayDataIndicateCnt =0;
 	m_iBypassSocketToUart =0;
@@ -520,8 +520,7 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 		{
 			//printf("Msg VAL : %x %x %x %x %x\n", p8udata[MSG_STX], p8udata[MSGTYPE], p8udata[DataLen-3], p8udata[DataLen-2], p8udata[DataLen-1]);
 			if(p8udata[MSGTYPE] == BSN_START) {
-				memset(m_pMsgQueue->m_Test, 0, sizeof(WORD)*4096);
-				memset(m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge, 0, sizeof(WORD)*4096);
+				m_nServerMessge_End =0;
 				m_pSocMsgqueue->BSN_MSG_ACK(p8udata);
 				for(int i=0; i<15; i++) {
 					printf("%x ", p8udata[i]);
@@ -594,6 +593,7 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 				}
 				printf("\n");
 				Send_Message(p8udata, 15);
+				m_nServerMessge_End =1;
 				m_iSocketReceiveQueue =1;
 			}
 			else if((p8udata[MSGTYPE] == DOWNLOAD_START_REQ) || (p8udata[MSGTYPE] == DATAINDICATION_REQ)) {

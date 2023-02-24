@@ -64,6 +64,9 @@ MsgQueue:: MsgQueue(void)
 	Redown2 =0;
 	m_nSendTagCount =0;
 	m_Uart_ServiceStart_TagAssociation_InitFlag =0;
+	memset(m_Test, 0, sizeof(WORD)*4096);
+	memset(m_pu16MsgQueueArrayDataAcknowledge, 0, sizeof(WORD)*4096);
+
 	m_pMsg = NULL;
 }
 

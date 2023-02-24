@@ -212,7 +212,7 @@ int Main_ByPass_UartToSocket()
 			bDataAckFlag =0;
 			nTempBeaconCnt =0;
 			nTemp2BeaconCnt =0;
-			memset(m_pMsgHandler->m_GetDownTagID, 0, 512);
+			memset(m_pMsgHandler->m_GetDownTagID, 0, 4096);
 			break;
 
 		case SERVICESTART_CONFIRM:			
@@ -382,7 +382,7 @@ int Main_ByPass_SocketToUart()
 			printf("!bReDownloadFlag %d && !bDataAckFlag %d m_nDataDownCount : %d\n", bReDownloadFlag, bDataAckFlag, m_pMsgHandler->m_nDataDownCount);
 			if(!bReDownloadFlag && !bDataAckFlag) {
 				if (m_pMsgHandler->UartPacket_DataIndicateStart(nBeaconValue) ) {
-					Set_WaitTimer(&DataIndecateTimerID, 30, 1);
+					Set_WaitTimer(&DataIndecateTimerID, 100, 1);
 					SecondTimerFlag = 1;
 				}
 				m_pMsgHandler->m_nDataDownCount++;
@@ -411,7 +411,7 @@ int Main_ByPass_SocketToUart()
 			if(!bReDownloadFlag && !bDataAckFlag) {
 				m_pMsgHandler->m_nDataIndiCount++;
 				if( m_pMsgHandler->UartPacket_DataDownStart(nBeaconValue) ) {
-					Set_WaitTimer(&DataDownTimerID, 30, 1);
+					Set_WaitTimer(&DataDownTimerID, 100, 1);
 					firstTimerFlag =1;
 				}
 			}
@@ -496,13 +496,13 @@ int Main_ByPass_SocketToUart()
 						return 1;
 					}
 				}
-				if(!DataSendFail_Redown && !AckFail_Redown &&(m_pMsgHandler->m_nDataSendFail_SuccessCnt == m_pMsgHandler->DataSendFail_RedownCnt)) {
+				if(!DataSendFail_Redown /*&&(m_pMsgHandler->m_nDataSendFail_SuccessCnt == m_pMsgHandler->DataSendFail_RedownCnt)*/) {
 					nTempBeaconCnt++;
 					printf("nTempBeaconCnt : %d\n", nTempBeaconCnt);
 
 					if(nTempBeaconCnt >= BEACON_MAX/2) {
 						bReDownloadFlag =0;
-						memset(m_pMsgHandler->m_GetDownTagID, 0, 512);
+						memset(m_pMsgHandler->m_GetDownTagID, 0, 4096);
 						printf("bDataAckFlag : %d, m_nUartArrayDataDownCnt : %d, m_nMapParity : %d\n", bDataAckFlag, m_pMsgHandler->m_nUartArrayDataDownCnt, m_pMsgQueue->m_nMapParity);
 
 						if(!bDataAckFlag && (m_pMsgHandler->m_nUartArrayDataDownCnt > m_pMsgQueue->m_nMapParity) ) {
@@ -512,8 +512,7 @@ int Main_ByPass_SocketToUart()
 							Main_TagSort_Arrange2(&j, &AckFail_Redown);
 						}
 						m_pMsgHandler->DataSendFail_RedownCnt = j;
-						printf("\nMain Fail tag count: %d, DataSendFail_Redown : %d, AckFail_Redown : %d\n", j, DataSendFail_Redown, AckFail_Redown);
-						return 1;
+						printf("\nMain Fail tag count: %d, DataSendFail_Redown : %d, AckFail_Redown : %d\n", j, DataSendFail_Redown, AckFail_Redown);						
 					}
 					else {
 						printf("return 1\n");
@@ -635,7 +634,7 @@ void Main_Service_Stop()
 	memset(m_pMsgHandler->m_pu16MsgDataAcknowledge, 0, sizeof(WORD)*4096);
 	
 	m_pMsgHandler->bClear();
-	memset(m_pMsgHandler->m_GetDownTagID, 0, 512);
+	memset(m_pMsgHandler->m_GetDownTagID, 0, 4096);
 	bReDownloadFlag = 0;
 	bDataAckFlag =0;
 	nTemp1BeaconCnt =0;
@@ -1092,8 +1091,9 @@ void PrintfHello(int sig, siginfo_t* si, void* uc)
 
 	if(*tidp == firstTimerID) {
 		if(!m_pMsgQueue->m_bReadEnd_UartMessage && !m_pMsgQueue->m_bUartCommuniFlag &&
-			!m_pSocket->m_iBypassSocketToUart && !m_pSocket->m_iSocketReceiveEnd &&
-			m_MainComport->m_iUartRetry == 0) {
+			!m_pSocket->m_iBypassSocketToUart && !m_pSocket->m_iSocketReceiveEnd && !m_pSocket->m_nServerMessge_End &&
+			m_MainComport->m_iUartRetry == 0) {			
+			timer_delete(firstTimerID);
 			printf("Kill Timer firstTimerID\n");
 			Socket_AliveCheck();
 		}
@@ -1101,16 +1101,19 @@ void PrintfHello(int sig, siginfo_t* si, void* uc)
 	else if(*tidp == DataDownTimerID) {
 		firstTimerFlag =0;
 		timer_delete(DataDownTimerID);
+	
+		printf("Kill Timer DataDownTimerID\n");
 		m_pMsgHandler->m_nDataDownCount++;
 		m_pMsgHandler->m_DataCnt++;
 		m_pMsgHandler->UartPacket_DataDownStart(nBeaconValue);
-		printf("Kill Timer DataDownTimerID\n");
 	}
 	else if (*tidp == DataIndecateTimerID){
-		SecondTimerFlag =0;
+		SecondTimerFlag =0;		
+		timer_delete(DataIndecateTimerID);
+	
+		printf("Kill Timer DataIndecateTimerID\n");
 		m_pMsgHandler->m_nDataDownCount--;
 		m_pMsgHandler->UartPacket_DataIndicateStart(nBeaconValue);
-		printf("Kill Timer DataIndecateTimerID\n");
 
 	}
 }

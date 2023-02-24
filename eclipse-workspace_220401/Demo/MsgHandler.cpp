@@ -34,7 +34,7 @@ MsgHandler::MsgHandler()
 	m_UartArrayDataIndicateMsg.reserve(5000);
 	m_UartArrayDataDownMsg.reserve(5000);
 
-	memset(m_GetDownTagID, 0, 512);
+	memset(m_GetDownTagID, 0, 4096);
 }
 
 MsgHandler::~MsgHandler()

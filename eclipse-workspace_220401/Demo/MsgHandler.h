@@ -45,7 +45,7 @@ public:
 	int m_nDataDownCount, m_nDataIndiCount;
 	int m_DataCnt;
 	int m_DataFlag;
-	int DataSendFail_RedownCnt, m_GetDownTagID[512];
+	int DataSendFail_RedownCnt, m_GetDownTagID[4096];
 	int Beacon_Max;
 	UartComThread* m_pCommUart;
 	int m_nUartArrayDataDownCnt, m_nUartArrayDataIndicateCnt;
