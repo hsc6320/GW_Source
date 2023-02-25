@@ -382,7 +382,7 @@ int Main_ByPass_SocketToUart()
 			printf("!bReDownloadFlag %d && !bDataAckFlag %d m_nDataDownCount : %d\n", bReDownloadFlag, bDataAckFlag, m_pMsgHandler->m_nDataDownCount);
 			if(!bReDownloadFlag && !bDataAckFlag) {
 				if (m_pMsgHandler->UartPacket_DataIndicateStart(nBeaconValue) ) {
-					Set_WaitTimer(&DataIndecateTimerID, 100, 1);
+					Set_WaitTimer(&DataIndecateTimerID, 30, 1);
 					SecondTimerFlag = 1;
 				}
 				m_pMsgHandler->m_nDataDownCount++;
@@ -411,7 +411,7 @@ int Main_ByPass_SocketToUart()
 			if(!bReDownloadFlag && !bDataAckFlag) {
 				m_pMsgHandler->m_nDataIndiCount++;
 				if( m_pMsgHandler->UartPacket_DataDownStart(nBeaconValue) ) {
-					Set_WaitTimer(&DataDownTimerID, 100, 1);
+					Set_WaitTimer(&DataDownTimerID, 30, 1);
 					firstTimerFlag =1;
 				}
 			}
@@ -441,7 +441,7 @@ int Main_ByPass_SocketToUart()
 
 			if(!bDataAckFlag && !bReDownloadFlag && ((int)m_pMsgQueue->m_vcemsg.MsgPacket.data[0] <= BEACON_MAX) && (nBeaconCnt < BEACON_MAX+1)) {				
 				if(m_pMsgHandler->UartPacket_DataDownStart(m_pMsgQueue->m_vcemsg.MsgPacket.data[0])) {
-					Set_WaitTimer(&DataDownTimerID, 100, 1);
+					Set_WaitTimer(&DataDownTimerID, 30, 1);
 					firstTimerFlag = 1;
 				}
 				nBeaconCnt++;
@@ -1294,7 +1294,7 @@ int main(int argc, char *argv[])
 			timer_delete(firstTimerID);
 			printf("delete Timer\n");
 			ServerReConn();
-			Set_WaitTimer(&firstTimerID, 5, 0);
+			Set_WaitTimer(&firstTimerID, 60, 0);
 			TagAssociation_Init();
 			printf("Main TagData\n");
 			while(!m_pMsgQueue->m_Queue.empty()) {

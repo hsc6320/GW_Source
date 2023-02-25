@@ -6943,3 +6943,34 @@ Invoking: Cross G++ Linker
 arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
 Finished building target: Demo
  
+23:54:29 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../MsgQueue.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgQueue.d" -MT"MsgQueue.o" -o "MsgQueue.o" "../MsgQueue.cpp"
+../MsgQueue.cpp: In member function ‘bool MsgQueue::PutByte(uint8_t*, int)’:
+../MsgQueue.cpp:110:9: warning: unused variable ‘size2’ [-Wunused-variable]
+     int size2 =GetSizeArray1(m_Test);
+         ^~~~~
+Finished building: ../MsgQueue.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+23:55:06 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+make: 'all'을(를) 위해 할 일이 없습니다.
+09:22:58 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 

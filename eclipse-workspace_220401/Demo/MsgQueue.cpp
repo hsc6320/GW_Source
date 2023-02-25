@@ -116,7 +116,7 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 
 				sort(m_Test, m_Test+size);
 				int j =0;
-				for(int i=0; i<=4096; i++) {
+				for(int i=0; i<4096; i++) {
 					if(m_Test[i] > 0) {
 						m_pu16MsgQueueArrayDataAcknowledge[j] = m_Test[i];
 						printf("[%d] ", m_pu16MsgQueueArrayDataAcknowledge[j]);
