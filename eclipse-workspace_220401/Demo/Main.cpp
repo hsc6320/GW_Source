@@ -628,7 +628,9 @@ void Main_Service_Stop()
 	m_pMsgQueue->m_ArrayDataAcknowledge.clear();	
 	m_pMsgHandler->m_DataFlag =0;
 	m_pMsgHandler->m_DataCnt =0;
-	
+
+	m_pMsgQueue->m_MsgQueueTagIDAssociation.clear();
+	m_pMsgQueue->m_MsgQueueTagIDAssociation.shrink_to_fit();
 	memset(m_pMsgQueue->m_Test, 0, sizeof(WORD)*4096);
 	memset(m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge, 0, sizeof(WORD)*4096);
 	memset(m_pMsgHandler->m_pu16MsgDataAcknowledge, 0, sizeof(WORD)*4096);
@@ -739,11 +741,13 @@ int Main_TagArrayVal_CheckParity(int Temp)
 	printf("After Sort(size[%d]) \n ", sizeof(m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge)/sizeof(m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[0]));
 
 	for(WORD i=0; i<m_pMsgHandler->m_nUartArrayDataDownCnt; i++) {		
-		if(m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[i] != i+1) {
+//		if(m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[i] != i+1) {
+		if(m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[i] != m_pMsgQueue->m_MsgQueueTagIDAssociation[i]) {
 			if(Temp) {
 			//	Main_deleteArray(i , 4096, m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge);
-				printf("Main deleteArray() %d %d\n", i, m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[i+1]);
+				printf("Main deleteArray() %d %d\n", i, m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[i]);
 			}
+			printf("%d %d [%d]\n",i, m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[i], m_pMsgQueue->m_MsgQueueTagIDAssociation[i] );
 			
 			Main_InsertArray(i, 0, m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge);
 			printf("insert value[%d] : %d %d\n",i, m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[i], m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[i+1]);
@@ -761,30 +765,33 @@ int Main_TagArrayVal_CheckParity(int Temp)
 
 int Main_Check_TagArrayPassFail(int* iTemp, int* iTemp2)
 {
-	int icnt =1, cnt =1;
+	int icnt =0, cnt =0;
 	int j = 0;
 	int AckFail_Redown =0;
 	while(icnt <=m_pMsgHandler->m_nUartArrayDataDownCnt) {
-		if( cnt != (m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[icnt-1]) ) {
+//		if( cnt != (m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[icnt-1]) ) {
+		if( m_pMsgQueue->m_MsgQueueTagIDAssociation[cnt] != (m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[icnt]) ) {
+
 			m_pMsgHandler->Map_u16AcknowParityCheck.insert({m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[icnt-1], FAIL});
 			j++;
 			AckFail_Redown = 1;
-			printf("Map_AcknowParityCheck Fail TagNum[%d]: %x\n", icnt, m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[icnt-1]);
+			printf("Map_AcknowParityCheck Fail TagNum[%d]: %x\n", icnt, m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[icnt]);
 		}
-		else if( cnt == (m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[icnt-1]) ) {
-			m_pMsgHandler->Map_u16AcknowParityCheck.insert({m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[icnt-1], PASS});
+//		else if( cnt == (m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[icnt-1]) ) {
+		else if( m_pMsgQueue->m_MsgQueueTagIDAssociation[cnt] == (m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[icnt]) ) {
+			m_pMsgHandler->Map_u16AcknowParityCheck.insert({m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[icnt], PASS});
 		//	printf("Map_AcknowParityCheck Pass TagNum[%d]: %x\n", icnt, m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[icnt-1]);
 		}
 		icnt++;
 		cnt++;
 
-		if(cnt > m_pMsgHandler->m_nUartArrayDataDownCnt) {
+		if(cnt+1 > m_pMsgHandler->m_nUartArrayDataDownCnt) {
 			m_pMsgQueue->Redown =1;
 			m_pMsgQueue->m_DataAckCnt = m_pMsgHandler->m_nUartArrayDataDownCnt;
 			printf("Redown :%d\n", m_pMsgQueue->Redown);
 			break;
 		}
-	}	
+	}
 	*iTemp = j;
 	*iTemp2 = AckFail_Redown;
 
@@ -1091,7 +1098,7 @@ void PrintfHello(int sig, siginfo_t* si, void* uc)
 
 	if(*tidp == firstTimerID) {
 		if(!m_pMsgQueue->m_bReadEnd_UartMessage && !m_pMsgQueue->m_bUartCommuniFlag &&
-			!m_pSocket->m_iBypassSocketToUart && !m_pSocket->m_iSocketReceiveEnd && !m_pSocket->m_nServerMessge_End &&
+			!m_pSocket->m_iBypassSocketToUart && !m_pSocket->m_iSocketReceiveEnd && m_pSocket->m_nServerMessge_End &&
 			m_MainComport->m_iUartRetry == 0) {			
 			timer_delete(firstTimerID);
 			printf("Kill Timer firstTimerID\n");
@@ -1276,7 +1283,7 @@ int main(int argc, char *argv[])
 	m_MainComport->SetMutex(Main_Uartmutex);
 	
 	
-	Set_WaitTimer(&firstTimerID, 60, 0);
+	//Set_WaitTimer(&firstTimerID, 60, 0);
 
 	Main_Socket_Init();
 	th_delay(100);

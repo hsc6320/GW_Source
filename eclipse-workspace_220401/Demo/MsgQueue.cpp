@@ -12,7 +12,7 @@ using namespace std;
 
 int m_uiPos =0;
 int nLengthCnt =0;
-int nDatalength =0;
+int nTagidCnt =0;
 int nDataDown =0;
 BYTE m_u8SendData[1024];
 
@@ -172,9 +172,16 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 				}
 				printf("\n");
 				m_Queue.push(m_MsgQueueDataAssocation);
-			//	m_MsgQueueTagData.push_back(m_MsgQueueDataAssocation);
+				
+				if(u8Data[MSG_ASSOCIATION_STATUS] == PAYLOAD_STATUS_SUCCESS) {					
+					m_MsgQueueTagIDAssociation.push_back( ByteToWord(m_MsgQueueDataAssocation.at(MSG_SADDRONE), m_MsgQueueDataAssocation.at(MSG_SADDRZERO)) );
+					printf("Association TAG ID : %d\n", m_MsgQueueTagIDAssociation.at(nTagidCnt));
+					nTagidCnt++;
+				}
+;			//	m_MsgQueueTagData.push_back(m_MsgQueueDataAssocation);
 				m_MsgQueueDataAssocation.clear();
 				m_nSendTagCount++;
+			
 				printf("m_nSendTagCount : %d\n", m_nSendTagCount );
 				m_bReadEnd_UartMessage =1;
 				return 1;

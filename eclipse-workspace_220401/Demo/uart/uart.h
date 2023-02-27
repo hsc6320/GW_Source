@@ -40,6 +40,7 @@ public:
 	int Uart_Close(int uartd);
 	int Open_fd(const char *dev);
 	int Ready_to_Read(int uartd, int timeoutms);
+	void deleteArray(int idx, int size, BYTE* ar);
 	int Ready_to_Write(int uartd, int timeoutms);
 	int Uart_Read(int uartd, uint8_t* data, int size);
 	int Uart_Write(int uartd, uint8_t* data, int size);

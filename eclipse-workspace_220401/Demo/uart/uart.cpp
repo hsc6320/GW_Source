@@ -149,20 +149,37 @@ static void *uart_Rx_Thread(void *param)
 				}
 			}
 			printf("\n");
-
+			int temp = nPutBuffCnt;
+			int ii =0;
 			if(nSecondPutByte) {
-				printf("##################################nSecondPutByte########################################\n");
-				for(int i=nPutBuffCnt-1; i<nToTalLen; i++) {
-					printf("%x ", rx_Putbyte[i]);
-					rx_sto2[sto_count2++]= rx_Putbyte[i];
-				}
-				printf("\n");
-				if( (rx_sto2[0] == STX) && (rx_sto2[sto_count2-3] == 0xa5) && (rx_sto2[sto_count2-2] == 0x5a) && (rx_sto2[sto_count2-1] == 0x7e) ) {
-					if(pMsgQueue->PutByte(rx_sto2,  sto_count2) != 1) {
-						printf("putbyte return 0\n");
+				while(1) {
+					printf("##################################nSecondPutByte########################################\n");				
+					for(ii=nPutBuffCnt-1; ii<nToTalLen; ii++) {
+						printf("%x[%d] ", rx_Putbyte[ii], ii);
+						rx_sto2[sto_count2++]= rx_Putbyte[ii];
+						if( (rx_sto2[0] == STX) && (rx_sto2[sto_count2-3] == 0xa5) && (rx_sto2[sto_count2-2] == 0x5a) && (rx_sto2[sto_count2-1] == 0x7e) ) {
+							break;
+						}
 					}
-					pComm->m_iUartRetry =0;
+					printf("\n");
+					if( (rx_sto2[0] == STX) && (rx_sto2[sto_count2-3] == 0xa5) && (rx_sto2[sto_count2-2] == 0x5a) && (rx_sto2[sto_count2-1] == 0x7e) ) {
+						if(pMsgQueue->PutByte(rx_sto2, sto_count2) != 1) {
+							printf("putbyte return 0\n");
+						}
+						for(int i=0; i< sto_count2; i++) {
+							pComm->deleteArray(i, sto_count2, rx_sto2);
+						}
+						sto_count2 =0;
+						printf("ii :%d, nToTalLen: %d rx_sto2[0] : %x\n", ii, nToTalLen, rx_sto2[0]);
+						pComm->m_iUartRetry =0;
+					}
+
+					if(ii == nToTalLen-1) {
+						printf("##################################ii : %d\n", ii);
+						break;
+					}
 				}
+				
 			}
 
 			reset_buffer();
@@ -183,6 +200,11 @@ static void *uart_Rx_Thread(void *param)
 
 	return 0;
 }
+void UartComThread::deleteArray(int idx, int size, BYTE* ar)
+{
+	memmove(ar+idx, ar+idx+1, size-idx);
+}
+
 
 void UartComThread::Exit_Uart_Thread()
 {

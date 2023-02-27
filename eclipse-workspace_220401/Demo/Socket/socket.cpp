@@ -470,6 +470,8 @@ void *Recieve_Function(void* rcvDt)
 	{
 		if(pSoc->Ready_to_Read(Socketd,10)) {
 			pthread_mutex_lock(&pSoc->Socket_mutex);
+			
+		//	pSoc->m_nServerMessge_End =0;
 			str_len = pSoc->Read_Message(u8data/*pSoc->m_p8uData*/);		
 
 			printf("\n*********Socket Read Thread ******** %d\n", str_len);
@@ -481,9 +483,11 @@ void *Recieve_Function(void* rcvDt)
 			else if(str_len <= 0) {
 				printf("Disconnect Server\n");
 				pSoc->bWorkingThread = 0;
+			//	pSoc->m_nServerMessge_End =1;
 				pthread_mutex_unlock(&pSoc->Socket_mutex);
 				break;
-			}
+			}			
+		//	pSoc->m_nServerMessge_End =1;
 			pthread_mutex_unlock(&pSoc->Socket_mutex);
 		}
 		usleep(1);
@@ -520,7 +524,7 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 		{
 			//printf("Msg VAL : %x %x %x %x %x\n", p8udata[MSG_STX], p8udata[MSGTYPE], p8udata[DataLen-3], p8udata[DataLen-2], p8udata[DataLen-1]);
 			if(p8udata[MSGTYPE] == BSN_START) {
-				m_nServerMessge_End =0;
+			//	m_nServerMessge_End =0;
 				m_pSocMsgqueue->BSN_MSG_ACK(p8udata);
 				for(int i=0; i<15; i++) {
 					printf("%x ", p8udata[i]);
@@ -593,7 +597,7 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 				}
 				printf("\n");
 				Send_Message(p8udata, 15);
-				m_nServerMessge_End =1;
+			//	m_nServerMessge_End =1;
 				m_iSocketReceiveQueue =1;
 			}
 			else if((p8udata[MSGTYPE] == DOWNLOAD_START_REQ) || (p8udata[MSGTYPE] == DATAINDICATION_REQ)) {
