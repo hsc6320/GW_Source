@@ -176,7 +176,7 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 				
 				if(u8Data[MSG_ASSOCIATION_STATUS] == PAYLOAD_STATUS_SUCCESS) {					
 					m_MsgQueueTagIDAssociation[nTagidCnt] =  ByteToWord(m_MsgQueueDataAssocation.at(MSG_SADDRONE), m_MsgQueueDataAssocation.at(MSG_SADDRZERO)) ;
-					printf("Association TAG ID : %d\n", m_MsgQueueTagIDAssociation[nTagidCnt]);
+					printf("Association TAG ID : %d\n", m_MsgQueueTagIDAssociation.at(nTagidCnt));
 					nTagidCnt++;
 				}
 ;			//	m_MsgQueueTagData.push_back(m_MsgQueueDataAssocation);

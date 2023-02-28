@@ -136,7 +136,6 @@ static void *uart_Rx_Thread(void *param)
 						if(pMsgQueue->PutByte(rx_sto,  nPutBuffCnt++) != 1) {
 							printf("putbyte return 0\n");
 						}
-						ii = nPutBuffCnt;
 						pComm->m_iUartRetry =0;
 						break;
 					}
@@ -150,22 +149,25 @@ static void *uart_Rx_Thread(void *param)
 				}
 			}
 			printf("\n");
-			
+			int temp = nPutBuffCnt;
+			int ii =0;
 			if(nSecondPutByte) {
-				while(ii < nToTalLen) {
-					printf("##################################nSecondPutByte########################################\n");
-			
-					printf("rx_Putbyte : %x[%d] \n", rx_Putbyte[ii], ii);				
-					rx_sto2[sto_count2++]= rx_Putbyte[ii];
-					printf("rx_sto2[%d] : %x \n", sto_count2, rx_sto2[sto_count2]);
-					
+				while(1) {
+					printf("##################################nSecondPutByte########################################\n");				
+					for(ii=nPutBuffCnt-1; ii<nToTalLen; ii++) {
+						printf("%x[%d] ", rx_Putbyte[ii], ii);
+						rx_sto2[sto_count2++]= rx_Putbyte[ii];
+						if( (rx_sto2[0] == STX) && (rx_sto2[sto_count2-3] == 0xa5) && (rx_sto2[sto_count2-2] == 0x5a) && (rx_sto2[sto_count2-1] == 0x7e) ) {
+							break;
+						}
+					}
+					printf("\n");
 					if( (rx_sto2[0] == STX) && (rx_sto2[sto_count2-3] == 0xa5) && (rx_sto2[sto_count2-2] == 0x5a) && (rx_sto2[sto_count2-1] == 0x7e) ) {
-						printf("\n");
 						if(pMsgQueue->PutByte(rx_sto2, sto_count2) != 1) {
 							printf("putbyte return 0\n");
 						}
 						for(int i=0; i< sto_count2; i++) {
-							pComm->deleteArray(i, 1024, rx_sto2);
+							pComm->deleteArray(i, sto_count2, rx_sto2);
 						}
 						sto_count2 =0;
 						printf("ii :%d, nToTalLen: %d rx_sto2[0] : %x\n", ii, nToTalLen, rx_sto2[0]);
@@ -176,10 +178,9 @@ static void *uart_Rx_Thread(void *param)
 						printf("##################################ii : %d\n", ii);
 						break;
 					}
-					ii++;
 				}
+				
 			}
-			ii =0;
 #else 
 			while(nPutBuffCnt < nToTalLen) {
 				rx_sto[nPutBuffCnt] = rx_Putbyte[nPutBuffCnt];
@@ -223,7 +224,7 @@ static void *uart_Rx_Thread(void *param)
 				}
 			}
 
-#endif
+			
 
 			reset_buffer();
 

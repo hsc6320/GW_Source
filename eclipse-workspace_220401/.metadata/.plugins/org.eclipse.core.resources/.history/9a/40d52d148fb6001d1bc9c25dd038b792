@@ -629,8 +629,8 @@ void Main_Service_Stop()
 	m_pMsgHandler->m_DataFlag =0;
 	m_pMsgHandler->m_DataCnt =0;
 
-//	m_pMsgQueue->m_MsgQueueTagIDAssociation.clear();
-//	m_pMsgQueue->m_MsgQueueTagIDAssociation.shrink_to_fit();
+	m_pMsgQueue->m_MsgQueueTagIDAssociation.clear();
+	m_pMsgQueue->m_MsgQueueTagIDAssociation.shrink_to_fit();
 	memset(m_pMsgQueue->m_Test, 0, sizeof(WORD)*4096);
 	memset(m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge, 0, sizeof(WORD)*4096);
 	memset(m_pMsgHandler->m_pu16MsgDataAcknowledge, 0, sizeof(WORD)*4096);

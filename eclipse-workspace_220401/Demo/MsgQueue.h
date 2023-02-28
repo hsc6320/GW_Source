@@ -68,7 +68,8 @@ public:
 
 	std::vector<std::vector<BYTE>> m_MsgQueueTagData;
 	std::vector<BYTE> m_MsgQueueDataAssocation;
-	std::vector<WORD> m_MsgQueueTagIDAssociation;
+	//std::vector<WORD> m_MsgQueueTagIDAssociation;
+	WORD m_MsgQueueTagIDAssociation[4096];
 
 	BYTE m_u8SendData[1024];
 	WORD m_pu16MsgQueueArrayDataAcknowledge[4096];
