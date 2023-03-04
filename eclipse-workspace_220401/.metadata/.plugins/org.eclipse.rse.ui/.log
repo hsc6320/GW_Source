@@ -1,4 +1,32 @@
-Mon Feb 27 12:38:03 KST 2023
+Fri Mar 03 15:19:05 KST 2023
+ERROR org.eclipse.rse.ui  RemoteFileSubSystemImpl.logError()
+org.eclipse.rse.services.clientserver.messages.SystemMessageException: An unexpected error occurred.
+	at org.eclipse.rse.subsystems.files.core.servicesubsystem.FileServiceSubSystem.getRemoteFileObject(FileServiceSubSystem.java:271)
+	at org.eclipse.rse.subsystems.files.core.subsystems.RemoteFileSubSystem.internalResolveFilterString(RemoteFileSubSystem.java:669)
+	at org.eclipse.rse.subsystems.files.core.subsystems.RemoteFileSubSystem.internalResolveFilterStrings(RemoteFileSubSystem.java:492)
+	at org.eclipse.rse.core.subsystems.SubSystem.resolveFilterStrings(SubSystem.java:2304)
+	at org.eclipse.rse.internal.ui.view.SystemViewFilterReferenceAdapter.internalGetChildren(SystemViewFilterReferenceAdapter.java:470)
+	at org.eclipse.rse.internal.ui.view.SystemViewFilterReferenceAdapter.getChildren(SystemViewFilterReferenceAdapter.java:288)
+	at org.eclipse.rse.internal.ui.view.SystemViewFilterReferenceAdapter.getChildren(SystemViewFilterReferenceAdapter.java:296)
+	at org.eclipse.rse.internal.ui.view.SystemViewPart$RestoreRemoteObjects.doRestore(SystemViewPart.java:1716)
+	at org.eclipse.rse.internal.ui.view.SystemViewPart$RestoreRemoteObjects.run(SystemViewPart.java:1589)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+--------------------------------------------
+Fri Mar 03 15:19:05 KST 2023
+ERROR org.eclipse.rse.ui  RemoteFileSubSystemImpl.logError()
+org.eclipse.rse.services.clientserver.messages.SystemMessageException: An unexpected error occurred.
+	at org.eclipse.rse.subsystems.files.core.servicesubsystem.FileServiceSubSystem.getRemoteFileObject(FileServiceSubSystem.java:271)
+	at org.eclipse.rse.subsystems.files.core.subsystems.RemoteFileSubSystem.internalResolveFilterString(RemoteFileSubSystem.java:669)
+	at org.eclipse.rse.subsystems.files.core.subsystems.RemoteFileSubSystem.internalResolveFilterStrings(RemoteFileSubSystem.java:492)
+	at org.eclipse.rse.core.subsystems.SubSystem.resolveFilterStrings(SubSystem.java:2304)
+	at org.eclipse.rse.internal.ui.view.SystemViewFilterReferenceAdapter.internalGetChildren(SystemViewFilterReferenceAdapter.java:470)
+	at org.eclipse.rse.internal.ui.view.SystemViewFilterReferenceAdapter.getChildren(SystemViewFilterReferenceAdapter.java:288)
+	at org.eclipse.rse.internal.ui.view.SystemViewFilterReferenceAdapter.getChildren(SystemViewFilterReferenceAdapter.java:296)
+	at org.eclipse.rse.internal.ui.view.SystemViewPart$RestoreRemoteObjects.doRestore(SystemViewPart.java:1716)
+	at org.eclipse.rse.internal.ui.view.SystemViewPart$RestoreRemoteObjects.run(SystemViewPart.java:1589)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+--------------------------------------------
+Fri Mar 03 18:39:31 KST 2023
 ERROR org.eclipse.rse.ui  RSEG1058
 java.lang.Exception
 	at org.eclipse.rse.ui.messages.SystemMessageDialog.logMessage(SystemMessageDialog.java:451)
@@ -31,9 +59,39 @@ java.lang.Exception
 	at org.eclipse.equinox.launcher.Main.run(Main.java:1467)
 	at org.eclipse.equinox.launcher.Main.main(Main.java:1440)
 --------------------------------------------
-Mon Feb 27 14:01:50 KST 2023
+Fri Mar 03 18:42:04 KST 2023
 ERROR org.eclipse.rse.ui  RSEF1002: SUB#0:Sftp: 4: Failure
 --------------------------------------------
-Mon Feb 27 14:02:25 KST 2023
-ERROR org.eclipse.rse.ui  RSEF1002: SUB#0:Sftp: 4: Failure
+Fri Mar 03 20:12:49 KST 2023
+ERROR org.eclipse.rse.ui  RSEG1058
+java.lang.Exception
+	at org.eclipse.rse.ui.messages.SystemMessageDialog.logMessage(SystemMessageDialog.java:451)
+	at org.eclipse.rse.ui.messages.SystemMessageDialog.open(SystemMessageDialog.java:461)
+	at org.eclipse.rse.internal.connectorservice.ssh.SshConnectorService$SessionLostHandler.run(SshConnectorService.java:351)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:40)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:185)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:5101)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:4579)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1150)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:338)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1041)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:155)
+	at org.eclipse.ui.internal.Workbench.lambda$3(Workbench.java:644)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:338)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:551)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:156)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:152)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:203)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:136)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:104)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:401)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:255)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:659)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:596)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1467)
+	at org.eclipse.equinox.launcher.Main.main(Main.java:1440)
 --------------------------------------------

@@ -67,7 +67,7 @@ MsgQueue:: MsgQueue(void)
 	memset(m_Test, 0, sizeof(WORD)*4096);
 	memset(m_pu16MsgQueueArrayDataAcknowledge, 0, sizeof(WORD)*4096);
 	memset (m_MsgQueueTagIDAssociation, 0, sizeof(WORD)*4096);
-
+	memset (m_MsgTempTagIDAssociation, 0, sizeof(WORD)*4096);
 	m_pMsg = NULL;
 }
 
@@ -174,9 +174,11 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 				printf("\n");
 				m_Queue.push(m_MsgQueueDataAssocation);
 				
-				if(u8Data[MSG_ASSOCIATION_STATUS] == PAYLOAD_STATUS_SUCCESS) {					
-					m_MsgQueueTagIDAssociation[nTagidCnt] =  ByteToWord(m_MsgQueueDataAssocation.at(MSG_SADDRONE), m_MsgQueueDataAssocation.at(MSG_SADDRZERO)) ;
-					printf("Association TAG ID : %d\n", m_MsgQueueTagIDAssociation[nTagidCnt]);
+				if(u8Data[MSG_ASSOCIATION_STATUS] == PAYLOAD_STATUS_SUCCESS) {
+					m_MsgTempTagIDAssociation[nTagidCnt] = ByteToWord(m_MsgQueueDataAssocation.at(MSG_SADDRONE), m_MsgQueueDataAssocation.at(MSG_SADDRZERO)) ;
+//					m_MsgQueueTagIDAssociation[nTagidCnt] = ByteToWord(m_MsgQueueDataAssocation.at(MSG_SADDRONE), m_MsgQueueDataAssocation.at(MSG_SADDRZERO)) ;
+					printf("Association TAG ID : %d\n", m_MsgTempTagIDAssociation[nTagidCnt]);
+					
 					nTagidCnt++;
 				}
 ;			//	m_MsgQueueTagData.push_back(m_MsgQueueDataAssocation);
@@ -289,6 +291,18 @@ void MsgQueue::GetDataDown(int cnt)
 {
 	nDataDown = cnt;
 }
+
+void MsgQueue::TagInforCount_Reset(int *cnt)
+{
+	*cnt = nTagidCnt;
+	nTagidCnt = 0;
+}
+
+void MsgQueue::TagInforCount_set(int *cnt)
+{
+	*cnt = nTagidCnt;
+}
+
 
 WORD MsgQueue::ByteToWord(BYTE puData, BYTE puData1)
 {

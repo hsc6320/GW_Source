@@ -50,7 +50,7 @@ int SocketHandler::SendMessage(int msg, PRE_DEFINE::S_PACKET packet)
 		m_iSocketArive = GateWay_Status_Check();
 		break;
 	default :
-		printf("Socket SendMsg : SERVICESTART_CONFIRM :0x%x\n", packet.header.type);
+		printf("Socket SendMsg : default : 0x%x\n", packet.header.type);
 		SendSocket_Data(packet);
 		break;
 	}

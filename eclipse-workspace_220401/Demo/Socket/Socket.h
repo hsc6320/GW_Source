@@ -55,7 +55,7 @@ public:
 	BYTE **OneData1;
 	BYTE **TwoData1;
 
-	int m_iSocketReceiveEnd, m_iBypassSocketToUart, m_iSocketReceiveQueue;
+	int m_iSocketReceiveEnd, m_iBypassSocketToUart, m_iSocketReceiveQueue, m_iSocketBSnStart;
 	int m_nSocketArrayDataDownCnt, m_nSocketArrayDataIndicateCnt;
 	BYTE* m_p8uData;
 	BYTE* m_p8uSendData;
@@ -80,6 +80,7 @@ public:
 	void th_Socket_delay(int millsec);
 	bool GetSocketMsg(BYTE* p8udata, int Len);
 	WORD ByteToWord(BYTE puData, BYTE puData1);
+	void deleteArray(int idx, int size, BYTE* ar);
 	//void crit_err_hdlr(int sig_num, siginfo_t * info, void * ucontext);
 	void installSignal2(int __sig);
 };

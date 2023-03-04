@@ -15,6 +15,8 @@ int CheckbsnFlag =0;
 int Map_AcknowOverlap =0;
 int Map_AcknowOverlap2 =0;
 int iSmallDataDown =0;
+int nTagNumber =0;
+
 
 MsgHandler::MsgHandler()
 {
@@ -287,9 +289,12 @@ int MsgHandler::Send_BeaconData(BYTE ibeaconvalue)
 						return 0;
 					}
 					else if(m_DataCnt == 0) {
-						m_nDataDownCount = 0;
+						m_nDataDownCount = (int)ByteToWord(m_UartArrayDataDownMsg[0].at(MSG_DADDRONE) ,m_UartArrayDataDownMsg[0].at(MSG_DADDRZERO) );
+						m_nDataDownCount--;
+						if(m_nDataDownCount > 14)
+							return 0;
 						m_DataFlag =1;
-						m_DataCnt++;						
+						m_DataCnt++;
 						printf("BEACON_MAX m_DataCnt else : [%d] \n", m_DataCnt);
 						break;
 					}
@@ -305,9 +310,9 @@ int MsgHandler::Send_BeaconData(BYTE ibeaconvalue)
 
 				}
 			}
-			else {
-				if( ((m_nDataDownCount/16) != (int)(beaconcnt)+1) && (m_DataFlag) ) {
-					printf("m_nDataDownCount / 16 m_DataFlag return0\n");
+			else {				
+				if( ((nTagNumber/16) != (int)(beaconcnt)+1) && (m_DataFlag) ) {
+					printf("TagCount / 16,  m_DataFlag return0\n");
 					return 0;
 				}
 				else {
@@ -316,11 +321,33 @@ int MsgHandler::Send_BeaconData(BYTE ibeaconvalue)
 						return 0;
 					}
 					else if(m_DataCnt == 0) {
-						m_nDataDownCount = (16 * ((int)(beaconcnt)+1))-1;
+						int temp3 =0;
+						int temp =(16*((int)(beaconcnt)+1))-1;
+					
+						for(int i=0; i<m_nUartArrayDataDownCnt; i++) {
+							nTagNumber = (int)ByteToWord(m_UartArrayDataDownMsg[i].at(MSG_DADDRONE) ,m_UartArrayDataDownMsg[i].at(MSG_DADDRZERO) );
+							if( (temp+1 <= nTagNumber) && (temp+15 >= nTagNumber) ) {
+								nTagNumber = (int)ByteToWord(m_UartArrayDataDownMsg[i].at(MSG_DADDRONE) ,m_UartArrayDataDownMsg[i].at(MSG_DADDRZERO) );
+								printf("temp+1 : %d, nTagNumber : %d break \n", temp+1, nTagNumber);
+								m_nDataDownCount = i;
+								break;
+							}							
+						}
+						if( ( temp+1 > nTagNumber) || (temp+15 < nTagNumber) ) {
+							printf("temp+1 : %d, nTagNumber : %d return 0 \n", temp+1, nTagNumber);
+							return 0;
+						}
+						if(m_nDataDownCount == m_nUartArrayDataDownCnt) {
+							printf("m_nDataDownCount == m_nUartArrayDataDownCnt return 0\n");
+							m_nDataDownCount =0;
+							return 0;
+						}
 						m_DataFlag =1;
-						m_DataCnt++;
+						temp3 = temp+1+15;
+						m_DataCnt = 16-(temp3 - nTagNumber); 
 						printf("m_nDataDownCount: %d[beacon : %d] \n", m_nDataDownCount, ibeaconvalue);
 						break;
+			
 					}
 					else {
 						if(!m_DataFlag  && (m_nDataDownCount > 0)) {
@@ -345,7 +372,7 @@ int MsgHandler::UartPacket_ReDataDownStart(BYTE u8data)
 	SENDPACKET::SOCKET_PACKET sendPacket;
 	int ibeaconvalue =0;
 	BYTE pu8data[1024];
-	int iBufcnt =0;
+	int iBufcnt =0, temp =0;
 	int beaconcnt =0;
 
 	memset(pu8data, 0, 1024);
@@ -358,14 +385,16 @@ int MsgHandler::UartPacket_ReDataDownStart(BYTE u8data)
 	while(BEACON_MAX >= beaconcnt) {
 		if(ibeaconvalue == beaconcnt) {
 			if(ibeaconvalue == BEACON_MAX) {
-				printf("E_BEACON_BSN_NUMBER%d\n", ibeaconvalue);
+				printf("E_BEACON_BSN_NUMBER MAX %d\n", ibeaconvalue);
+				
 				for(int i=0; i< 15; i++) {
-					if( (i==15) || (m_nUartArrayDataDownCnt-1 < i) ) {
-						printf("%d == 15 m_nUartArrayDataDownCnt %d return 0\n", i, m_nUartArrayDataDownCnt);
+					temp = (int)m_UartArrayDataDownMsg[i].at(MSG_DADDRONE) | (int)m_UartArrayDataDownMsg[i].at(MSG_DADDRZERO);					
+					if( (i==15) || (m_nUartArrayDataDownCnt-1 < i) || (temp >15)) {
+						printf("%d == 15 m_nUartArrayDataDownCnt %d temp : %d return 0\n", i, m_nUartArrayDataDownCnt, temp);
 						return 0;
 					}
 					else if(Map_dataParityCheck[m_UartArrayDataDownMsg[i]] != PASS) {
-						m_nDataDownCount = (int)m_UartArrayDataDownMsg[i].at(MSG_DADDRZERO) | (int)m_UartArrayDataDownMsg[i].at(MSG_DADDRONE);
+						m_nDataDownCount = (int)m_UartArrayDataDownMsg[i].at(MSG_DADDRONE) | (int)m_UartArrayDataDownMsg[i].at(MSG_DADDRZERO);
 						m_nDataDownCount--;
 						
 					//	printf("\nReDown E_BEACON_BSN_NUMBER6:\n");
@@ -379,10 +408,46 @@ int MsgHandler::UartPacket_ReDataDownStart(BYTE u8data)
 				}
 			}
 			else {
+				printf("E_BEACON_BSN_NUMBER%d[%d]\n", ibeaconvalue, beaconcnt);
 				int j = (16 * (beaconcnt+1))-1;
+				int k=0;
+				for(k=0; k<m_nUartArrayDataDownCnt; k++) {
+					nTagNumber = (int)ByteToWord(m_UartArrayDataDownMsg[k].at(MSG_DADDRONE) ,m_UartArrayDataDownMsg[k].at(MSG_DADDRZERO) );
+					if( (j+1 <= nTagNumber) && (j+1+15 >= nTagNumber) ) {
+						if(Map_dataParityCheck[m_UartArrayDataDownMsg[k]] != PASS) {
+							nTagNumber = (int)ByteToWord(m_UartArrayDataDownMsg[k].at(MSG_DADDRONE) ,m_UartArrayDataDownMsg[k].at(MSG_DADDRZERO) );
+							printf("j+1 : %d, nTagNumber : %d break \n", j+1, nTagNumber);
+							m_nDataDownCount = k;
+							break;
+						}
+					}
+					if (k == m_nUartArrayDataDownCnt-1) {
+						printf(" k(%d)== m_nUartArrayDataDownCnt (%d)return 0\n", k, m_nUartArrayDataDownCnt-1);
+						return 0;
+					}
+				}
+				if( ( j+1 > nTagNumber) || (j+1+15 < nTagNumber) ) {
+					printf("temp+1 : %d, nTagNumber : %d return 0 \n", j+1, nTagNumber);
+					return 0;
+				}
+#if 0
+
+				for(int i=j; i<j+16; j++) {
+					if(Map_dataParityCheck[m_UartArrayDataDownMsg[k]] != PASS) {
+						m_nDataDownCount = ByteToWord(m_UartArrayDataDownMsg[i][MSG_DADDRONE], m_UartArrayDataDownMsg[i][MSG_DADDRZERO]);
+						m_nDataDownCount--;
+						printf("************TAG ID : %d\n", m_nDataDownCount);
+
+						m_nDataSendFail_SuccessCnt++;
+						break;
+					}
+				}
+
+				////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 				for(int i=j; i< j+16; i++) {
-					if( (i==(j+16)) || (m_nUartArrayDataDownCnt-1 < i) ) {
-						printf("%d != 15 m_nUartArrayDataDownCnt %d return \n", i, m_nUartArrayDataDownCnt);
+					temp = (int)m_UartArrayDataDownMsg[i].at(MSG_DADDRONE) | (int)m_UartArrayDataDownMsg[i].at(MSG_DADDRZERO);
+					if( (i==(j+16)) || (temp < i) ) {
+						printf("%d != 15 temp : %d return \n", i, temp);
 						return 0;
 					}
 					else if(Map_dataParityCheck[m_UartArrayDataDownMsg[i]] != PASS) {
@@ -398,6 +463,7 @@ int MsgHandler::UartPacket_ReDataDownStart(BYTE u8data)
 						return 0;
 					}
 				}
+#endif
 			}
 		}
 		beaconcnt++;
@@ -426,11 +492,6 @@ int MsgHandler::UartPacket_ReDataDownStart(BYTE u8data)
 	pu8data[++iBufcnt] = m_UartArrayDataDownMsg[m_nDataDownCount][++nTagidCOunt];		//etx1
 	pu8data[++iBufcnt] = m_UartArrayDataDownMsg[m_nDataDownCount][++nTagidCOunt];		//etx2
 
-	for(int i=0; i< iBufcnt; i++) {
-		printf("%x ", pu8data[i]);
-	}
-	printf("\n");
-	
 	m_pCommUart->Uart_Write(m_pCommUart->m_uartd, pu8data, iBufcnt+1);
 	return 1;
 }
@@ -529,7 +590,7 @@ int MsgHandler::UartPacket_ReDataAcknowledge_DownStart(BYTE u8data)
 						return 0;
 					}
 					else */
-					printf(" Total Send data  %d, Map_AcknowCnt : %d\n", m_nUartArrayDataDownCnt, Map_AcknowCnt);
+				//	printf(" Total Send data  %d, Map_AcknowCnt : %d\n", m_nUartArrayDataDownCnt, Map_AcknowCnt);
 					if(Map_u16AcknowParityCheck[m_pu16MsgDataAcknowledge[Map_AcknowCnt]] == FAIL) {
 						if( (Map_AcknowCnt != 0) && (Map_AcknowOverlap == Map_AcknowCnt) ) { printf("Map_AcknowOverlap : %d Map_AcknowCnt : %d\n", Map_AcknowOverlap, Map_AcknowCnt); return 0; }
 			
@@ -547,9 +608,9 @@ int MsgHandler::UartPacket_ReDataAcknowledge_DownStart(BYTE u8data)
 					else if(Map_u16AcknowParityCheck[m_pu16MsgDataAcknowledge[Map_AcknowCnt]] == PASS) {
 						Map_AcknowOverlap =0;
 					}
-					if(Map_AcknowCnt>=15) {
+					if(Map_AcknowCnt>=14) {
 						Map_AcknowOverlap =0;
-					//	printf("i == %d\n", i);
+						printf("Map_AcknowCnt == %d return 0\n", Map_AcknowCnt);
 						return 0;
 					}
 					Map_AcknowCnt++;
@@ -730,6 +791,14 @@ void MsgHandler::BypassSocketToUart(BYTE* p8Data, int DataLen, int msgtype)
 		break;
 	case MULTI_GATEWAY_SCAN_RESPONESE:
 		printf("MULTI_GATEWAY_SCAN_RESPONESE UART_WRITE\n");
+		m_pCommUart->Uart_Write(m_pCommUart->m_uartd, p8Data, DataLen);
+		break;
+	case POWEROFF_REQ:
+		printf("POWEROFF_REQ UART_WRITE\n");
+		m_pCommUart->Uart_Write(m_pCommUart->m_uartd, p8Data, DataLen);
+		break;
+	case DISPLAY_ENABLE_REQ:
+		printf("DISPLAY_ENABLE_REQ UART_WRITE\n");
 		m_pCommUart->Uart_Write(m_pCommUart->m_uartd, p8Data, DataLen);
 		break;
 	}

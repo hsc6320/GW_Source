@@ -49,6 +49,8 @@ public:
 	void Exit_Uart_Thread();
 	int Create_Uart_thread(pthread_t thread);
 	void SetMsgQueue(MsgQueue* msg);
+	void InsertArray(int idx, WORD sz, WORD* ar);
+	void AppendArray(WORD sz, int idx, WORD* ar);
 	void SetUartComm(UartComThread* msg);
 };
 #endif /* UART_UART_H_ */

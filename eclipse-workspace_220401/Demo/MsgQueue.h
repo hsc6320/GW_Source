@@ -68,8 +68,8 @@ public:
 
 	std::vector<std::vector<BYTE>> m_MsgQueueTagData;
 	std::vector<BYTE> m_MsgQueueDataAssocation;
-	//std::vector<WORD> m_MsgQueueTagIDAssociation;
 	WORD m_MsgQueueTagIDAssociation[4096];
+	WORD m_MsgTempTagIDAssociation[4096];
 
 	BYTE m_u8SendData[1024];
 	WORD m_pu16MsgQueueArrayDataAcknowledge[4096];
@@ -83,6 +83,8 @@ public:
 	bool PutByte(uint8_t* b, int len);
 	int DataSort();
 	void GetDataDown(int cnt);
+	void TagInforCount_Reset(int *cnt);
+	void TagInforCount_set(int *cnt);
 	int GetSizeArray1(WORD* ar);
 	void AppendArray1(WORD sz, int size1, WORD* ar);
 	void PrintArray1(WORD* ar, int size);

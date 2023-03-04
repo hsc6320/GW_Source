@@ -47,6 +47,7 @@ Socket::Socket()
 	m_ReceiveData_len =0;
 	m_iSocketReceiveQueue =0;
 	m_Main_ServiceStart_TagAssociation_InitFlag = 0;
+	m_iSocketBSnStart = 0;
 	m_iSocketReceiveEnd =0;
 	bWorkingThread =0;
 	m_SocketArrayDataDownMsg.reserve(5000);
@@ -463,6 +464,7 @@ void *Recieve_Function(void* rcvDt)
 
 	int str_len;
 	BYTE u8data[1024] = {0, };
+	BYTE u8data2[1024] = {0, };
 	printf("Recieve_Function() Socketd : %d, m_serv_sock : %d\n", Socketd, pSoc->m_serv_sock);
 
 	//socket_ctx_t* ctx = (socket_ctx_t *)pSoc->m_serv_sock;
@@ -472,13 +474,28 @@ void *Recieve_Function(void* rcvDt)
 			pthread_mutex_lock(&pSoc->Socket_mutex);
 			
 		//	pSoc->m_nServerMessge_End =0;
-			str_len = pSoc->Read_Message(u8data/*pSoc->m_p8uData*/);		
-
+			str_len = pSoc->Read_Message(u8data/*pSoc->m_p8uData*/);
+			/*for(int i=0; i<=str_len; i++) {
+				printf("[%x] ",u8data[i]);
+			}
+			printf("\n");
+*/
 			printf("\n*********Socket Read Thread ******** %d\n", str_len);
 			if(str_len > 0) {
-				pSoc->m_ReceiveData_len = str_len;				
-				pSoc->GetSocketMsg(u8data, str_len);
+				pSoc->m_ReceiveData_len = str_len;			
+			
+				for(int i=0; i<=str_len; i++) {
+					u8data2[i] = u8data[i];
+					if( (u8data2[MSG_STX] == STX) && (u8data2[i-1] == 0x7e) && (u8data2[i-2] == 0x5a) && (u8data2[i-3] == 0xa5) ) {
+						pSoc->GetSocketMsg(u8data2, str_len);
+						pSoc->deleteArray(i, str_len, u8data);
+					}						
+					if(i == str_len) {
+						break;
+					}
+				}			
 				memset(u8data, 0, 1024);
+				memset(u8data2, 0, 1024);
 			}
 			else if(str_len <= 0) {
 				printf("Disconnect Server\n");
@@ -520,7 +537,9 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 			p8udata[MSGTYPE] != COORDINATOR_RESET_REQ &&
 			p8udata[MSGTYPE] != 0x11 &&
 			p8udata[MSGTYPE] != TAG_INFOR_UPDATE_REQ &&
-		   p8udata[MSGTYPE] != MULTI_GATEWAY_SCAN_REQ)
+		    p8udata[MSGTYPE] != MULTI_GATEWAY_SCAN_REQ &&
+		    p8udata[MSGTYPE] != POWEROFF_REQ &&
+		    p8udata[MSGTYPE] != DISPLAY_ENABLE_REQ )
 		{
 			//printf("Msg VAL : %x %x %x %x %x\n", p8udata[MSG_STX], p8udata[MSGTYPE], p8udata[DataLen-3], p8udata[DataLen-2], p8udata[DataLen-1]);
 			if(p8udata[MSGTYPE] == BSN_START) {
@@ -532,8 +551,15 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 				printf("\n");
 				m_nSocketArrayDataDownCnt =0;
 				m_nSocketArrayDataIndicateCnt =0;
+				m_iSocketBSnStart =1;
 				Send_Message(p8udata, 15);
 				return 1;
+			}
+			else if (p8udata[MSGTYPE] == CONNECT_SOCKET_ALIVE_CHECK) {
+				for(int i=0; i<Len; i++) {
+					printf("%x ", p8udata[i]);
+				}
+				printf("\n");
 			}
 			else if(p8udata[MSGTYPE] == BSN_DATA_END_REQ) {
 				int n;
@@ -666,7 +692,8 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 				}		
 			}
 		}
-		else if ((p8udata[MSGTYPE] == COORDINATOR_RESET_REQ) || (p8udata[MSGTYPE] == TAG_INFOR_UPDATE_REQ) || (p8udata[MSGTYPE] == MULTI_GATEWAY_SCAN_REQ)) {
+		else if ( (p8udata[MSGTYPE] == COORDINATOR_RESET_REQ) || (p8udata[MSGTYPE] == TAG_INFOR_UPDATE_REQ) || (p8udata[MSGTYPE] == MULTI_GATEWAY_SCAN_REQ)
+			 || (p8udata[MSGTYPE] == POWEROFF_REQ) ||(p8udata[MSGTYPE] == DISPLAY_ENABLE_REQ)  ) {
 			m_SocketMsg_vec.clear();
 			printf("Socket queue Read : ");
 			for(int i=0; i< DataLen; i++) {
@@ -761,6 +788,11 @@ int Socket::Ready_to_Read(int uartd, int timeoutms)
 
 }
 
+void Socket::deleteArray(int idx, int size, BYTE* ar)
+{
+	memmove(ar+idx, ar+idx+1, size-idx);
+}
+
 int Socket::Socket_fd_Select(int fd, int timeout_ms)
 {
 	int n;
@@ -778,7 +810,7 @@ int Socket::Socket_fd_Select(int fd, int timeout_ms)
 	}
 
 	for(int i=0; i<n; i++) {
-		printf("epoll N : %d\n", events[i].data.fd );
+	//	printf("epoll N : %d\n", events[i].data.fd );
 		if(events[i].data.fd == m_serv_sock) {
 			return m_serv_sock;
 		}
