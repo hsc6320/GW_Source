@@ -548,10 +548,6 @@ int MsgHandler::UartPacket_ReDataIndicateStart(BYTE u8data)
 	pu8data[++iBufcnt] = m_UartArrayDataIndicateMsg[m_nDataIndiCount][++nTagidCOunt];		//etx2
 //	printf("%x \n\n", pu8data[iBufcnt]);
 
-	for(int i=0; i<iBufcnt; i++) {
-		printf("%x ", pu8data[i]);
-	}
-	printf("\n");
 	m_pCommUart->Uart_Write(m_pCommUart->m_uartd, pu8data, iBufcnt+1);
 
 
@@ -596,7 +592,7 @@ int MsgHandler::UartPacket_ReDataAcknowledge_DownStart(BYTE u8data)
 			
 						m_nDataDownCount = Map_AcknowCnt;
 
-						printf("DataDown Tag Number [%x] : %d\n", Map_AcknowCnt+1, Map_u16AcknowParityCheck[Map_AcknowCnt]);
+						printf("DataDown Tag Number [%x] : %d\n", Map_AcknowCnt+1, Map_u16AcknowParityCheck[m_pu16MsgDataAcknowledge[Map_AcknowCnt]]);
 
 						m_nDataSendFail_SuccessCnt++;
 						Map_AcknowOverlap = Map_AcknowCnt;
@@ -624,7 +620,7 @@ int MsgHandler::UartPacket_ReDataAcknowledge_DownStart(BYTE u8data)
 					return 0;
 				}
 				while(Map_AcknowCnt2 < jend) {
-					printf(" Total Send data  %d, Map_AcknowCnt : %d\n", m_nUartArrayDataDownCnt, Map_AcknowCnt2);				
+				//	printf(" Total Send data  %d, Map_AcknowCnt : %d\n", m_nUartArrayDataDownCnt, Map_AcknowCnt2);				
 					if( (Map_AcknowCnt2==jend) || (m_nUartArrayDataDownCnt-1 < Map_AcknowCnt2) ) {
 						Map_AcknowOverlap2 = 0;
 						printf("Tag Number  must Bigger then %x  , Total Send data  %d return 0\n", Map_AcknowCnt2, m_nUartArrayDataDownCnt);
@@ -817,8 +813,7 @@ void MsgHandler::SetMapValueArray(std::vector<std::vector<BYTE>> vec, int Len)
 }
 
 void MsgHandler::SetSocketArray(std::vector<std::vector<BYTE>> DataDownmsg, std::vector<std::vector<BYTE>> DataIndimsg)
-{
-	printf("SetSocketArray()\n");	
+{	
 	m_UartArrayDataIndicateMsg.reserve(5000);
 	m_UartArrayDataDownMsg.reserve(5000);
 	

@@ -55,7 +55,7 @@ public:
 	BYTE **OneData1;
 	BYTE **TwoData1;
 
-	int m_iSocketReceiveEnd, m_iBypassSocketToUart, m_iSocketReceiveQueue, m_iSocketBSnStart;
+	int m_iSocketReceiveEnd, m_iBypassSocketToUart, m_iSocketReceiveQueue;
 	int m_nSocketArrayDataDownCnt, m_nSocketArrayDataIndicateCnt;
 	BYTE* m_p8uData;
 	BYTE* m_p8uSendData;
@@ -64,6 +64,7 @@ public:
 	int m_nServerMessge_End;
 	int m_ReceiveData_len;
 	int m_Main_ServiceStart_TagAssociation_InitFlag;
+	WORD m_TagNumber[4096];
 	::string m_IP_String;
 
 	void SetMutex(pthread_mutex_t mutex, int fd);

@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="MSG_CFM_DATAINDICATE_STATUS"/>
+		<item key="selection" value="230400"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="230400"/>
+			<item value="iflagContinue"/>
+			<item value="size2"/>
 			<item value="MSG_CFM_DATAINDICATE_STATUS"/>
 			<item value="UartPacket_ReDataDownStart"/>
 			<item value="UartPacket_DataDownStart"/>
@@ -18,11 +21,8 @@
 			<item value="signal"/>
 			<item value="vec2"/>
 			<item value="460800"/>
-			<item value="230400"/>
 			<item value="capacity"/>
 			<item value="RAM"/>
-			<item value="iSmallDataDown"/>
-			<item value="PrintfHello"/>
 		</list>
 		<list key="replacehistory">
 		</list>

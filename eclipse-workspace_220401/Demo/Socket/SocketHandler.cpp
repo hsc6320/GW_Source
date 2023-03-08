@@ -46,7 +46,7 @@ int SocketHandler::SendMessage(int msg, PRE_DEFINE::S_PACKET packet)
 		printf("Socket SendMsg : TAG_ASSOCIATION\n");
 		break;
 	case CONNECT_ALIVE_CHECK:
-		printf("Socket SendMsg : CONNECT_ALIVE_CHECK\n");
+	//	printf("Socket SendMsg : CONNECT_ALIVE_CHECK\n");
 		m_iSocketArive = GateWay_Status_Check();
 		break;
 	default :

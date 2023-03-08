@@ -94,13 +94,13 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 					if( !Redown ) {
 						if(m_pu16MsgQueueArrayDataAcknowledge[i] == (ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO])) ) {
 							printf("m_nMapParity Overlap Parity 0x%x\n", m_pu16MsgQueueArrayDataAcknowledge[i]);
-							return 0;
+							return 1;
 						}
 					}
 					else {
 						if(m_pu16MsgQueueArrayDataAcknowledge[i] == (ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO])) ) {
 							printf("m_pu16MsgQueueArrayDataAcknowledge, Overlap Parity 0x%x \n", m_pu16MsgQueueArrayDataAcknowledge[i]);
-							return 0;
+							return 1;
 						}
 					}
 				}
@@ -108,7 +108,7 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 				wordPanID = ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO]);
 				printf("m_nMapParity :%d, wordPanID : %d, size : %d\n", m_nMapParity, wordPanID, size);
 				
-				int size2 =GetSizeArray1(m_Test);
+//				int size2 =GetSizeArray1(m_Test);
 //				PrintArray1(m_Test, size2);
 				AppendArray1(wordPanID, m_nMapParity, m_Test);
 //				m_ArrayUtil.InsertArray(m_nMapParity, wordPanID, m_Test);
@@ -120,30 +120,16 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 				for(int i=0; i<4096; i++) {
 					if(m_Test[i] > 0) {
 						m_pu16MsgQueueArrayDataAcknowledge[j] = m_Test[i];
-						printf("[%d]%d ",j, m_pu16MsgQueueArrayDataAcknowledge[j]);
+					//	printf("[%d]%d ",j, m_pu16MsgQueueArrayDataAcknowledge[j]);
 						j++;
 					}
 				}
 				printf("\n");
 
 				printf("DataAck TagID : ");
-				printf("%x\n",(BYTE)(ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO])) );
-				
+				printf("%x\n",(BYTE)(ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO])) );	
 
-			/*	if(Redown) {
-					printf("MsgQueue Redown m_nMapParity : %d \n", m_nMapParity);
-					m_ArrayUtil.InsertArray(m_nMapParity, wordPanID, m_Test);
-					sort(m_pu16MsgQueueArrayDataAcknowledge, m_pu16MsgQueueArrayDataAcknowledge+size, ZeroCompare2);
-					
-					for(int i=0; i<m_nMapParity; i++) {
-						if(m_Test[i] > 0) {
-							m_pu16MsgQueueArrayDataAcknowledge[i] = m_Test[i];
-							printf("[%d] ", m_pu16MsgQueueArrayDataAcknowledge[i]);
-							}				
-						printf("\n");
-					//	DataSort();					
-					}
-				}*/
+			
 				m_nMapParity++;				
 				printf("m_nMapParity : %d\n", m_nMapParity);
 
@@ -176,12 +162,10 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 				
 				if(u8Data[MSG_ASSOCIATION_STATUS] == PAYLOAD_STATUS_SUCCESS) {
 					m_MsgTempTagIDAssociation[nTagidCnt] = ByteToWord(m_MsgQueueDataAssocation.at(MSG_SADDRONE), m_MsgQueueDataAssocation.at(MSG_SADDRZERO)) ;
-//					m_MsgQueueTagIDAssociation[nTagidCnt] = ByteToWord(m_MsgQueueDataAssocation.at(MSG_SADDRONE), m_MsgQueueDataAssocation.at(MSG_SADDRZERO)) ;
 					printf("Association TAG ID : %d\n", m_MsgTempTagIDAssociation[nTagidCnt]);
 					
 					nTagidCnt++;
 				}
-;			//	m_MsgQueueTagData.push_back(m_MsgQueueDataAssocation);
 				m_MsgQueueDataAssocation.clear();
 				m_nSendTagCount++;
 			
@@ -194,7 +178,7 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 					|| (u8Data[MSGTYPE] == TAG_LOWBATT_ALARM_INDICATION) )
 			{
 
-				if(u8Data[MSGTYPE] == COORDINATOR_RESET_CONFIRM)	{
+				if(u8Data[MSGTYPE] == COORDINATOR_RESET_CONFIRM) {
 					memcpy(m_u8SendData, u8Data, len);
 					m_bUartCommuniFlag = 0;
 					m_bReadEnd_UartMessage=1;
@@ -203,12 +187,10 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 				m_GetSocket->Send_Message(u8Data, len);
 			}
 			else {
-				if(!m_bUartCommuniFlag && (u8Data[MSGTYPE] == BSN_START_ACK)) {
-					
+				if(!m_bUartCommuniFlag && (u8Data[MSGTYPE] == BSN_START_ACK)) {					
 				
 					m_vcemsg.MsgPacket.u8MsgType = u8Data[MSGTYPE];
 					m_vcemsg.MsgPacket.data[0] = u8Data[MSG_DATA];
-				//	printf("BSN_START_ACK msgtype : %x, becondata : %x \n", m_vcemsg.MsgPacket.u8MsgType, m_vcemsg.MsgPacket.data[0]);
 					m_bUartCommuniFlag = 1;				
 					return 1;
 				}
@@ -233,8 +215,10 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 		}
 		else {
 			memcpy(m_u8SendData, u8Data, len);
-			for(int i =0; i< m_vcemsg.m_UartMsg_vec.size(); i++) {
-				m_vcemsg.m_UartMsg_vec.remove(i);
+			if(m_vcemsg.m_UartMsg_vec.size() > 0) {
+				for(int i =0; i< m_vcemsg.m_UartMsg_vec.size(); i++) {
+					m_vcemsg.m_UartMsg_vec.remove(i);
+				}
 			}
 			printf("m_vcemsg.m_UartMsg_vec.Push_back\n");
 			for(int i=0; i< len; i++) {

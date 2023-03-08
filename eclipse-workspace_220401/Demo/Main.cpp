@@ -54,6 +54,7 @@ int nBeaconCnt =0, nTempBeaconCnt =0, nTemp2BeaconCnt = 0, nTemp1BeaconCnt=0;
 BYTE nBeaconValue =0;
 int bReDownloadFlag =0, bDataAckFlag =0;
 int nSavedTagCount =0;
+
 int GetUartMsg();
 BYTE GetChecksum(BYTE* puData, int len);
 WORD ByteToWord(BYTE puData, BYTE puData1);
@@ -329,13 +330,10 @@ int Main_ByPass_SocketToUart()
 		m_pSocket->m_iSocketReceiveEnd =0;
 
 	}
-	else if(m_pSocket->m_iSocketBSnStart) {
-		m_pSocket->m_iSocketBSnStart =0;
-		TagAssociation_Sort();
-	}
 	else if(m_pSocket->m_iSocketReceiveQueue) {
 		m_pSocket->m_iSocketReceiveQueue =0;
-
+		th_delay(50);
+		TagAssociation_Sort();
 		m_pMsgHandler->SetSocketArray(m_pSocket->m_SocketArrayDataDownMsg, m_pSocket->m_SocketArrayDataIndicateMsg);
 		m_pMsgQueue->GetDataDown(m_pSocket->m_nSocketArrayDataDownCnt);
 		printf("Socket Communication End\n");
@@ -355,8 +353,10 @@ int Main_ByPass_SocketToUart()
 			}
 
 			if(!bReDownloadFlag) {
-				if( (m_pMsgQueue->m_vcemsg.MsgPacket.Saddr[0]| m_pMsgQueue->m_vcemsg.MsgPacket.Saddr[1])
-						== (m_pMsgHandler->m_UartArrayDataDownMsg[m_pMsgHandler->m_nDataDownCount].at(MSG_DADDRZERO)|m_pMsgHandler->m_UartArrayDataDownMsg[m_pMsgHandler->m_nDataDownCount].at(MSG_DADDRONE)))
+				if(ByteToWord(m_pMsgQueue->m_vcemsg.MsgPacket.Saddr[1], m_pMsgQueue->m_vcemsg.MsgPacket.Saddr[0]) == 
+					ByteToWord(m_pMsgHandler->m_UartArrayDataDownMsg[m_pMsgHandler->m_nDataDownCount].at(MSG_DADDRONE), m_pMsgHandler->m_UartArrayDataDownMsg[m_pMsgHandler->m_nDataDownCount].at(MSG_DADDRZERO)) )
+			//	if( (m_pMsgQueue->m_vcemsg.MsgPacket.Saddr[0]| m_pMsgQueue->m_vcemsg.MsgPacket.Saddr[1])
+			//			== (m_pMsgHandler->m_UartArrayDataDownMsg[m_pMsgHandler->m_nDataDownCount].at(MSG_DADDRZERO)|m_pMsgHandler->m_UartArrayDataDownMsg[m_pMsgHandler->m_nDataDownCount].at(MSG_DADDRONE)))
 				{
 					if(bDataAckFlag) {
 						m_pMsgHandler->Map_dataParityCheck[m_pMsgHandler->m_UartArrayDataDownMsg[m_pMsgHandler->m_nDataDownCount]] = PASS;
@@ -381,9 +381,11 @@ int Main_ByPass_SocketToUart()
 			}
 			else {
 				printf("Before Parity Pass Tag : %d\n", m_pMsgHandler->m_nDataDownCount+1);
-
-				if( (m_pMsgQueue->m_vcemsg.MsgPacket.Saddr[0]| m_pMsgQueue->m_vcemsg.MsgPacket.Saddr[1]) ==
-						(m_pMsgHandler->m_UartArrayDataDownMsg[m_pMsgHandler->m_nDataDownCount].at(MSG_DADDRZERO)|m_pMsgHandler->m_UartArrayDataDownMsg[m_pMsgHandler->m_nDataDownCount].at(MSG_DADDRONE))) {
+				if(ByteToWord(m_pMsgQueue->m_vcemsg.MsgPacket.Saddr[1], m_pMsgQueue->m_vcemsg.MsgPacket.Saddr[0]) == 
+					ByteToWord(m_pMsgHandler->m_UartArrayDataDownMsg[m_pMsgHandler->m_nDataDownCount].at(MSG_DADDRONE), m_pMsgHandler->m_UartArrayDataDownMsg[m_pMsgHandler->m_nDataDownCount].at(MSG_DADDRZERO)) )
+	//			if( (m_pMsgQueue->m_vcemsg.MsgPacket.Saddr[0]| m_pMsgQueue->m_vcemsg.MsgPacket.Saddr[1]) ==
+	//						(m_pMsgHandler->m_UartArrayDataDownMsg[m_pMsgHandler->m_nDataDownCount].at(MSG_DADDRZERO)|m_pMsgHandler->m_UartArrayDataDownMsg[m_pMsgHandler->m_nDataDownCount].at(MSG_DADDRONE))) 
+				{
 
 					m_pMsgHandler->Map_dataParityCheck[m_pMsgHandler->m_UartArrayDataDownMsg[m_pMsgHandler->m_nDataDownCount]] = PASS;
 
@@ -604,6 +606,7 @@ void Main_Service_Stop()
 	m_pMsgQueue->m_MsgQueueArrayDataAcknowledge.reserve(5000);
 	m_pMsgQueue->m_MsgQueueDataAcknowledge.reserve(5000);
 	m_pMsgQueue->TagInforCount_Reset(&nSavedTagCount);
+
 	 
 	m_pMsgQueue->m_nMapParity =0;
 	m_pMsgQueue->Redown =0;
@@ -611,10 +614,12 @@ void Main_Service_Stop()
 	m_pMsgQueue->m_ArrayDataAcknowledge.clear();	
 	m_pMsgHandler->m_DataFlag =0;
 	m_pMsgHandler->m_DataCnt =0;
-
+	
+	memset (m_pSocket->m_TagNumber, 0, sizeof(WORD)*4096);
 	memset(m_pMsgQueue->m_Test, 0, sizeof(WORD)*4096);
 	memset(m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge, 0, sizeof(WORD)*4096);
 	memset(m_pMsgHandler->m_pu16MsgDataAcknowledge, 0, sizeof(WORD)*4096);
+	
 
 	m_pMsgHandler->bClear();
 	memset(m_pMsgHandler->m_GetDownTagID, 0, 4096);
@@ -653,12 +658,8 @@ int Main_TagSort_Arrange(int* iTemp, int* iTemp2)
 {
 	int Temp =0;
 	Temp = *iTemp;
-	printf("\nMain_TagSort_Arrange() %d\n", Temp);
+	printf("\nMain_TagSort_Arrange()\n");	
 	
-	for(int i=0; i<m_pMsgHandler->m_nUartArrayDataDownCnt; i++) {	
-		printf("%d ", m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[i]);	
-	}
-	printf("\n");	
 	printf("m_nMapParity(Total 0x43) : %d\n", m_pMsgQueue->m_nMapParity);
 	Main_TagArrayVal_CheckParity(Temp);
 	Main_Check_TagArrayPassFail(iTemp, iTemp2);
@@ -682,8 +683,9 @@ int Main_TagSort_Arrange2(int* iTemp, int* iTemp2)
 	Temp = *iTemp;
 	printf("Main_TagSort_Arrange2 %d()\n", Temp);
 
+
 	for(int i=0; i<m_pMsgHandler->m_nUartArrayDataDownCnt; i++) {
-		printf("[%d] %d ", i, m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[i]);
+	//	printf("[%d] %d ", i, m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[i]);
 		if(m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[i] == 0) {
 			Main_deleteArray(i, 4096, m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge);
 			printf("Main_deleteArray[%d] %d ", i, m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[i]);
@@ -696,8 +698,7 @@ int Main_TagSort_Arrange2(int* iTemp, int* iTemp2)
 			printf(" %d ", m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[i]);
 		}		
 	}
-	printf("\n");
-	
+	printf("\n");	
 	printf("m_nMapParity(Total 0x43) : %d\n", m_pMsgQueue->m_nMapParity);
 
 	Main_TagArrayVal_CheckParity(Temp );
@@ -705,6 +706,7 @@ int Main_TagSort_Arrange2(int* iTemp, int* iTemp2)
 
 	memcpy(m_pMsgHandler->m_pu16MsgDataAcknowledge, m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge, 
 		sizeof(m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge)/sizeof(m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[0]));
+
 	printf("Final m_ArrayDataAcknowledge\n");
 	for(int i=0; i<m_pMsgHandler->m_nUartArrayDataDownCnt; i++) {
 		printf("%x ", m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[i]);
@@ -721,11 +723,11 @@ int Main_TagArrayVal_CheckParity(int Temp)
 	printf("\nMain_TagArrayVal_CheckParity()\n");
 	printf("After Sort(size[%d]) \n ", sizeof(m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge)/sizeof(m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[0]));
 
+
 	for(WORD i=0; i<m_pMsgHandler->m_nUartArrayDataDownCnt; i++) {
-		if(m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[i] != m_pMsgQueue->m_MsgQueueTagIDAssociation[i]) {			
+		if(m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[i] != m_pSocket->m_TagNumber[i]) {
 			printf("%d : %d [%d, %x]\n",i, m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[i], 
-								m_pMsgQueue->m_MsgQueueTagIDAssociation[i], 
-								m_pMsgQueue->m_MsgQueueTagIDAssociation[i]  );
+								m_pSocket->m_TagNumber[i], m_pSocket->m_TagNumber[i] );
 			
 			Main_InsertArray(i, 0, m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge);
 			printf("insert value[%d] : %d %d\n",i, m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[i], m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[i+1]);
@@ -746,18 +748,16 @@ int Main_Check_TagArrayPassFail(int* iTemp, int* iTemp2)
 	int icnt =0, cnt =0;
 	int j = 0;
 	int AckFail_Redown =0;
-	printf("Map_AcknowParityCheck Fail TagNum : ");
+	printf("Map_AcknowParityCheck Fail TagNum : \n");
 	while(icnt <=m_pMsgHandler->m_nUartArrayDataDownCnt) {
-//		if( cnt != (m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[icnt-1]) ) {
-		if( m_pMsgQueue->m_MsgQueueTagIDAssociation[cnt] != (m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[icnt]) ) {
+		if( m_pSocket->m_TagNumber[cnt] != (m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[icnt]) ) {
 
 			m_pMsgHandler->Map_u16AcknowParityCheck.insert({m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[icnt-1], FAIL});
 			j++;
 			AckFail_Redown = 1;
 			printf(" [%d]: %x\n", icnt, m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[icnt]);
 		}
-//		else if( cnt == (m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[icnt-1]) ) {
-		else if( m_pMsgQueue->m_MsgQueueTagIDAssociation[cnt] == (m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[icnt]) ) {
+		else if( m_pSocket->m_TagNumber[cnt] == (m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[icnt]) ) {
 			m_pMsgHandler->Map_u16AcknowParityCheck.insert({m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[icnt], PASS});
 		//	printf("Map_AcknowParityCheck Pass TagNum[%d]: %x\n", icnt, m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[icnt-1]);
 		}
@@ -1076,11 +1076,15 @@ void PrintfHello(int sig, siginfo_t* si, void* uc)
 	tidp = (void**)(si->si_value.sival_ptr);
 
 	if(*tidp == firstTimerID) {
+		printf("Status Check :%d , %d, %d, %d, %d \n", m_pMsgQueue->m_bReadEnd_UartMessage, m_pMsgQueue->m_bUartCommuniFlag
+									, m_pSocket->m_iBypassSocketToUart, m_pSocket->m_iSocketReceiveEnd
+/*,m_pSocket->m_nServerMessge_End*/,m_MainComport->m_iUartRetry);
+		
 		if(!m_pMsgQueue->m_bReadEnd_UartMessage && !m_pMsgQueue->m_bUartCommuniFlag &&
-			!m_pSocket->m_iBypassSocketToUart && !m_pSocket->m_iSocketReceiveEnd && m_pSocket->m_nServerMessge_End &&
-			m_MainComport->m_iUartRetry == 0) {			
-			timer_delete(firstTimerID);
-			printf("Kill Timer firstTimerID\n");
+			!m_pSocket->m_iBypassSocketToUart && !m_pSocket->m_iSocketReceiveEnd && /*!m_pSocket->m_nServerMessge_End &&*/
+			!m_MainComport->m_iUartRetry) {			
+		//	timer_delete(firstTimerID);
+		//	printf("Kill Timer firstTimerID\n");
 			Socket_AliveCheck();
 		}
 	}
@@ -1106,23 +1110,17 @@ void PrintfHello(int sig, siginfo_t* si, void* uc)
 
 void TagAssociation_Sort()
 {
-	int j=0;
-	
-	m_pMsgQueue->TagInforCount_set(&nSavedTagCount);
-	printf("nSavedTagCount : %d\n", nSavedTagCount);
-	
-	for(int i=0; i<=nSavedTagCount+10; i++) {
-		if(m_pMsgQueue->m_MsgTempTagIDAssociation[i] > 0) {
-			m_pMsgQueue->m_MsgQueueTagIDAssociation[j] = m_pMsgQueue->m_MsgTempTagIDAssociation[i];
-			printf("%d[%d] ",j, m_pMsgQueue->m_MsgQueueTagIDAssociation[j]);
-			j++;
-		}
+	int nTagcount =0;
+	m_pMsgQueue->TagInforCount_set(&nTagcount);
+	/*for(int i=0; i<nTagcount; i++) {
+		printf("TagNumber : %d ", m_pSocket->m_TagNumber[i]);
 	}
-	printf("\n");
-	sort(m_pMsgQueue->m_MsgTempTagIDAssociation, m_pMsgQueue->m_MsgTempTagIDAssociation+4096);
-
+	printf("\n");*/
+	
+	memset(m_pMsgQueue->m_MsgTempTagIDAssociation, 0, sizeof(WORD)*4096);
 	memset(m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge, 0, sizeof(WORD)*4096);
 	memset(m_pMsgHandler->m_pu16MsgDataAcknowledge, 0, sizeof(WORD)*4096);
+
 }
 
 
@@ -1275,22 +1273,18 @@ int main(int argc, char *argv[])
 	
 	getrlimit(RLIMIT_DATA, &rlim2);
 	printf("Current data Size : [%ld] Max Current Stack Size : [%ld]\n", rlim2.rlim_cur, rlim2.rlim_max);
-	th_delay(1000);
 	th_delay(40);
 	th_delay(50);
 	
 	m_MainComport->uart_init();
-
 	m_MainComport->SetMutex(Main_Uartmutex);
 	
-	
-	//Set_WaitTimer(&firstTimerID, 60, 0);
+	Set_WaitTimer(&firstTimerID, 30, 0);
 
 	Main_Socket_Init();
 	th_delay(100);
 	th_delay(200);
 	TagAssociation_Init();	
-	printf("vector Max size %d, %d\n", m_pSocket->m_SocketArrayDataDownMsg.max_size(), m_pSocket->m_SocketArrayDataIndicateMsg.max_size());
 
  	while(1)
 	{
@@ -1298,12 +1292,11 @@ int main(int argc, char *argv[])
 		Main_ByPass_UartToSocket();
 
 		if( (m_pSocket->bWorkingThread == 0) ||(m_pSocketHandle->m_iSocketArive <= 0) ){
-		//	Set_WaitTimer(&firstTimerID, 0, 0);
-		//	timer_delete(firstTimerID);
-		//	printf("delete Timer\n");
-			ServerReConn();
-			Set_WaitTimer(&firstTimerID, 60, 0);
+			timer_delete(firstTimerID);
+			printf("delete Timer\n");
+			ServerReConn();			
 			TagAssociation_Init();
+			Set_WaitTimer(&firstTimerID, 30, 0);
 			printf("Main TagData\n");
 			while(!m_pMsgQueue->m_Queue.empty()) {
 				m_pSocketHandle->TagData(m_pMsgQueue->m_Queue);
