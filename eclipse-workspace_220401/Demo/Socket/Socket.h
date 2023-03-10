@@ -81,6 +81,8 @@ public:
 	void th_Socket_delay(int millsec);
 	bool GetSocketMsg(BYTE* p8udata, int Len);
 	WORD ByteToWord(BYTE puData, BYTE puData1);
+	BYTE Socket_GetChecksum(BYTE* puData, int len);
+	void th_delay(int millsec);
 	void deleteArray(int idx, int size, BYTE* ar);
 	//void crit_err_hdlr(int sig_num, siginfo_t * info, void * ucontext);
 	void installSignal2(int __sig);

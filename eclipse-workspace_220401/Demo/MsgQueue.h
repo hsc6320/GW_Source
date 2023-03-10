@@ -52,7 +52,8 @@ public:
 	std::vector<uint8_t> vec2;
 	std::queue<BYTE> que;
 
-	vecmsgform m_vcemsg;
+	//vecmsgform m_vcemsg;
+	std::vector<BYTE> m_vcemsg;
 	int m_bReadEnd_UartMessage;
 	int m_bUartCommuniFlag, m_bUartTagAssociFlag;
 	int m_Uart_ServiceStart_TagAssociation_InitFlag;

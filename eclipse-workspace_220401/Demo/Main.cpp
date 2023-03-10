@@ -55,7 +55,7 @@ BYTE nBeaconValue =0;
 int bReDownloadFlag =0, bDataAckFlag =0;
 int nSavedTagCount =0;
 
-int GetUartMsg();
+int GetUartMsg(PRE_DEFINE::S_PACKET* Getpacket);
 BYTE GetChecksum(BYTE* puData, int len);
 WORD ByteToWord(BYTE puData, BYTE puData1);
 BYTE m_SendData[1024];
@@ -185,6 +185,7 @@ int uart_SetTimer()
 int Main_ByPass_UartToSocket()
 {
 	int msg = 0;
+	PRE_DEFINE::S_PACKET GetInforPacket;
 
 	if(m_pMsgQueue->m_bReadEnd_UartMessage) {
 		printf("Main_ByPass_UartToSocket\n");
@@ -229,9 +230,9 @@ int Main_ByPass_UartToSocket()
 			}
 			UartToSocket_TagAssociation();
 			break;
-		default :
-			if(GetUartMsg()) {				
-				m_pSocketHandle->SendMessage(m_GetInforPacket.header.type, m_GetInforPacket);
+		default :			
+			if(GetUartMsg(&GetInforPacket)) {				
+				m_pSocketHandle->SendMessage(m_GetInforPacket.header.type, GetInforPacket);
 				m_pMsgQueue->m_bReadEnd_UartMessage =0;
 			}
 			else {
@@ -340,8 +341,8 @@ int Main_ByPass_SocketToUart()
 	}
 	else if(m_pMsgQueue->m_bUartCommuniFlag) {
 		m_pMsgQueue->m_bUartCommuniFlag =0;
-
-		switch((int)m_pMsgQueue->m_vcemsg.MsgPacket.u8MsgType)
+		printf("m_pMsgQueue->m_vcemsg.at(MSGTYPE) :%x\n", m_pMsgQueue->m_vcemsg.at(MSGTYPE));
+		switch((int)m_pMsgQueue->m_vcemsg.at(MSGTYPE)) 
 		{
 		case DOWNLOAD_START_ACK:
 //	printf("DOWNLOAD_START_ACK Compare Tag ID : %x, %x\n", 
@@ -353,7 +354,7 @@ int Main_ByPass_SocketToUart()
 			}
 
 			if(!bReDownloadFlag) {
-				if(ByteToWord(m_pMsgQueue->m_vcemsg.MsgPacket.Saddr[1], m_pMsgQueue->m_vcemsg.MsgPacket.Saddr[0]) == 
+				if(ByteToWord(m_pMsgQueue->m_vcemsg.at(MSG_SADDRONE), m_pMsgQueue->m_vcemsg.at(MSG_SADDRZERO)) == 
 					ByteToWord(m_pMsgHandler->m_UartArrayDataDownMsg[m_pMsgHandler->m_nDataDownCount].at(MSG_DADDRONE), m_pMsgHandler->m_UartArrayDataDownMsg[m_pMsgHandler->m_nDataDownCount].at(MSG_DADDRZERO)) )
 			//	if( (m_pMsgQueue->m_vcemsg.MsgPacket.Saddr[0]| m_pMsgQueue->m_vcemsg.MsgPacket.Saddr[1])
 			//			== (m_pMsgHandler->m_UartArrayDataDownMsg[m_pMsgHandler->m_nDataDownCount].at(MSG_DADDRZERO)|m_pMsgHandler->m_UartArrayDataDownMsg[m_pMsgHandler->m_nDataDownCount].at(MSG_DADDRONE)))
@@ -381,7 +382,7 @@ int Main_ByPass_SocketToUart()
 			}
 			else {
 				printf("Before Parity Pass Tag : %d\n", m_pMsgHandler->m_nDataDownCount+1);
-				if(ByteToWord(m_pMsgQueue->m_vcemsg.MsgPacket.Saddr[1], m_pMsgQueue->m_vcemsg.MsgPacket.Saddr[0]) == 
+				if(ByteToWord(m_pMsgQueue->m_vcemsg.at(MSG_SADDRONE), m_pMsgQueue->m_vcemsg.at(MSG_SADDRZERO)) ==
 					ByteToWord(m_pMsgHandler->m_UartArrayDataDownMsg[m_pMsgHandler->m_nDataDownCount].at(MSG_DADDRONE), m_pMsgHandler->m_UartArrayDataDownMsg[m_pMsgHandler->m_nDataDownCount].at(MSG_DADDRZERO)) )
 	//			if( (m_pMsgQueue->m_vcemsg.MsgPacket.Saddr[0]| m_pMsgQueue->m_vcemsg.MsgPacket.Saddr[1]) ==
 	//						(m_pMsgHandler->m_UartArrayDataDownMsg[m_pMsgHandler->m_nDataDownCount].at(MSG_DADDRZERO)|m_pMsgHandler->m_UartArrayDataDownMsg[m_pMsgHandler->m_nDataDownCount].at(MSG_DADDRONE))) 
@@ -415,9 +416,9 @@ int Main_ByPass_SocketToUart()
 
 		case DATAINDICATION_ACK:
 		//	printf("DATAINDICATION_ACK Compare Tag ID : %x,  %x\n", m_pMsgQueue->m_vcemsg.MsgPacket.Saddr[0]|m_pMsgQueue->m_vcemsg.MsgPacket.Saddr[1],m_pMsgHandler->m_UartArrayDataIndicateMsg[m_pMsgHandler->m_nDataIndiCount].at(3)|m_pMsgHandler->m_UartArrayDataIndicateMsg[m_pMsgHandler->m_nDataIndiCount].at(4));
-			printf("Data status %d\n ", m_pMsgQueue->m_vcemsg.MsgPacket.status );
-			if(m_pMsgQueue->m_vcemsg.MsgPacket.status != 0x01) {
-				printf("Data FAIL %d\n ", m_pMsgQueue->m_vcemsg.MsgPacket.status );
+			printf("Data status %d\n ", m_pMsgQueue->m_vcemsg.at(MSG_CFM_DATAINDICATE_STATUS));
+			if(m_pMsgQueue->m_vcemsg.at(MSG_CFM_DATAINDICATE_STATUS) != 0x01) {
+				printf("Data FAIL %d\n ", m_pMsgQueue->m_vcemsg.at(MSG_CFM_DATAINDICATE_STATUS));
 				break;
 			}
 			
@@ -446,7 +447,8 @@ int Main_ByPass_SocketToUart()
 				firstTimerFlag =0;
 				timer_delete(DataDownTimerID);
 			}
-			nBeaconValue = (BYTE)m_pMsgQueue->m_vcemsg.MsgPacket.data[0];
+			printf("Main BSN_START_ACK\n");
+			nBeaconValue = (BYTE)m_pMsgQueue->m_vcemsg.at(MSG_BSN_DATA);
 			m_pMsgHandler->m_DataFlag =0;
 			m_pMsgHandler->m_DataCnt =0;
 			m_pMsgHandler->Map_AcknowCnt =0;
@@ -458,7 +460,7 @@ int Main_ByPass_SocketToUart()
 			}
 
 			if(!bDataAckFlag && !bReDownloadFlag && ((int)nBeaconValue/*m_pMsgQueue->m_vcemsg.MsgPacket.data[0] */<= BEACON_MAX) && (nBeaconCnt < BEACON_MAX+1)) {				
-				if( m_pMsgHandler->UartPacket_DataDownStart(m_pMsgQueue->m_vcemsg.MsgPacket.data[0]) ) {
+				if( m_pMsgHandler->UartPacket_DataDownStart(nBeaconValue/*m_pMsgQueue->m_vcemsg.MsgPacket.data[0])*/ ) ) {
 					Set_WaitTimer(&DataDownTimerID, 100, 1);
 					firstTimerFlag = 1;
 				}
@@ -466,12 +468,12 @@ int Main_ByPass_SocketToUart()
 				printf("DataDown nBeaconCnt : %d\n", nBeaconCnt);
 			}
 			else if(bReDownloadFlag && ((int)nBeaconValue/*m_pMsgQueue->m_vcemsg.MsgPacket.data[0]*/ <= BEACON_MAX) && (nBeaconCnt < BEACON_MAX+1)) {
-				m_pMsgHandler->UartPacket_ReDataDownStart(m_pMsgQueue->m_vcemsg.MsgPacket.data[0]);
+				m_pMsgHandler->UartPacket_ReDataDownStart(nBeaconValue/*m_pMsgQueue->m_vcemsg.MsgPacket.data[0]*/);
 				nBeaconCnt++;
 				printf("ReDown nBeaconCnt : %d\n", nBeaconCnt);
 			}
 			else if(bDataAckFlag && ((int)nBeaconValue/*m_pMsgQueue->m_vcemsg.MsgPacket.data[0] */<= BEACON_MAX) && (nBeaconCnt < BEACON_MAX+1)) {
-				m_pMsgHandler->UartPacket_ReDataAcknowledge_DownStart(m_pMsgQueue->m_vcemsg.MsgPacket.data[0]);
+				m_pMsgHandler->UartPacket_ReDataAcknowledge_DownStart(nBeaconValue/*m_pMsgQueue->m_vcemsg.MsgPacket.data[0]*/);
 				nBeaconCnt++;
 				printf("DataAck nBeaconCnt : %d\n", nBeaconCnt);
 			}
@@ -510,7 +512,7 @@ int Main_ByPass_SocketToUart()
 						bReDownloadFlag =1;
 						m_pMsgHandler->m_nDataDownCount = 0;
 						m_pMsgHandler->m_nDataIndiCount = 0;
-						m_pMsgHandler->UartPacket_ReDataDownStart(m_pMsgQueue->m_vcemsg.MsgPacket.data[0]);
+						m_pMsgHandler->UartPacket_ReDataDownStart(nBeaconValue/*m_pMsgQueue->m_vcemsg.MsgPacket.data[0]*/);
 						return 1;
 					}
 				}
@@ -552,7 +554,7 @@ int Main_ByPass_SocketToUart()
 					m_pMsgHandler->m_nDataSendFail_SuccessCnt =0;
 					m_pMsgHandler->m_nDataDownCount = 0;
 					m_pMsgHandler->m_nDataIndiCount = 0;
-					m_pMsgHandler->UartPacket_ReDataAcknowledge_DownStart(m_pMsgQueue->m_vcemsg.MsgPacket.data[0]);
+					m_pMsgHandler->UartPacket_ReDataAcknowledge_DownStart(nBeaconValue/*m_pMsgQueue->m_vcemsg.MsgPacket.data[0]*/);
 				}
 				else {
 					if(m_pMsgHandler->m_nUartArrayDataDownCnt == m_pMsgQueue->m_nMapParity) {
@@ -636,18 +638,23 @@ int Main_SendSocketMsgToUart(int msgtype)
 		printf("msgtype %d return\n", msgtype);
 		return 0;
 	}
-	printf("Main_SendSocketMsgToUart() : ");
+	printf("Main_SendSocketMsgToUart()[%d] : ", m_pSocket->m_ReceiveData_len);
 
 	if(/*m_pSocket->m_iBypassSocketToUart ||*/ m_pSocket->m_iSocketReceiveEnd) {
 		m_pSocket->m_iSocketReceiveEnd =0;
 
-		for(int i=0; i<m_pSocket->m_ReceiveData_len; i++) {
-			printf("%x ", m_pSocket->m_p8uData[i]);
+		for(int i=0; i<=m_pSocket->m_ReceiveData_len; i++) {
+			printf("%d((%x)) ",i, m_pSocket->m_p8uData[i] );
+			if( (m_pSocket->m_p8uData[0] == STX) && (m_pSocket->m_p8uData[i-1] == 0x7e) && (m_pSocket->m_p8uData[i-2] == 0x5a) && (m_pSocket->m_p8uData[i-3] == 0xa5) ) {			
+				printf("\n");
+				m_pMsgHandler->BypassSocketToUart(m_pSocket->m_p8uData, i/*m_pSocket->m_ReceiveData_len*/, msgtype);
+				delete[] m_pSocket->m_p8uData;
+				m_pSocket->m_p8uData = NULL;
+				break;
+			}
 		}
 		printf("\n");
-		m_pMsgHandler->BypassSocketToUart(m_pSocket->m_p8uData, m_pSocket->m_ReceiveData_len, msgtype);
-			delete[] m_pSocket->m_p8uData;
-			m_pSocket->m_p8uData = NULL;
+		
 	}
 
 	return 1;
@@ -678,11 +685,9 @@ int Main_TagSort_Arrange(int* iTemp, int* iTemp2)
 
 int Main_TagSort_Arrange2(int* iTemp, int* iTemp2)
 {
-
 	int Temp=0;
 	Temp = *iTemp;
 	printf("Main_TagSort_Arrange2 %d()\n", Temp);
-
 
 	for(int i=0; i<m_pMsgHandler->m_nUartArrayDataDownCnt; i++) {
 	//	printf("[%d] %d ", i, m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[i]);
@@ -780,6 +785,7 @@ int Main_Check_TagArrayPassFail(int* iTemp, int* iTemp2)
 int Main_Socket_Init()
 {
 	int Ret =0;
+	PRE_DEFINE::S_PACKET	GetInforPacket;
 
 	m_MainComport->Create_Uart_thread(Main_thread[0]);
 	m_pMsgHandler->ServiceIdle();
@@ -787,7 +793,7 @@ int Main_Socket_Init()
 	while(1) {
 		if(m_pMsgQueue->m_bReadEnd_UartMessage) {
 			printf("m_pMsgQueue->m_bReadEnd_UartMessage %d\n", m_pMsgQueue->m_bReadEnd_UartMessage);
-			if(GetUartMsg()) {
+			if(GetUartMsg(&GetInforPacket)) {
 				while(1) {
 					m_pSocket->m_IP_String = "";
 					socket_fd = m_pSocket->Socket_Init();
@@ -831,11 +837,13 @@ int UartToSocket_TagAssociation()
 
 int UartToSocket_Service_cfm()
 {
+	PRE_DEFINE::S_PACKET	GetInforPacket;
+
 	printf("UartToSocket_Service_cfm()\n");
 	if(m_pMsgQueue->m_nSendTagCount > 0) {
 		m_pSocketHandle->SetMsg_StartCfm_Remalloc(1);
 	}
-	m_pSocketHandle->SendMessage(SERVICESTART_CONFIRM, m_GetInforPacket);
+	m_pSocketHandle->SendMessage(SERVICESTART_CONFIRM, GetInforPacket);
 	m_pMsgQueue->m_bReadEnd_UartMessage =0;
 
 	return 1;
@@ -844,15 +852,16 @@ int UartToSocket_Service_cfm()
 int ServiceStart_Cfm()
 {
 	int Ret =0;
-
-	if(GetUartMsg()) {			
-		m_pSocketHandle->SendMessage(SERVICESTART_CONFIRM, m_GetInforPacket);
-		m_pMsgQueue->m_bReadEnd_UartMessage =0;
-		Ret =1;
-	}
-	else {
-		m_pMsgQueue->m_bReadEnd_UartMessage =0;
-
+	PRE_DEFINE::S_PACKET	GetInforPacket;
+	while(1) {
+		if(m_pMsgQueue->m_bReadEnd_UartMessage && GetUartMsg(&GetInforPacket)) {
+			m_pMsgQueue->m_bReadEnd_UartMessage =0;
+			if(GetInforPacket.header.type == SERVICESTART_CONFIRM) {
+				m_pSocketHandle->SendMessage(SERVICESTART_CONFIRM, GetInforPacket);			
+				Ret =1;
+				break;
+			}
+		}
 	}
 
 	return Ret;
@@ -860,49 +869,49 @@ int ServiceStart_Cfm()
 
 int Socket_Registration_Req()
 {
-	m_pSocketHandle->SendMessage(REGISTRATION_REQUEST, m_GetInforPacket);
+	PRE_DEFINE::S_PACKET	GetInforPacket;
+
+	m_pSocketHandle->SendMessage(REGISTRATION_REQUEST, GetInforPacket);
 
 	return 1;
 }
 
 int Socket_Connect_Req()
 {
-	m_pSocketHandle->SendMessage(CONNECT_REQUEST, m_GetInforPacket);
+	PRE_DEFINE::S_PACKET	GetInforPacket;
+
+	m_pSocketHandle->SendMessage(CONNECT_REQUEST, GetInforPacket);
 	printf("main_Socket_Connect_Req(), bWorkingThread : %d\n", m_pSocket->bWorkingThread);
 
 	return 1;
 }
 int Socket_AliveCheck()
 {
-	m_pSocketHandle->SendMessage(CONNECT_ALIVE_CHECK, m_GetInforPacket);
+	PRE_DEFINE::S_PACKET	GetInforPacket;
+
+	m_pSocketHandle->SendMessage(CONNECT_ALIVE_CHECK, GetInforPacket);
 	printf("main_Socket_AliveCheck, bWorkingThread : %d, m_iSocketArive : %d\n", m_pSocket->bWorkingThread, m_pSocketHandle->m_iSocketArive);
 
 	return 1;
 }
 
-int GetUartMsg()
+int GetUartMsg(PRE_DEFINE::S_PACKET* Getpacket)
 {
-	Vector<uint8_t> vec;// = m_pMsgQueue->m_vcemsg.m_UartMsg_vec;
-	//std::vector<uint8_t> vSoceket;// = m_pMsgQueue->m_vcemsg.m_UartMsg_vec;
-	PRE_DEFINE::S_PACKET	Getpacket;
+	std::vector<BYTE> vec;
 	int size =0;
 	int ipos =0;
 	int loopEnd =0;
 
-	//printf("GetUartMsg()\n");
-	size = m_pMsgQueue->m_vcemsg.m_UartMsg_vec.size();
-	//printf("size %d\n", size);
-	if(size <= 0)	{
-	//	printf("GetUartMsg() return 0\n");
+	
+	size = m_pMsgQueue->m_vcemsg.size();
+	printf("MAIN_GetUartMsg() SIZE : %d\n", size);
+	if(size <= 0) {
 		return 0;
 	}
-	for(int i =0; i< size; i++) {
-		vec.push_back(m_pMsgQueue->m_vcemsg.m_UartMsg_vec[i]);
-	}
-	printf("\n");
-	for(int i =0; i< size; i++) {
-		m_pMsgQueue->m_vcemsg.m_UartMsg_vec.remove(i);
-	}
+	
+	vec =m_pMsgQueue->m_vcemsg;	
+	//m_pMsgQueue->m_vcemsg.clear();
+
 
 	while(!loopEnd) {
 		switch(ipos)
@@ -913,58 +922,58 @@ int GetUartMsg()
 				return 0;
 			}
 			else {
-				Getpacket.header.stx = vec[MSG_STX];
+				Getpacket->header.stx = vec[MSG_STX];
 	//			printf("STX : [%x] ", Getpacket.header.stx);
 				ipos++;
 			}
 			break;
 		case 1:
-			Getpacket.header.panID = ByteToWord(vec[MSG_PANIDONE], vec[MSG_PANIDZERO]);
+			Getpacket->header.panID = ByteToWord(vec[MSG_PANIDONE], vec[MSG_PANIDZERO]);
 	//		printf("panID [%x], ", Getpacket.header.panID);
 			ipos = ipos +2;
 			break;
 		case 3:
-			Getpacket.header.dAddr = ByteToWord(vec[MSG_DADDRZERO], vec[MSG_DADDRONE]);
+			Getpacket->header.dAddr = ByteToWord(vec[MSG_DADDRONE], vec[MSG_DADDRZERO]);
 	//		printf("Daddr[%x] , ",Getpacket.header.dAddr);
 			ipos = ipos +2;
 			break;
 		case 5:
-			Getpacket.header.sAddr = ByteToWord(vec[MSG_SADDRZERO], vec[MSG_SADDRONE]);
+			Getpacket->header.sAddr = ByteToWord(vec[MSG_SADDRONE], vec[MSG_SADDRZERO]);
 	//		printf("Saddr[%x], ", Getpacket.header.sAddr);
 			ipos = ipos +2;
 			break;
 		case 7:
-			Getpacket.header.type = vec[MSGTYPE];
+			Getpacket->header.type = vec[MSGTYPE];
 	//		printf("MsgType[%x], ", Getpacket.header.type);
 			ipos++;
 			break;
 		case 8:
-			Getpacket.header.length = ByteToWord(vec[MSG_LENGTHONE], vec[MSG_LENGTHZERO]);
+			Getpacket->header.length = ByteToWord(vec[MSG_LENGTHONE], vec[MSG_LENGTHZERO]);
 	//		printf("DataLen[%x], ", Getpacket.header.length);
 			ipos = ipos +2;
 			break;
 		case 10:
-			Getpacket.pu8Data = new BYTE[Getpacket.header.length];
-			for(int i =0; i< Getpacket.header.length; i++) {
-				Getpacket.pu8Data[i] = vec[MSG_LENGTHONE+1+i];
+			Getpacket->pu8Data = new BYTE[Getpacket->header.length];
+			for(int i =0; i< Getpacket->header.length; i++) {
+				Getpacket->pu8Data[i] = vec[MSG_LENGTHONE+1+i];
 	//			printf("pu8Data [%x] ", Getpacket.pu8Data[i]);
 			}
-			ipos = ipos + (int)Getpacket.header.length;
+			ipos = ipos + (int)Getpacket->header.length;
 			break;
 		default:
 			if(!nlsChecksum) {
-				Getpacket.tail.checksum = vec[ipos];
+				Getpacket->tail.checksum = vec[ipos];
 	//			printf("checksum Val :%x ", Getpacket.tail.checksum);
 				nlsChecksum =1;
 				ipos++;
 				break;
 			}
 			else {
-				Getpacket.tail.ext[0] = vec[ipos];
-				Getpacket.tail.ext[1] = vec[++ipos];
-				Getpacket.tail.ext[2] = vec[++ipos];
+				Getpacket->tail.ext[0] = vec[ipos];
+				Getpacket->tail.ext[1] = vec[++ipos];
+				Getpacket->tail.ext[2] = vec[++ipos];
 
-				if((Getpacket.tail.ext[0] != 0xA5) || (Getpacket.tail.ext[1] != 0x5A) || (Getpacket.tail.ext[2] != 0x7E)) {
+				if((Getpacket->tail.ext[0] != 0xA5) || (Getpacket->tail.ext[1] != 0x5A) || (Getpacket->tail.ext[2] != 0x7E)) {
 	//				printf("etx error return 0\n");
 					return 0;
 				}
@@ -972,25 +981,21 @@ int GetUartMsg()
 	//				printf("etx : %x %x %x\n", Getpacket.tail.ext[0], Getpacket.tail.ext[1], Getpacket.tail.ext[2]);
 					loopEnd =1;
 					nlsChecksum =0;
-					Getpacket.header.DataLength = vec.size();
+					Getpacket->header.DataLength = vec.size();
 					break;
 				}
 			}
 
 		}		//END SWITCH
 	}		//END WHILE
-	m_GetInforPacket = Getpacket;
+	//m_GetInforPacket = Getpacket;
 
-	if(Getpacket.header.type == 0x21) {
-	//	uart_SetTimer();
-	}
-
-	if(Getpacket.header.type == REGISTRATION_CONFIRM) {
-		m_pSocketHandle->GetServerID(Getpacket.header.sAddr);
+	if(Getpacket->header.type == REGISTRATION_CONFIRM) {
+		m_pSocketHandle->GetServerID(Getpacket->header.sAddr);
 	//	m_pSocket->m_pSocMsgqueue->GetServerID(Getpacket.header.sAddr);
 	}
-	if(Getpacket.header.type == GATEWAYID_RESPONSE) {
-		m_pSocketHandle->GetPanID(Getpacket.header.panID);
+	if(Getpacket->header.type == GATEWAYID_RESPONSE) {
+		m_pSocketHandle->GetPanID(Getpacket->header.panID);
 	//	m_pSocket->m_pSocMsgqueue->GetPanID(Getpacket.header.panID);
 	}
 

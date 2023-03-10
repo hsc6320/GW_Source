@@ -11,8 +11,10 @@
 typedef uint8_t	BYTE;
 typedef uint16_t WORD;
 
-#define STX	0xAA
 
+#define MSG_HEADER		10
+#define MSG_TAIL		3
+#define STX	0xAA
 #define MSG_STX 		0
 #define MSG_PANIDZERO 			1
 #define MSG_PANIDONE 			2
@@ -26,6 +28,7 @@ typedef uint16_t WORD;
 #define MSG_DATA					10
 #define MSG_ACKNOWLEDGE_STATUS		10
 #define MSG_CFM_DATAINDICATE_STATUS		11
+#define MSG_BSN_DATA				10
 #define MSG_ASSOCIATION_STATUS 	19
 
 #define REGISTRATION_REQUEST				0x01

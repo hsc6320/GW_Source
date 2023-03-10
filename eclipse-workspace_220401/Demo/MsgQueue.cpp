@@ -187,23 +187,32 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 				m_GetSocket->Send_Message(u8Data, len);
 			}
 			else {
+				m_vcemsg.clear();
+				for(int i=0; i<len; i++) {
+					m_vcemsg.push_back(u8Data[i]);
+					printf("[%x] ", m_vcemsg.at(i));
+				}
 				if(!m_bUartCommuniFlag && (u8Data[MSGTYPE] == BSN_START_ACK)) {					
-				
-					m_vcemsg.MsgPacket.u8MsgType = u8Data[MSGTYPE];
-					m_vcemsg.MsgPacket.data[0] = u8Data[MSG_DATA];
-					m_bUartCommuniFlag = 1;				
+		/*			m_vcemsg[MSGTYPE] = u8Data[MSGTYPE];
+					m_vcemsg[MSG_BSN_DATA] = u8Data[MSG_DATA];
+				*/
+					printf("BSN_START ACK :%x \n", m_vcemsg[MSGTYPE] );
+					printf("MSGTYPE  :%x \n", m_vcemsg[MSGTYPE] );
+					printf("MSG_BSN_DATA  :%x \n", m_vcemsg[MSG_BSN_DATA] );
+					m_bUartCommuniFlag = 1;
 					return 1;
 				}
 				else if( (u8Data[MSGTYPE] == DATAINDICATION_ACK) || (u8Data[MSGTYPE] == DOWNLOAD_START_ACK) ) {
-					m_vcemsg.MsgPacket.u8MsgType = u8Data[MSGTYPE];
+					//m_vcemsg[MSGTYPE] = u8Data[MSGTYPE];
+					printf("m_vcemsg[MSGTYPE] : %x \n", m_vcemsg[MSGTYPE]);
 					if(u8Data[MSGTYPE] == DOWNLOAD_START_ACK) {
-						m_vcemsg.MsgPacket.Saddr[0] = u8Data[MSG_SADDRZERO];
-						m_vcemsg.MsgPacket.Saddr[1] = u8Data[MSG_SADDRONE];
+						m_vcemsg[MSG_SADDRZERO] = u8Data[MSG_SADDRZERO];
+						m_vcemsg[MSG_SADDRONE] = u8Data[MSG_SADDRONE];
 					}
 					else if(u8Data[MSGTYPE] == DATAINDICATION_ACK) {
-						m_vcemsg.MsgPacket.Saddr[0] = u8Data[MSG_SADDRZERO];
-						m_vcemsg.MsgPacket.Saddr[1] = u8Data[MSG_SADDRONE];
-						m_vcemsg.MsgPacket.status = u8Data[MSG_CFM_DATAINDICATE_STATUS];
+						m_vcemsg[MSG_SADDRZERO] = u8Data[MSG_SADDRZERO];
+						m_vcemsg[MSG_SADDRONE] = u8Data[MSG_SADDRONE];
+						m_vcemsg[MSG_CFM_DATAINDICATE_STATUS] = u8Data[MSG_CFM_DATAINDICATE_STATUS];
 					}
 					m_bUartCommuniFlag = 1;
 				}
@@ -215,15 +224,13 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 		}
 		else {
 			memcpy(m_u8SendData, u8Data, len);
-			if(m_vcemsg.m_UartMsg_vec.size() > 0) {
-				for(int i =0; i< m_vcemsg.m_UartMsg_vec.size(); i++) {
-					m_vcemsg.m_UartMsg_vec.remove(i);
-				}
+			if(m_vcemsg.size() > 0) {
+				m_vcemsg.clear();
 			}
 			printf("m_vcemsg.m_UartMsg_vec.Push_back\n");
 			for(int i=0; i< len; i++) {
-				m_vcemsg.m_UartMsg_vec.push_back(u8Data[i]);
-				printf("[%x] ", m_vcemsg.m_UartMsg_vec[i]);
+				m_vcemsg.push_back(u8Data[i]);
+				printf("[%x] ", m_vcemsg[i]);
 			}
 			printf("\n");
 			m_bReadEnd_UartMessage =1;

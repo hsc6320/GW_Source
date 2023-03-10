@@ -463,7 +463,9 @@ void *Recieve_Function(void* rcvDt)
 	int Socketd = 0;//pSoc->m_serv_sock;
 	pSoc = (Socket* )m_pSoc;
 
-	int str_len, restBufCnt =0;
+	int str_len, restBufCnt =0, nChecksumFlag =0;
+	WORD CheckSumIndex =0;
+	BYTE u8CheckSum =0;
 	BYTE u8data[1024] = {0, };
 	BYTE u8data2[1024] = {0, };
 	printf("Recieve_Function() Socketd : %d, m_serv_sock : %d\n", Socketd, pSoc->m_serv_sock);
@@ -482,37 +484,69 @@ void *Recieve_Function(void* rcvDt)
 			printf("\n");*/
 			int TempCnt =0, TempCnt2 =0;
 			printf("\n*********Socket Read Thread ******** %d\n", str_len);
-			if(str_len > 0) {
-				pSoc->m_ReceiveData_len = str_len;			
+			if(str_len > 0) {				
+				pSoc->m_ReceiveData_len = str_len;
 				while(1) {
 					u8data2[TempCnt2] = u8data[TempCnt];
-			//		printf("%x(%d)", u8data2[TempCnt2], TempCnt2);
-					if( (u8data2[MSG_STX] == STX) && (u8data2[TempCnt2-1] == 0x7e) && (u8data2[TempCnt2-2] == 0x5a) && (u8data2[TempCnt2-3] == 0xa5) ) {
-			//			printf("\n");
-						pSoc->GetSocketMsg(u8data2, TempCnt);
-					
-						if(TempCnt == str_len) {
-							memset(u8data, 0, 1024);
-							memset(u8data2, 0, 1024);
-							break;
+					if(TempCnt2 > MSG_LENGTHONE) {
+
+						CheckSumIndex = pSoc->ByteToWord(u8data[MSG_LENGTHONE], u8data[MSG_LENGTHZERO]);
+						CheckSumIndex = CheckSumIndex+ MSG_HEADER;					
+
+						if(TempCnt2 > CheckSumIndex) {						
+							u8CheckSum = pSoc->Socket_GetChecksum(u8data2 , CheckSumIndex);
+					//		printf("u8CheckSum : %d,  u8data[CheckSumIndex]) : %d\n", u8CheckSum, u8data2[CheckSumIndex]);
+
+							if(u8CheckSum != u8data[CheckSumIndex]) {
+								printf("%x != %x\n", u8CheckSum, u8data[CheckSumIndex]);
+								printf("###str_len :  %d\n", str_len);
+								if(str_len >= 14) {
+									for(int j=0; j<CheckSumIndex+MSG_TAIL; j++) {
+										pSoc->deleteArray(0, 1024, u8data);
+									}								
+									str_len = str_len - (CheckSumIndex+MSG_TAIL);
+								}
+								printf("str_len :  %d\n", str_len);
+								memset(u8data2, 0, 1024);
+								TempCnt=0;
+								TempCnt2=0;
+							}
+						/*	else {
+								printf("%x == %x\n", u8CheckSum, u8data[CheckSumIndex]);
+							}*/
 						}
-						else if(TempCnt < str_len) {
-							for(int j=0; j<TempCnt; j++) {
-								pSoc->deleteArray(0, 1024, u8data);
+					}
+					if( (u8data2[MSG_STX] == STX) && (u8data2[TempCnt2-1] == 0x7e) && (u8data2[TempCnt2-2] == 0x5a) && (u8data2[TempCnt2-3] == 0xa5) ) {						
+						if(pSoc->GetSocketMsg(u8data2, TempCnt) ) {
+							if(TempCnt == str_len) {
+								printf("%d == %d\n", TempCnt, str_len);
+								memset(u8data, 0, 1024);
+								memset(u8data2, 0, 1024);
+								break;
 							}
-					//		printf("\n");
-							str_len = str_len - TempCnt;
-							printf("After delete, Rest Array\n");
-							for(int j=0; j<=str_len; j++) {
-								printf("<%x> ", u8data[j]);
+							else if(TempCnt < str_len) {
+								for(int j=0; j<TempCnt; j++) {
+									pSoc->deleteArray(0, 1024, u8data);
+								}
+								str_len = str_len - TempCnt;
+								printf("After delete, Rest Array, str_len : %d\n", str_len);
+								for(int j=0; j<=str_len; j++) {
+									printf("<%x> ", u8data[j]);
+								}
+								printf("\n");
+								restBufCnt=1;
+								memset(u8data2, 0, 1024);
 							}
-							printf("\n");
-							restBufCnt=1;
-							memset(u8data2, 0, 1024);
-						}						
+						}
+					}
+					if(TempCnt == str_len) {
+						printf("STX/ETX ERROR\n");
+						memset(u8data, 0, 1024);
+						memset(u8data2, 0, 1024);
+						break;
 					}
 					if(restBufCnt) {
-						printf("restBufCnt \n");
+						printf("restBufCnt On\n");
 						restBufCnt =0;
 						TempCnt=0;
 						TempCnt2=0;
@@ -535,7 +569,7 @@ void *Recieve_Function(void* rcvDt)
 			pSoc->m_nServerMessge_End =0;
 			pthread_mutex_unlock(&pSoc->Socket_mutex);
 		}
-		usleep(1);
+		usleep(10);
 	}
 
 	return 0;
@@ -748,6 +782,10 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 				m_p8uData = new BYTE[DataLen];
 				memcpy(m_p8uData, p8udata, DataLen);
 
+				for(int i=0; i<DataLen; i++) {
+					printf("%x ", m_p8uData[i]);
+				}
+				printf("\n");
 				m_iSocketReceiveEnd =1;
 
 				if((m_SocketMsg_vec[MSGTYPE] == SERVICESTART_REQUEST) || (m_SocketMsg_vec[MSGTYPE] == COORDINATOR_RESET_CONFIRM))
@@ -898,6 +936,38 @@ void Socket::SetMutex(pthread_mutex_t mutex, int fd)
 	printf("SetMutex()\n");
 }
 
+BYTE Socket::Socket_GetChecksum(BYTE* puData, int len)
+{
+	BYTE sum =0;
+
+	for(int i=1; i< len; i++) {
+	//	printf("%x ", puData[i]);
+		sum += puData[i];
+	}
+//	printf("(check nsum : %x) ", sum);
+
+	return sum;
+}
+
+void Socket::th_delay(int millsec)
+{
+	double time;
+	double timedelay = millsec;
+	struct timeval start1 = {};
+	struct timeval end1 = {};
+
+	clock_t end = timedelay* 1000;
+	clock_t start = clock();
+
+	//printf("th_dealy %.2f msec\n", timedelay*2);
+	gettimeofday(&start1 , NULL);
+	while(clock()-start < end) {;}
+	gettimeofday(&end1 , NULL);
+	time = end1.tv_sec + end1.tv_usec / 1000000.0 - start1.tv_sec - start1.tv_usec / 1000000.0;
+	printf("%.2f sec\n", time);
+}
+
+
 WORD Socket::ByteToWord(BYTE puData, BYTE puData1)
 {
 	WORD p16Tempdata_HIGH, p16Tempdata_LOW;
@@ -906,7 +976,6 @@ WORD Socket::ByteToWord(BYTE puData, BYTE puData1)
 	p16Tempdata_LOW = puData1;
 
 	return p16Tempdata_HIGH|p16Tempdata_LOW;
-
 }
 void crit_err_hdlr2(int sig_num, siginfo_t * info, void * ucontext)
 {
