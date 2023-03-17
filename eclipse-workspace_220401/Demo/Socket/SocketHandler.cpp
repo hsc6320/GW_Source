@@ -374,7 +374,7 @@ void SocketHandler::TagData(std::queue<std::vector<BYTE>> que)
 	vec.push_back(vTagData.front());
 	for(int i=0; i<(int)vec.size(); i++) {
 		for(int k=0; k<(int)vec[i].size(); k++) {
-			printf("%x ", vec[i][k]);
+	//		printf("%x ", vec[i][k]);
 			pu8data[iBufcnt] = vec[i][k];
 			iBufcnt++;
 		}

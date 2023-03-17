@@ -66,10 +66,6 @@ static void *uart_Rx_Thread(void *param)
 			pthread_mutex_unlock(&ctx->mutex);
 #if 1			
 			printf("len : %d\n", len);
-		/*	for(int i=0; i<len; i++) {
-				printf("(%x) ", rx2[i]);
-			}
-			printf("\n");*/
 
 			if( (rx2[0] == 0) && (len == 1) ) {
 				printf("rx[%d] : %x, len : %d continue \n", rx2[0], len);
@@ -93,10 +89,6 @@ static void *uart_Rx_Thread(void *param)
 //			printf("[%d] [%d]", nToTalLen2, nToTalLen);
 //			printf("\n");
 			
-			for(int i=0; i<nToTalLen; i++) {
-				printf("%x ", rx[i]);
-			}
-			printf("\n");
 			
 			printf("\n***************uart_Rx_Thread uart **********%d*********\n", len);
 			int i=0, cnt =0;			

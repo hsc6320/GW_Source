@@ -196,15 +196,15 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 		/*			m_vcemsg[MSGTYPE] = u8Data[MSGTYPE];
 					m_vcemsg[MSG_BSN_DATA] = u8Data[MSG_DATA];
 				*/
-					printf("BSN_START ACK :%x \n", m_vcemsg[MSGTYPE] );
+		/*			printf("BSN_START ACK :%x \n", m_vcemsg[MSGTYPE] );
 					printf("MSGTYPE  :%x \n", m_vcemsg[MSGTYPE] );
-					printf("MSG_BSN_DATA  :%x \n", m_vcemsg[MSG_BSN_DATA] );
+					printf("MSG_BSN_DATA  :%x \n", m_vcemsg[MSG_BSN_DATA] );*/
 					m_bUartCommuniFlag = 1;
 					return 1;
 				}
 				else if( (u8Data[MSGTYPE] == DATAINDICATION_ACK) || (u8Data[MSGTYPE] == DOWNLOAD_START_ACK) ) {
 					//m_vcemsg[MSGTYPE] = u8Data[MSGTYPE];
-					printf("m_vcemsg[MSGTYPE] : %x \n", m_vcemsg[MSGTYPE]);
+			//		printf("m_vcemsg[MSGTYPE] : %x \n", m_vcemsg[MSGTYPE]);
 					if(u8Data[MSGTYPE] == DOWNLOAD_START_ACK) {
 						m_vcemsg[MSG_SADDRZERO] = u8Data[MSG_SADDRZERO];
 						m_vcemsg[MSG_SADDRONE] = u8Data[MSG_SADDRONE];
