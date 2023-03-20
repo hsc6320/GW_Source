@@ -463,11 +463,16 @@ void *Recieve_Function(void* rcvDt)
 	int Socketd = 0;//pSoc->m_serv_sock;
 	pSoc = (Socket* )m_pSoc;
 
+	time_t ct;
+	struct tm tm;
 	int str_len, restBufCnt =0, nChecksumFlag =0;
 	WORD CheckSumIndex =0;
 	BYTE u8CheckSum =0;
 	BYTE u8data[1024] = {0, };
 	BYTE u8data2[1024] = {0, };
+
+	
+	
 	printf("Recieve_Function() Socketd : %d, m_serv_sock : %d\n", Socketd, pSoc->m_serv_sock);
 
 	//socket_ctx_t* ctx = (socket_ctx_t *)pSoc->m_serv_sock;
@@ -482,8 +487,10 @@ void *Recieve_Function(void* rcvDt)
 				printf("[%x] ",u8data[i]);
 			}
 			printf("\n");*/
+			ct = time(NULL);
+			tm = *localtime(&ct);
 			int TempCnt =0, TempCnt2 =0;
-			printf("\n*********Socket Read Thread ******** %d\n", str_len);
+			printf("\n*********Socket Read Thread ******%d-%d-%d:%d:%d***** %d\n", tm.tm_mon+1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec,str_len);
 			if(str_len > 0) {				
 				pSoc->m_ReceiveData_len = str_len;
 				while(1) {

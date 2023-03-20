@@ -79,6 +79,7 @@ void PrintfHello(int sig, siginfo_t* si, void* uc);
 void th_delay(int millsec);
 int ServerReConn();
 int TagAssociation_Init();
+int Main_ReTry_SendFailData(int* failcnt) ;
 void Main_Service_Stop();
 int Main_TagSort_Arrange(int* iTemp, int* iTemp2);
 int Main_TagSort_Arrange2(int* iTemp, int* iTemp2);
@@ -340,7 +341,6 @@ int Main_ByPass_SocketToUart()
 	}
 	else if(m_pMsgQueue->m_bUartCommuniFlag) {
 		m_pMsgQueue->m_bUartCommuniFlag =0;
-		printf("m_pMsgQueue->m_vcemsg.at(MSGTYPE) :%x\n", m_pMsgQueue->m_vcemsg.at(MSGTYPE));
 		switch((int)m_pMsgQueue->m_vcemsg.at(MSGTYPE)) 
 		{
 		case DOWNLOAD_START_ACK:
@@ -481,7 +481,29 @@ int Main_ByPass_SocketToUart()
 				m_pMsgHandler->DataSendFail_RedownCnt =0;
 				m_pMsgHandler->m_nDataSendFail_SuccessCnt =0;
 				printf("nBeaconCnt : %d > BEACON_MAX\n", nBeaconCnt);
+#if 0				
+				if(!bDataAckFlag) {
+					if(Main_ReTry_SendFailData(&j)) {
+						if(nTemp1BeaconCnt > 3) {
+							DataSendFail_Redown =0;
+						}
+					}
+					else {
+						printf("DataSendFail_Redown\n");
+						nTemp1BeaconCnt++;						
+						m_pMsgHandler->DataSendFail_RedownCnt = j;
+						j =0;
+						nBeaconCnt =0;
+						bReDownloadFlag =1;
+						m_pMsgHandler->m_nDataDownCount = 0;
+						m_pMsgHandler->m_nDataIndiCount = 0;
+						m_pMsgHandler->UartPacket_ReDataDownStart(nBeaconValue/*m_pMsgQueue->m_vcemsg.MsgPacket.data[0]*/);
+						return 1;
+					}
+				}
+#endif
 
+#if 0
 				if(!bDataAckFlag) {
 					for(int i=0; i<m_pMsgHandler->m_nUartArrayDataDownCnt; i++) {
 						if(m_pMsgHandler->Map_dataParityCheck[m_pMsgHandler->m_UartArrayDataDownMsg[i]] != PASS) {
@@ -498,7 +520,6 @@ int Main_ByPass_SocketToUart()
 
 				if(DataSendFail_Redown) {
 					if(nTemp1BeaconCnt > 3) {
-						//Main_Service_Stop();
 						DataSendFail_Redown =0;
 					}
 					else {
@@ -511,16 +532,18 @@ int Main_ByPass_SocketToUart()
 						m_pMsgHandler->m_nDataDownCount = 0;
 						m_pMsgHandler->m_nDataIndiCount = 0;
 						m_pMsgHandler->UartPacket_ReDataDownStart(nBeaconValue/*m_pMsgQueue->m_vcemsg.MsgPacket.data[0]*/);
-						return 1;
+					//	return 1;
 					}
 				}
-				if(!DataSendFail_Redown) {
+
+			//	if(DataSendFail_Redown) {
+#endif
 					nTempBeaconCnt++;
 					printf("nTempBeaconCnt : %d\n", nTempBeaconCnt);
 
 					if(nTempBeaconCnt >= 3/*BEACON_MAX/2*/) {
 						bReDownloadFlag =0;
-						memset(m_pMsgHandler->m_GetDownTagID, 0, 4096);
+				//		memset(m_pMsgHandler->m_GetDownTagID, 0, 4096);
 						printf("bDataAckFlag : %d, m_nUartArrayDataDownCnt : %d, m_nMapParity : %d\n", bDataAckFlag, m_pMsgHandler->m_nUartArrayDataDownCnt, m_pMsgQueue->m_nMapParity);
 
 						if(!bDataAckFlag && (m_pMsgHandler->m_nUartArrayDataDownCnt > m_pMsgQueue->m_nMapParity) ) {
@@ -536,14 +559,14 @@ int Main_ByPass_SocketToUart()
 						printf("return 1\n");
 						return 1;
 					}
-				}
+	//			}
 
 				if(AckFail_Redown) {
 					AckFail_Redown =0;
 					nTemp2BeaconCnt++;
 					printf("AckFail_Redown nTemp2BeaconCnt : %d\n", nTemp2BeaconCnt);
 				
-					if(nTemp2BeaconCnt > 5) {
+					if(nTemp2BeaconCnt > 4) {
 						Main_Service_Stop();
 						break;
 					}
@@ -574,14 +597,30 @@ int Main_ByPass_SocketToUart()
 
 	return 1;
 }
+int Main_ReTry_SendFailData(int* failcnt) 
+{
+	int nRet =0;
+	int j =0;
+	for(int i=0; i<m_pMsgHandler->m_nUartArrayDataDownCnt; i++) {
+		if(m_pMsgHandler->Map_dataParityCheck[m_pMsgHandler->m_UartArrayDataDownMsg[j]] != PASS) {
+			printf("Map_dataParityCheck[%d] FAIL \n", i);
+			//m_pMsgHandler->m_GetDownTagID[j] = (int)m_pMsgHandler->m_UartArrayDataDownMsg[failcnt].at(MSG_DADDRZERO);
+			m_pMsgHandler->m_GetDownTagID[j] = (int)ByteToWord(m_pMsgHandler->m_UartArrayDataDownMsg[j][MSG_DADDRONE], m_pMsgHandler->m_UartArrayDataDownMsg[j][MSG_DADDRZERO]);
+		
+			printf("TagID : 0x%x\n", m_pMsgHandler->m_GetDownTagID[j]);
+			j++;
+			nRet = 1;
+		}
+	}
+	*failcnt = j;
 
+	return nRet;
+}
 void Main_Service_Stop()
 {
 	printf("Beacon Stop\n");
 	th_delay(3);
 	m_pMsgHandler->BSN_Stop_Packet();
-	th_delay(1000);
-	th_delay(1000);
 	th_delay(1000);
 	th_delay(1000);
 	m_pSocketHandle->Server_BSN_Stop_Packet();
