@@ -731,6 +731,7 @@ int Main_TagSort_Arrange2(int* iTemp, int* iTemp2)
 		if(m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[i] == 0) {
 			Main_deleteArray(i, 4096, m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge);
 			printf("Main_deleteArray[%d] %d ", i, m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[i]);
+			i--;
 		}		
 	}
 	printf("\n");	
