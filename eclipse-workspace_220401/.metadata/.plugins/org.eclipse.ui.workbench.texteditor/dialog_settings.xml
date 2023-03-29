@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="AckFail_Redown"/>
+		<item key="selection" value="ifr_name"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="ifr_name"/>
+			<item value="GetTagNumber"/>
+			<item value="beacon_count"/>
+			<item value="BEACON_MAX"/>
+			<item value="temp+1"/>
+			<item value="UartPacket_ReDataAcknowledge_DownStart"/>
+			<item value="Main_TagSort_Arrange2"/>
+			<item value="UartPacket_DataDownStart"/>
+			<item value="m_pSoc"/>
 			<item value="AckFail_Redown"/>
 			<item value="230400"/>
 			<item value="iflagContinue"/>
 			<item value="size2"/>
 			<item value="MSG_CFM_DATAINDICATE_STATUS"/>
 			<item value="UartPacket_ReDataDownStart"/>
-			<item value="UartPacket_DataDownStart"/>
-			<item value="Main_TagSort_Arrange2"/>
-			<item value="bDataAckFlag"/>
-			<item value="nTemp1BeaconCnt"/>
-			<item value="m_SocketArrayDataDownMsg"/>
-			<item value="signal"/>
-			<item value="vec2"/>
-			<item value="460800"/>
-			<item value="capacity"/>
 		</list>
 		<list key="replacehistory">
 		</list>

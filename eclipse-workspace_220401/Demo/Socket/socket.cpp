@@ -72,6 +72,7 @@ int Socket::Socket_Init(/*int argc, char *argv[]*/)
 
 	struct ifconf	ifc;
 	struct ifreq	ifr[256];
+	struct ifreq	ifrMac;
 	struct sockaddr_in serv_addr;
 
 	struct sockaddr*	pAddr(NULL);
@@ -82,6 +83,7 @@ int Socket::Socket_Init(/*int argc, char *argv[]*/)
 
 	char buf[13];
 	char buf2[5];
+	char Mac_addr[20];	
 
 	if(m_pSocMsgqueue == NULL)
 		m_pSocMsgqueue = new Socket_MsgQueue;
@@ -192,6 +194,22 @@ int Socket::Socket_Init(/*int argc, char *argv[]*/)
 		printf("%c",buf[i]);
 	}
 
+	strcpy(ifrMac.ifr_name, "eth0");
+	if(ioctl(m_serv_sock, SIOCGIFHWADDR, &ifrMac)<0) {
+		dp(4, "ioctl() - get mac");
+	}
+	Convert_mac( ether_ntoa((struct ether_addr *)(ifrMac.ifr_hwaddr.sa_data)), Mac_addr, sizeof(Mac_addr) -1 );
+	strcpy(m_szMac_addr, Mac_addr);
+	::string str = "";
+	for(int i=0; i<20; i++) {
+		str += m_szMac_addr[i];
+		printf("%c[%d] ", m_szMac_addr[i], i);
+	}
+	printf("\n");
+	
+	m_Mac_String = str;
+	printf("Mac Addrss : %s\n",m_Mac_String.c_str());
+	
 	fd3 = open("port", O_RDONLY);
 	if(fd3 < 0) {
 		printf("PORT file open error : %d\n", fd3);
@@ -311,6 +329,27 @@ int Socket::Socket_Init(/*int argc, char *argv[]*/)
 	return (int)ctx;
 #endif
 
+}
+
+void Socket::Convert_mac(const char* data, char* cvrt_str, int sz)
+{
+	char buf[128] = {0,};
+     char t_buf[8];
+     char *stp = strtok( (char *)data , ":" );
+     int temp=0;
+
+     do
+     {
+          memset( t_buf, 0, sizeof(t_buf) );
+          sscanf( stp, "%x", &temp );
+          snprintf( t_buf, sizeof(t_buf)-1, "%02X", temp );
+          strncat( buf, t_buf, sizeof(buf)-1 );
+          strncat( buf, ":", sizeof(buf)-1 );
+     } while( (stp = strtok( NULL , ":" )) != NULL );
+
+     buf[strlen(buf) -1] = '\0';
+     strncpy( cvrt_str, buf, sz );
+	
 }
 
 void Socket::Create_Socket_Thread(pthread_t thread, int strucData)
@@ -483,7 +522,7 @@ void *Recieve_Function(void* rcvDt)
 			
 			pSoc->m_nServerMessge_End =1;
 			str_len = pSoc->Read_Message(u8data/*pSoc->m_p8uData*/);
-		/*	for(int i=0; i<=str_len; i++) {
+			/*for(int i=0; i<=str_len; i++) {
 				printf("[%x] ",u8data[i]);
 			}
 			printf("\n");*/
@@ -494,29 +533,43 @@ void *Recieve_Function(void* rcvDt)
 			if(str_len > 0) {				
 				pSoc->m_ReceiveData_len = str_len;
 				while(1) {
-					u8data2[TempCnt2] = u8data[TempCnt];
+					u8data2[TempCnt2] = u8data[TempCnt];					
 					if(TempCnt2 > MSG_LENGTHONE) {
 
 						CheckSumIndex = pSoc->ByteToWord(u8data[MSG_LENGTHONE], u8data[MSG_LENGTHZERO]);
+					//	printf("CheckSumIndex : %d u8data2(CheckSumIndex) : %x\n",CheckSumIndex, u8data2[CheckSumIndex]);
 						CheckSumIndex = CheckSumIndex+ MSG_HEADER;					
 
 						if(TempCnt2 > CheckSumIndex) {						
 							u8CheckSum = pSoc->Socket_GetChecksum(u8data2 , CheckSumIndex);
-					//		printf("u8CheckSum : %d,  u8data[CheckSumIndex]) : %d\n", u8CheckSum, u8data2[CheckSumIndex]);
+					//		printf("u8CheckSum : %d, u8data[CheckSumIndex]) : %d\n", u8CheckSum, u8data2[CheckSumIndex]);
 
 							if(u8CheckSum != u8data[CheckSumIndex]) {
 								printf("%x != %x\n", u8CheckSum, u8data[CheckSumIndex]);
-								printf("###str_len :  %d\n", str_len);
+								printf("CheckSumIndex : %d ###str_len :  %d\n",CheckSumIndex, str_len);
 								if(str_len >= 14) {
-									for(int j=0; j<CheckSumIndex+MSG_TAIL; j++) {
+									for(int j=0; j<=CheckSumIndex+MSG_TAIL; j++) {
 										pSoc->deleteArray(0, 1024, u8data);
 									}								
 									str_len = str_len - (CheckSumIndex+MSG_TAIL);
 								}
+								/*for(int j=0; j<str_len; j++) {
+									printf("%x ", u8data[j]);
+								}
+								printf("\n");*/
 								printf("str_len :  %d\n", str_len);
+								printf("STX/ETX ERROR\n");
 								memset(u8data2, 0, 1024);
 								TempCnt=0;
 								TempCnt2=0;
+								if(str_len > 1) {
+									printf("Continue\n");
+									continue;
+								}
+								else {
+									printf("Checksum break\n");
+									break;
+								}
 							}
 						/*	else {
 								printf("%x == %x\n", u8CheckSum, u8data[CheckSumIndex]);
@@ -546,8 +599,10 @@ void *Recieve_Function(void* rcvDt)
 							}
 						}
 					}
-					if(TempCnt == str_len) {
-						printf("STX/ETX ERROR\n");
+					
+					if( (!restBufCnt) && (TempCnt == str_len) ) {
+						printf("&&&&&&&&&&&&& %d %d\n", TempCnt, str_len);
+						
 						memset(u8data, 0, 1024);
 						memset(u8data2, 0, 1024);
 						break;

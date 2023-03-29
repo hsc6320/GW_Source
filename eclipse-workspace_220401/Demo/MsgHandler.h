@@ -56,11 +56,14 @@ public:
 	void SetMapValueArray(std::vector<std::vector<BYTE>> vec, int Len);
 	void ServiceIdle();
 	int ServiceStart();
+	int GetTagNumber(int temp);
+	int DataFlag_Initialize(int beacon);
 	void BypassSocketToUart(BYTE* p8Data, int DataLen, int msgtype);
 	void BypassUartToSocket();
 	BYTE GetChecksum(BYTE* puData, int len);
 	void GetPanID(WORD panid);
 	void GetServerID(WORD severid);
+	void SetBeacon(int a);
 	int BSN_Start_Packet(/*BYTE* u8data*/);
 	int BSN_Stop_Packet();
 	int UartPacket_DataDownStart(BYTE u8data);

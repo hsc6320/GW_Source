@@ -44,6 +44,7 @@ public:
 	int DownLoad_Start_Ack();
 	int SendSocket_Data(PRE_DEFINE::S_PACKET packet);
 	void SetMsg_StartCfm_Remalloc(int OnOff);
+	void SetBeconCount(int* cnt);
 	int GateWay_Status_Check();
 	void TagData(std::queue<std::vector<BYTE>> que);
 };

@@ -1,16 +1,16 @@
-14:14:09 **** Build of configuration Debug for project Demo ****
+19:30:08 **** Build of configuration Debug for project Demo ****
 make all 
 Building file: ../uart/uart.cpp
 Invoking: Cross G++ Compiler
 arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"uart/uart.d" -MT"uart/uart.o" -o "uart/uart.o" "../uart/uart.cpp"
 ../uart/uart.cpp: In function ‘void* uart_Rx_Thread(void*)’:
-../uart/uart.cpp:71:60: warning: format ‘%d’ expects a matching ‘int’ argument [-Wformat=]
+../uart/uart.cpp:69:60: warning: format ‘%d’ expects a matching ‘int’ argument [-Wformat=]
      printf("rx[%d] : %x, len : %d continue \n", rx2[0], len);
                                                             ^
-../uart/uart.cpp:127:10: warning: unused variable ‘j’ [-Wunused-variable]
+../uart/uart.cpp:122:10: warning: unused variable ‘j’ [-Wunused-variable]
       int j=0;
           ^
-../uart/uart.cpp:94:13: warning: unused variable ‘cnt’ [-Wunused-variable]
+../uart/uart.cpp:89:13: warning: unused variable ‘cnt’ [-Wunused-variable]
     int i=0, cnt =0;   
              ^~~
 ../uart/uart.cpp:52:6: warning: variable ‘nSecondPutByte’ set but not used [-Wunused-but-set-variable]
@@ -42,15 +42,452 @@ arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 
   p_thread = NULL;
              ^~~~
 ../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
-../Socket/socket.cpp:174:27: warning: NULL used in arithmetic [-Wpointer-arith]
+../Socket/socket.cpp:177:27: warning: NULL used in arithmetic [-Wpointer-arith]
    if(pAddr->sa_data[i] != NULL) {
                            ^~~~
+In file included from ../Socket/../pch.h:43:0,
+                 from ../Socket/Socket.h:11,
+                 from ../Socket/socket.cpp:9:
+../Socket/socket.cpp:198:16: error: request for member ‘ifr_ifrn’ in ‘ifrMac’, which is of non-class type ‘ifreq [256]’
+  strcpy(ifrMac.ifr_name, "eth0");
+                ^
+../Socket/socket.cpp:199:13: error: request for member ‘ifr_ifrn’ in ‘ifr’, which is of non-class type ‘ifreq [256]’
+  strcpy(ifr.ifr_name, "eth0");
+             ^
+../Socket/socket.cpp:200:24: error: ‘SIOCGFHWADDR’ was not declared in this scope
+  if(ioctl(m_serv_sock, SIOCGFHWADDR, &ifr)<0) {
+                        ^~~~~~~~~~~~
+In file included from ../Socket/Socket.h:11:0,
+                 from ../Socket/socket.cpp:9:
+../Socket/../pch.h:65:110: warning: format ‘%d’ expects argument of type ‘int’, but argument 4 has type ‘const char*’ [-Wformat=]
+ #define dp(n, fmt, args...) if (DEBUG_LEVEL_ <= n) fprintf(stderr, "%s:%d,", fmt, __FILE__, __LINE__, ## args)
+                                                                                                              ^
+../Socket/socket.cpp:201:3: note: in expansion of macro ‘dp’
+   dp(4, "ioctl() - get mac");
+   ^~
+../Socket/../pch.h:65:110: warning: too many arguments for format [-Wformat-extra-args]
+ #define dp(n, fmt, args...) if (DEBUG_LEVEL_ <= n) fprintf(stderr, "%s:%d,", fmt, __FILE__, __LINE__, ## args)
+                                                                                                              ^
+../Socket/socket.cpp:201:3: note: in expansion of macro ‘dp’
+   dp(4, "ioctl() - get mac");
+   ^~
+In file included from ../Socket/../pch.h:43:0,
+                 from ../Socket/Socket.h:11,
+                 from ../Socket/socket.cpp:9:
+../Socket/socket.cpp:203:55: error: request for member ‘ifr_ifru’ in ‘ifrMac’, which is of non-class type ‘ifreq [256]’
+  Convert_mac( ether_ntoa((struct ether_addr *)(ifrMac.ifr_hwaddr.sa_data)), Mac_addr, sizeof(Mac_addr) -1 );
+                                                       ^
+../Socket/socket.cpp:206:15: error: no match for call to ‘(std::__cxx11::string {aka std::__cxx11::basic_string<char>}) (char [20])’
+  str(Mac_addr2);
+               ^
+../Socket/socket.cpp: At global scope:
+../Socket/socket.cpp:331:6: error: ‘Socekt’ has not been declared
+ void Socekt::Convert_mac(const char* data, char* cvrt_str, int sz)
+      ^~~~~~
 ../Socket/socket.cpp: In function ‘void* Recieve_Function(void*)’:
-../Socket/socket.cpp:468:30: warning: unused variable ‘nChecksumFlag’ [-Wunused-variable]
+../Socket/socket.cpp:504:30: warning: unused variable ‘nChecksumFlag’ [-Wunused-variable]
   int str_len, restBufCnt =0, nChecksumFlag =0;
                               ^~~~~~~~~~~~~
 ../Socket/socket.cpp: In member function ‘bool Socket::GetSocketMsg(BYTE*, int)’:
-../Socket/socket.cpp:634:9: warning: unused variable ‘n’ [-Wunused-variable]
+../Socket/socket.cpp:686:9: warning: unused variable ‘n’ [-Wunused-variable]
+     int n;
+         ^
+make: *** [Socket/subdir.mk:26: Socket/socket.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+19:30:42 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In constructor ‘Socket::Socket()’:
+../Socket/socket.cpp:40:13: warning: converting to non-pointer type ‘pthread_t {aka long unsigned int}’ from NULL [-Wconversion-null]
+  p_thread = NULL;
+             ^~~~
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:177:27: warning: NULL used in arithmetic [-Wpointer-arith]
+   if(pAddr->sa_data[i] != NULL) {
+                           ^~~~
+In file included from ../Socket/../pch.h:43:0,
+                 from ../Socket/Socket.h:11,
+                 from ../Socket/socket.cpp:9:
+../Socket/socket.cpp:198:16: error: request for member ‘ifr_ifrn’ in ‘ifrMac’, which is of non-class type ‘ifreq [256]’
+  strcpy(ifrMac.ifr_name, "eth0");
+                ^
+../Socket/socket.cpp:199:13: error: request for member ‘ifr_ifrn’ in ‘ifr’, which is of non-class type ‘ifreq [256]’
+  strcpy(ifr.ifr_name, "eth0");
+             ^
+In file included from ../Socket/Socket.h:11:0,
+                 from ../Socket/socket.cpp:9:
+../Socket/../pch.h:65:110: warning: format ‘%d’ expects argument of type ‘int’, but argument 4 has type ‘const char*’ [-Wformat=]
+ #define dp(n, fmt, args...) if (DEBUG_LEVEL_ <= n) fprintf(stderr, "%s:%d,", fmt, __FILE__, __LINE__, ## args)
+                                                                                                              ^
+../Socket/socket.cpp:201:3: note: in expansion of macro ‘dp’
+   dp(4, "ioctl() - get mac");
+   ^~
+../Socket/../pch.h:65:110: warning: too many arguments for format [-Wformat-extra-args]
+ #define dp(n, fmt, args...) if (DEBUG_LEVEL_ <= n) fprintf(stderr, "%s:%d,", fmt, __FILE__, __LINE__, ## args)
+                                                                                                              ^
+../Socket/socket.cpp:201:3: note: in expansion of macro ‘dp’
+   dp(4, "ioctl() - get mac");
+   ^~
+In file included from ../Socket/../pch.h:43:0,
+                 from ../Socket/Socket.h:11,
+                 from ../Socket/socket.cpp:9:
+../Socket/socket.cpp:203:55: error: request for member ‘ifr_ifru’ in ‘ifrMac’, which is of non-class type ‘ifreq [256]’
+  Convert_mac( ether_ntoa((struct ether_addr *)(ifrMac.ifr_hwaddr.sa_data)), Mac_addr, sizeof(Mac_addr) -1 );
+                                                       ^
+../Socket/socket.cpp:206:15: error: no match for call to ‘(std::__cxx11::string {aka std::__cxx11::basic_string<char>}) (char [20])’
+  str(Mac_addr2);
+               ^
+../Socket/socket.cpp: At global scope:
+../Socket/socket.cpp:331:6: error: ‘Socekt’ has not been declared
+ void Socekt::Convert_mac(const char* data, char* cvrt_str, int sz)
+      ^~~~~~
+../Socket/socket.cpp: In function ‘void* Recieve_Function(void*)’:
+../Socket/socket.cpp:504:30: warning: unused variable ‘nChecksumFlag’ [-Wunused-variable]
+  int str_len, restBufCnt =0, nChecksumFlag =0;
+                              ^~~~~~~~~~~~~
+../Socket/socket.cpp: In member function ‘bool Socket::GetSocketMsg(BYTE*, int)’:
+../Socket/socket.cpp:686:9: warning: unused variable ‘n’ [-Wunused-variable]
+     int n;
+         ^
+make: *** [Socket/subdir.mk:26: Socket/socket.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+19:31:18 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In constructor ‘Socket::Socket()’:
+../Socket/socket.cpp:40:13: warning: converting to non-pointer type ‘pthread_t {aka long unsigned int}’ from NULL [-Wconversion-null]
+  p_thread = NULL;
+             ^~~~
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:177:27: warning: NULL used in arithmetic [-Wpointer-arith]
+   if(pAddr->sa_data[i] != NULL) {
+                           ^~~~
+../Socket/socket.cpp:198:16: error: request for member ‘ifru_newname’ in ‘ifrMac’, which is of non-class type ‘ifreq [256]’
+  strcpy(ifrMac.ifru_newname, "eth0");
+                ^~~~~~~~~~~~
+../Socket/socket.cpp:199:13: error: request for member ‘ifru_newname’ in ‘ifr’, which is of non-class type ‘ifreq [256]’
+  strcpy(ifr.ifru_newname, "eth0");
+             ^~~~~~~~~~~~
+In file included from ../Socket/Socket.h:11:0,
+                 from ../Socket/socket.cpp:9:
+../Socket/../pch.h:65:110: warning: format ‘%d’ expects argument of type ‘int’, but argument 4 has type ‘const char*’ [-Wformat=]
+ #define dp(n, fmt, args...) if (DEBUG_LEVEL_ <= n) fprintf(stderr, "%s:%d,", fmt, __FILE__, __LINE__, ## args)
+                                                                                                              ^
+../Socket/socket.cpp:201:3: note: in expansion of macro ‘dp’
+   dp(4, "ioctl() - get mac");
+   ^~
+../Socket/../pch.h:65:110: warning: too many arguments for format [-Wformat-extra-args]
+ #define dp(n, fmt, args...) if (DEBUG_LEVEL_ <= n) fprintf(stderr, "%s:%d,", fmt, __FILE__, __LINE__, ## args)
+                                                                                                              ^
+../Socket/socket.cpp:201:3: note: in expansion of macro ‘dp’
+   dp(4, "ioctl() - get mac");
+   ^~
+In file included from ../Socket/../pch.h:43:0,
+                 from ../Socket/Socket.h:11,
+                 from ../Socket/socket.cpp:9:
+../Socket/socket.cpp:203:55: error: request for member ‘ifr_ifru’ in ‘ifrMac’, which is of non-class type ‘ifreq [256]’
+  Convert_mac( ether_ntoa((struct ether_addr *)(ifrMac.ifr_hwaddr.sa_data)), Mac_addr, sizeof(Mac_addr) -1 );
+                                                       ^
+../Socket/socket.cpp:206:15: error: no match for call to ‘(std::__cxx11::string {aka std::__cxx11::basic_string<char>}) (char [20])’
+  str(Mac_addr2);
+               ^
+../Socket/socket.cpp: At global scope:
+../Socket/socket.cpp:331:6: error: ‘Socekt’ has not been declared
+ void Socekt::Convert_mac(const char* data, char* cvrt_str, int sz)
+      ^~~~~~
+../Socket/socket.cpp: In function ‘void* Recieve_Function(void*)’:
+../Socket/socket.cpp:504:30: warning: unused variable ‘nChecksumFlag’ [-Wunused-variable]
+  int str_len, restBufCnt =0, nChecksumFlag =0;
+                              ^~~~~~~~~~~~~
+../Socket/socket.cpp: In member function ‘bool Socket::GetSocketMsg(BYTE*, int)’:
+../Socket/socket.cpp:686:9: warning: unused variable ‘n’ [-Wunused-variable]
+     int n;
+         ^
+make: *** [Socket/subdir.mk:26: Socket/socket.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+19:31:53 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In constructor ‘Socket::Socket()’:
+../Socket/socket.cpp:40:13: warning: converting to non-pointer type ‘pthread_t {aka long unsigned int}’ from NULL [-Wconversion-null]
+  p_thread = NULL;
+             ^~~~
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:177:27: warning: NULL used in arithmetic [-Wpointer-arith]
+   if(pAddr->sa_data[i] != NULL) {
+                           ^~~~
+../Socket/socket.cpp:198:16: error: request for member ‘ifrn_name’ in ‘ifrMac’, which is of non-class type ‘ifreq [256]’
+  strcpy(ifrMac.ifrn_name, "eth0");
+                ^~~~~~~~~
+../Socket/socket.cpp:199:13: error: request for member ‘ifrn_name’ in ‘ifr’, which is of non-class type ‘ifreq [256]’
+  strcpy(ifr.ifrn_name, "eth0");
+             ^~~~~~~~~
+In file included from ../Socket/Socket.h:11:0,
+                 from ../Socket/socket.cpp:9:
+../Socket/../pch.h:65:110: warning: format ‘%d’ expects argument of type ‘int’, but argument 4 has type ‘const char*’ [-Wformat=]
+ #define dp(n, fmt, args...) if (DEBUG_LEVEL_ <= n) fprintf(stderr, "%s:%d,", fmt, __FILE__, __LINE__, ## args)
+                                                                                                              ^
+../Socket/socket.cpp:201:3: note: in expansion of macro ‘dp’
+   dp(4, "ioctl() - get mac");
+   ^~
+../Socket/../pch.h:65:110: warning: too many arguments for format [-Wformat-extra-args]
+ #define dp(n, fmt, args...) if (DEBUG_LEVEL_ <= n) fprintf(stderr, "%s:%d,", fmt, __FILE__, __LINE__, ## args)
+                                                                                                              ^
+../Socket/socket.cpp:201:3: note: in expansion of macro ‘dp’
+   dp(4, "ioctl() - get mac");
+   ^~
+In file included from ../Socket/../pch.h:43:0,
+                 from ../Socket/Socket.h:11,
+                 from ../Socket/socket.cpp:9:
+../Socket/socket.cpp:203:55: error: request for member ‘ifr_ifru’ in ‘ifrMac’, which is of non-class type ‘ifreq [256]’
+  Convert_mac( ether_ntoa((struct ether_addr *)(ifrMac.ifr_hwaddr.sa_data)), Mac_addr, sizeof(Mac_addr) -1 );
+                                                       ^
+../Socket/socket.cpp:206:15: error: no match for call to ‘(std::__cxx11::string {aka std::__cxx11::basic_string<char>}) (char [20])’
+  str(Mac_addr2);
+               ^
+../Socket/socket.cpp: At global scope:
+../Socket/socket.cpp:331:6: error: ‘Socekt’ has not been declared
+ void Socekt::Convert_mac(const char* data, char* cvrt_str, int sz)
+      ^~~~~~
+../Socket/socket.cpp: In function ‘void* Recieve_Function(void*)’:
+../Socket/socket.cpp:504:30: warning: unused variable ‘nChecksumFlag’ [-Wunused-variable]
+  int str_len, restBufCnt =0, nChecksumFlag =0;
+                              ^~~~~~~~~~~~~
+../Socket/socket.cpp: In member function ‘bool Socket::GetSocketMsg(BYTE*, int)’:
+../Socket/socket.cpp:686:9: warning: unused variable ‘n’ [-Wunused-variable]
+     int n;
+         ^
+make: *** [Socket/subdir.mk:26: Socket/socket.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+19:32:18 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In constructor ‘Socket::Socket()’:
+../Socket/socket.cpp:40:13: warning: converting to non-pointer type ‘pthread_t {aka long unsigned int}’ from NULL [-Wconversion-null]
+  p_thread = NULL;
+             ^~~~
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:177:27: warning: NULL used in arithmetic [-Wpointer-arith]
+   if(pAddr->sa_data[i] != NULL) {
+                           ^~~~
+../Socket/socket.cpp:198:16: error: request for member ‘ifrn_name’ in ‘ifrMac’, which is of non-class type ‘ifreq [256]’
+  strcpy(ifrMac.ifrn_name, "eth0");
+                ^~~~~~~~~
+In file included from ../Socket/Socket.h:11:0,
+                 from ../Socket/socket.cpp:9:
+../Socket/../pch.h:65:110: warning: format ‘%d’ expects argument of type ‘int’, but argument 4 has type ‘const char*’ [-Wformat=]
+ #define dp(n, fmt, args...) if (DEBUG_LEVEL_ <= n) fprintf(stderr, "%s:%d,", fmt, __FILE__, __LINE__, ## args)
+                                                                                                              ^
+../Socket/socket.cpp:200:3: note: in expansion of macro ‘dp’
+   dp(4, "ioctl() - get mac");
+   ^~
+../Socket/../pch.h:65:110: warning: too many arguments for format [-Wformat-extra-args]
+ #define dp(n, fmt, args...) if (DEBUG_LEVEL_ <= n) fprintf(stderr, "%s:%d,", fmt, __FILE__, __LINE__, ## args)
+                                                                                                              ^
+../Socket/socket.cpp:200:3: note: in expansion of macro ‘dp’
+   dp(4, "ioctl() - get mac");
+   ^~
+In file included from ../Socket/../pch.h:43:0,
+                 from ../Socket/Socket.h:11,
+                 from ../Socket/socket.cpp:9:
+../Socket/socket.cpp:202:55: error: request for member ‘ifr_ifru’ in ‘ifrMac’, which is of non-class type ‘ifreq [256]’
+  Convert_mac( ether_ntoa((struct ether_addr *)(ifrMac.ifr_hwaddr.sa_data)), Mac_addr, sizeof(Mac_addr) -1 );
+                                                       ^
+../Socket/socket.cpp:205:15: error: no match for call to ‘(std::__cxx11::string {aka std::__cxx11::basic_string<char>}) (char [20])’
+  str(Mac_addr2);
+               ^
+../Socket/socket.cpp: In function ‘void* Recieve_Function(void*)’:
+../Socket/socket.cpp:503:30: warning: unused variable ‘nChecksumFlag’ [-Wunused-variable]
+  int str_len, restBufCnt =0, nChecksumFlag =0;
+                              ^~~~~~~~~~~~~
+../Socket/socket.cpp: In member function ‘bool Socket::GetSocketMsg(BYTE*, int)’:
+../Socket/socket.cpp:685:9: warning: unused variable ‘n’ [-Wunused-variable]
+     int n;
+         ^
+make: *** [Socket/subdir.mk:26: Socket/socket.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+19:33:25 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In constructor ‘Socket::Socket()’:
+../Socket/socket.cpp:40:13: warning: converting to non-pointer type ‘pthread_t {aka long unsigned int}’ from NULL [-Wconversion-null]
+  p_thread = NULL;
+             ^~~~
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:177:27: warning: NULL used in arithmetic [-Wpointer-arith]
+   if(pAddr->sa_data[i] != NULL) {
+                           ^~~~
+../Socket/socket.cpp:198:16: error: request for member ‘ifrn_name’ in ‘ifrMac’, which is of non-class type ‘ifreq [256]’
+  strcpy(ifrMac.ifrn_name, "eth0");
+                ^~~~~~~~~
+In file included from ../Socket/Socket.h:11:0,
+                 from ../Socket/socket.cpp:9:
+../Socket/../pch.h:65:110: warning: format ‘%d’ expects argument of type ‘int’, but argument 4 has type ‘const char*’ [-Wformat=]
+ #define dp(n, fmt, args...) if (DEBUG_LEVEL_ <= n) fprintf(stderr, "%s:%d,", fmt, __FILE__, __LINE__, ## args)
+                                                                                                              ^
+../Socket/socket.cpp:200:3: note: in expansion of macro ‘dp’
+   dp(4, "ioctl() - get mac");
+   ^~
+../Socket/../pch.h:65:110: warning: too many arguments for format [-Wformat-extra-args]
+ #define dp(n, fmt, args...) if (DEBUG_LEVEL_ <= n) fprintf(stderr, "%s:%d,", fmt, __FILE__, __LINE__, ## args)
+                                                                                                              ^
+../Socket/socket.cpp:200:3: note: in expansion of macro ‘dp’
+   dp(4, "ioctl() - get mac");
+   ^~
+In file included from ../Socket/../pch.h:43:0,
+                 from ../Socket/Socket.h:11,
+                 from ../Socket/socket.cpp:9:
+../Socket/socket.cpp:202:55: error: request for member ‘ifr_ifru’ in ‘ifrMac’, which is of non-class type ‘ifreq [256]’
+  Convert_mac( ether_ntoa((struct ether_addr *)(ifrMac.ifr_hwaddr.sa_data)), Mac_addr, sizeof(Mac_addr) -1 );
+                                                       ^
+../Socket/socket.cpp:205:15: error: no match for call to ‘(std::__cxx11::string {aka std::__cxx11::basic_string<char>}) (char [20])’
+  str(Mac_addr2);
+               ^
+../Socket/socket.cpp: In function ‘void* Recieve_Function(void*)’:
+../Socket/socket.cpp:503:30: warning: unused variable ‘nChecksumFlag’ [-Wunused-variable]
+  int str_len, restBufCnt =0, nChecksumFlag =0;
+                              ^~~~~~~~~~~~~
+../Socket/socket.cpp: In member function ‘bool Socket::GetSocketMsg(BYTE*, int)’:
+../Socket/socket.cpp:685:9: warning: unused variable ‘n’ [-Wunused-variable]
+     int n;
+         ^
+make: *** [Socket/subdir.mk:26: Socket/socket.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+19:34:15 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In constructor ‘Socket::Socket()’:
+../Socket/socket.cpp:40:13: warning: converting to non-pointer type ‘pthread_t {aka long unsigned int}’ from NULL [-Wconversion-null]
+  p_thread = NULL;
+             ^~~~
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:177:27: warning: NULL used in arithmetic [-Wpointer-arith]
+   if(pAddr->sa_data[i] != NULL) {
+                           ^~~~
+In file included from ../Socket/../pch.h:43:0,
+                 from ../Socket/Socket.h:11,
+                 from ../Socket/socket.cpp:9:
+../Socket/socket.cpp:198:16: error: request for member ‘ifr_ifrn’ in ‘ifrMac’, which is of non-class type ‘ifreq [256]’
+  strcpy(ifrMac.ifr_name, "eth0");
+                ^
+In file included from ../Socket/Socket.h:11:0,
+                 from ../Socket/socket.cpp:9:
+../Socket/../pch.h:65:110: warning: format ‘%d’ expects argument of type ‘int’, but argument 4 has type ‘const char*’ [-Wformat=]
+ #define dp(n, fmt, args...) if (DEBUG_LEVEL_ <= n) fprintf(stderr, "%s:%d,", fmt, __FILE__, __LINE__, ## args)
+                                                                                                              ^
+../Socket/socket.cpp:200:3: note: in expansion of macro ‘dp’
+   dp(4, "ioctl() - get mac");
+   ^~
+../Socket/../pch.h:65:110: warning: too many arguments for format [-Wformat-extra-args]
+ #define dp(n, fmt, args...) if (DEBUG_LEVEL_ <= n) fprintf(stderr, "%s:%d,", fmt, __FILE__, __LINE__, ## args)
+                                                                                                              ^
+../Socket/socket.cpp:200:3: note: in expansion of macro ‘dp’
+   dp(4, "ioctl() - get mac");
+   ^~
+In file included from ../Socket/../pch.h:43:0,
+                 from ../Socket/Socket.h:11,
+                 from ../Socket/socket.cpp:9:
+../Socket/socket.cpp:202:55: error: request for member ‘ifr_ifru’ in ‘ifrMac’, which is of non-class type ‘ifreq [256]’
+  Convert_mac( ether_ntoa((struct ether_addr *)(ifrMac.ifr_hwaddr.sa_data)), Mac_addr, sizeof(Mac_addr) -1 );
+                                                       ^
+../Socket/socket.cpp:205:15: error: no match for call to ‘(std::__cxx11::string {aka std::__cxx11::basic_string<char>}) (char [20])’
+  str(Mac_addr2);
+               ^
+../Socket/socket.cpp: In function ‘void* Recieve_Function(void*)’:
+../Socket/socket.cpp:503:30: warning: unused variable ‘nChecksumFlag’ [-Wunused-variable]
+  int str_len, restBufCnt =0, nChecksumFlag =0;
+                              ^~~~~~~~~~~~~
+../Socket/socket.cpp: In member function ‘bool Socket::GetSocketMsg(BYTE*, int)’:
+../Socket/socket.cpp:685:9: warning: unused variable ‘n’ [-Wunused-variable]
+     int n;
+         ^
+make: *** [Socket/subdir.mk:26: Socket/socket.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+19:34:34 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In constructor ‘Socket::Socket()’:
+../Socket/socket.cpp:40:13: warning: converting to non-pointer type ‘pthread_t {aka long unsigned int}’ from NULL [-Wconversion-null]
+  p_thread = NULL;
+             ^~~~
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:177:27: warning: NULL used in arithmetic [-Wpointer-arith]
+   if(pAddr->sa_data[i] != NULL) {
+                           ^~~~
+In file included from ../Socket/Socket.h:11:0,
+                 from ../Socket/socket.cpp:9:
+../Socket/../pch.h:65:110: warning: format ‘%d’ expects argument of type ‘int’, but argument 4 has type ‘const char*’ [-Wformat=]
+ #define dp(n, fmt, args...) if (DEBUG_LEVEL_ <= n) fprintf(stderr, "%s:%d,", fmt, __FILE__, __LINE__, ## args)
+                                                                                                              ^
+../Socket/socket.cpp:200:3: note: in expansion of macro ‘dp’
+   dp(4, "ioctl() - get mac");
+   ^~
+../Socket/../pch.h:65:110: warning: too many arguments for format [-Wformat-extra-args]
+ #define dp(n, fmt, args...) if (DEBUG_LEVEL_ <= n) fprintf(stderr, "%s:%d,", fmt, __FILE__, __LINE__, ## args)
+                                                                                                              ^
+../Socket/socket.cpp:200:3: note: in expansion of macro ‘dp’
+   dp(4, "ioctl() - get mac");
+   ^~
+../Socket/socket.cpp:205:15: error: no match for call to ‘(std::__cxx11::string {aka std::__cxx11::basic_string<char>}) (char [20])’
+  str(Mac_addr2);
+               ^
+../Socket/socket.cpp: In function ‘void* Recieve_Function(void*)’:
+../Socket/socket.cpp:503:30: warning: unused variable ‘nChecksumFlag’ [-Wunused-variable]
+  int str_len, restBufCnt =0, nChecksumFlag =0;
+                              ^~~~~~~~~~~~~
+../Socket/socket.cpp: In member function ‘bool Socket::GetSocketMsg(BYTE*, int)’:
+../Socket/socket.cpp:685:9: warning: unused variable ‘n’ [-Wunused-variable]
+     int n;
+         ^
+make: *** [Socket/subdir.mk:26: Socket/socket.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+19:34:52 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In constructor ‘Socket::Socket()’:
+../Socket/socket.cpp:40:13: warning: converting to non-pointer type ‘pthread_t {aka long unsigned int}’ from NULL [-Wconversion-null]
+  p_thread = NULL;
+             ^~~~
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:177:27: warning: NULL used in arithmetic [-Wpointer-arith]
+   if(pAddr->sa_data[i] != NULL) {
+                           ^~~~
+In file included from ../Socket/Socket.h:11:0,
+                 from ../Socket/socket.cpp:9:
+../Socket/../pch.h:65:110: warning: format ‘%d’ expects argument of type ‘int’, but argument 4 has type ‘const char*’ [-Wformat=]
+ #define dp(n, fmt, args...) if (DEBUG_LEVEL_ <= n) fprintf(stderr, "%s:%d,", fmt, __FILE__, __LINE__, ## args)
+                                                                                                              ^
+../Socket/socket.cpp:200:3: note: in expansion of macro ‘dp’
+   dp(4, "ioctl() - get mac");
+   ^~
+../Socket/../pch.h:65:110: warning: too many arguments for format [-Wformat-extra-args]
+ #define dp(n, fmt, args...) if (DEBUG_LEVEL_ <= n) fprintf(stderr, "%s:%d,", fmt, __FILE__, __LINE__, ## args)
+                                                                                                              ^
+../Socket/socket.cpp:200:3: note: in expansion of macro ‘dp’
+   dp(4, "ioctl() - get mac");
+   ^~
+../Socket/socket.cpp: In function ‘void* Recieve_Function(void*)’:
+../Socket/socket.cpp:503:30: warning: unused variable ‘nChecksumFlag’ [-Wunused-variable]
+  int str_len, restBufCnt =0, nChecksumFlag =0;
+                              ^~~~~~~~~~~~~
+../Socket/socket.cpp: In member function ‘bool Socket::GetSocketMsg(BYTE*, int)’:
+../Socket/socket.cpp:685:9: warning: unused variable ‘n’ [-Wunused-variable]
      int n;
          ^
 Finished building: ../Socket/socket.cpp
@@ -63,6 +500,10 @@ Finished building: ../Main.cpp
 Building file: ../MsgHandler.cpp
 Invoking: Cross G++ Compiler
 arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgHandler.d" -MT"MsgHandler.o" -o "MsgHandler.o" "../MsgHandler.cpp"
+../MsgHandler.cpp: In member function ‘int MsgHandler::DataFlag_Initialize(int)’:
+../MsgHandler.cpp:905:1: warning: no return statement in function returning non-void [-Wreturn-type]
+ }
+ ^
 Finished building: ../MsgHandler.cpp
  
 Building file: ../MsgQueue.cpp
@@ -75,25 +516,61 @@ Invoking: Cross G++ Linker
 arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
 Finished building target: Demo
  
-14:37:59 **** Incremental Build of configuration Debug for project Demo ****
+19:36:22 **** Incremental Build of configuration Debug for project Demo ****
 make all 
-make: 'all'을(를) 위해 할 일이 없습니다.
-15:12:06 **** Incremental Build of configuration Debug for project Demo ****
-make all 
-make: 'all'을(를) 위해 할 일이 없습니다.
-14:32:15 **** Incremental Build of configuration Debug for project Demo ****
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In constructor ‘Socket::Socket()’:
+../Socket/socket.cpp:40:13: warning: converting to non-pointer type ‘pthread_t {aka long unsigned int}’ from NULL [-Wconversion-null]
+  p_thread = NULL;
+             ^~~~
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:177:27: warning: NULL used in arithmetic [-Wpointer-arith]
+   if(pAddr->sa_data[i] != NULL) {
+                           ^~~~
+In file included from ../Socket/Socket.h:11:0,
+                 from ../Socket/socket.cpp:9:
+../Socket/../pch.h:65:110: warning: format ‘%d’ expects argument of type ‘int’, but argument 4 has type ‘const char*’ [-Wformat=]
+ #define dp(n, fmt, args...) if (DEBUG_LEVEL_ <= n) fprintf(stderr, "%s:%d,", fmt, __FILE__, __LINE__, ## args)
+                                                                                                              ^
+../Socket/socket.cpp:200:3: note: in expansion of macro ‘dp’
+   dp(4, "ioctl() - get mac");
+   ^~
+../Socket/../pch.h:65:110: warning: too many arguments for format [-Wformat-extra-args]
+ #define dp(n, fmt, args...) if (DEBUG_LEVEL_ <= n) fprintf(stderr, "%s:%d,", fmt, __FILE__, __LINE__, ## args)
+                                                                                                              ^
+../Socket/socket.cpp:200:3: note: in expansion of macro ‘dp’
+   dp(4, "ioctl() - get mac");
+   ^~
+../Socket/socket.cpp: In function ‘void* Recieve_Function(void*)’:
+../Socket/socket.cpp:505:30: warning: unused variable ‘nChecksumFlag’ [-Wunused-variable]
+  int str_len, restBufCnt =0, nChecksumFlag =0;
+                              ^~~~~~~~~~~~~
+../Socket/socket.cpp: In member function ‘bool Socket::GetSocketMsg(BYTE*, int)’:
+../Socket/socket.cpp:687:9: warning: unused variable ‘n’ [-Wunused-variable]
+     int n;
+         ^
+Finished building: ../Socket/socket.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+19:38:40 **** Incremental Build of configuration Debug for project Demo ****
 make all 
 Building file: ../uart/uart.cpp
 Invoking: Cross G++ Compiler
 arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"uart/uart.d" -MT"uart/uart.o" -o "uart/uart.o" "../uart/uart.cpp"
 ../uart/uart.cpp: In function ‘void* uart_Rx_Thread(void*)’:
-../uart/uart.cpp:71:60: warning: format ‘%d’ expects a matching ‘int’ argument [-Wformat=]
+../uart/uart.cpp:69:60: warning: format ‘%d’ expects a matching ‘int’ argument [-Wformat=]
      printf("rx[%d] : %x, len : %d continue \n", rx2[0], len);
                                                             ^
-../uart/uart.cpp:127:10: warning: unused variable ‘j’ [-Wunused-variable]
+../uart/uart.cpp:122:10: warning: unused variable ‘j’ [-Wunused-variable]
       int j=0;
           ^
-../uart/uart.cpp:94:13: warning: unused variable ‘cnt’ [-Wunused-variable]
+../uart/uart.cpp:89:13: warning: unused variable ‘cnt’ [-Wunused-variable]
     int i=0, cnt =0;   
              ^~~
 ../uart/uart.cpp:52:6: warning: variable ‘nSecondPutByte’ set but not used [-Wunused-but-set-variable]
@@ -112,11 +589,6 @@ Invoking: Cross G++ Compiler
 arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
 Finished building: ../Socket/SocketHandler.cpp
  
-Building file: ../Socket/SocketMsgQueue.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/SocketMsgQueue.d" -MT"Socket/SocketMsgQueue.o" -o "Socket/SocketMsgQueue.o" "../Socket/SocketMsgQueue.cpp"
-Finished building: ../Socket/SocketMsgQueue.cpp
- 
 Building file: ../Socket/socket.cpp
 Invoking: Cross G++ Compiler
 arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
@@ -125,15 +597,29 @@ arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 
   p_thread = NULL;
              ^~~~
 ../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
-../Socket/socket.cpp:174:27: warning: NULL used in arithmetic [-Wpointer-arith]
+../Socket/socket.cpp:176:27: warning: NULL used in arithmetic [-Wpointer-arith]
    if(pAddr->sa_data[i] != NULL) {
                            ^~~~
+In file included from ../Socket/Socket.h:11:0,
+                 from ../Socket/socket.cpp:9:
+../Socket/../pch.h:65:110: warning: format ‘%d’ expects argument of type ‘int’, but argument 4 has type ‘const char*’ [-Wformat=]
+ #define dp(n, fmt, args...) if (DEBUG_LEVEL_ <= n) fprintf(stderr, "%s:%d,", fmt, __FILE__, __LINE__, ## args)
+                                                                                                              ^
+../Socket/socket.cpp:199:3: note: in expansion of macro ‘dp’
+   dp(4, "ioctl() - get mac");
+   ^~
+../Socket/../pch.h:65:110: warning: too many arguments for format [-Wformat-extra-args]
+ #define dp(n, fmt, args...) if (DEBUG_LEVEL_ <= n) fprintf(stderr, "%s:%d,", fmt, __FILE__, __LINE__, ## args)
+                                                                                                              ^
+../Socket/socket.cpp:199:3: note: in expansion of macro ‘dp’
+   dp(4, "ioctl() - get mac");
+   ^~
 ../Socket/socket.cpp: In function ‘void* Recieve_Function(void*)’:
-../Socket/socket.cpp:468:30: warning: unused variable ‘nChecksumFlag’ [-Wunused-variable]
+../Socket/socket.cpp:504:30: warning: unused variable ‘nChecksumFlag’ [-Wunused-variable]
   int str_len, restBufCnt =0, nChecksumFlag =0;
                               ^~~~~~~~~~~~~
 ../Socket/socket.cpp: In member function ‘bool Socket::GetSocketMsg(BYTE*, int)’:
-../Socket/socket.cpp:634:9: warning: unused variable ‘n’ [-Wunused-variable]
+../Socket/socket.cpp:686:9: warning: unused variable ‘n’ [-Wunused-variable]
      int n;
          ^
 Finished building: ../Socket/socket.cpp
@@ -146,6 +632,10 @@ Finished building: ../Main.cpp
 Building file: ../MsgHandler.cpp
 Invoking: Cross G++ Compiler
 arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgHandler.d" -MT"MsgHandler.o" -o "MsgHandler.o" "../MsgHandler.cpp"
+../MsgHandler.cpp: In member function ‘int MsgHandler::DataFlag_Initialize(int)’:
+../MsgHandler.cpp:905:1: warning: no return statement in function returning non-void [-Wreturn-type]
+ }
+ ^
 Finished building: ../MsgHandler.cpp
  
 Building file: ../MsgQueue.cpp
@@ -158,3 +648,162 @@ Invoking: Cross G++ Linker
 arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
 Finished building target: Demo
  
+19:43:54 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In constructor ‘Socket::Socket()’:
+../Socket/socket.cpp:40:13: warning: converting to non-pointer type ‘pthread_t {aka long unsigned int}’ from NULL [-Wconversion-null]
+  p_thread = NULL;
+             ^~~~
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:176:27: warning: NULL used in arithmetic [-Wpointer-arith]
+   if(pAddr->sa_data[i] != NULL) {
+                           ^~~~
+In file included from ../Socket/Socket.h:11:0,
+                 from ../Socket/socket.cpp:9:
+../Socket/../pch.h:65:110: warning: format ‘%d’ expects argument of type ‘int’, but argument 4 has type ‘const char*’ [-Wformat=]
+ #define dp(n, fmt, args...) if (DEBUG_LEVEL_ <= n) fprintf(stderr, "%s:%d,", fmt, __FILE__, __LINE__, ## args)
+                                                                                                              ^
+../Socket/socket.cpp:199:3: note: in expansion of macro ‘dp’
+   dp(4, "ioctl() - get mac");
+   ^~
+../Socket/../pch.h:65:110: warning: too many arguments for format [-Wformat-extra-args]
+ #define dp(n, fmt, args...) if (DEBUG_LEVEL_ <= n) fprintf(stderr, "%s:%d,", fmt, __FILE__, __LINE__, ## args)
+                                                                                                              ^
+../Socket/socket.cpp:199:3: note: in expansion of macro ‘dp’
+   dp(4, "ioctl() - get mac");
+   ^~
+../Socket/socket.cpp: In function ‘void* Recieve_Function(void*)’:
+../Socket/socket.cpp:507:30: warning: unused variable ‘nChecksumFlag’ [-Wunused-variable]
+  int str_len, restBufCnt =0, nChecksumFlag =0;
+                              ^~~~~~~~~~~~~
+../Socket/socket.cpp: In member function ‘bool Socket::GetSocketMsg(BYTE*, int)’:
+../Socket/socket.cpp:689:9: warning: unused variable ‘n’ [-Wunused-variable]
+     int n;
+         ^
+Finished building: ../Socket/socket.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+19:44:31 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In constructor ‘Socket::Socket()’:
+../Socket/socket.cpp:40:13: warning: converting to non-pointer type ‘pthread_t {aka long unsigned int}’ from NULL [-Wconversion-null]
+  p_thread = NULL;
+             ^~~~
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:176:27: warning: NULL used in arithmetic [-Wpointer-arith]
+   if(pAddr->sa_data[i] != NULL) {
+                           ^~~~
+In file included from ../Socket/Socket.h:11:0,
+                 from ../Socket/socket.cpp:9:
+../Socket/../pch.h:65:110: warning: format ‘%d’ expects argument of type ‘int’, but argument 4 has type ‘const char*’ [-Wformat=]
+ #define dp(n, fmt, args...) if (DEBUG_LEVEL_ <= n) fprintf(stderr, "%s:%d,", fmt, __FILE__, __LINE__, ## args)
+                                                                                                              ^
+../Socket/socket.cpp:199:3: note: in expansion of macro ‘dp’
+   dp(4, "ioctl() - get mac");
+   ^~
+../Socket/../pch.h:65:110: warning: too many arguments for format [-Wformat-extra-args]
+ #define dp(n, fmt, args...) if (DEBUG_LEVEL_ <= n) fprintf(stderr, "%s:%d,", fmt, __FILE__, __LINE__, ## args)
+                                                                                                              ^
+../Socket/socket.cpp:199:3: note: in expansion of macro ‘dp’
+   dp(4, "ioctl() - get mac");
+   ^~
+../Socket/socket.cpp: In function ‘void* Recieve_Function(void*)’:
+../Socket/socket.cpp:507:30: warning: unused variable ‘nChecksumFlag’ [-Wunused-variable]
+  int str_len, restBufCnt =0, nChecksumFlag =0;
+                              ^~~~~~~~~~~~~
+../Socket/socket.cpp: In member function ‘bool Socket::GetSocketMsg(BYTE*, int)’:
+../Socket/socket.cpp:689:9: warning: unused variable ‘n’ [-Wunused-variable]
+     int n;
+         ^
+Finished building: ../Socket/socket.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+19:45:18 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In constructor ‘Socket::Socket()’:
+../Socket/socket.cpp:40:13: warning: converting to non-pointer type ‘pthread_t {aka long unsigned int}’ from NULL [-Wconversion-null]
+  p_thread = NULL;
+             ^~~~
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:176:27: warning: NULL used in arithmetic [-Wpointer-arith]
+   if(pAddr->sa_data[i] != NULL) {
+                           ^~~~
+In file included from ../Socket/Socket.h:11:0,
+                 from ../Socket/socket.cpp:9:
+../Socket/../pch.h:65:110: warning: format ‘%d’ expects argument of type ‘int’, but argument 4 has type ‘const char*’ [-Wformat=]
+ #define dp(n, fmt, args...) if (DEBUG_LEVEL_ <= n) fprintf(stderr, "%s:%d,", fmt, __FILE__, __LINE__, ## args)
+                                                                                                              ^
+../Socket/socket.cpp:199:3: note: in expansion of macro ‘dp’
+   dp(4, "ioctl() - get mac");
+   ^~
+../Socket/../pch.h:65:110: warning: too many arguments for format [-Wformat-extra-args]
+ #define dp(n, fmt, args...) if (DEBUG_LEVEL_ <= n) fprintf(stderr, "%s:%d,", fmt, __FILE__, __LINE__, ## args)
+                                                                                                              ^
+../Socket/socket.cpp:199:3: note: in expansion of macro ‘dp’
+   dp(4, "ioctl() - get mac");
+   ^~
+../Socket/socket.cpp: In function ‘void* Recieve_Function(void*)’:
+../Socket/socket.cpp:507:30: warning: unused variable ‘nChecksumFlag’ [-Wunused-variable]
+  int str_len, restBufCnt =0, nChecksumFlag =0;
+                              ^~~~~~~~~~~~~
+../Socket/socket.cpp: In member function ‘bool Socket::GetSocketMsg(BYTE*, int)’:
+../Socket/socket.cpp:689:9: warning: unused variable ‘n’ [-Wunused-variable]
+     int n;
+         ^
+Finished building: ../Socket/socket.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+19:50:56 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+make: 'all'을(를) 위해 할 일이 없습니다.
+11:05:43 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+11:15:46 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+make: 'all'을(를) 위해 할 일이 없습니다.
+15:08:44 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+15:09:43 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+make: 'all'을(를) 위해 할 일이 없습니다.

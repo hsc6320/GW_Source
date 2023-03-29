@@ -64,9 +64,7 @@ static void *uart_Rx_Thread(void *param)
 			pthread_mutex_lock(&ctx->mutex);
 			len = pComm->Uart_Read(uartd, rx2, 1024);			
 			pthread_mutex_unlock(&ctx->mutex);
-#if 1			
-			printf("len : %d\n", len);
-
+#if 1
 			if( (rx2[0] == 0) && (len == 1) ) {
 				printf("rx[%d] : %x, len : %d continue \n", rx2[0], len);
 				continue;
@@ -86,10 +84,7 @@ static void *uart_Rx_Thread(void *param)
 				pComm->AppendArray( rx2[restBufCnt], i, rx);
 				restBufCnt++;
 			}
-//			printf("[%d] [%d]", nToTalLen2, nToTalLen);
-//			printf("\n");
-			
-			
+
 			printf("\n***************uart_Rx_Thread uart **********%d*********\n", len);
 			int i=0, cnt =0;			
 			while(1) {

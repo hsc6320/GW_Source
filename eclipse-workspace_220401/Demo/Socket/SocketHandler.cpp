@@ -9,7 +9,7 @@
 
 Socket* pSocket;
 MsgQueue* pUartQueue;
-int nServiceStart_Confirm =0;
+int nServiceStart_Confirm =0, beacon_count =0;
 std::queue<std::vector<BYTE>> vTagData;
 
 SocketHandler::SocketHandler()
@@ -49,9 +49,13 @@ int SocketHandler::SendMessage(int msg, PRE_DEFINE::S_PACKET packet)
 	//	printf("Socket SendMsg : CONNECT_ALIVE_CHECK\n");
 		m_iSocketArive = GateWay_Status_Check();
 		break;
+	case SERVICESTART_CONFIRM:
+		printf("Socket SendMsg : SERVICESTART_CONFIRM\n");
+		SendSocket_Data(packet);
+		break;
 	default :
 		printf("Socket SendMsg : default : 0x%x\n", packet.header.type);
-		SendSocket_Data(packet);
+	//	SendSocket_Data(packet);
 		break;
 	}
 
@@ -81,18 +85,27 @@ int SocketHandler::SendSocket_Data(PRE_DEFINE::S_PACKET packet)
 	printf("%x ", pu8data[iBufcnt]);
 	pu8data[++iBufcnt] = packet.header.type; //SERVICESTART_CONFIRM;	//msg type
 	printf("%x ", pu8data[iBufcnt]);
-	pu8data[++iBufcnt] = packet.header.length;//0x01;	//Data Length
+	pu8data[++iBufcnt] = packet.header.length;//0x02;	//Data Length
 	printf("%x ", pu8data[iBufcnt]);
 	pu8data[++iBufcnt] = packet.header.length >> 8;
 	printf("%x ", pu8data[iBufcnt]);
 	for(int i=0; i< (int)packet.header.length; i++) {
-		if(nServiceStart_Confirm) {
-			pu8data[++iBufcnt] = 0x06;
+		if(i==0) {
+			if( nServiceStart_Confirm ) {
+				pu8data[++iBufcnt] = 0x06;
+			}
+			else {
+				pu8data[++iBufcnt] = packet.pu8Data[i];//0x01;
+			}
+			printf("%x ", pu8data[iBufcnt]);
 		}
 		else {
-			pu8data[++iBufcnt] = packet.pu8Data[i];//0x01;
-		}
-		printf("%x ", pu8data[iBufcnt]);
+			pu8data[++iBufcnt] = packet.pu8Data[i];
+			beacon_count = packet.pu8Data[i];
+			beacon_count--;
+			//pu8data[++iBufcnt] = packet.pu8Data[i];//0x01;
+			printf("(bEACON COUNT : %x ", beacon_count);
+		}		
 	}
 
 	u8Checksum = GetChecksum(pu8data, iBufcnt);
@@ -405,6 +418,11 @@ BYTE SocketHandler::GetChecksum(BYTE* puData, int len)
 	printf("(check nsum : %x) ", sum);
 
 	return sum;
+}
+
+void SocketHandler::SetBeconCount(int* cnt)
+{
+	*cnt = beacon_count;
 }
 
 void SocketHandler::SetMsgQueueHwnd(MsgQueue* soc)
