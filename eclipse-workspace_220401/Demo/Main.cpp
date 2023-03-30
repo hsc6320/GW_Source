@@ -265,7 +265,8 @@ int Main_ServiceStart_TagAssociation_Init()
 			case 1:
 				if(m_pSocket->m_iSocketReceiveEnd) {
 					m_pSocket->m_iSocketReceiveEnd =0;
-					m_pSocketHandle->GetServerID(ByteToWord(m_pSocket->m_SocketMsg_vec[MSG_SADDRONE], m_pSocket->m_SocketMsg_vec[MSG_SADDRZERO]));
+					m_pSocketHandle->GetServerID(ByteToWord(m_pSocket->m_SocketMsg_vec[MSG_DADDRONE], m_pSocket->m_SocketMsg_vec[MSG_DADDRZERO]));
+					
 					msg++;
 				}
 				break;
