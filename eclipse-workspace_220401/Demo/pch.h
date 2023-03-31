@@ -40,9 +40,11 @@
 //#include <linux/time.h>
 //#include <linux/kernel.h>
 
+#include <netdb.h>
 #include <net/if.h>
 #include <netinet/ether.h>
 #include <net/if.h>
+#include <arpa/inet.h>
 
 
 #include "Msg_Define.h"

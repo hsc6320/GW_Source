@@ -65,7 +65,6 @@ Socket::~Socket()
 	delete m_pSocMsgqueue;
 }
 
-//aaa
 int Socket::Socket_Init(/*int argc, char *argv[]*/)
 {
 	//socket_ctx_t* ctx = NULL;
@@ -76,12 +75,13 @@ int Socket::Socket_Init(/*int argc, char *argv[]*/)
 	struct sockaddr_in serv_addr;
 
 	struct sockaddr*	pAddr(NULL);
-
+	struct hostent *hostinfo;
 	size_t	nNIC;
 	int nRet =0, retEpoll = 0;
 	int fd2, fd3, n;
 
-	char buf[13];
+	char buf[50];
+	char *domainName = "haem.rocketsci.io";
 	char buf2[5];
 	char Mac_addr[20];	
 
@@ -183,17 +183,27 @@ int Socket::Socket_Init(/*int argc, char *argv[]*/)
 	printf("MY IP %s ", m_IP_String.c_str());
 	printf("---------------------\n");
 
-	fd2 = open("ip", O_RDONLY);
-	if(fd2 < 0) {
-		printf("IP file open error\n");
-		exit(1);
-	}
-	n = read(fd2, buf, 1024);
-	printf("SERVER IP : ");
-	for(int i=0; i<n; i++) {
-		printf("%c",buf[i]);
-	}
+//	fd2 = open("ip", O_RDONLY);
+//	if(fd2 < 0) {
+//		printf("IP file open error\n");
+//		exit(1);
+//	}
 
+//	n = read(fd2, buf, 1024);
+//	printf("Domain Address(%d) : ", n);
+//	for(int i=0; i<n; i++) {
+//		printf("%c",buf[i]);
+//	}
+	printf("\n");
+	th_delay(1000);
+	th_delay(1000);
+	th_delay(1000);
+
+	hostinfo= gethostbyname(domainName);
+	for(int k=0; hostinfo->h_addr_list[k] != NULL; k++) {
+		printf("addrList : %s\n", inet_ntoa(*(struct in_addr*)hostinfo->h_addr_list[k]));
+	}
+	
 	strcpy(ifrMac.ifr_name, "eth0");
 	if(ioctl(m_serv_sock, SIOCGIFHWADDR, &ifrMac)<0) {
 		dp(4, "ioctl() - get mac");
@@ -223,14 +233,15 @@ int Socket::Socket_Init(/*int argc, char *argv[]*/)
 
 	if(close(fd3) == -1)
 		printf("Failed to Close file fd3\n");
-	if(close(fd2) == -1)
-		printf("Failed to Close file fd2\n");
+//	if(close(fd2) == -1)
+//		printf("Failed to Close file fd2\n");
 
 #define PORT atoi(buf2)
 
 	memset(&serv_addr, 0, sizeof(serv_addr));
 	serv_addr.sin_family = AF_INET;
-	serv_addr.sin_addr.s_addr = inet_addr(buf);
+	memcpy((char*)&serv_addr.sin_addr, hostinfo->h_addr_list[0], hostinfo->h_length);
+	//serv_addr.sin_addr.s_addr = inet_addr(buf);
 
 	serv_addr.sin_port = htons(PORT/*atoi(argv[2])*/);
 
@@ -504,7 +515,7 @@ void *Recieve_Function(void* rcvDt)
 
 	time_t ct;
 	struct tm tm;
-	int str_len, restBufCnt =0, nChecksumFlag =0;
+	int str_len, restBufCnt =0;
 	WORD CheckSumIndex =0;
 	BYTE u8CheckSum =0;
 	BYTE u8data[1024] = {0, };
@@ -668,6 +679,22 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 			//printf("Msg VAL : %x %x %x %x %x\n", p8udata[MSG_STX], p8udata[MSGTYPE], p8udata[DataLen-3], p8udata[DataLen-2], p8udata[DataLen-1]);
 			if(p8udata[MSGTYPE] == BSN_START) {
 				m_nServerMessge_End =1;
+				m_SocketArrayDataDownMsg.push_back(m_SocketQueue_vec);
+				m_SocketQueue_vec.clear();
+				m_SocketQueue_vec.shrink_to_fit();
+
+				m_SocketArrayDataIndicateMsg.push_back(m_SocketQueue_vec);
+				m_SocketQueue_vec.clear();
+				m_SocketQueue_vec.shrink_to_fit();
+
+				for(int i=0; i<4096; i++) {
+					for(int j=0; j<2048; j++) {
+						OneData[i][j] =0x0;
+						TwoData[i][j] =0x0;
+					}
+				}
+				
+				
 				m_pSocMsgqueue->BSN_MSG_ACK(p8udata);
 				for(int i=0; i<15; i++) {
 					printf("%x ", p8udata[i]);
@@ -680,18 +707,26 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 				return 1;
 			}
 			else if (p8udata[MSGTYPE] == CONNECT_SOCKET_ALIVE_CHECK) {
-				for(int i=0; i<Len; i++) {
+				/*for(int i=0; i<Len; i++) {
 					printf("%x ", p8udata[i]);
 				}
-				printf("\n");
+				printf("\n");*/
+
+				if(m_p8uData != NULL) {
+					m_p8uData = NULL;
+				}
+				m_p8uData = new BYTE[DataLen];
+				memcpy(m_p8uData, p8udata, DataLen);
+				
+				m_iSocketReceiveEnd =1;
+				m_iBypassSocketToUart = 1;
 			}
 			else if(p8udata[MSGTYPE] == BSN_DATA_END_REQ) {
-				int n;
 				m_SocketQueue_vec.clear();
 				m_SocketQueue_vec.shrink_to_fit();
 				
 				for(int i=0; i<m_nSocketArrayDataDownCnt; i++) {
-					for(int j =1; j<512; j++) {
+					for(int j =1; j<4095; j++) {
 					//	printf("%x ", OneData[i][j]);
 						if( (OneData[i][j-3] == 0xa5) && (OneData[i][j-2] == 0x5a) && (OneData[i][j-1] == 0x7e) ) {
 							index = j;
@@ -718,14 +753,14 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 				m_SocketQueue_vec.clear();
 				m_SocketQueue_vec.shrink_to_fit();
 				for(int i=0; i<m_nSocketArrayDataDownCnt; i++) {
-					for(int j =1; j<512; j++) {
+					for(int j =1; j<4095; j++) {
 						if( (TwoData[i][j-3] == 0xa5) && (TwoData[i][j-2] == 0x5a) && (TwoData[i][j-1] == 0x7e) ) {
 							index = j;
 					//		printf("\nIndex : %d\n", index);
 							break;
 						}
 					}
-					printf("\n");
+			//		printf("\n");
 					
 				//	printf("TwoData[%d] size : %d\n", i, index);
 					for(int j=0; j<index; j++) {

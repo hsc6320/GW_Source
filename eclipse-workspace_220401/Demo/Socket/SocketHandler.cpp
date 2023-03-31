@@ -229,16 +229,22 @@ int SocketHandler::Registration_Request()
 	pu8data[++iBufcnt] = packet.GateWayID >> 8;		//gateway ID
 	
 	pu8data[++iBufcnt] = REGISTRATION_REQUEST;	//msg type
-	pu8data[++iBufcnt] = 0x07;
+	pu8data[++iBufcnt] = 0x0d;
 	pu8data[++iBufcnt] = 0;
 	
-	pu8data[++iBufcnt] = 0;
-	pu8data[++iBufcnt] = 0;
 	pu8data[++iBufcnt] = 1;
-	pu8data[++iBufcnt] = 0;
-	pu8data[++iBufcnt] = 0;
-	pu8data[++iBufcnt] = 0;
-	pu8data[++iBufcnt] = 0;
+	pu8data[++iBufcnt] = pSocket->m_szMac_addr[0];
+	pu8data[++iBufcnt] = pSocket->m_szMac_addr[1];
+	pu8data[++iBufcnt] = pSocket->m_szMac_addr[3];
+	pu8data[++iBufcnt] = pSocket->m_szMac_addr[4];
+	pu8data[++iBufcnt] = pSocket->m_szMac_addr[6];
+	pu8data[++iBufcnt] = pSocket->m_szMac_addr[7];
+	pu8data[++iBufcnt] = pSocket->m_szMac_addr[9];
+	pu8data[++iBufcnt] = pSocket->m_szMac_addr[10];
+	pu8data[++iBufcnt] = pSocket->m_szMac_addr[12];
+	pu8data[++iBufcnt] = pSocket->m_szMac_addr[13];
+	pu8data[++iBufcnt] = pSocket->m_szMac_addr[15];
+	pu8data[++iBufcnt] = pSocket->m_szMac_addr[16];
 
 	u8Checksum = GetChecksum(pu8data, iBufcnt);
 	pu8data[++iBufcnt] = u8Checksum; //0x07;

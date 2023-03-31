@@ -320,10 +320,24 @@ int Main_ServiceStart_TagAssociation_Init()
 int Main_ByPass_SocketToUart()
 {	
 	if(m_pSocket->m_iBypassSocketToUart && m_pSocket->m_iSocketReceiveEnd) {
+		timer_delete(firstTimerID);
+		Set_WaitTimer(&firstTimerID, 30, 0);
+	
 		printf("Main_ByPass_SocketToUart() : ");
 		for(int i=0; i<m_pSocket->m_ReceiveData_len; i++) {
 			printf("%x ", m_pSocket->m_p8uData[i]);
 		}
+		
+		if(m_pSocket->m_p8uData[MSGTYPE] == CONNECT_SOCKET_ALIVE_CHECK) {
+			printf("CONNECT_SOCKET_ALIVE_CHECK\n");
+			delete[] m_pSocket->m_p8uData;
+			m_pSocket->m_p8uData = NULL;
+			m_pSocket->m_iBypassSocketToUart =0;
+			m_pSocket->m_iSocketReceiveEnd =0;
+			return 1;
+		}
+		
+		
 		m_pMsgHandler->BypassSocketToUart(m_pSocket->m_p8uData,	m_pSocket->m_ReceiveData_len, m_pSocket->m_SocketMsg_vec[MSGTYPE]);
 
 		delete[] m_pSocket->m_p8uData;
@@ -333,7 +347,7 @@ int Main_ByPass_SocketToUart()
 		m_pSocket->m_iSocketReceiveEnd =0;
 
 	}
-	else if(m_pSocket->m_iSocketReceiveQueue) {
+	else if(m_pSocket->m_iSocketReceiveQueue) {	
 		m_pSocket->m_iSocketReceiveQueue =0;
 		TagAssociation_Sort();
 		m_pMsgHandler->SetSocketArray(m_pSocket->m_SocketArrayDataDownMsg, m_pSocket->m_SocketArrayDataIndicateMsg);
@@ -1139,6 +1153,13 @@ void PrintfHello(int sig, siginfo_t* si, void* uc)
 	tidp = (void**)(si->si_value.sival_ptr);
 
 	if(*tidp == firstTimerID) {
+		timer_delete(firstTimerID);
+		printf("Status Check :%d , %d, %d \n", m_pSocket->m_iSocketReceiveQueue
+									, m_pSocket->m_iBypassSocketToUart, m_pSocket->m_iSocketReceiveEnd);
+		printf("Server Connect Timeout : %d\n", m_pSocketHandle->m_iSocketArive);
+		m_pSocketHandle->m_iSocketArive =0;
+		
+#if 0
 		printf("Status Check :%d , %d, %d, %d, %d \n", m_pMsgQueue->m_bReadEnd_UartMessage, m_pMsgQueue->m_bUartCommuniFlag
 									, m_pSocket->m_iBypassSocketToUart, m_pSocket->m_iSocketReceiveEnd
 /*,m_pSocket->m_nServerMessge_End*/,m_MainComport->m_iUartRetry);
@@ -1149,7 +1170,7 @@ void PrintfHello(int sig, siginfo_t* si, void* uc)
 		//	timer_delete(firstTimerID);
 		//	printf("Kill Timer firstTimerID\n");
 			Socket_AliveCheck();
-		}
+#endif
 	}
 	else if(*tidp == DataDownTimerID) {
 		firstTimerFlag =0;
@@ -1354,8 +1375,7 @@ int main(int argc, char *argv[])
 		Main_ByPass_SocketToUart();
 		Main_ByPass_UartToSocket();
 
-		if( (m_pSocket->bWorkingThread == 0) ||(m_pSocketHandle->m_iSocketArive <= 0) ){
-			timer_delete(firstTimerID);
+		if( (m_pSocket->bWorkingThread == 0) ||(m_pSocketHandle->m_iSocketArive <= 0) ){			
 			printf("delete Timer\n");
 			ServerReConn();			
 			TagAssociation_Init();
