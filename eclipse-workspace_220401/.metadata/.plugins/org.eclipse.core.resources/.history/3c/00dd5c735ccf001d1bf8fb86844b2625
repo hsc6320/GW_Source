@@ -65,7 +65,7 @@ Socket::~Socket()
 	delete m_pSocMsgqueue;
 }
 
-//aaa
+
 int Socket::Socket_Init(/*int argc, char *argv[]*/)
 {
 	//socket_ctx_t* ctx = NULL;
