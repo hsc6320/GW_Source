@@ -306,6 +306,7 @@ int Main_ServiceStart_TagAssociation_Init()
 		if(loopEnd) {
 			break;
 		}
+	
 		usleep(200);
 	}
 	m_pMsgQueue->m_Uart_ServiceStart_TagAssociation_InitFlag =0;
@@ -322,7 +323,14 @@ int Main_ByPass_SocketToUart()
 	if(m_pSocket->m_iBypassSocketToUart && m_pSocket->m_iSocketReceiveEnd) {
 		timer_delete(firstTimerID);
 		Set_WaitTimer(&firstTimerID, 30, 0);
-	
+
+		printf(": m_iStatusAlive : %d\n", m_pSocket->m_iStatusAlive);
+		if(m_pSocket->m_iStatusAlive) {
+			m_pSocket->m_iStatusAlive =0;
+			m_pSocket->m_iBypassSocketToUart =0;
+			m_pSocket->m_iSocketReceiveEnd =0;
+			return 1;
+		}
 		printf("Main_ByPass_SocketToUart() : ");
 		for(int i=0; i<m_pSocket->m_ReceiveData_len; i++) {
 			printf("%x ", m_pSocket->m_p8uData[i]);
@@ -347,7 +355,8 @@ int Main_ByPass_SocketToUart()
 		m_pSocket->m_iSocketReceiveEnd =0;
 
 	}
-	else if(m_pSocket->m_iSocketReceiveQueue) {	
+	else if(m_pSocket->m_iSocketReceiveQueue) {
+		printf("m_iSocketReceiveQueue  :  %d\n", m_pSocket->m_iSocketReceiveQueue);
 		m_pSocket->m_iSocketReceiveQueue =0;
 		TagAssociation_Sort();
 		m_pMsgHandler->SetSocketArray(m_pSocket->m_SocketArrayDataDownMsg, m_pSocket->m_SocketArrayDataIndicateMsg);
@@ -719,7 +728,13 @@ int Main_TagSort_Arrange(int* iTemp, int* iTemp2)
 {
 	int Temp =0;
 	Temp = *iTemp;
-	printf("\nMain_TagSort_Arrange()\n");	
+	printf("\nMain_TagSort_Arrange()\n");
+	
+	for(int i=0; i<m_pMsgHandler->m_nUartArrayDataDownCnt; i++) {
+		printf("%d ", m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[i]);
+	}
+	printf("\n");
+	printf("\n");
 	
 	printf("m_nMapParity(Total 0x43) : %d\n", m_pMsgQueue->m_nMapParity);
 	Main_TagArrayVal_CheckParity(Temp);
@@ -1156,8 +1171,7 @@ void PrintfHello(int sig, siginfo_t* si, void* uc)
 		timer_delete(firstTimerID);
 		printf("Status Check :%d , %d, %d \n", m_pSocket->m_iSocketReceiveQueue
 									, m_pSocket->m_iBypassSocketToUart, m_pSocket->m_iSocketReceiveEnd);
-		printf("Server Connect Timeout : %d\n", m_pSocketHandle->m_iSocketArive);
-		m_pSocketHandle->m_iSocketArive =0;
+		printf("Server Connect Timeout : %d\n", m_pSocketHandle->m_iSocketArive);		
 		
 #if 0
 		printf("Status Check :%d , %d, %d, %d, %d \n", m_pMsgQueue->m_bReadEnd_UartMessage, m_pMsgQueue->m_bUartCommuniFlag
@@ -1212,6 +1226,8 @@ int TagAssociation_Init()
 {
 	while (1) {
 		if(Main_ServiceStart_TagAssociation_Init() == 0) {
+			th_delay(1000);
+			th_delay(1000);
 			ServerReConn();
 		}
 		else
@@ -1231,7 +1247,7 @@ int ServerReConn()
 		socket_fd = m_pSocket->Socket_Init();
 		if(socket_fd == -1)
 			continue;
-		th_delay(500);
+		th_delay(1000);
 		m_pSocket->Create_Socket_Thread(Main_thread[1], socket_fd);
 		printf("Socket Re-Init End\n");
 		m_pSocket->bWorkingThread = 1;
@@ -1375,11 +1391,12 @@ int main(int argc, char *argv[])
 		Main_ByPass_SocketToUart();
 		Main_ByPass_UartToSocket();
 
-		if( (m_pSocket->bWorkingThread == 0) ||(m_pSocketHandle->m_iSocketArive <= 0) ){			
+		if(m_pSocket->bWorkingThread == 0) {			
 			printf("delete Timer\n");
-			ServerReConn();			
-			TagAssociation_Init();
+			timer_delete(firstTimerID);
 			Set_WaitTimer(&firstTimerID, 30, 0);
+			ServerReConn();
+			TagAssociation_Init();
 			printf("Main TagData\n");
 			while(!m_pMsgQueue->m_Queue.empty()) {
 				m_pSocketHandle->TagData(m_pMsgQueue->m_Queue);
@@ -1425,7 +1442,6 @@ void crit_err_hdlr(int sig_num, siginfo_t * info, void * ucontext) {
   }
   free(messages);
   
-  Set_WaitTimer(&firstTimerID, 0, 0);
   exit(EXIT_FAILURE);
 }
 

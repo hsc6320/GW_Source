@@ -1,83 +1,57 @@
-Wed Mar 29 08:59:43 KST 2023
-ERROR org.eclipse.rse.ui  RSEG1066
---------------------------------------------
-Wed Mar 29 11:16:46 KST 2023
-ERROR org.eclipse.rse.ui  RSEG1066
---------------------------------------------
-Wed Mar 29 15:09:54 KST 2023
+Mon Apr 03 09:37:37 KST 2023
 ERROR org.eclipse.rse.ui  RSEF1002: SUB#0:Sftp: 4: Failure
 --------------------------------------------
-Thu Mar 30 10:20:35 KST 2023
-ERROR org.eclipse.rse.ui  RemoteFileSubSystemImpl.logError()
-org.eclipse.rse.services.clientserver.messages.SystemMessageException: An unexpected error occurred.
-	at org.eclipse.rse.subsystems.files.core.servicesubsystem.FileServiceSubSystem.getRemoteFileObject(FileServiceSubSystem.java:271)
-	at org.eclipse.rse.subsystems.files.core.subsystems.RemoteFileSubSystem.internalResolveFilterString(RemoteFileSubSystem.java:669)
-	at org.eclipse.rse.subsystems.files.core.subsystems.RemoteFileSubSystem.internalResolveFilterStrings(RemoteFileSubSystem.java:492)
-	at org.eclipse.rse.core.subsystems.SubSystem.resolveFilterStrings(SubSystem.java:2304)
-	at org.eclipse.rse.internal.ui.view.SystemViewFilterReferenceAdapter.internalGetChildren(SystemViewFilterReferenceAdapter.java:470)
-	at org.eclipse.rse.internal.ui.view.SystemViewFilterReferenceAdapter.getChildren(SystemViewFilterReferenceAdapter.java:288)
-	at org.eclipse.rse.internal.ui.view.SystemViewFilterReferenceAdapter.getChildren(SystemViewFilterReferenceAdapter.java:296)
-	at org.eclipse.rse.ui.operations.SystemFetchOperation.execute(SystemFetchOperation.java:443)
-	at org.eclipse.rse.ui.operations.SystemFetchOperation.run(SystemFetchOperation.java:184)
-	at org.eclipse.rse.ui.view.AbstractSystemViewAdapter.fetchDeferredChildren(AbstractSystemViewAdapter.java:2292)
-	at org.eclipse.ui.progress.DeferredTreeContentManager$1.run(DeferredTreeContentManager.java:219)
-	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+Mon Apr 03 09:38:13 KST 2023
+ERROR org.eclipse.rse.ui  Exception getting parent's child names in rename dialog
+org.eclipse.rse.services.files.RemoteFileIOException: Operation failed. File system input or output error
+	at org.eclipse.rse.internal.services.ssh.files.SftpFileService.makeSystemMessageException(SftpFileService.java:603)
+	at org.eclipse.rse.internal.services.ssh.files.SftpFileService.getChannel(SftpFileService.java:550)
+	at org.eclipse.rse.internal.services.ssh.files.SftpFileService.getFile(SftpFileService.java:627)
+	at org.eclipse.rse.subsystems.files.core.servicesubsystem.FileServiceSubSystem.updateRemoteFile(FileServiceSubSystem.java:597)
+	at org.eclipse.rse.subsystems.files.core.servicesubsystem.FileServiceSubSystem.list(FileServiceSubSystem.java:578)
+	at org.eclipse.rse.subsystems.files.core.subsystems.RemoteFileSubSystem.list(RemoteFileSubSystem.java:999)
+	at org.eclipse.rse.subsystems.files.core.subsystems.RemoteFileSubSystem.list(RemoteFileSubSystem.java:974)
+	at org.eclipse.rse.subsystems.files.core.subsystems.RemoteFileSubSystem.list(RemoteFileSubSystem.java:960)
+	at org.eclipse.rse.internal.files.ui.view.SystemViewRemoteFileAdapter.getRemoteParentNamesInUse(SystemViewRemoteFileAdapter.java:3423)
+	at org.eclipse.rse.ui.dialogs.SystemRenameSingleDialog.getUniqueNameValidator(SystemRenameSingleDialog.java:458)
+	at org.eclipse.rse.ui.dialogs.SystemRenameSingleDialog.run(SystemRenameSingleDialog.java:426)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:40)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:185)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:5101)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:4579)
+	at org.eclipse.jface.window.Window.runEventLoop(Window.java:823)
+	at org.eclipse.jface.window.Window.open(Window.java:799)
+	at org.eclipse.rse.files.ui.resources.UniversalFileTransferUtility$3.run(UniversalFileTransferUtility.java:3013)
+	at org.eclipse.ui.internal.PendingSyncExec.run(PendingSyncExec.java:68)
+	at org.eclipse.ui.internal.UILockListener.doPendingWork(UILockListener.java:171)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:40)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:185)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:5101)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:4579)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1150)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:338)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1041)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:155)
+	at org.eclipse.ui.internal.Workbench.lambda$3(Workbench.java:644)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:338)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:551)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:156)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:152)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:203)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:136)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:104)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:401)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:255)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:659)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:596)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1467)
+	at org.eclipse.equinox.launcher.Main.main(Main.java:1440)
 --------------------------------------------
-Thu Mar 30 10:20:35 KST 2023
-ERROR org.eclipse.rse.ui  RemoteFileSubSystemImpl.logError()
-org.eclipse.rse.services.clientserver.messages.SystemMessageException: An unexpected error occurred.
-	at org.eclipse.rse.subsystems.files.core.servicesubsystem.FileServiceSubSystem.getRemoteFileObject(FileServiceSubSystem.java:271)
-	at org.eclipse.rse.subsystems.files.core.subsystems.RemoteFileSubSystem.internalResolveFilterString(RemoteFileSubSystem.java:669)
-	at org.eclipse.rse.subsystems.files.core.subsystems.RemoteFileSubSystem.internalResolveFilterStrings(RemoteFileSubSystem.java:492)
-	at org.eclipse.rse.core.subsystems.SubSystem.resolveFilterStrings(SubSystem.java:2304)
-	at org.eclipse.rse.internal.ui.view.SystemViewFilterReferenceAdapter.internalGetChildren(SystemViewFilterReferenceAdapter.java:470)
-	at org.eclipse.rse.internal.ui.view.SystemViewFilterReferenceAdapter.getChildren(SystemViewFilterReferenceAdapter.java:288)
-	at org.eclipse.rse.internal.ui.view.SystemViewFilterReferenceAdapter.getChildren(SystemViewFilterReferenceAdapter.java:296)
-	at org.eclipse.rse.ui.operations.SystemFetchOperation.execute(SystemFetchOperation.java:443)
-	at org.eclipse.rse.ui.operations.SystemFetchOperation.run(SystemFetchOperation.java:184)
-	at org.eclipse.rse.ui.view.AbstractSystemViewAdapter.fetchDeferredChildren(AbstractSystemViewAdapter.java:2292)
-	at org.eclipse.ui.progress.DeferredTreeContentManager$1.run(DeferredTreeContentManager.java:219)
-	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
---------------------------------------------
-Thu Mar 30 10:20:37 KST 2023
-ERROR org.eclipse.rse.ui  RemoteFileSubSystemImpl.logError()
-org.eclipse.rse.services.clientserver.messages.SystemMessageException: An unexpected error occurred.
-	at org.eclipse.rse.subsystems.files.core.servicesubsystem.FileServiceSubSystem.getRemoteFileObject(FileServiceSubSystem.java:271)
-	at org.eclipse.rse.subsystems.files.core.subsystems.RemoteFileSubSystem.internalResolveFilterString(RemoteFileSubSystem.java:669)
-	at org.eclipse.rse.subsystems.files.core.subsystems.RemoteFileSubSystem.internalResolveFilterStrings(RemoteFileSubSystem.java:492)
-	at org.eclipse.rse.core.subsystems.SubSystem.resolveFilterStrings(SubSystem.java:2304)
-	at org.eclipse.rse.internal.ui.view.SystemViewFilterReferenceAdapter.internalGetChildren(SystemViewFilterReferenceAdapter.java:470)
-	at org.eclipse.rse.internal.ui.view.SystemViewFilterReferenceAdapter.getChildren(SystemViewFilterReferenceAdapter.java:288)
-	at org.eclipse.rse.internal.ui.view.SystemViewFilterReferenceAdapter.getChildren(SystemViewFilterReferenceAdapter.java:296)
-	at org.eclipse.rse.ui.operations.SystemFetchOperation.execute(SystemFetchOperation.java:443)
-	at org.eclipse.rse.ui.operations.SystemFetchOperation.run(SystemFetchOperation.java:184)
-	at org.eclipse.rse.ui.view.AbstractSystemViewAdapter.fetchDeferredChildren(AbstractSystemViewAdapter.java:2292)
-	at org.eclipse.ui.progress.DeferredTreeContentManager$1.run(DeferredTreeContentManager.java:219)
-	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
---------------------------------------------
-Thu Mar 30 10:20:37 KST 2023
-ERROR org.eclipse.rse.ui  RemoteFileSubSystemImpl.logError()
-org.eclipse.rse.services.clientserver.messages.SystemMessageException: An unexpected error occurred.
-	at org.eclipse.rse.subsystems.files.core.servicesubsystem.FileServiceSubSystem.getRemoteFileObject(FileServiceSubSystem.java:271)
-	at org.eclipse.rse.subsystems.files.core.subsystems.RemoteFileSubSystem.internalResolveFilterString(RemoteFileSubSystem.java:669)
-	at org.eclipse.rse.subsystems.files.core.subsystems.RemoteFileSubSystem.internalResolveFilterStrings(RemoteFileSubSystem.java:492)
-	at org.eclipse.rse.core.subsystems.SubSystem.resolveFilterStrings(SubSystem.java:2304)
-	at org.eclipse.rse.internal.ui.view.SystemViewFilterReferenceAdapter.internalGetChildren(SystemViewFilterReferenceAdapter.java:470)
-	at org.eclipse.rse.internal.ui.view.SystemViewFilterReferenceAdapter.getChildren(SystemViewFilterReferenceAdapter.java:288)
-	at org.eclipse.rse.internal.ui.view.SystemViewFilterReferenceAdapter.getChildren(SystemViewFilterReferenceAdapter.java:296)
-	at org.eclipse.rse.ui.operations.SystemFetchOperation.execute(SystemFetchOperation.java:443)
-	at org.eclipse.rse.ui.operations.SystemFetchOperation.run(SystemFetchOperation.java:184)
-	at org.eclipse.rse.ui.view.AbstractSystemViewAdapter.fetchDeferredChildren(AbstractSystemViewAdapter.java:2292)
-	at org.eclipse.ui.progress.DeferredTreeContentManager$1.run(DeferredTreeContentManager.java:219)
-	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
---------------------------------------------
-Thu Mar 30 10:21:12 KST 2023
-ERROR org.eclipse.rse.ui  RSEF1002: SUB#0:Sftp: 4: Failure
---------------------------------------------
-Thu Mar 30 10:49:27 KST 2023
-ERROR org.eclipse.rse.ui  RSEG1066
---------------------------------------------
-Thu Mar 30 10:55:22 KST 2023
+Mon Apr 03 09:38:14 KST 2023
 ERROR org.eclipse.rse.ui  RSEG1058
 java.lang.Exception
 	at org.eclipse.rse.ui.messages.SystemMessageDialog.logMessage(SystemMessageDialog.java:451)
@@ -110,71 +84,10 @@ java.lang.Exception
 	at org.eclipse.equinox.launcher.Main.run(Main.java:1467)
 	at org.eclipse.equinox.launcher.Main.main(Main.java:1440)
 --------------------------------------------
-Thu Mar 30 10:57:13 KST 2023
-ERROR org.eclipse.rse.ui  RemoteFileSubSystemImpl.logError()
-org.eclipse.rse.services.clientserver.messages.SystemMessageException: An unexpected error occurred.
-	at org.eclipse.rse.subsystems.files.core.servicesubsystem.FileServiceSubSystem.getRemoteFileObject(FileServiceSubSystem.java:271)
-	at org.eclipse.rse.subsystems.files.core.subsystems.RemoteFileSubSystem.internalResolveFilterString(RemoteFileSubSystem.java:669)
-	at org.eclipse.rse.subsystems.files.core.subsystems.RemoteFileSubSystem.internalResolveFilterStrings(RemoteFileSubSystem.java:492)
-	at org.eclipse.rse.core.subsystems.SubSystem.resolveFilterStrings(SubSystem.java:2304)
-	at org.eclipse.rse.internal.ui.view.SystemViewFilterReferenceAdapter.internalGetChildren(SystemViewFilterReferenceAdapter.java:470)
-	at org.eclipse.rse.internal.ui.view.SystemViewFilterReferenceAdapter.getChildren(SystemViewFilterReferenceAdapter.java:288)
-	at org.eclipse.rse.internal.ui.view.SystemViewFilterReferenceAdapter.getChildren(SystemViewFilterReferenceAdapter.java:296)
-	at org.eclipse.rse.ui.operations.SystemFetchOperation.execute(SystemFetchOperation.java:443)
-	at org.eclipse.rse.ui.operations.SystemFetchOperation.run(SystemFetchOperation.java:184)
-	at org.eclipse.rse.ui.view.AbstractSystemViewAdapter.fetchDeferredChildren(AbstractSystemViewAdapter.java:2292)
-	at org.eclipse.ui.progress.DeferredTreeContentManager$1.run(DeferredTreeContentManager.java:219)
-	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+Mon Apr 03 09:39:21 KST 2023
+ERROR org.eclipse.rse.ui  RSEG1066
 --------------------------------------------
-Thu Mar 30 10:57:13 KST 2023
-ERROR org.eclipse.rse.ui  RemoteFileSubSystemImpl.logError()
-org.eclipse.rse.services.clientserver.messages.SystemMessageException: An unexpected error occurred.
-	at org.eclipse.rse.subsystems.files.core.servicesubsystem.FileServiceSubSystem.getRemoteFileObject(FileServiceSubSystem.java:271)
-	at org.eclipse.rse.subsystems.files.core.subsystems.RemoteFileSubSystem.internalResolveFilterString(RemoteFileSubSystem.java:669)
-	at org.eclipse.rse.subsystems.files.core.subsystems.RemoteFileSubSystem.internalResolveFilterStrings(RemoteFileSubSystem.java:492)
-	at org.eclipse.rse.core.subsystems.SubSystem.resolveFilterStrings(SubSystem.java:2304)
-	at org.eclipse.rse.internal.ui.view.SystemViewFilterReferenceAdapter.internalGetChildren(SystemViewFilterReferenceAdapter.java:470)
-	at org.eclipse.rse.internal.ui.view.SystemViewFilterReferenceAdapter.getChildren(SystemViewFilterReferenceAdapter.java:288)
-	at org.eclipse.rse.internal.ui.view.SystemViewFilterReferenceAdapter.getChildren(SystemViewFilterReferenceAdapter.java:296)
-	at org.eclipse.rse.ui.operations.SystemFetchOperation.execute(SystemFetchOperation.java:443)
-	at org.eclipse.rse.ui.operations.SystemFetchOperation.run(SystemFetchOperation.java:184)
-	at org.eclipse.rse.ui.view.AbstractSystemViewAdapter.fetchDeferredChildren(AbstractSystemViewAdapter.java:2292)
-	at org.eclipse.ui.progress.DeferredTreeContentManager$1.run(DeferredTreeContentManager.java:219)
-	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
---------------------------------------------
-Thu Mar 30 10:57:15 KST 2023
-ERROR org.eclipse.rse.ui  RemoteFileSubSystemImpl.logError()
-org.eclipse.rse.services.clientserver.messages.SystemMessageException: An unexpected error occurred.
-	at org.eclipse.rse.subsystems.files.core.servicesubsystem.FileServiceSubSystem.getRemoteFileObject(FileServiceSubSystem.java:271)
-	at org.eclipse.rse.subsystems.files.core.subsystems.RemoteFileSubSystem.internalResolveFilterString(RemoteFileSubSystem.java:669)
-	at org.eclipse.rse.subsystems.files.core.subsystems.RemoteFileSubSystem.internalResolveFilterStrings(RemoteFileSubSystem.java:492)
-	at org.eclipse.rse.core.subsystems.SubSystem.resolveFilterStrings(SubSystem.java:2304)
-	at org.eclipse.rse.internal.ui.view.SystemViewFilterReferenceAdapter.internalGetChildren(SystemViewFilterReferenceAdapter.java:470)
-	at org.eclipse.rse.internal.ui.view.SystemViewFilterReferenceAdapter.getChildren(SystemViewFilterReferenceAdapter.java:288)
-	at org.eclipse.rse.internal.ui.view.SystemViewFilterReferenceAdapter.getChildren(SystemViewFilterReferenceAdapter.java:296)
-	at org.eclipse.rse.ui.operations.SystemFetchOperation.execute(SystemFetchOperation.java:443)
-	at org.eclipse.rse.ui.operations.SystemFetchOperation.run(SystemFetchOperation.java:184)
-	at org.eclipse.rse.ui.view.AbstractSystemViewAdapter.fetchDeferredChildren(AbstractSystemViewAdapter.java:2292)
-	at org.eclipse.ui.progress.DeferredTreeContentManager$1.run(DeferredTreeContentManager.java:219)
-	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
---------------------------------------------
-Thu Mar 30 10:57:15 KST 2023
-ERROR org.eclipse.rse.ui  RemoteFileSubSystemImpl.logError()
-org.eclipse.rse.services.clientserver.messages.SystemMessageException: An unexpected error occurred.
-	at org.eclipse.rse.subsystems.files.core.servicesubsystem.FileServiceSubSystem.getRemoteFileObject(FileServiceSubSystem.java:271)
-	at org.eclipse.rse.subsystems.files.core.subsystems.RemoteFileSubSystem.internalResolveFilterString(RemoteFileSubSystem.java:669)
-	at org.eclipse.rse.subsystems.files.core.subsystems.RemoteFileSubSystem.internalResolveFilterStrings(RemoteFileSubSystem.java:492)
-	at org.eclipse.rse.core.subsystems.SubSystem.resolveFilterStrings(SubSystem.java:2304)
-	at org.eclipse.rse.internal.ui.view.SystemViewFilterReferenceAdapter.internalGetChildren(SystemViewFilterReferenceAdapter.java:470)
-	at org.eclipse.rse.internal.ui.view.SystemViewFilterReferenceAdapter.getChildren(SystemViewFilterReferenceAdapter.java:288)
-	at org.eclipse.rse.internal.ui.view.SystemViewFilterReferenceAdapter.getChildren(SystemViewFilterReferenceAdapter.java:296)
-	at org.eclipse.rse.ui.operations.SystemFetchOperation.execute(SystemFetchOperation.java:443)
-	at org.eclipse.rse.ui.operations.SystemFetchOperation.run(SystemFetchOperation.java:184)
-	at org.eclipse.rse.ui.view.AbstractSystemViewAdapter.fetchDeferredChildren(AbstractSystemViewAdapter.java:2292)
-	at org.eclipse.ui.progress.DeferredTreeContentManager$1.run(DeferredTreeContentManager.java:219)
-	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
---------------------------------------------
-Fri Mar 31 11:04:49 KST 2023
+Mon Apr 03 10:02:44 KST 2023
 ERROR org.eclipse.rse.ui  RSEG1058
 java.lang.Exception
 	at org.eclipse.rse.ui.messages.SystemMessageDialog.logMessage(SystemMessageDialog.java:451)
@@ -207,7 +120,236 @@ java.lang.Exception
 	at org.eclipse.equinox.launcher.Main.run(Main.java:1467)
 	at org.eclipse.equinox.launcher.Main.main(Main.java:1440)
 --------------------------------------------
-Fri Mar 31 11:04:52 KST 2023
+Mon Apr 03 10:43:01 KST 2023
+ERROR org.eclipse.rse.ui  RSEG1058
+java.lang.Exception
+	at org.eclipse.rse.ui.messages.SystemMessageDialog.logMessage(SystemMessageDialog.java:451)
+	at org.eclipse.rse.ui.messages.SystemMessageDialog.open(SystemMessageDialog.java:461)
+	at org.eclipse.rse.internal.connectorservice.ssh.SshConnectorService$SessionLostHandler.run(SshConnectorService.java:351)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:40)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:185)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:5101)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:4579)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1150)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:338)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1041)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:155)
+	at org.eclipse.ui.internal.Workbench.lambda$3(Workbench.java:644)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:338)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:551)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:156)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:152)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:203)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:136)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:104)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:401)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:255)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:659)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:596)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1467)
+	at org.eclipse.equinox.launcher.Main.main(Main.java:1440)
+--------------------------------------------
+Mon Apr 03 11:25:32 KST 2023
+ERROR org.eclipse.rse.ui  RSEG1058
+java.lang.Exception
+	at org.eclipse.rse.ui.messages.SystemMessageDialog.logMessage(SystemMessageDialog.java:451)
+	at org.eclipse.rse.ui.messages.SystemMessageDialog.open(SystemMessageDialog.java:461)
+	at org.eclipse.rse.internal.connectorservice.ssh.SshConnectorService$SessionLostHandler.run(SshConnectorService.java:351)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:40)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:185)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:5101)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:4579)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1150)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:338)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1041)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:155)
+	at org.eclipse.ui.internal.Workbench.lambda$3(Workbench.java:644)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:338)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:551)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:156)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:152)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:203)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:136)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:104)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:401)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:255)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:659)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:596)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1467)
+	at org.eclipse.equinox.launcher.Main.main(Main.java:1440)
+--------------------------------------------
+Mon Apr 03 11:25:40 KST 2023
+ERROR org.eclipse.rse.ui  RSEF1002: SUB#0:Sftp: 4: Failure
+--------------------------------------------
+Mon Apr 03 11:34:24 KST 2023
+ERROR org.eclipse.rse.ui  SystemCopyRemoteFileAction.checkForCollision()
+org.eclipse.rse.services.files.RemoteFileIOException: Operation failed. File system input or output error
+	at org.eclipse.rse.internal.services.ssh.files.SftpFileService.makeSystemMessageException(SftpFileService.java:603)
+	at org.eclipse.rse.internal.services.ssh.files.SftpFileService.getChannel(SftpFileService.java:550)
+	at org.eclipse.rse.internal.services.ssh.files.SftpFileService.getFile(SftpFileService.java:627)
+	at org.eclipse.rse.subsystems.files.core.servicesubsystem.FileServiceSubSystem.getFile(FileServiceSubSystem.java:387)
+	at org.eclipse.rse.subsystems.files.core.servicesubsystem.FileServiceSubSystem.getRemoteFileObject(FileServiceSubSystem.java:212)
+	at org.eclipse.rse.files.ui.resources.UniversalFileTransferUtility.checkForCollision(UniversalFileTransferUtility.java:2997)
+	at org.eclipse.rse.files.ui.resources.UniversalFileTransferUtility.uploadResourceFromWorkspace(UniversalFileTransferUtility.java:1941)
+	at org.eclipse.rse.internal.files.ui.view.SystemViewRemoteFileAdapter.doDrop(SystemViewRemoteFileAdapter.java:2681)
+	at org.eclipse.rse.internal.ui.view.SystemDNDTransferRunnable.transferNonRSEResources(SystemDNDTransferRunnable.java:531)
+	at org.eclipse.rse.internal.ui.view.SystemDNDTransferRunnable.runInWorkspace(SystemDNDTransferRunnable.java:749)
+	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:42)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+--------------------------------------------
+Mon Apr 03 11:34:25 KST 2023
+ERROR org.eclipse.rse.ui  RSEF1002
+--------------------------------------------
+Mon Apr 03 11:34:26 KST 2023
+ERROR org.eclipse.rse.ui  RSEG1058
+java.lang.Exception
+	at org.eclipse.rse.ui.messages.SystemMessageDialog.logMessage(SystemMessageDialog.java:451)
+	at org.eclipse.rse.ui.messages.SystemMessageDialog.open(SystemMessageDialog.java:461)
+	at org.eclipse.rse.internal.connectorservice.ssh.SshConnectorService$SessionLostHandler.run(SshConnectorService.java:351)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:40)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:185)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:5101)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:4579)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1150)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:338)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1041)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:155)
+	at org.eclipse.ui.internal.Workbench.lambda$3(Workbench.java:644)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:338)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:551)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:156)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:152)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:203)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:136)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:104)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:401)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:255)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:659)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:596)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1467)
+	at org.eclipse.equinox.launcher.Main.main(Main.java:1440)
+--------------------------------------------
+Mon Apr 03 11:36:35 KST 2023
+ERROR org.eclipse.rse.ui  RSEG1058
+java.lang.Exception
+	at org.eclipse.rse.ui.messages.SystemMessageDialog.logMessage(SystemMessageDialog.java:451)
+	at org.eclipse.rse.ui.messages.SystemMessageDialog.open(SystemMessageDialog.java:461)
+	at org.eclipse.rse.internal.connectorservice.ssh.SshConnectorService$SessionLostHandler.run(SshConnectorService.java:351)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:40)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:185)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:5101)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:4579)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1150)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:338)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1041)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:155)
+	at org.eclipse.ui.internal.Workbench.lambda$3(Workbench.java:644)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:338)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:551)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:156)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:152)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:203)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:136)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:104)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:401)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:255)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:659)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:596)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1467)
+	at org.eclipse.equinox.launcher.Main.main(Main.java:1440)
+--------------------------------------------
+Mon Apr 03 11:36:38 KST 2023
+ERROR org.eclipse.rse.ui  RSEG1066
+--------------------------------------------
+Mon Apr 03 12:30:19 KST 2023
+ERROR org.eclipse.rse.ui  RSEG1058
+java.lang.Exception
+	at org.eclipse.rse.ui.messages.SystemMessageDialog.logMessage(SystemMessageDialog.java:451)
+	at org.eclipse.rse.ui.messages.SystemMessageDialog.open(SystemMessageDialog.java:461)
+	at org.eclipse.rse.internal.connectorservice.ssh.SshConnectorService$SessionLostHandler.run(SshConnectorService.java:351)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:40)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:185)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:5101)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:4579)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1150)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:338)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1041)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:155)
+	at org.eclipse.ui.internal.Workbench.lambda$3(Workbench.java:644)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:338)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:551)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:156)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:152)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:203)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:136)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:104)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:401)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:255)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:659)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:596)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1467)
+	at org.eclipse.equinox.launcher.Main.main(Main.java:1440)
+--------------------------------------------
+Mon Apr 03 12:55:55 KST 2023
+ERROR org.eclipse.rse.ui  RSEG1058
+java.lang.Exception
+	at org.eclipse.rse.ui.messages.SystemMessageDialog.logMessage(SystemMessageDialog.java:451)
+	at org.eclipse.rse.ui.messages.SystemMessageDialog.open(SystemMessageDialog.java:461)
+	at org.eclipse.rse.internal.connectorservice.ssh.SshConnectorService$SessionLostHandler.run(SshConnectorService.java:351)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:40)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:185)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:5101)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:4579)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1150)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:338)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1041)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:155)
+	at org.eclipse.ui.internal.Workbench.lambda$3(Workbench.java:644)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:338)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:551)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:156)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:152)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:203)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:136)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:104)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:401)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:255)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:659)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:596)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1467)
+	at org.eclipse.equinox.launcher.Main.main(Main.java:1440)
+--------------------------------------------
+Mon Apr 03 12:57:02 KST 2023
+ERROR org.eclipse.rse.ui  RSEG1066
+--------------------------------------------
+Mon Apr 03 14:31:44 KST 2023
+ERROR org.eclipse.rse.ui  RSEF1002: SUB#0:Sftp: 4: Failure
+--------------------------------------------
+Mon Apr 03 14:41:47 KST 2023
 ERROR org.eclipse.rse.ui  RSEG1058
 java.lang.Exception
 	at org.eclipse.rse.ui.messages.SystemMessageDialog.logMessage(SystemMessageDialog.java:451)

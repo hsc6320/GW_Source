@@ -90,7 +90,7 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 		if(u8Data[MSGTYPE] == DATA_ACKNOWLEDGEMENT) {
 			if(u8Data[MSG_ACKNOWLEDGE_STATUS] == PAYLOAD_STATUS_SUCCESS) {	
 				Cnt = m_nMapParity;
-				for(int i=0; i< 2048; i++) {
+				for(int i=0; i< Cnt; i++) {
 					if( !Redown ) {
 						if(m_pu16MsgQueueArrayDataAcknowledge[i] == (ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO])) ) {
 							printf("m_nMapParity Overlap Parity 0x%x\n", m_pu16MsgQueueArrayDataAcknowledge[i]);
@@ -98,6 +98,7 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 						}
 					}
 					else {
+						printf("%x %x\n", m_pu16MsgQueueArrayDataAcknowledge[i] , ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO]));
 						if(m_pu16MsgQueueArrayDataAcknowledge[i] == (ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO])) ) {
 							printf("m_pu16MsgQueueArrayDataAcknowledge, Overlap Parity 0x%x \n", m_pu16MsgQueueArrayDataAcknowledge[i]);
 							return 1;
@@ -116,18 +117,19 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 //				PrintArray1(m_Test, size2);
 
 				sort(m_Test, m_Test+size);
+
 				int j =0;
-				for(int i=0; i<2048; i++) {
+				for(int i=0; i<4096; i++) {
 					if(m_Test[i] > 0) {
 						m_pu16MsgQueueArrayDataAcknowledge[j] = m_Test[i];
-					//	printf("[%d]%d ",j, m_pu16MsgQueueArrayDataAcknowledge[j]);
+						printf("[%d]%d ",j, m_pu16MsgQueueArrayDataAcknowledge[j]);
 						j++;
 					}
 				}
 				printf("\n");
 
 				printf("DataAck TagID : ");
-				printf("%x\n",(ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO])) );
+				printf("%x\n",(ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO])));
 
 			
 				m_nMapParity++;				

@@ -55,7 +55,8 @@ public:
 	BYTE **OneData1;
 	BYTE **TwoData1;
 
-	int m_iSocketReceiveEnd, m_iBypassSocketToUart, m_iSocketReceiveQueue;
+	int m_iSocketReceiveEnd, m_iBypassSocketToUart, m_iSocketReceiveQueue, m_iStatusAlive;
+	int m_iWorkingAlive;
 	int m_nSocketArrayDataDownCnt, m_nSocketArrayDataIndicateCnt;
 	BYTE* m_p8uData;
 	BYTE* m_p8uSendData;

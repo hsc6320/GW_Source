@@ -40,7 +40,7 @@ Socket::Socket()
 	p_thread = NULL;
 	m_p8uData = NULL;
 	m_p8uSendData = NULL;
-	
+	m_iWorkingAlive =0;
 	m_nServerMessge_End =0;
 	m_nSocketArrayDataDownCnt =0;
 	m_nSocketArrayDataIndicateCnt =0;
@@ -49,6 +49,7 @@ Socket::Socket()
 	m_iSocketReceiveQueue =0;
 	m_Main_ServiceStart_TagAssociation_InitFlag = 0;
 	m_iSocketReceiveEnd =0;
+	m_iStatusAlive =0;
 	bWorkingThread =0;
 	m_SocketArrayDataDownMsg.reserve(5000);
 	m_SocketArrayDataIndicateMsg.reserve(5000);
@@ -195,9 +196,7 @@ int Socket::Socket_Init(/*int argc, char *argv[]*/)
 //		printf("%c",buf[i]);
 //	}
 	printf("\n");
-	th_delay(1000);
-	th_delay(1000);
-	th_delay(1000);
+	th_delay(6000);
 
 	hostinfo= gethostbyname(domainName);
 	for(int k=0; hostinfo->h_addr_list[k] != NULL; k++) {
@@ -377,6 +376,7 @@ void Socket::Create_Socket_Thread(pthread_t thread, int strucData)
 		exit(0);
 	}
 	else {
+		m_iWorkingAlive = 1;
 		bWorkingThread = 1;
 	}
 	//printf("Create_Socket_Thread sock %d %d %d\n\n", ctx->fd, (int)ctx, m_serv_sock);
@@ -385,8 +385,8 @@ void Socket::Create_Socket_Thread(pthread_t thread, int strucData)
 
 void Socket::Exit_Socket_Thread()
 {
-	int retEpoll =0;
-	void *retval;
+	int retEpoll =0, reclose =0;
+	int retval;
 	int ret =0;
 
 	if(m_serv_sock != 0) {
@@ -394,7 +394,9 @@ void Socket::Exit_Socket_Thread()
 			printf("Exit_Socket_Thread close(m_serv_sock) error : %d\n", m_serv_sock);
 		m_serv_sock = 0;
 	}
+		
 	retEpoll = epoll_ctl(efd, EPOLL_CTL_DEL, m_serv_sock/*events[0].data.fd*/, events);
+	
 	switch(retEpoll)
 	{
 	case 0:
@@ -428,12 +430,9 @@ void Socket::Exit_Socket_Thread()
 		break;
 	default:
 		printf("EPOLL CTL DEFAULT\n");
-		break;
+	
 	}
-	ret = pthread_join(p_thread, &retval);
-
-	printf("Socket Exit Thread , ");
-	if(retval == PTHREAD_CANCELED)
+/*	if(retval == PTHREAD_CANCELED)
 		printf("The thread was canceled - \n");
 	else
 		printf("Returned value %d \n", (int)retval);
@@ -455,8 +454,35 @@ void Socket::Exit_Socket_Thread()
 	default:
 		printf("Error occurred when joining the thread\n");
 		break;
+	}*/
+	printf("Exit_Socket_Thread() \n");
+
+	reclose = close(m_serv_sock);
+	printf("reclose : %d\n", reclose);
+	
+	m_iWorkingAlive =0;
+	ret = pthread_join(p_thread, (void**)&retval);
+	printf("Socket Exit Thread ,%d\n", retval);
+	switch(retval)
+	{
+	case 0:
+		printf("The thread joined successfully\n");
+		break;
+	case EDEADLK:
+		printf("Deadlock detected\n");
+		break;
+	case EINVAL:
+		printf("The thread is not joinable\n");
+		break;
+	case ESRCH:
+		printf("No thread with given ID is found\n");
+		break;
+	default:
+		printf("Error occurred when joining the thread\n");
+		break;
 	}
 	printf("Exit_Socket_Thread() \n");
+	
 }
 
 int Socket::Send_Message(BYTE* msg, int len)
@@ -526,14 +552,13 @@ void *Recieve_Function(void* rcvDt)
 	printf("Recieve_Function() Socketd : %d, m_serv_sock : %d\n", Socketd, pSoc->m_serv_sock);
 
 	//socket_ctx_t* ctx = (socket_ctx_t *)pSoc->m_serv_sock;
-	while(1)
+	while(pSoc->m_iWorkingAlive)
 	{
-		if(pSoc->Ready_to_Read(Socketd,10)) {
-			pthread_mutex_lock(&pSoc->Socket_mutex);
-			
+		if(pSoc->Ready_to_Read(Socketd,10)) {			
+			pthread_mutex_lock(&pSoc->Socket_mutex);			
 			pSoc->m_nServerMessge_End =1;
 			str_len = pSoc->Read_Message(u8data/*pSoc->m_p8uData*/);
-			/*for(int i=0; i<=str_len; i++) {
+		/*	for(int i=0; i<=str_len; i++) {
 				printf("[%x] ",u8data[i]);
 			}
 			printf("\n");*/
@@ -628,6 +653,7 @@ void *Recieve_Function(void* rcvDt)
 						TempCnt++;
 						TempCnt2++;
 					}
+					
 				}
 			}
 			else if(str_len <= 0) {
@@ -643,6 +669,12 @@ void *Recieve_Function(void* rcvDt)
 			pthread_mutex_unlock(&pSoc->Socket_mutex);
 		}
 		usleep(10);
+	}
+
+	if(pSoc->m_iWorkingAlive == 0) {
+		printf("Disconnect Server  m_iWorkingAlive : %d \n", pSoc->m_iWorkingAlive);
+		pSoc->bWorkingThread = 0;
+		pSoc->m_nServerMessge_End =0;
 	}
 
 	return 0;
@@ -679,18 +711,19 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 			//printf("Msg VAL : %x %x %x %x %x\n", p8udata[MSG_STX], p8udata[MSGTYPE], p8udata[DataLen-3], p8udata[DataLen-2], p8udata[DataLen-1]);
 			if(p8udata[MSGTYPE] == BSN_START) {
 				m_nServerMessge_End =1;
-				m_SocketArrayDataDownMsg.push_back(m_SocketQueue_vec);
-				m_SocketQueue_vec.clear();
-				m_SocketQueue_vec.shrink_to_fit();
+				
+				m_SocketArrayDataDownMsg.clear();
+				m_SocketArrayDataDownMsg.shrink_to_fit();
+				m_SocketArrayDataDownMsg.reserve(5000);
 
-				m_SocketArrayDataIndicateMsg.push_back(m_SocketQueue_vec);
-				m_SocketQueue_vec.clear();
-				m_SocketQueue_vec.shrink_to_fit();
+				m_SocketArrayDataIndicateMsg.clear();
+				m_SocketArrayDataIndicateMsg.shrink_to_fit();
+				m_SocketArrayDataIndicateMsg.reserve(5000);
 
 				for(int i=0; i<4096; i++) {
 					for(int j=0; j<2048; j++) {
-						OneData[i][j] =0x0;
-						TwoData[i][j] =0x0;
+						OneData[i][j] =0;
+						TwoData[i][j] =0;
 					}
 				}
 				
@@ -824,6 +857,7 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 					}
 					m_TagNumber[m_nSocketArrayDataIndicateCnt] = (int)ByteToWord(TwoData[m_nSocketArrayDataIndicateCnt][MSG_DADDRONE], TwoData[m_nSocketArrayDataIndicateCnt][MSG_DADDRZERO]);				
 					printf("Tag Number[%d] : %d\n", m_nSocketArrayDataIndicateCnt, m_TagNumber[m_nSocketArrayDataIndicateCnt]);
+					
 			//		TwoData1[m_nSocketArrayDataIndicateCnt] = (BYTE*)malloc(sizeof(BYTE) * DataLen);
 			//		for(int i = 0; i<DataLen; i++) {
 			//			TwoData1[m_nSocketArrayDataIndicateCnt][i] = TwoData[m_nSocketArrayDataIndicateCnt][i];
@@ -835,6 +869,9 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 					printf("\nm_nSocketArrayDataIndicate Size : %d\n", m_nSocketArrayDataIndicateCnt);
 					m_nSocketArrayDataIndicateCnt++;
 				}
+				m_iSocketReceiveEnd =1;
+				m_iBypassSocketToUart = 1;
+				m_iStatusAlive =1;
 			}
 		}
 		else if ( (p8udata[MSGTYPE] == COORDINATOR_RESET_REQ) || (p8udata[MSGTYPE] == TAG_INFOR_UPDATE_REQ) || (p8udata[MSGTYPE] == MULTI_GATEWAY_SCAN_REQ)
