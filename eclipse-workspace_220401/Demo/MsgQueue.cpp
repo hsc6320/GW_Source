@@ -90,16 +90,15 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 		if(u8Data[MSGTYPE] == DATA_ACKNOWLEDGEMENT) {
 			if(u8Data[MSG_ACKNOWLEDGE_STATUS] == PAYLOAD_STATUS_SUCCESS) {	
 				Cnt = m_nMapParity;
-				for(int i=0; i< Cnt; i++) {
+				for(int i=0; i<= Cnt; i++) {
 					if( !Redown ) {
-						if(m_pu16MsgQueueArrayDataAcknowledge[i] == (ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO])) ) {
+						if(m_pu16MsgQueueArrayDataAcknowledge[i] == ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO]) ) {
 							printf("m_nMapParity Overlap Parity 0x%x\n", m_pu16MsgQueueArrayDataAcknowledge[i]);
 							return 1;
 						}
 					}
-					else {
-						printf("%x %x\n", m_pu16MsgQueueArrayDataAcknowledge[i] , ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO]));
-						if(m_pu16MsgQueueArrayDataAcknowledge[i] == (ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO])) ) {
+					else {						
+						if(m_pu16MsgQueueArrayDataAcknowledge[i] == ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO]) ) {
 							printf("m_pu16MsgQueueArrayDataAcknowledge, Overlap Parity 0x%x \n", m_pu16MsgQueueArrayDataAcknowledge[i]);
 							return 1;
 						}
@@ -107,22 +106,25 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 				}
 				size = 4096; 
 				wordPanID = ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO]);
-				printf("m_nMapParity :%d, wordPanID : %d, size : %d\n", m_nMapParity, wordPanID, size);
+				printf("m_nMapParity :%d, wordPanID : %d ", m_nMapParity, wordPanID);
 				
 //				int size2 =GetSizeArray1(m_Test);
 //				PrintArray1(m_Test, size2);
-				AppendArray1(wordPanID, m_nMapParity, m_Test);
+
+				m_Test[m_nMapParity] = wordPanID;
+
+//				AppendArray1(wordPanID, m_nMapParity, m_Test);
 //				m_ArrayUtil.InsertArray(m_nMapParity, wordPanID, m_Test);
 //				size2 =GetSizeArray1(m_Test);
 //				PrintArray1(m_Test, size2);
-
+			
 				sort(m_Test, m_Test+size);
 
 				int j =0;
 				for(int i=0; i<4096; i++) {
 					if(m_Test[i] > 0) {
 						m_pu16MsgQueueArrayDataAcknowledge[j] = m_Test[i];
-						printf("[%d]%d ",j, m_pu16MsgQueueArrayDataAcknowledge[j]);
+//						printf("%d ",m_pu16MsgQueueArrayDataAcknowledge[j]);
 						j++;
 					}
 				}
@@ -347,6 +349,9 @@ void MsgQueue::InsertArray1(int idx, WORD sz, WORD* ar)
 	int size = (sizeof(arr)/sizeof(*arr));
 	memmove(ar+idx+1, ar+idx, size-idx+1);
 	ar[idx] = sz;
+/*	for(int i=0; i<4096; i++) {
+		printf("%x ", ar[i]);
+	}*/
 	printf("Insert [%d]%x, size : %d\n", idx, ar[idx], size);
 }
 

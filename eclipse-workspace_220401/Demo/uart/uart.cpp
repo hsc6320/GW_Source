@@ -29,9 +29,6 @@ pthread_mutex_t mutex2;
 UartComThread::UartComThread()
 {
 	m_uartd = 0;
-	m_grun =0;
-	bWorkingUart =0;
-	m_iUartRetry =0;
 	pMsgQueue = NULL;
 	m_p8uUartData = NULL;
 }
@@ -59,7 +56,7 @@ static void *uart_Rx_Thread(void *param)
 
 	while(1) {
 		if(pComm->Ready_to_Read(uartd,0)) {
-			pComm->m_iUartRetry =1;
+			
 			ChecksumError =0;
 			pthread_mutex_lock(&ctx->mutex);
 			len = pComm->Uart_Read(uartd, rx2, 1024);			
@@ -113,7 +110,7 @@ static void *uart_Rx_Thread(void *param)
 				if(ChecksumError)
 					break;
 				if(underflowcnt) {
-					printf(" underflowcnt break\n");
+			//		printf(" underflowcnt break\n");
 					break;
 				}
 				
@@ -148,10 +145,9 @@ static void *uart_Rx_Thread(void *param)
 					nToTalLen2 =0;
 					break;
 				}
-				
 			}
 			if(underflowcnt) {
-				printf(" underflowcnt Continue  \n");
+			//	printf(" underflowcnt Continue  \n");
 				memset(rx2, 0, 1024);
 				continue;
 			}
@@ -159,7 +155,6 @@ static void *uart_Rx_Thread(void *param)
 			nToTalLen += len;
 
 			if((len < 15) && (underflowcnt == 0) ) {
-				pComm->m_iUartRetry =1;
 				printf("Read Buffer underflow... Retry\n");
 				if( (len <= 1) &&(rx2[0] != 0xaa) ) {
 					nToTalLen =0;
@@ -184,7 +179,6 @@ static void *uart_Rx_Thread(void *param)
 				}
 			}
 			else if( (len < 16) && (underflowcnt == 0) && (rx2[MSGTYPE]==DATA_ACKNOWLEDGEMENT) ) {
-				pComm->m_iUartRetry =1;
 				printf("Read Buffer underflow...DATA_ACKNOWLEDGEMENT Retry\n");
 				for(int i=0; i<len; i++) {
 					rx[underflowcnt] = rx2[i];
@@ -228,14 +222,12 @@ static void *uart_Rx_Thread(void *param)
 							printf("putbyte return 0\n");
 						}
 						ii = nPutBuffCnt;
-						pComm->m_iUartRetry =0;
 						break;
 					}
 					else if(nPutBuffCnt == nToTalLen){
 						if(pMsgQueue->PutByte(rx_sto, nToTalLen) != 1) {
 							printf("putbyte return 0\n");
 						}
-						pComm->m_iUartRetry =0;
 						break;
 					}
 				}
@@ -273,7 +265,6 @@ static void *uart_Rx_Thread(void *param)
 						}
 						sto_count2 =0;
 						printf("ii :%d, nToTalLen: %d rx_sto2[0] : %x\n", ii, nToTalLen, rx_sto2[0]);
-						pComm->m_iUartRetry =0;
 					}
 
 					if(ii == nToTalLen) {
@@ -283,7 +274,6 @@ static void *uart_Rx_Thread(void *param)
 				}
 			}		
 			ii =0;
-			pComm->m_iUartRetry =0;
 #endif
 			reset_buffer();
 
@@ -293,7 +283,6 @@ static void *uart_Rx_Thread(void *param)
 			sto_count2 =0;
 			//nPutBuffCnt =0;
 			nToTalLen =0;
-			pComm->m_iUartRetry = 0;
 			nSecondPutByte =0;
 		}
 		usleep(10);
@@ -343,7 +332,6 @@ void UartComThread::Exit_Uart_Thread()
 		break;
 	}
 
-	bWorkingUart =0;
 
 	//pthread_exit(NULL);
 	printf("Exit_Uart_Thread() : [%d] \n", (int)status);
@@ -398,7 +386,6 @@ int UartComThread::Create_Uart_thread(pthread_t thread)
 		printf("Error:unable to create thread, %d\n", rc);
 		exit(-1);
 	}
-	bWorkingUart = 1;
 	return 1;
 }
 

@@ -288,7 +288,7 @@ int MsgHandler::Send_BeaconData(BYTE ibeaconvalue)
 
 	while(BEACON_MAX_COUNT >= (int)beaconcnt) {
 		if(ibeaconvalue == beaconcnt) {
-			printf("Send_BeaconData () ibeaconvalue :DEC[%d], HEX[%x]\n", ibeaconvalue , ibeaconvalue);
+		//	printf("Send_BeaconData () ibeaconvalue :DEC[%d], HEX[%x]\n", ibeaconvalue , ibeaconvalue);
 			if((int)ibeaconvalue == BEACON_MAX_COUNT) {				
 				if( ((m_nDataDownCount / 16) != 0) && (m_DataCnt > 15) ) {
 					printf("m_nDataDownCount / 16 return0\n");
@@ -856,17 +856,6 @@ void MsgHandler::BypassSocketToUart(BYTE* p8Data, int DataLen, int msgtype)
 	}
 	//printf("BypassSocketToUart() End\n");
 }
-void MsgHandler::SetMapValueArray(std::vector<std::vector<BYTE>> vec, int Len)
-{
-	printf("SetMapValueArray() m_nUartArrayDataDownCnt : %d\n", m_nUartArrayDataDownCnt);
-	for(int i=0; i<m_nUartArrayDataDownCnt; i++) {
-		for(int j=0; j<(int)vMsgDataAcknowledge[i].size(); j++) {
-			printf("%x " , vMsgDataAcknowledge[i].at(j));
-		}
-	}
-	printf("\n");
-	//vMsgDataAcknowledge.clear();
-}
 
 void MsgHandler::SetSocketArray(std::vector<std::vector<BYTE>> DataDownmsg, std::vector<std::vector<BYTE>> DataIndimsg)
 {	
@@ -875,10 +864,10 @@ void MsgHandler::SetSocketArray(std::vector<std::vector<BYTE>> DataDownmsg, std:
 	
 	m_UartArrayDataDownMsg = DataDownmsg;
 	m_UartArrayDataIndicateMsg = DataIndimsg;
-	printf("SetSocketArray() Current m_UartArrayDataDownMsg Size : %d, m_UartArrayDataIndicateMsg Size : %d\n", m_UartArrayDataDownMsg.size(), m_UartArrayDataIndicateMsg.size());
+//	printf("SetSocketArray() Current m_UartArrayDataDownMsg Size : %d, m_UartArrayDataIndicateMsg Size : %d\n", m_UartArrayDataDownMsg.size(), m_UartArrayDataIndicateMsg.size());
 	m_UartArrayDataDownMsg.shrink_to_fit();
 	m_UartArrayDataIndicateMsg.shrink_to_fit();
-	printf("SetSocketArray() Fit  m_UartArrayDataDownMsg Size : %d, m_UartArrayDataIndicateMsg Size : %d\n", m_UartArrayDataDownMsg.size(), m_UartArrayDataIndicateMsg.size());
+	printf("SetSocketArray()  m_UartArrayDataDownMsg Size : %d, m_UartArrayDataIndicateMsg Size : %d\n", m_UartArrayDataDownMsg.size(), m_UartArrayDataIndicateMsg.size());
 	
 	m_nUartArrayDataDownCnt = (int)DataDownmsg.size();
 	m_nUartArrayDataIndicateCnt = (int)DataIndimsg.size();

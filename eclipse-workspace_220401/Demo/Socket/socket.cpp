@@ -11,6 +11,7 @@
 #include "../Vector_SocketQueue.h"
 
 
+
 #define EPOLL_SIZE 20
 
 void *Recieve_Function(void* rcvDt);
@@ -18,13 +19,16 @@ void *Recieve_Function(void* rcvDt);
 Socket* m_pSoc;
 
 
-int nDataLen=0;
+int nDataLen=0, nHostLength =0;
 int serv_sockfd;
 int efd;
 struct epoll_event	ev, *events;
 
 extern UartComThread* m_MainComport;
 extern MsgQueue* m_pMsgQueue;
+struct hostent *hostinfo;
+struct sockaddr*	pAddr(NULL);
+struct sockaddr*	pAddr2(NULL);
 
 std::vector<std::vector<BYTE>> vecTagData;
 
@@ -39,7 +43,8 @@ Socket::Socket()
 {
 	p_thread = NULL;
 	m_p8uData = NULL;
-	m_p8uSendData = NULL;
+	memset(m_p8uSendData,0, sizeof(BYTE)*4096);
+	//m_p8uSendData = NULL;
 	m_iWorkingAlive =0;
 	m_nServerMessge_End =0;
 	m_nSocketArrayDataDownCnt =0;
@@ -70,13 +75,13 @@ int Socket::Socket_Init(/*int argc, char *argv[]*/)
 {
 	//socket_ctx_t* ctx = NULL;
 
-	struct ifconf	ifc;
-	struct ifreq	ifr[256];
+//	struct ifconf	ifc;
+//	struct ifreq	ifr[256];
 	struct ifreq	ifrMac;
 	struct sockaddr_in serv_addr;
 
-	struct sockaddr*	pAddr(NULL);
-	struct hostent *hostinfo;
+	//struct sockaddr*	pAddr(NULL);
+	//struct hostent *hostinfo;
 	size_t	nNIC;
 	int nRet =0, retEpoll = 0;
 	int fd2, fd3, n;
@@ -146,44 +151,6 @@ int Socket::Socket_Init(/*int argc, char *argv[]*/)
 		return -1;
 	}
 
-//	ctx = (socket_ctx_t*)malloc(sizeof(socket_ctx_t));
-
-	m_serv_sock = socket(PF_INET, SOCK_STREAM, 0);
-	//ctx->fd = socket(PF_INET, SOCK_STREAM,  0);
-
-	ifc.ifc_len = sizeof(ifr);
-	ifc.ifc_ifcu.ifcu_req = ifr;
-
-	if(m_serv_sock == -1) {
-		printf("Socket Error\n");
-	}
-	else {
-		printf("\nSocket Val : %d\n", m_serv_sock);
-	}
-
-	nRet = ioctl(m_serv_sock, SIOCGIFCONF, &ifc);
-	if(nRet == -1) printf("Get ip error\n");
-
-	nNIC = ifc.ifc_len / sizeof(struct ifreq);
-
-	for(size_t i =0; i< nNIC; i++) {
-		if(PF_INET == ifc.ifc_ifcu.ifcu_req[i].ifr_ifru.ifru_addr.sa_family)
-		{
-			pAddr = (&ifc.ifc_ifcu.ifcu_req[i].ifr_ifru.ifru_addr);
-		}
-	}
-
-	for(int i=0; i<15; i++) {
-		if(pAddr->sa_data[i] != NULL) {
-			m_IP_String += std::to_string(pAddr->sa_data[i]);
-			m_IP_String.append(" ");
-		}
-	}
-
-	printf("-------------MY IP ADDRESS : ");
-	printf("MY IP %s ", m_IP_String.c_str());
-	printf("---------------------\n");
-
 //	fd2 = open("ip", O_RDONLY);
 //	if(fd2 < 0) {
 //		printf("IP file open error\n");
@@ -195,12 +162,38 @@ int Socket::Socket_Init(/*int argc, char *argv[]*/)
 //	for(int i=0; i<n; i++) {
 //		printf("%c",buf[i]);
 //	}
-	printf("\n");
-	th_delay(6000);
 
-	hostinfo= gethostbyname(domainName);
-	for(int k=0; hostinfo->h_addr_list[k] != NULL; k++) {
-		printf("addrList : %s\n", inet_ntoa(*(struct in_addr*)hostinfo->h_addr_list[k]));
+	m_serv_sock = socket(PF_INET, SOCK_STREAM, 0);
+	//ctx->fd = socket(PF_INET, SOCK_STREAM,  0);	
+
+	if(m_serv_sock == -1) {
+		printf("Socket Error\n");
+	}
+	else {
+		printf("\nSocket Val : %d\n", m_serv_sock);
+	}
+	
+	while(1) {
+		if(IP_Address_Init())
+			break;
+		else
+			th_delay(5000);
+	}
+ 	
+	if((hostinfo == NULL) && (nHostLength <= 0) ) {
+		hostinfo= gethostbyname(domainName);
+		while(1) { 	
+			if(hostinfo != NULL) {
+				for(int k=0; hostinfo->h_addr_list[k] != NULL; k++) {
+					printf("addrList : %s\n", inet_ntoa(*(struct in_addr*)hostinfo->h_addr_list[k]));
+				}
+				nHostLength = hostinfo->h_length;				
+				break;
+			}
+			else
+				printf("hostinfo == NULL\n");
+			th_delay(1000);
+		}
 	}
 	
 	strcpy(ifrMac.ifr_name, "eth0");
@@ -247,6 +240,7 @@ int Socket::Socket_Init(/*int argc, char *argv[]*/)
 	while(1) {
 		if(connect(m_serv_sock , (struct sockaddr *)&serv_addr, sizeof(serv_addr)) == -1) {
 			printf("Failed Connection, Try Re-Connect\n");
+			th_delay(1000);
 			//exit(0);
 		}
 		else {
@@ -340,6 +334,139 @@ int Socket::Socket_Init(/*int argc, char *argv[]*/)
 #endif
 
 }
+
+int Socket::IP_Address_Init()
+{
+	struct ifconf	ifc;
+	struct ifreq	ifr[250];
+	struct sockaddr_in* serv_addr;
+	int nRet =0;
+	int bConf =0;
+	size_t	nNIC;
+
+	ifc.ifc_len = sizeof(ifr);
+	ifc.ifc_ifcu.ifcu_req = ifr;
+/*
+	nRet = ioctl(m_serv_sock, SIOCGIFCONF, &ifc);
+	if(nRet == -1) {
+		printf("Get ip error\n");
+		return 0;
+	}*/
+#if 1
+	nRet = ioctl(m_serv_sock, SIOCGIFCONF, &ifc);
+	if(nRet == -1) {
+		printf("Get ip error 1\n");
+		return 0;
+	}
+	else {
+		nNIC = ifc.ifc_len / sizeof(struct ifreq);
+		for(size_t i =0; i< nNIC; i++) {
+			if(PF_INET == ifc.ifc_ifcu.ifcu_req[i].ifr_ifru.ifru_addr.sa_family) {
+				pAddr = (&ifc.ifc_ifcu.ifcu_req[i].ifr_ifru.ifru_addr);
+				printf("%s\n", ifc.ifc_ifcu.ifcu_req[i].ifr_ifrn.ifrn_name);
+			}
+			if('l' == ifc.ifc_ifcu.ifcu_req[i].ifr_ifrn.ifrn_name[0]) {
+				printf("%d %d %d %d \n",  pAddr->sa_data[0], pAddr->sa_data[1], pAddr->sa_data[2], pAddr->sa_data[3]);
+			}
+			else if('w' == ifc.ifc_ifcu.ifcu_req[i].ifr_ifrn.ifrn_name[0]) {
+				printf("%d %d %d %d \n",  pAddr->sa_data[0], pAddr->sa_data[1], pAddr->sa_data[2], pAddr->sa_data[3]);
+				bConf =1;
+			}
+			else if('e' == ifc.ifc_ifcu.ifcu_req[i].ifr_ifrn.ifrn_name[0]) {
+				printf("%d %d %d %d \n",  pAddr->sa_data[0], pAddr->sa_data[1], pAddr->sa_data[2], pAddr->sa_data[3]);
+				bConf = 1;
+			}
+		}
+		if(!bConf) {
+			printf("return 0, ifconfig lo\n");
+			return 0;
+		}
+		for(int i=0; i<15; i++) {
+			if(pAddr->sa_data[i] != '0') {
+				m_IP_String += std::to_string(pAddr->sa_data[i]);
+				m_IP_String.append(" ");
+			}
+		}
+
+#endif
+		printf("-------------MY IP ADDRESS : ");
+		printf("MY IP %s", m_IP_String.c_str());
+		printf("---------------------\n");
+	}
+
+#if 0
+	ifc2.ifc_len = sizeof(ifr2);
+	ifc2.ifc_ifcu.ifcu_req = ifr2;
+	strncpy(ifr2->ifr_name, ifName, IFNAMSIZ);
+	nRet = ioctl(m_serv_sock, SIOCGIFCONF, &ifc2);
+	if(nRet == -1) {
+		printf("Get ip error 2\n");
+		return 0;
+	}
+	else {
+		nNIC = ifc2.ifc_len / sizeof(struct ifreq);
+
+		for(size_t i =0; i< nNIC; i++) {
+			if(PF_INET == ifc2.ifc_ifcu.ifcu_req[i].ifr_ifru.ifru_addr.sa_family)
+			{
+				pAddr2 = (&ifc2.ifc_ifcu.ifcu_req[i].ifr_ifru.ifru_addr);
+			}
+		}
+
+		for(int i=0; i<15; i++) {
+			if(pAddr2->sa_data[i] != NULL) {
+				m_IP_String += std::to_string(pAddr2->sa_data[i]);
+				m_IP_String.append(" ");
+			}
+		}
+#endif
+	return 1;
+}
+
+
+
+int Socket::Internet_connected()
+{
+	FILE *fpp;
+	FILE *fpp2;
+	char bbuff[1024];
+	char bbuff2[1024];
+	//fpp = popen("sudo ping www.falinux.com -c 1 -w 10 | grep \"1 received\" | wc -l", "r");
+	fpp2 = popen(" sudo su", "w");
+	//fpp = popen("sudo su", "r");
+	if(NULL != fpp2) {		
+		
+
+		while( fgets(bbuff2, 1024, fpp2)) {			
+			printf("%s \n", bbuff2);
+			break;
+		}
+
+		if("[sudo] password for debian") {
+			printf("temppwd\n");
+			memset(bbuff2, 0x00, sizeof(bbuff2));
+			sprintf(bbuff2, "temppwd\n");
+			fwrite(bbuff2, sizeof(char), sizeof(bbuff2), fpp2);
+			printf("temppwd\n");
+			fprintf(fpp2, " temppwd\n");
+		}
+	//	fwrite(bbuff2, sizeof(char), sizeof(bbuff2), fpp2);
+	//	fpp = popen("sudo ping www.falinux.com -c 1 -w 10 | grep \"1 received\" | wc -l", "r");
+/*		if(NULL != fpp) {
+			while( fgets(bbuff, 1024, fpp)) {
+				if(NULL != index(bbuff, '1' ) ) {
+					printf("true\n");
+					break;
+				}			
+			}
+		}*/
+	//	pclose(fpp);
+		pclose(fpp2);
+	}
+	return 1;
+}
+
+
 
 void Socket::Convert_mac(const char* data, char* cvrt_str, int sz)
 {
@@ -488,8 +615,8 @@ void Socket::Exit_Socket_Thread()
 int Socket::Send_Message(BYTE* msg, int len)
 {
 	int ret =0;
-	m_p8uSendData = new BYTE[len+1];
-	memcpy(m_p8uSendData, msg, len+1);
+//	m_p8uSendData = new BYTE[len];
+	memcpy(m_p8uSendData, msg, len);
 	nDataLen = len;
 
 	ret = Send_Function();
@@ -504,14 +631,15 @@ int Socket::Send_Function()
 	BYTE p8Data[1024];
 
 	memset(p8Data, 0, 1024);
-	memcpy(p8Data, m_p8uSendData, 1024);
+	memcpy(p8Data, m_p8uSendData, nDataLen);
 
 	printf("socket Send_Function() ");
 	for(int i=0; i < nDataLen; i++) {
 		printf("%x ", m_p8uSendData[i]);
 	}
-	delete[] m_p8uSendData;
-	m_p8uSendData = NULL;
+	memset(m_p8uSendData, 0, sizeof(BYTE)*4096);
+//	delete[] m_p8uSendData;
+//	m_p8uSendData = NULL;
 
 	ret = write(m_serv_sock,p8Data,nDataLen);
 	//ret = write(m_serv_sock,&vecTagData,sizeof(vecTagData));
@@ -615,7 +743,7 @@ void *Recieve_Function(void* rcvDt)
 					if( (u8data2[MSG_STX] == STX) && (u8data2[TempCnt2-1] == 0x7e) && (u8data2[TempCnt2-2] == 0x5a) && (u8data2[TempCnt2-3] == 0xa5) ) {						
 						if(pSoc->GetSocketMsg(u8data2, TempCnt) ) {
 							if(TempCnt == str_len) {
-								printf("%d == %d\n", TempCnt, str_len);
+							//	printf("%d == %d\n", TempCnt, str_len);
 								memset(u8data, 0, 1024);
 								memset(u8data2, 0, 1024);
 								break;
@@ -954,7 +1082,7 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 		}
 
 	}
-	printf("Socket GetSocketMsg ReceiveData_len %d\n", Len);
+//	printf("Socket GetSocketMsg ReceiveData_len %d\n", Len);
 
 	return 1;
 }

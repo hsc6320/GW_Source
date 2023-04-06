@@ -6,6 +6,5 @@ org.eclipse.rse.internal.processes.ui.view.SystemViewRemoteProcessAdapter\:org.e
 org.eclipse.rse.internal.ui.view.SystemViewFilterReferenceAdapter\:org.eclipse.rse.ui.view.SystemTableView=org.eclipse.rse.ui.filterParentPool;org.eclipse.rse.ui.filterParent;org.eclipse.rse.ui.filterstringsCount;org.eclipse.rse.ui.filterConnectionPrivate
 org.eclipse.rse.preferences.alert.nonssl=false
 org.eclipse.rse.preferences.order.connections=gw-VirtualBox.f105;gw-VirtualBox.f102;gw-VirtualBox.f300;gw-VirtualBox.Test;hong-PC.Local;hong-PC.f100;hong-PC.f101;hong-PC.f102;hong-PC.f103;hong-PC.f105;hong-PC.TEST
-org.eclipse.rse.preferences.verify.connection=false
 org.eclipse.rse.shells.ui.view.SystemViewRemoteOutputAdapter\:org.eclipse.rse.shells.ui.view.SystemCommandsView=null
 ssh.files.filterStringDialog=.

@@ -297,7 +297,7 @@ int SocketHandler::Server_BSN_Stop_Packet()
 	BYTE pu8data[30];
 	BYTE u8Checksum;
 	int iBufcnt =0;
-
+	printf("Server_BSN_Stop_Packet()\n");
 	pu8data[iBufcnt] = STX;
 	pu8data[++iBufcnt] = (BYTE)packet.PanID;
 	pu8data[++iBufcnt] = packet.PanID>> 8;

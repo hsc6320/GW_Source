@@ -16,6 +16,7 @@
 #include <stdio.h>
 #include <signal.h>
 #include <string>
+#include <string.h>
 #include <sys/ioctl.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -36,6 +37,7 @@
 #include <queue>
 #include <algorithm>
 #include <execinfo.h>
+#include <errno.h>
 
 //#include <linux/time.h>
 //#include <linux/kernel.h>

@@ -59,7 +59,7 @@ public:
 	int m_iWorkingAlive;
 	int m_nSocketArrayDataDownCnt, m_nSocketArrayDataIndicateCnt;
 	BYTE* m_p8uData;
-	BYTE* m_p8uSendData;
+	BYTE m_p8uSendData[4096];
 	char m_szMac_addr[20];
 	pthread_mutex_t Socket_mutex;
 	int bWorkingThread;
@@ -71,8 +71,10 @@ public:
 	::string m_IP_String, m_Mac_String;
 
 	void Convert_mac(const char* data, char* cvrt_str, int sz);
+	int Internet_connected();
 
 	void SetMutex(pthread_mutex_t mutex, int fd);
+	int IP_Address_Init();
 	int Socket_fd_Select(int fd, int timeout_ms);
 	int Ready_to_Read(int uartd, int timeoutms);
 	void SetSocketQueue(Socket_MsgQueue* socketqueue);

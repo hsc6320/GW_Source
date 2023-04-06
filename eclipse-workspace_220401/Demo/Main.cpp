@@ -21,13 +21,13 @@
 
 
 using namespace std;
-#define SETPANID(u8data)
 
 Socket*	m_pSocket;
 MsgHandler* m_pMsgHandler;
 UartComThread* m_MainComport;
 MsgQueue* m_pMsgQueue;
 SocketHandler*	m_pSocketHandle;
+
 pthread_t Main_thread[2];
 pthread_mutex_t Main_mutex;
 pthread_mutex_t Main_Uartmutex;
@@ -47,19 +47,17 @@ template <typename T>
 std::vector<uint8_t> vec;
 std::vector<std::vector<BYTE>> m_ArrayDataAcknowledge;
 int nlsChecksum =0;
-int nflagRegistration_Req =0;
-int nTagCnt =0;
 int socket_fd =0;
 int nBeaconCnt =0, nTempBeaconCnt =0, nTemp2BeaconCnt = 0, nTemp1BeaconCnt=0;
 BYTE nBeaconValue =0;
 int bReDownloadFlag =0, bDataAckFlag =0;
 int nSavedTagCount =0;
 int BEACON_MAX =0;
+int bSocketAlive =1;
 
 int GetUartMsg(PRE_DEFINE::S_PACKET* Getpacket);
 BYTE GetChecksum(BYTE* puData, int len);
 WORD ByteToWord(BYTE puData, BYTE puData1);
-BYTE m_SendData[1024];
 
 
 int Main_Socket_Init();
@@ -324,7 +322,7 @@ int Main_ByPass_SocketToUart()
 		timer_delete(firstTimerID);
 		Set_WaitTimer(&firstTimerID, 30, 0);
 
-		printf(": m_iStatusAlive : %d\n", m_pSocket->m_iStatusAlive);
+	//	printf(": m_iStatusAlive : %d\n", m_pSocket->m_iStatusAlive);
 		if(m_pSocket->m_iStatusAlive) {
 			m_pSocket->m_iStatusAlive =0;
 			m_pSocket->m_iBypassSocketToUart =0;
@@ -421,7 +419,7 @@ int Main_ByPass_SocketToUart()
 				}
 			}
 
-			printf("!bReDownloadFlag %d && !bDataAckFlag %d m_nDataDownCount : %d\n", bReDownloadFlag, bDataAckFlag, m_pMsgHandler->m_nDataDownCount);
+		//	printf("!bReDownloadFlag %d && !bDataAckFlag %d m_nDataDownCount : %d\n", bReDownloadFlag, bDataAckFlag, m_pMsgHandler->m_nDataDownCount);
 			if(!bReDownloadFlag && !bDataAckFlag) {
 				if (m_pMsgHandler->UartPacket_DataIndicateStart(nBeaconValue) ) {
 					Set_WaitTimer(&DataIndecateTimerID, 100, 1);
@@ -647,8 +645,6 @@ void Main_Service_Stop()
 	printf("Beacon Stop\n");
 	th_delay(3);
 	m_pMsgHandler->BSN_Stop_Packet();
-	th_delay(1000);
-	th_delay(1000);
 	m_pSocketHandle->Server_BSN_Stop_Packet();
 	nBeaconCnt = 0;
 	for(int i=0; i<m_pSocket->m_nSocketArrayDataDownCnt; i++) {
@@ -1171,20 +1167,8 @@ void PrintfHello(int sig, siginfo_t* si, void* uc)
 		timer_delete(firstTimerID);
 		printf("Status Check :%d , %d, %d \n", m_pSocket->m_iSocketReceiveQueue
 									, m_pSocket->m_iBypassSocketToUart, m_pSocket->m_iSocketReceiveEnd);
-		printf("Server Connect Timeout : %d\n", m_pSocketHandle->m_iSocketArive);		
-		
-#if 0
-		printf("Status Check :%d , %d, %d, %d, %d \n", m_pMsgQueue->m_bReadEnd_UartMessage, m_pMsgQueue->m_bUartCommuniFlag
-									, m_pSocket->m_iBypassSocketToUart, m_pSocket->m_iSocketReceiveEnd
-/*,m_pSocket->m_nServerMessge_End*/,m_MainComport->m_iUartRetry);
-		
-		if(!m_pMsgQueue->m_bReadEnd_UartMessage && !m_pMsgQueue->m_bUartCommuniFlag &&
-			!m_pSocket->m_iBypassSocketToUart && !m_pSocket->m_iSocketReceiveEnd && /*!m_pSocket->m_nServerMessge_End &&*/
-			!m_MainComport->m_iUartRetry) {			
-		//	timer_delete(firstTimerID);
-		//	printf("Kill Timer firstTimerID\n");
-			Socket_AliveCheck();
-#endif
+		bSocketAlive = 0;
+		printf("Server Connect Timeout : %d\n", bSocketAlive);
 	}
 	else if(*tidp == DataDownTimerID) {
 		firstTimerFlag =0;
@@ -1391,11 +1375,12 @@ int main(int argc, char *argv[])
 		Main_ByPass_SocketToUart();
 		Main_ByPass_UartToSocket();
 
-		if(m_pSocket->bWorkingThread == 0) {			
+		if( (m_pSocket->bWorkingThread == 0) || (bSocketAlive == 0) ) {
 			printf("delete Timer\n");
 			timer_delete(firstTimerID);
-			Set_WaitTimer(&firstTimerID, 30, 0);
 			ServerReConn();
+			bSocketAlive = 1;			
+			Set_WaitTimer(&firstTimerID, 30, 0);
 			TagAssociation_Init();
 			printf("Main TagData\n");
 			while(!m_pMsgQueue->m_Queue.empty()) {

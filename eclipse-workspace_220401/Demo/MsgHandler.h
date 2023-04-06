@@ -53,7 +53,6 @@ public:
 	int m_nDataSendFail_SuccessCnt;
 	void SetHandle(UartComThread* msg);
 	void SetSocketArray(std::vector<std::vector<BYTE>> DataDownmsg, std::vector<std::vector<BYTE>> DataIndimsg);
-	void SetMapValueArray(std::vector<std::vector<BYTE>> vec, int Len);
 	void ServiceIdle();
 	int ServiceStart();
 	int GetTagNumber(int temp);
