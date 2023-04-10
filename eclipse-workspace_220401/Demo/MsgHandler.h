@@ -35,9 +35,7 @@ public:
 	std::vector<std::vector<BYTE>> m_UartArrayReDataDownMsg;
 	std::vector<std::vector<BYTE>> m_UartArrayReDataIndicateMsg;
 	std::map<std::vector<BYTE>, int > Map_dataParityCheck;
-	std::map<std::vector<BYTE>, int > Map_AcknowParityCheck;
 	std::map<WORD, int > Map_u16AcknowParityCheck;
-	std::vector<std::vector<BYTE>> vMsgDataAcknowledge;
 	WORD m_pu16MsgDataAcknowledge[4096];
 
 	Common_Packet	CommonPacket;
@@ -45,7 +43,7 @@ public:
 	int m_nDataDownCount, m_nDataIndiCount;
 	int m_DataCnt;
 	int m_DataFlag;
-	int DataSendFail_RedownCnt, m_GetDownTagID[4096];
+	int DataSendFail_RedownCnt;
 	int Beacon_Max;
 	UartComThread* m_pCommUart;
 	int m_nUartArrayDataDownCnt, m_nUartArrayDataIndicateCnt;
@@ -56,7 +54,7 @@ public:
 	void ServiceIdle();
 	int ServiceStart();
 	int GetTagNumber(int temp);
-	int DataFlag_Initialize(int beacon);
+	void DataFlag_Initialize(int beacon);
 	void BypassSocketToUart(BYTE* p8Data, int DataLen, int msgtype);
 	void BypassUartToSocket();
 	BYTE GetChecksum(BYTE* puData, int len);

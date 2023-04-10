@@ -10,22 +10,22 @@
 #include "../uart/uart.h"
 #include "../Vector_SocketQueue.h"
 
-
-
 #define EPOLL_SIZE 20
 
 void *Recieve_Function(void* rcvDt);
 
 Socket* m_pSoc;
 
-
 int nDataLen=0, nHostLength =0;
 int serv_sockfd;
 int efd;
+int bConf =0;
+
 struct epoll_event	ev, *events;
 
 extern UartComThread* m_MainComport;
 extern MsgQueue* m_pMsgQueue;
+
 struct hostent *hostinfo;
 struct sockaddr*	pAddr(NULL);
 struct sockaddr*	pAddr2(NULL);
@@ -35,16 +35,13 @@ std::vector<std::vector<BYTE>> vecTagData;
 BYTE OneData[4096][2048] = { {0,}, {0,} };
 BYTE TwoData[4096][2048] = { {0,}, {0,} };
 
-
-
 int vectorCnt = 0;
 
 Socket::Socket()
 {
-	p_thread = NULL;
+	p_thread = 0;
 	m_p8uData = NULL;
 	memset(m_p8uSendData,0, sizeof(BYTE)*4096);
-	//m_p8uSendData = NULL;
 	m_iWorkingAlive =0;
 	m_nServerMessge_End =0;
 	m_nSocketArrayDataDownCnt =0;
@@ -75,19 +72,14 @@ int Socket::Socket_Init(/*int argc, char *argv[]*/)
 {
 	//socket_ctx_t* ctx = NULL;
 
-//	struct ifconf	ifc;
-//	struct ifreq	ifr[256];
 	struct ifreq	ifrMac;
 	struct sockaddr_in serv_addr;
 
-	//struct sockaddr*	pAddr(NULL);
-	//struct hostent *hostinfo;
-	size_t	nNIC;
-	int nRet =0, retEpoll = 0;
-	int fd2, fd3, n;
 
-	char buf[50];
-	char *domainName = "haem.rocketsci.io";
+	int retEpoll = 0;
+	int fd3, n;
+
+	const char *domainName = "haem.rocketsci.io";
 	char buf2[5];
 	char Mac_addr[20];	
 
@@ -176,13 +168,13 @@ int Socket::Socket_Init(/*int argc, char *argv[]*/)
 	while(1) {
 		if(IP_Address_Init())
 			break;
-		else
-			th_delay(5000);
+		
+		th_delay(5000);
 	}
  	
 	if((hostinfo == NULL) && (nHostLength <= 0) ) {
 		hostinfo= gethostbyname(domainName);
-		while(1) { 	
+		while(1) {
 			if(hostinfo != NULL) {
 				for(int k=0; hostinfo->h_addr_list[k] != NULL; k++) {
 					printf("addrList : %s\n", inet_ntoa(*(struct in_addr*)hostinfo->h_addr_list[k]));
@@ -195,22 +187,28 @@ int Socket::Socket_Init(/*int argc, char *argv[]*/)
 			th_delay(1000);
 		}
 	}
+
+	if(bConf == ETHERNET)
+		strcpy(ifrMac.ifr_name, "eth0");
+	else if(bConf == WIFI)		
+		strcpy(ifrMac.ifr_name, "wlan0");
 	
-	strcpy(ifrMac.ifr_name, "eth0");
 	if(ioctl(m_serv_sock, SIOCGIFHWADDR, &ifrMac)<0) {
 		dp(4, "ioctl() - get mac");
 	}
+
+	
 	Convert_mac( ether_ntoa((struct ether_addr *)(ifrMac.ifr_hwaddr.sa_data)), Mac_addr, sizeof(Mac_addr) -1 );
 	strcpy(m_szMac_addr, Mac_addr);
 	::string str = "";
 	for(int i=0; i<20; i++) {
 		str += m_szMac_addr[i];
-		printf("%c[%d] ", m_szMac_addr[i], i);
+	//	printf("%c[%d] ", m_szMac_addr[i], i);
 	}
-	printf("\n");
 	
 	m_Mac_String = str;
 	printf("Mac Addrss : %s\n",m_Mac_String.c_str());
+	printf("\n");
 	
 	fd3 = open("port", O_RDONLY);
 	if(fd3 < 0) {
@@ -254,84 +252,6 @@ int Socket::Socket_Init(/*int argc, char *argv[]*/)
 	printf("Socket Init\n");
 
 	return (int)m_serv_sock;
-#if 0
-	ifc.ifc_len = sizeof(ifr);
-	ifc.ifc_ifcu.ifcu_req = ifr;
-
-	if(ctx->fd == -1) {
-		printf("Socket Error\n");
-	}
-	else {
-		printf("Socket Val : %d\n", ctx->fd);
-	}
-
-	nRet = ioctl(ctx->fd, SIOCGIFCONF, &ifc);
-	if(nRet == -1) printf("Get ip error\n");
-
-	nNIC = ifc.ifc_len / sizeof(struct ifreq);
-
-	for(size_t i =0; i< nNIC; i++) {
-		if(PF_INET == ifc.ifc_ifcu.ifcu_req[i].ifr_ifru.ifru_addr.sa_family)
-		{
-			pAddr = (&ifc.ifc_ifcu.ifcu_req[i].ifr_ifru.ifru_addr);
-		}
-	}
-
-	for(int i=0; i<15; i++) {
-		if(pAddr->sa_data[i] != NULL) {
-		//	printf("%d ", pAddr->sa_data[i]);
-			m_IP_String += std::to_string(pAddr->sa_data[i]);
-			m_IP_String.append(" ");
-		//	m_IP_String.append(i, pAddr->sa_data[i]);
-		//	m_IP_String += pAddr->sa_data[i];
-		}
-	}
-
-	printf("-------------MY IP ADDRESS : ");
-	printf("MY IP %s ", m_IP_String.c_str());
-	printf("---------------------\n");
-
-	fd2 = open("ip", O_RDONLY);
-	if(fd2 < 0) {
-		printf("IP file open error\n");
-		exit(1);
-	}
-	n = read(fd2, buf, 1024);
-	printf("SERVER IP : ");
-	for(int i=0; i<n; i++) {
-		printf("%c",buf[i]);
-	}
-
-	fd3 = open("port", O_RDONLY);
-	if(fd3 < 0) {
-		printf("PORT file open error\n");
-		exit(1);
-	}
-	n = read(fd3, buf2, 1024);
-	printf("PORT : ");
-	for(int i=0; i<n; i++) {
-		printf("%c",buf2[i]);
-	}
-
-#define PORT atoi(buf2)
-
-	memset(&serv_addr, 0, sizeof(serv_addr));
-	serv_addr.sin_family = AF_INET;
-	serv_addr.sin_addr.s_addr = inet_addr(buf);
-
-	serv_addr.sin_port = htons(PORT/*atoi(argv[2])*/);
-
-	if(connect(ctx->fd , (struct sockaddr *)&serv_addr, sizeof(serv_addr)) == -1) {
-		printf("Connect Error\n");
-		exit(0);
-	}
-	m_serv_sock = (int)ctx;
-	printf("serv_sockfd : %d, %d\n", ctx->fd , (int)ctx);
-
-	printf("Socket Init\n");
-
-	return (int)ctx;
-#endif
 
 }
 
@@ -339,9 +259,8 @@ int Socket::IP_Address_Init()
 {
 	struct ifconf	ifc;
 	struct ifreq	ifr[250];
-	struct sockaddr_in* serv_addr;
 	int nRet =0;
-	int bConf =0;
+	
 	size_t	nNIC;
 
 	ifc.ifc_len = sizeof(ifr);
@@ -367,17 +286,18 @@ int Socket::IP_Address_Init()
 			}
 			if('l' == ifc.ifc_ifcu.ifcu_req[i].ifr_ifrn.ifrn_name[0]) {
 				printf("%d %d %d %d \n",  pAddr->sa_data[0], pAddr->sa_data[1], pAddr->sa_data[2], pAddr->sa_data[3]);
+				bConf =LO;
 			}
 			else if('w' == ifc.ifc_ifcu.ifcu_req[i].ifr_ifrn.ifrn_name[0]) {
-				printf("%d %d %d %d \n",  pAddr->sa_data[0], pAddr->sa_data[1], pAddr->sa_data[2], pAddr->sa_data[3]);
-				bConf =1;
+				printf("WIFI %d %d %d %d \n",  pAddr->sa_data[0], pAddr->sa_data[1], pAddr->sa_data[2], pAddr->sa_data[3]);
+				bConf =WIFI;
 			}
 			else if('e' == ifc.ifc_ifcu.ifcu_req[i].ifr_ifrn.ifrn_name[0]) {
-				printf("%d %d %d %d \n",  pAddr->sa_data[0], pAddr->sa_data[1], pAddr->sa_data[2], pAddr->sa_data[3]);
-				bConf = 1;
+				printf("ETHERNET %d %d %d %d \n",  pAddr->sa_data[0], pAddr->sa_data[1], pAddr->sa_data[2], pAddr->sa_data[3]);
+				bConf = ETHERNET;
 			}
 		}
-		if(!bConf) {
+		if(bConf == LO) {
 			printf("return 0, ifconfig lo\n");
 			return 0;
 		}
@@ -427,9 +347,7 @@ int Socket::IP_Address_Init()
 
 int Socket::Internet_connected()
 {
-	FILE *fpp;
 	FILE *fpp2;
-	char bbuff[1024];
 	char bbuff2[1024];
 	//fpp = popen("sudo ping www.falinux.com -c 1 -w 10 | grep \"1 received\" | wc -l", "r");
 	fpp2 = popen(" sudo su", "w");
@@ -450,17 +368,6 @@ int Socket::Internet_connected()
 			printf("temppwd\n");
 			fprintf(fpp2, " temppwd\n");
 		}
-	//	fwrite(bbuff2, sizeof(char), sizeof(bbuff2), fpp2);
-	//	fpp = popen("sudo ping www.falinux.com -c 1 -w 10 | grep \"1 received\" | wc -l", "r");
-/*		if(NULL != fpp) {
-			while( fgets(bbuff, 1024, fpp)) {
-				if(NULL != index(bbuff, '1' ) ) {
-					printf("true\n");
-					break;
-				}			
-			}
-		}*/
-	//	pclose(fpp);
 		pclose(fpp2);
 	}
 	return 1;
@@ -514,7 +421,6 @@ void Socket::Exit_Socket_Thread()
 {
 	int retEpoll =0, reclose =0;
 	int retval;
-	int ret =0;
 
 	if(m_serv_sock != 0) {
 		if(close(m_serv_sock) == -1)
@@ -588,7 +494,7 @@ void Socket::Exit_Socket_Thread()
 	printf("reclose : %d\n", reclose);
 	
 	m_iWorkingAlive =0;
-	ret = pthread_join(p_thread, (void**)&retval);
+	pthread_join(p_thread, (void**)&retval);
 	printf("Socket Exit Thread ,%d\n", retval);
 	switch(retval)
 	{

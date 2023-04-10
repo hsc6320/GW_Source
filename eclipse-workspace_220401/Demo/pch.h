@@ -62,11 +62,13 @@
 #define FAIL 	0
 
 //#define BEACON_MAX		63	//63	//63	//31	//9
-
+#define LO				0
+#define ETHERNET		1
+#define WIFI			2
 #define BUILD_UINT16(loByte, hiByte)	((unsigned int )(((loByte) & 0x00FF) + (((hiByte) & 0x00FF) << 8)))
 
 #ifdef  DEBUG_LEVEL_
-#define dp(n, fmt, args...)	if (DEBUG_LEVEL_ <= n) fprintf(stderr, "%s:%d,", fmt, __FILE__, __LINE__, ## args)
+#define dp(n, fmt, args...)	if (DEBUG_LEVEL_ <= n) fprintf(stderr, "%s %s:%d,", fmt, __FILE__, __LINE__, ## args)
 #define dp0(n, fmt)		if (DEBUG_LEVEL_ <= n) fprintf(stderr, "%s:%d,"fmt, __FILE__, __LINE__)
 #define _dp(n, fmt, args...)	if (DEBUG_LEVEL_ <= n) fprintf(stderr, " "fmt, ## args)
 #else	/* DEBUG_LEVEL_ */

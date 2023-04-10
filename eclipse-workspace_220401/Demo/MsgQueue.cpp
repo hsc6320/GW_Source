@@ -55,19 +55,15 @@ bool ZeroCompare3(WORD a, WORD b)
 
 MsgQueue:: MsgQueue(void)
 {
-	m_DataAckCnt=0;
 	m_bReadEnd_UartMessage = 0;
 	m_bUartCommuniFlag = 0;
 	m_bUartTagAssociFlag =0;
 	m_nMapParity =0;
-	Redown =0;
-	Redown2 =0;
+	m_ServerDisconnect =0;
 	m_nSendTagCount =0;
 	m_Uart_ServiceStart_TagAssociation_InitFlag =0;
 	memset(m_Test, 0, sizeof(WORD)*4096);
 	memset(m_pu16MsgQueueArrayDataAcknowledge, 0, sizeof(WORD)*4096);
-	memset (m_MsgQueueTagIDAssociation, 0, sizeof(WORD)*4096);
-	memset (m_MsgTempTagIDAssociation, 0, sizeof(WORD)*4096);
 	m_pMsg = NULL;
 }
 
@@ -91,28 +87,27 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 			if(u8Data[MSG_ACKNOWLEDGE_STATUS] == PAYLOAD_STATUS_SUCCESS) {	
 				Cnt = m_nMapParity;
 				for(int i=0; i<= Cnt; i++) {
-					if( !Redown ) {
+			/*		if( !Redown ) {
 						if(m_pu16MsgQueueArrayDataAcknowledge[i] == ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO]) ) {
 							printf("m_nMapParity Overlap Parity 0x%x\n", m_pu16MsgQueueArrayDataAcknowledge[i]);
 							return 1;
 						}
 					}
-					else {						
+					else {	*/					
 						if(m_pu16MsgQueueArrayDataAcknowledge[i] == ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO]) ) {
 							printf("m_pu16MsgQueueArrayDataAcknowledge, Overlap Parity 0x%x \n", m_pu16MsgQueueArrayDataAcknowledge[i]);
 							return 1;
 						}
-					}
+				//	}
 				}
 				size = 4096; 
 				wordPanID = ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO]);
 				printf("m_nMapParity :%d, wordPanID : %d ", m_nMapParity, wordPanID);
+
+				m_Test[m_nMapParity] = wordPanID;
 				
 //				int size2 =GetSizeArray1(m_Test);
 //				PrintArray1(m_Test, size2);
-
-				m_Test[m_nMapParity] = wordPanID;
-
 //				AppendArray1(wordPanID, m_nMapParity, m_Test);
 //				m_ArrayUtil.InsertArray(m_nMapParity, wordPanID, m_Test);
 //				size2 =GetSizeArray1(m_Test);
@@ -132,10 +127,12 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 
 				printf("DataAck TagID : ");
 				printf("%x\n",(ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO])));
-
 			
 				m_nMapParity++;				
 				printf("m_nMapParity : %d\n", m_nMapParity);
+				if(m_ServerDisconnect) {
+			//		m_QueueDataAck.push(m_pu16MsgQueueArrayDataAcknowledge);
+				}
 
 			}
 			m_GetSocket->Send_Message(u8Data, len);
@@ -164,12 +161,12 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 				printf("\n");
 				m_Queue.push(m_MsgQueueDataAssocation);
 				
-				if(u8Data[MSG_ASSOCIATION_STATUS] == PAYLOAD_STATUS_SUCCESS) {
+			/*	if(u8Data[MSG_ASSOCIATION_STATUS] == PAYLOAD_STATUS_SUCCESS) {
 					m_MsgTempTagIDAssociation[nTagidCnt] = ByteToWord(m_MsgQueueDataAssocation.at(MSG_SADDRONE), m_MsgQueueDataAssocation.at(MSG_SADDRZERO)) ;
 					printf("Association TAG ID : %d\n", m_MsgTempTagIDAssociation[nTagidCnt]);
 					
 					nTagidCnt++;
-				}
+				}*/
 				m_MsgQueueDataAssocation.clear();
 				m_nSendTagCount++;
 			
@@ -223,7 +220,6 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 			}
 		}
 		else if( (u8Data[MSGTYPE] == 0) && (u8Data[MSGTYPE] == BSN_DATA_END_ACK) ) {
-			Redown =0;
 			return 1;
 		}
 		else {
@@ -279,25 +275,12 @@ int MsgQueue::DataSort()
 	printf("\n");
 
 	return 1;
-
 }
 
 void MsgQueue::GetDataDown(int cnt)
 {
 	nDataDown = cnt;
 }
-
-void MsgQueue::TagInforCount_Reset(int *cnt)
-{
-	*cnt = nTagidCnt;
-	nTagidCnt = 0;
-}
-
-void MsgQueue::TagInforCount_set(int *cnt)
-{
-	*cnt = nTagidCnt;
-}
-
 
 WORD MsgQueue::ByteToWord(BYTE puData, BYTE puData1)
 {

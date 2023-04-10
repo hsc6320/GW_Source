@@ -27,7 +27,6 @@ public:
 	UartComThread();
 	virtual ~UartComThread();
 
-	BYTE* m_p8uUartData;
 	int m_uartd;
 
 	void SetMutex(pthread_mutex_t mutex);

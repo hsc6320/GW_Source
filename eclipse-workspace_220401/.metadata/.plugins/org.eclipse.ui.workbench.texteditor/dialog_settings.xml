@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="gethostbyname"/>
+		<item key="selection" value="serv_addr"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="serv_addr"/>
+			<item value="IP_Address_Init"/>
+			<item value="struct sockaddr"/>
+			<item value="sockaddr"/>
+			<item value="ifr_addr"/>
+			<item value="SIOCGIFCONF"/>
 			<item value="gethostbyname"/>
 			<item value="h_addr_list"/>
 			<item value="buf2"/>
@@ -17,19 +23,13 @@
 			<item value="/aa"/>
 			<item value="ifr_name"/>
 			<item value="GetTagNumber"/>
-			<item value="beacon_count"/>
-			<item value="BEACON_MAX"/>
-			<item value="temp+1"/>
-			<item value="UartPacket_ReDataAcknowledge_DownStart"/>
-			<item value="Main_TagSort_Arrange2"/>
-			<item value="UartPacket_DataDownStart"/>
 		</list>
 		<list key="replacehistory">
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="753"/>
-		<item key="DIALOG_Y_ORIGIN" value="231"/>
+		<item key="DIALOG_X_ORIGIN" value="149"/>
+		<item key="DIALOG_Y_ORIGIN" value="248"/>
 		<item key="DIALOG_WIDTH" value="348"/>
 		<item key="DIALOG_HEIGHT" value="437"/>
 		<item key="DIALOG_FONT_NAME" value="1|Ubuntu|11.0|0|GTK|1|"/>

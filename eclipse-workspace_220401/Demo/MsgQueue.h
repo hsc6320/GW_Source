@@ -49,7 +49,6 @@ public :
 public:
 	VectorSocket<WORD> m_ArrayUtil;
 
-	std::vector<uint8_t> vec2;
 	std::queue<BYTE> que;
 
 	//vecmsgform m_vcemsg;
@@ -57,25 +56,16 @@ public:
 	int m_bReadEnd_UartMessage;
 	int m_bUartCommuniFlag, m_bUartTagAssociFlag;
 	int m_Uart_ServiceStart_TagAssociation_InitFlag;
-	int m_nMapParity, Redown, Redown2;
+	int m_nMapParity, m_ServerDisconnect;
 	int m_nSendTagCount;
-	int m_DataAckCnt;
 
-	std::queue<std::vector<BYTE>> m_Queue;
-	std::vector<std::vector<BYTE>> m_MsgQueueArrayDataAcknowledge;
+	std::queue<std::vector<BYTE>> m_Queue, m_QueueDataAck;
 	std::vector<std::vector<BYTE>> m_ArrayDataAcknowledge;
-	std::vector<BYTE> m_MsgQueueDataAcknowledge;
-	std::map<std::vector<BYTE>, int > Map_dataAcknowParityCheck;
-
-	std::vector<std::vector<BYTE>> m_MsgQueueTagData;
 	std::vector<BYTE> m_MsgQueueDataAssocation;
-	WORD m_MsgQueueTagIDAssociation[4096];
-	WORD m_MsgTempTagIDAssociation[4096];
 
 	BYTE m_u8SendData[1024];
 	WORD m_pu16MsgQueueArrayDataAcknowledge[4096];
 	WORD m_Test[4096];
-	//VectorSocket<BYTE> m_vArrayDataAcknowledge;
 	
 	void GetSocket(Socket* soc);
 	int uart_SetTimer();
@@ -84,8 +74,6 @@ public:
 	bool PutByte(uint8_t* b, int len);
 	int DataSort();
 	void GetDataDown(int cnt);
-	void TagInforCount_Reset(int *cnt);
-	void TagInforCount_set(int *cnt);
 	int GetSizeArray1(WORD* ar);
 	void AppendArray1(WORD sz, int size1, WORD* ar);
 	void PrintArray1(WORD* ar, int size);

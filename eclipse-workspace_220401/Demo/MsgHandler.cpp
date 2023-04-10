@@ -36,8 +36,6 @@ MsgHandler::MsgHandler()
 	m_nUartArrayReDataIndicateCnt =0;
 	m_UartArrayDataIndicateMsg.reserve(5000);
 	m_UartArrayDataDownMsg.reserve(5000);
-
-	memset(m_GetDownTagID, 0, 4096);
 }
 
 MsgHandler::~MsgHandler()
@@ -48,11 +46,10 @@ int MsgHandler::bClear()
 {
 	m_nDataIndiCount =0;
 	DataSendFail_RedownCnt =0;
-	m_nDataDownCount =0;
+	m_nDataDownCount =0;	
+	Map_dataParityCheck.clear();
 	m_UartArrayDataDownMsg.clear();
 	m_UartArrayDataIndicateMsg.clear();
-	Map_AcknowParityCheck.clear();
-	vMsgDataAcknowledge.clear();
 	Map_dataParityCheck.clear();
 	return 1;
 }
@@ -576,8 +573,6 @@ int MsgHandler::UartPacket_ReDataAcknowledge_DownStart(BYTE u8data)
 		return 0;
 	}
 	
-
-	printf("UartPacket_ReDataAcknowledge_DownStart ()\n");
 	while(BEACON_MAX_COUNT >= beaconcnt) {
 		if(ibeaconvalue == beaconcnt) {
 			printf("UartPacket_ReDataAcknowledge_DownStart() ibeaconvalue : DEC[%d], HEX[%x]\n", ibeaconvalue , ibeaconvalue);
@@ -600,7 +595,6 @@ int MsgHandler::UartPacket_ReDataAcknowledge_DownStart(BYTE u8data)
 				}
 				else {
 					Map_AcknowOverlap =1;
-			//		Map_AcknowCnt = m_nDataDownCount;
 				}
 				
 				if(m_nDataDownCount == m_nUartArrayDataDownCnt) {
@@ -618,14 +612,12 @@ int MsgHandler::UartPacket_ReDataAcknowledge_DownStart(BYTE u8data)
 				while(Map_AcknowCnt < 15) {			
 				//	printf(" Total Send data %d, Map_AcknowCnt : %d\n", m_nUartArrayDataDownCnt, Map_AcknowCnt);
 					if(Map_u16AcknowParityCheck[m_pu16MsgDataAcknowledge[Map_AcknowCnt]] == FAIL) {
-					//	if( (Map_AcknowCnt != 0) && (Map_AcknowOverlap == Map_AcknowCnt) ) { printf("Map_AcknowOverlap : %d Map_AcknowCnt : %d\n", Map_AcknowOverlap, Map_AcknowCnt); return 0; }
 			
 						m_nDataDownCount = Map_AcknowCnt;
 
 						printf("DataDown Tag Number [%x] : %d\n", Map_AcknowCnt+1, Map_u16AcknowParityCheck[m_pu16MsgDataAcknowledge[Map_AcknowCnt]]);
 
-						m_nDataSendFail_SuccessCnt++;					
-					//	Map_AcknowOverlap = Map_AcknowCnt;
+						m_nDataSendFail_SuccessCnt++;
 						Map_AcknowCnt++;
 
 						beaconcnt = BEACON_MAX_COUNT;
@@ -656,7 +648,6 @@ int MsgHandler::UartPacket_ReDataAcknowledge_DownStart(BYTE u8data)
 					printf("Map_AcknowOverlap : %d, nTagNumber : %d\n", Map_AcknowOverlap, nTagNumber);
 				}
 				
-//				GetTagNumber(j);
 				if( ( j+1 > nTagNumber) || (j+15 < nTagNumber) ) {
 					printf("j+1 : %d, nTagNumber : %d return 0 \n", j+1, nTagNumber);
 					return 0;
@@ -676,7 +667,6 @@ int MsgHandler::UartPacket_ReDataAcknowledge_DownStart(BYTE u8data)
 					return 0;
 				}
 				while(Map_AcknowCnt2 < jend) {
-				//	printf(" Total Send data  %d, Map_AcknowCnt : %d\n", m_nUartArrayDataDownCnt, Map_AcknowCnt2);
 					if( (Map_AcknowCnt2==jend) || (m_nUartArrayDataDownCnt-1 < Map_AcknowCnt2) ) {
 						Map_AcknowOverlap2 = 0;
 						printf("Tag Number  must Bigger then %x  , Total Send data  %d return 0\n", Map_AcknowCnt2, m_nUartArrayDataDownCnt);
@@ -689,15 +679,12 @@ int MsgHandler::UartPacket_ReDataAcknowledge_DownStart(BYTE u8data)
 
 						printf("\nReDown E_BEACON_BSN_NUMBER%d: Map_AcknowCnt2 %d m_nDataDownCount : %d\n", ibeaconvalue, Map_AcknowCnt2, m_nDataDownCount);
 						m_nDataSendFail_SuccessCnt++;
-					//	Map_AcknowOverlap2 = Map_AcknowCnt2;
 						Map_AcknowCnt2++;
 
 						beaconcnt = BEACON_MAX_COUNT;
 						break;
 					}
-					else if(Map_u16AcknowParityCheck[m_pu16MsgDataAcknowledge[Map_AcknowCnt2]] == PASS) {
-					//	Map_AcknowOverlap2 =0;
-					}
+					
 					if(Map_AcknowCnt2 >= jend-1) {
 						printf("Map_AcknowCnt2== jend-1\n");
 						Map_AcknowOverlap2 =0;
@@ -882,7 +869,7 @@ void MsgHandler::SetSocketArray(std::vector<std::vector<BYTE>> DataDownmsg, std:
 	BSN_Start_Packet();
 }
 
-int MsgHandler::DataFlag_Initialize(int beacon)
+void MsgHandler::DataFlag_Initialize(int beacon)
 {
 	m_DataFlag =0;
 	m_DataCnt =0;

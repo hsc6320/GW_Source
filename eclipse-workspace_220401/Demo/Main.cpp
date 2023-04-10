@@ -51,7 +51,6 @@ int socket_fd =0;
 int nBeaconCnt =0, nTempBeaconCnt =0, nTemp2BeaconCnt = 0, nTemp1BeaconCnt=0;
 BYTE nBeaconValue =0;
 int bReDownloadFlag =0, bDataAckFlag =0;
-int nSavedTagCount =0;
 int BEACON_MAX =0;
 int bSocketAlive =1;
 
@@ -71,14 +70,12 @@ int UartToSocket_Service_cfm();
 int Main_ByPass_SocketToUart();
 int Main_ByPass_UartToSocket();
 int uart_SetTimer();
-void TagAssociation_Sort();
 
 int Set_WaitTimer(timer_t *timerID, int expireMS, int intervalMS);
 void PrintfHello(int sig, siginfo_t* si, void* uc);
 void th_delay(int millsec);
 int ServerReConn();
 int TagAssociation_Init();
-int Main_ReTry_SendFailData(int* failcnt) ;
 void Main_Service_Stop();
 int Main_TagSort_Arrange(int* iTemp, int* iTemp2);
 int Main_TagSort_Arrange2(int* iTemp, int* iTemp2);
@@ -196,29 +193,18 @@ int Main_ByPass_UartToSocket()
 		{
 		case COORDINATOR_RESET_CONFIRM:
 			nBeaconCnt = 0;
-			m_pMsgHandler->m_nDataIndiCount =0;
-			m_pMsgHandler->m_nDataDownCount =0;
-			m_pMsgHandler->m_UartArrayDataDownMsg.clear();
-			m_pMsgHandler->m_UartArrayDataIndicateMsg.clear();
 			m_pMsgQueue->m_nSendTagCount =0;
 			m_pSocket->m_SocketArrayDataDownMsg.clear();
 			m_pSocket->m_SocketArrayDataIndicateMsg.clear();
-			m_pMsgQueue->m_MsgQueueArrayDataAcknowledge.clear();
-			m_pMsgQueue->m_MsgQueueDataAcknowledge.clear();
 			m_pMsgQueue->m_nMapParity =0;
-			m_pMsgQueue->Map_dataAcknowParityCheck.clear();
-			m_pMsgHandler->Map_dataParityCheck.clear();
-			m_pMsgHandler->Map_AcknowParityCheck.clear();
 			m_pMsgHandler->bClear();
 			m_pSocketHandle->SetMsg_StartCfm_Remalloc(0);
-			m_pMsgQueue->m_MsgQueueTagData.clear();
 			m_pSocketHandle->m_nTagDataCount =0;
 			m_pMsgHandler->BSN_Stop_Packet();
 			bReDownloadFlag = 0;
 			bDataAckFlag =0;
 			nTempBeaconCnt =0;
 			nTemp2BeaconCnt =0;
-			memset(m_pMsgHandler->m_GetDownTagID, 0, 4096);
 			break;
 
 		case SERVICESTART_CONFIRM:
@@ -341,8 +327,7 @@ int Main_ByPass_SocketToUart()
 			m_pSocket->m_iBypassSocketToUart =0;
 			m_pSocket->m_iSocketReceiveEnd =0;
 			return 1;
-		}
-		
+		}		
 		
 		m_pMsgHandler->BypassSocketToUart(m_pSocket->m_p8uData,	m_pSocket->m_ReceiveData_len, m_pSocket->m_SocketMsg_vec[MSGTYPE]);
 
@@ -356,7 +341,9 @@ int Main_ByPass_SocketToUart()
 	else if(m_pSocket->m_iSocketReceiveQueue) {
 		printf("m_iSocketReceiveQueue  :  %d\n", m_pSocket->m_iSocketReceiveQueue);
 		m_pSocket->m_iSocketReceiveQueue =0;
-		TagAssociation_Sort();
+	
+		memset(m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge, 0, sizeof(WORD)*4096);
+		memset(m_pMsgHandler->m_pu16MsgDataAcknowledge, 0, sizeof(WORD)*4096);
 		m_pMsgHandler->SetSocketArray(m_pSocket->m_SocketArrayDataDownMsg, m_pSocket->m_SocketArrayDataIndicateMsg);
 		m_pMsgQueue->GetDataDown(m_pSocket->m_nSocketArrayDataDownCnt);
 		printf("Socket Communication End\n");
@@ -469,10 +456,6 @@ int Main_ByPass_SocketToUart()
 				timer_delete(DataDownTimerID);
 			}
 			nBeaconValue = (BYTE)m_pMsgQueue->m_vcemsg.at(MSG_BSN_DATA);
-		/*	m_pMsgHandler->m_DataFlag =0;
-			m_pMsgHandler->m_DataCnt =0;
-			m_pMsgHandler->Map_AcknowCnt =0;*/
-			//m_pMsgHandler->Map_AcknowCnt2 = (16 * ((int)(nBeaconValue)+1))-1;
 
 			m_pMsgHandler->DataFlag_Initialize(nBeaconValue);
 
@@ -504,86 +487,28 @@ int Main_ByPass_SocketToUart()
 				int j =0;
 				m_pMsgHandler->DataSendFail_RedownCnt =0;
 				m_pMsgHandler->m_nDataSendFail_SuccessCnt =0;
-				printf("nBeaconCnt : %d > BEACON_MAX\n", nBeaconCnt);
-#if 0				
-				if(!bDataAckFlag) {
-					if(Main_ReTry_SendFailData(&j)) {
-						if(nTemp1BeaconCnt > 3) {
-							DataSendFail_Redown =0;
-						}
-					}
-					else {
-						printf("DataSendFail_Redown\n");
-						nTemp1BeaconCnt++;						
-						m_pMsgHandler->DataSendFail_RedownCnt = j;
-						j =0;
-						nBeaconCnt =0;
-						bReDownloadFlag =1;
-						m_pMsgHandler->m_nDataDownCount = 0;
-						m_pMsgHandler->m_nDataIndiCount = 0;
-						m_pMsgHandler->UartPacket_ReDataDownStart(nBeaconValue/*m_pMsgQueue->m_vcemsg.MsgPacket.data[0]*/);
-						return 1;
-					}
-				}
-#endif
 
-#if 0
-				if(!bDataAckFlag) {
-					for(int i=0; i<m_pMsgHandler->m_nUartArrayDataDownCnt; i++) {
-						if(m_pMsgHandler->Map_dataParityCheck[m_pMsgHandler->m_UartArrayDataDownMsg[i]] != PASS) {
-							printf("Map_dataParityCheck[%d] FAIL \n", i);
-							//m_pMsgHandler->m_GetDownTagID[j] = (int)m_pMsgHandler->m_UartArrayDataDownMsg[i].at(MSG_DADDRZERO);
-							m_pMsgHandler->m_GetDownTagID[j] = (int)ByteToWord(m_pMsgHandler->m_UartArrayDataDownMsg[i][MSG_DADDRONE], m_pMsgHandler->m_UartArrayDataDownMsg[i][MSG_DADDRZERO]);
-						
-							printf("TagID : 0x%x\n", m_pMsgHandler->m_GetDownTagID[j]);
-							j++;
-							DataSendFail_Redown = 1;
-						}
+				nTempBeaconCnt++;
+				printf("nTempBeaconCnt : %d\n", nTempBeaconCnt);
+
+				if(nTempBeaconCnt >= 3/*BEACON_MAX/2*/) {
+					bReDownloadFlag =0;
+					printf("bDataAckFlag : %d, m_nUartArrayDataDownCnt : %d, m_nMapParity : %d\n", bDataAckFlag, m_pMsgHandler->m_nUartArrayDataDownCnt, m_pMsgQueue->m_nMapParity);
+
+					if(!bDataAckFlag && (m_pMsgHandler->m_nUartArrayDataDownCnt > m_pMsgQueue->m_nMapParity) ) {
+						Main_TagSort_Arrange(&j, &AckFail_Redown);
 					}
+					else if(bDataAckFlag && (m_pMsgHandler->m_nUartArrayDataDownCnt > m_pMsgQueue->m_nMapParity) ) {						
+						Main_TagSort_Arrange2(&j, &AckFail_Redown);
+					}
+					m_pMsgHandler->DataSendFail_RedownCnt = j;
+					printf("\nMain Fail tag count: %d, DataSendFail_Redown : %d, AckFail_Redown : %d\n", j, DataSendFail_Redown, AckFail_Redown);						
+				}
+				else {
+					printf("return 1\n");
+					return 1;
 				}
 
-				if(DataSendFail_Redown) {
-					if(nTemp1BeaconCnt > 3) {
-						DataSendFail_Redown =0;
-					}
-					else {
-						printf("DataSendFail_Redown\n");
-						nTemp1BeaconCnt++;						
-						m_pMsgHandler->DataSendFail_RedownCnt = j;
-						j =0;
-						nBeaconCnt =0;
-						bReDownloadFlag =1;
-						m_pMsgHandler->m_nDataDownCount = 0;
-						m_pMsgHandler->m_nDataIndiCount = 0;
-						m_pMsgHandler->UartPacket_ReDataDownStart(nBeaconValue/*m_pMsgQueue->m_vcemsg.MsgPacket.data[0]*/);
-					//	return 1;
-					}
-				}
-
-			//	if(DataSendFail_Redown) {
-#endif
-					nTempBeaconCnt++;
-					printf("nTempBeaconCnt : %d\n", nTempBeaconCnt);
-
-					if(nTempBeaconCnt >= 3/*BEACON_MAX/2*/) {
-						bReDownloadFlag =0;
-				//		memset(m_pMsgHandler->m_GetDownTagID, 0, 4096);
-						printf("bDataAckFlag : %d, m_nUartArrayDataDownCnt : %d, m_nMapParity : %d\n", bDataAckFlag, m_pMsgHandler->m_nUartArrayDataDownCnt, m_pMsgQueue->m_nMapParity);
-
-						if(!bDataAckFlag && (m_pMsgHandler->m_nUartArrayDataDownCnt > m_pMsgQueue->m_nMapParity) ) {
-							Main_TagSort_Arrange(&j, &AckFail_Redown);
-						}
-						else if(bDataAckFlag && (m_pMsgHandler->m_nUartArrayDataDownCnt > m_pMsgQueue->m_nMapParity) ) {						
-							Main_TagSort_Arrange2(&j, &AckFail_Redown);
-						}
-						m_pMsgHandler->DataSendFail_RedownCnt = j;
-						printf("\nMain Fail tag count: %d, DataSendFail_Redown : %d, AckFail_Redown : %d\n", j, DataSendFail_Redown, AckFail_Redown);						
-					}
-					else {
-						printf("return 1\n");
-						return 1;
-					}
-	//			}
 
 				if(AckFail_Redown) {
 					AckFail_Redown =0;
@@ -613,7 +538,7 @@ int Main_ByPass_SocketToUart()
 							Main_Service_Stop();
 						}
 					}
-				}				
+				}
 			}
 			break;
 		}
@@ -621,25 +546,7 @@ int Main_ByPass_SocketToUart()
 
 	return 1;
 }
-int Main_ReTry_SendFailData(int* failcnt) 
-{
-	int nRet =0;
-	int j =0;
-	for(int i=0; i<m_pMsgHandler->m_nUartArrayDataDownCnt; i++) {
-		if(m_pMsgHandler->Map_dataParityCheck[m_pMsgHandler->m_UartArrayDataDownMsg[j]] != PASS) {
-			printf("Map_dataParityCheck[%d] FAIL \n", i);
-			//m_pMsgHandler->m_GetDownTagID[j] = (int)m_pMsgHandler->m_UartArrayDataDownMsg[failcnt].at(MSG_DADDRZERO);
-			m_pMsgHandler->m_GetDownTagID[j] = (int)ByteToWord(m_pMsgHandler->m_UartArrayDataDownMsg[j][MSG_DADDRONE], m_pMsgHandler->m_UartArrayDataDownMsg[j][MSG_DADDRZERO]);
-		
-			printf("TagID : 0x%x\n", m_pMsgHandler->m_GetDownTagID[j]);
-			j++;
-			nRet = 1;
-		}
-	}
-	*failcnt = j;
 
-	return nRet;
-}
 void Main_Service_Stop()
 {
 	printf("Beacon Stop\n");
@@ -660,18 +567,8 @@ void Main_Service_Stop()
 	m_pSocket->m_SocketArrayDataDownMsg.reserve(5000);
 	m_pSocket->m_SocketArrayDataIndicateMsg.reserve(5000);
 	
-	m_pMsgQueue->m_MsgQueueArrayDataAcknowledge.clear();
-	m_pMsgQueue->m_MsgQueueDataAcknowledge.clear();	
-	m_pMsgQueue->m_MsgQueueArrayDataAcknowledge.shrink_to_fit();
-	m_pMsgQueue->m_MsgQueueDataAcknowledge.shrink_to_fit();
-	m_pMsgQueue->m_MsgQueueArrayDataAcknowledge.reserve(5000);
-	m_pMsgQueue->m_MsgQueueDataAcknowledge.reserve(5000);
-	m_pMsgQueue->TagInforCount_Reset(&nSavedTagCount);
-
 	 
 	m_pMsgQueue->m_nMapParity =0;
-	m_pMsgQueue->Redown =0;
-	m_pMsgQueue->Map_dataAcknowParityCheck.clear();
 	m_pMsgQueue->m_ArrayDataAcknowledge.clear();	
 	m_pMsgHandler->m_DataFlag =0;
 	m_pMsgHandler->m_DataCnt =0;
@@ -683,7 +580,6 @@ void Main_Service_Stop()
 	
 
 	m_pMsgHandler->bClear();
-	memset(m_pMsgHandler->m_GetDownTagID, 0, 4096);
 	bReDownloadFlag = 0;
 	bDataAckFlag =0;
 	nTemp1BeaconCnt =0;
@@ -755,7 +651,7 @@ int Main_TagSort_Arrange2(int* iTemp, int* iTemp2)
 	Temp = *iTemp;
 	printf("Main_TagSort_Arrange2 %d()\n", Temp);
 	for(int i=0; i<m_pMsgHandler->m_nUartArrayDataDownCnt; i++) {
-		printf("[%d] %d ", i, m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[i]);
+		printf("%d ", m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[i]);
 	}
 	printf("\n");
 	printf("\n");
@@ -806,9 +702,7 @@ int Main_TagArrayVal_CheckParity(int Temp)
 {
 	VectorSocket<WORD> ArrayUtil;
 
-	printf("\nMain_TagArrayVal_CheckParity()\n");
-	printf("After Sort(size[%d]) \n ", sizeof(m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge)/sizeof(m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[0]));
-
+	printf("\nMain_TagArrayVal_CheckParity() %d\n", sizeof(m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge)/sizeof(m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[0]));
 
 	for(WORD i=0; i<m_pMsgHandler->m_nUartArrayDataDownCnt; i++) {
 		if(m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[i] != m_pSocket->m_TagNumber[i]) {
@@ -816,7 +710,7 @@ int Main_TagArrayVal_CheckParity(int Temp)
 								m_pSocket->m_TagNumber[i], m_pSocket->m_TagNumber[i] );
 			
 			Main_InsertArray(i, 0, m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge);
-			printf("insert value[%d] : %d %d\n",i, m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[i], m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[i+1]);
+		//	printf("insert value[%d] : %d %d\n",i, m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[i], m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[i+1]);
 		}
 	}
 	printf("\n\n");
@@ -834,7 +728,6 @@ int Main_Check_TagArrayPassFail(int* iTemp, int* iTemp2)
 	int icnt =0, cnt =0;
 	int j = 0;
 	int AckFail_Redown =0;
-	printf("Map_AcknowParityCheck Fail TagNum : \n");
 	while(icnt <=m_pMsgHandler->m_nUartArrayDataDownCnt) {
 		if( m_pSocket->m_TagNumber[cnt] != (m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[icnt]) ) {
 
@@ -845,17 +738,17 @@ int Main_Check_TagArrayPassFail(int* iTemp, int* iTemp2)
 		}
 		else if( m_pSocket->m_TagNumber[cnt] == (m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[icnt]) ) {
 			m_pMsgHandler->Map_u16AcknowParityCheck.insert({m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[icnt], PASS});
-		//	printf("Map_AcknowParityCheck Pass TagNum[%d]: %x\n", icnt, m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[icnt-1]);
+		
 		}
 		icnt++;
 		cnt++;
 	
-		if(cnt+1 > m_pMsgHandler->m_nUartArrayDataDownCnt) {
+	/*	if(cnt+1 > m_pMsgHandler->m_nUartArrayDataDownCnt) {
 			m_pMsgQueue->Redown =1;
 			m_pMsgQueue->m_DataAckCnt = m_pMsgHandler->m_nUartArrayDataDownCnt;
 			printf("Redown :%d\n", m_pMsgQueue->Redown);
 			break;
-		}
+		}*/
 	}
 	*iTemp = j;
 	*iTemp2 = AckFail_Redown;
@@ -1169,6 +1062,7 @@ void PrintfHello(int sig, siginfo_t* si, void* uc)
 									, m_pSocket->m_iBypassSocketToUart, m_pSocket->m_iSocketReceiveEnd);
 		bSocketAlive = 0;
 		printf("Server Connect Timeout : %d\n", bSocketAlive);
+		m_pMsgQueue->m_ServerDisconnect =1;
 	}
 	else if(*tidp == DataDownTimerID) {
 		firstTimerFlag =0;
@@ -1189,22 +1083,6 @@ void PrintfHello(int sig, siginfo_t* si, void* uc)
 
 	}
 }
-
-void TagAssociation_Sort()
-{
-	int nTagcount =0;
-	m_pMsgQueue->TagInforCount_set(&nTagcount);
-	/*for(int i=0; i<nTagcount; i++) {
-		printf("TagNumber : %d ", m_pSocket->m_TagNumber[i]);
-	}
-	printf("\n");*/
-	
-	memset(m_pMsgQueue->m_MsgTempTagIDAssociation, 0, sizeof(WORD)*4096);
-	memset(m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge, 0, sizeof(WORD)*4096);
-	memset(m_pMsgHandler->m_pu16MsgDataAcknowledge, 0, sizeof(WORD)*4096);
-
-}
-
 
 int TagAssociation_Init()
 {
