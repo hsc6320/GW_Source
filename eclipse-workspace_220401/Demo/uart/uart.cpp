@@ -262,7 +262,13 @@ int UartComThread::Uart_Open(const char *dev, int baud_rate)
 		printf("Uart_Open baud_rate :%d\n", baud_rate);
 		memset(ctx, 0, sizeof(uart_ctx_t));
 
-		ctx->fd = Open_fd(dev);
+		while(1) {
+			if(ctx->fd = Open_fd(dev))
+				break;
+
+			printf("Uart_Open Fail ctx->fd : %d\n", ctx->fd);
+			th_delay(3000);
+		}
 		printf("Uart_Open ctx->fd : %d\n", ctx->fd);
 		if(ctx->fd <= 0) {
 			printf("Uart_Close\n");
@@ -340,8 +346,7 @@ int UartComThread::Open_fd(const char *dev)
 	 fd = open(dev, O_RDWR | O_NOCTTY | O_NONBLOCK);
 	 printf("Open_fd %d\n", fd);
 	if (fd < 0) {
-		fprintf(stderr, "ERR\n");
-		exit(-1);
+		return 0;
 	}
 
 	return fd;
@@ -472,6 +477,24 @@ BYTE UartComThread::Uart_GetChecksum(BYTE* puData, int len)
 	//printf("(check nsum : %x) ", sum);
 
 	return sum;
+}
+
+void UartComThread::th_delay(int millsec)
+{
+	double time;
+	double timedelay = millsec;
+	struct timeval start1 = {};
+	struct timeval end1 = {};
+
+	clock_t end = timedelay* 1000;
+	clock_t start = clock();
+
+	//printf("th_dealy %.2f msec\n", timedelay*2);
+	gettimeofday(&start1 , NULL);
+	while(clock()-start < end) {;}
+	gettimeofday(&end1 , NULL);
+	time = end1.tv_sec + end1.tv_usec / 1000000.0 - start1.tv_sec - start1.tv_usec / 1000000.0;
+	printf("%.2f sec\n", time);
 }
 
 

@@ -50,6 +50,8 @@ typedef uint16_t WORD;
 #define TAG_INFOR_UPDATE						0x44
 #define TAG_INFOR_UPDATE_REQ				0x45
 #define TAG_INFOR_UPDATE_ACK				0x46
+#define TAG_DIRECT_UPDATE_REQ				0x51
+#define TAG_DIRECT_UPDATE_ACK				0x52
 #define COORDINATOR_RESET_REQ				0x60
 #define COORDINATOR_RESET_CONFIRM			0x61
 #define BSN_START								0x71

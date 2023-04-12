@@ -17,6 +17,7 @@ int Map_AcknowOverlap2 =0;
 int iSmallDataDown =0;
 int nTagNumber =0;
 int BEACON_MAX_COUNT=0;
+int tempBeacon =0;
 
 
 MsgHandler::MsgHandler()
@@ -281,7 +282,7 @@ int MsgHandler::UartPacket_DataDownStart(BYTE u8data)
 
 int MsgHandler::Send_BeaconData(BYTE ibeaconvalue)
 {
-	BYTE beaconcnt =0;
+	BYTE beaconcnt =0;	
 
 	while(BEACON_MAX_COUNT >= (int)beaconcnt) {
 		if(ibeaconvalue == beaconcnt) {
@@ -335,11 +336,11 @@ int MsgHandler::Send_BeaconData(BYTE ibeaconvalue)
 					}
 					else if(m_DataCnt == 0) {
 						int temp3 =0;
-						int temp =(16*((int)(beaconcnt)+1))-1;						
-			
-						GetTagNumber(temp);
-						if( ( temp+1 > nTagNumber) || (temp+15 < nTagNumber) ) {
-							printf("temp+1 : %d, nTagNumber : %d return 0 \n", temp+1, nTagNumber);
+						tempBeacon =(16*((int)(beaconcnt)+1))-1;
+					
+						GetTagNumber(tempBeacon);
+						if( ( tempBeacon+1 > nTagNumber) || (tempBeacon+15 < nTagNumber) ) {
+							printf("tempBeacon+1 : %d, nTagNumber : %d return 0 \n", tempBeacon+1, nTagNumber);
 							return 0;
 						}
 						if(m_nDataDownCount == m_nUartArrayDataDownCnt) {
@@ -348,7 +349,7 @@ int MsgHandler::Send_BeaconData(BYTE ibeaconvalue)
 							return 0;
 						}
 						m_DataFlag =1;
-						temp3 = temp+1+15;
+						temp3 = tempBeacon+1+15;
 						m_DataCnt = 16-(temp3 - nTagNumber); 
 						printf("m_nDataDownCount: %d[beacon : %d] \n", m_nDataDownCount, ibeaconvalue);
 						break;
@@ -359,8 +360,17 @@ int MsgHandler::Send_BeaconData(BYTE ibeaconvalue)
 							m_DataFlag =1;
 							m_DataCnt =0;
 						}
+						if(m_nUartArrayDataDownCnt == m_nDataDownCount) {
+							printf("m_nDataDownCount %d = m_nUartArrayDataDownCnt : %d\n", m_nDataDownCount, m_nUartArrayDataDownCnt);
+							return 0;
+						}
+						nTagNumber = (int)ByteToWord(m_UartArrayDataDownMsg[m_nDataDownCount].at(MSG_DADDRONE) ,m_UartArrayDataDownMsg[m_nDataDownCount].at(MSG_DADDRZERO) );
+						if( ( tempBeacon+1 > nTagNumber) || (tempBeacon+16 < nTagNumber) ) {
+							printf("tempBeacon+1 : %d, nTagNumber : %d return 0 \n", tempBeacon+1, nTagNumber);
+							return 0;
+						}
 						m_DataCnt++;
-						printf("m_DataCnt : [%d] \n", m_DataCnt);
+						printf("m_DataCnt : [%d]  nTagNumber : %x\n", m_DataCnt, nTagNumber);
 						break;
 					}
 				}

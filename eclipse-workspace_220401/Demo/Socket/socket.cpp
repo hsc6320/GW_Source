@@ -788,6 +788,15 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 				m_iSocketReceiveEnd =1;
 				m_iBypassSocketToUart = 1;
 			}
+			else if(p8udata[MSGTYPE] == TAG_INFOR_UPDATE_REQ) {
+				m_pSocMsgqueue->Tag_Direct_Update_Ack(p8udata);
+				for(int i=0; i<15; i++) {
+					printf("%x ", p8udata[i]);
+				}
+				printf("\n");
+				
+				Send_Message(p8udata, 15);
+			}
 			else if(p8udata[MSGTYPE] == BSN_DATA_END_REQ) {
 				m_SocketQueue_vec.clear();
 				m_SocketQueue_vec.shrink_to_fit();
@@ -931,6 +940,7 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 				m_iBypassSocketToUart = 1;
 			}
 		}
+			 
 		else if(m_Main_ServiceStart_TagAssociation_InitFlag) {
 			m_SocketMsg_vec.clear();
 			printf("m_Main_ServiceStart_TagAssociation_InitFlag Socket queue Read : ");

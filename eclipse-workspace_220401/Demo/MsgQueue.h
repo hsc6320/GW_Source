@@ -73,7 +73,7 @@ public:
 	WORD ByteToWord(BYTE puData, BYTE puData1);
 	bool PutByte(uint8_t* b, int len);
 	int DataSort();
-	void GetDataDown(int cnt);
+	void GetDataDown(int cnt, WORD* TagNumber);
 	int GetSizeArray1(WORD* ar);
 	void AppendArray1(WORD sz, int size1, WORD* ar);
 	void PrintArray1(WORD* ar, int size);

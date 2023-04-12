@@ -33,6 +33,7 @@ public:
 	int GetSocketMsg(std::vector<uint8_t> vec, int len);
 	void BSN_MSG_ACK(BYTE* puData);
 	void BSN_MSG_END_ACK(BYTE* puData);
+	void Tag_Direct_Update_Ack(BYTE* puData);
 	void DownLoad_MSG_Start_ACK(BYTE* puData);
 	void DataIndication_MSG_Start_ACK(BYTE* puData);
 	void GetPanID(WORD panid);

@@ -345,7 +345,7 @@ int Main_ByPass_SocketToUart()
 		memset(m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge, 0, sizeof(WORD)*4096);
 		memset(m_pMsgHandler->m_pu16MsgDataAcknowledge, 0, sizeof(WORD)*4096);
 		m_pMsgHandler->SetSocketArray(m_pSocket->m_SocketArrayDataDownMsg, m_pSocket->m_SocketArrayDataIndicateMsg);
-		m_pMsgQueue->GetDataDown(m_pSocket->m_nSocketArrayDataDownCnt);
+		m_pMsgQueue->GetDataDown(m_pSocket->m_nSocketArrayDataDownCnt, m_pSocket->m_TagNumber);
 		printf("Socket Communication End\n");
 	}
 	else if(m_pMsgQueue->m_bUartCommuniFlag) {
@@ -593,13 +593,12 @@ int Main_SendSocketMsgToUart(int msgtype)
 		printf("msgtype %d return\n", msgtype);
 		return 0;
 	}
-	printf("Main_SendSocketMsgToUart()[%d] : ", m_pSocket->m_ReceiveData_len);
+	printf("Main_SendSocketMsgToUart()\n");
 
 	if(/*m_pSocket->m_iBypassSocketToUart ||*/ m_pSocket->m_iSocketReceiveEnd) {
 		m_pSocket->m_iSocketReceiveEnd =0;
-
 		for(int i=0; i<=m_pSocket->m_ReceiveData_len; i++) {
-			printf("%d((%x)) ",i, m_pSocket->m_p8uData[i] );
+			printf("%x ", m_pSocket->m_p8uData[i] );
 			if( (m_pSocket->m_p8uData[0] == STX) && (m_pSocket->m_p8uData[i-1] == 0x7e) && (m_pSocket->m_p8uData[i-2] == 0x5a) && (m_pSocket->m_p8uData[i-3] == 0xa5) ) {			
 				printf("\n");
 				m_pMsgHandler->BypassSocketToUart(m_pSocket->m_p8uData, i/*m_pSocket->m_ReceiveData_len*/, msgtype);
@@ -622,10 +621,10 @@ int Main_TagSort_Arrange(int* iTemp, int* iTemp2)
 	Temp = *iTemp;
 	printf("\nMain_TagSort_Arrange()\n");
 	
-	for(int i=0; i<m_pMsgHandler->m_nUartArrayDataDownCnt; i++) {
+	/*for(int i=0; i<m_pMsgHandler->m_nUartArrayDataDownCnt; i++) {
 		printf("%d ", m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[i]);
 	}
-	printf("\n");
+	printf("\n");*/
 	printf("\n");
 	
 	printf("m_nMapParity(Total 0x43) : %d\n", m_pMsgQueue->m_nMapParity);
@@ -650,10 +649,10 @@ int Main_TagSort_Arrange2(int* iTemp, int* iTemp2)
 	int j=0;
 	Temp = *iTemp;
 	printf("Main_TagSort_Arrange2 %d()\n", Temp);
-	for(int i=0; i<m_pMsgHandler->m_nUartArrayDataDownCnt; i++) {
+	/*for(int i=0; i<m_pMsgHandler->m_nUartArrayDataDownCnt; i++) {
 		printf("%d ", m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[i]);
 	}
-	printf("\n");
+	printf("\n");*/
 	printf("\n");
 	for(int i=0; i<m_pMsgHandler->m_nUartArrayDataDownCnt; i++) {
 	//	printf("[%d] %d ", i, m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge[i]);
@@ -1275,47 +1274,47 @@ int main(int argc, char *argv[])
 }
 
 void crit_err_hdlr(int sig_num, siginfo_t * info, void * ucontext) {
-  void * array[50];
-  void * caller_address;
-  char ** messages;
-  int size, i;
-  sig_ucontext_t * uc;
+	void * array[50];
+	void * caller_address;
+	char ** messages;
+	int size, i;
+	sig_ucontext_t * uc;
 
-  uc = (sig_ucontext_t *) ucontext;
+	uc = (sig_ucontext_t *) ucontext;
 
-  /* Get the address at the time the signal was raised */
-  caller_address = (void *) uc->uc_mcontext.arm_pc;  // RIP: x86_64 specific     arm_pc: ARM
+	/* Get the address at the time the signal was raised */
+	caller_address = (void *) uc->uc_mcontext.arm_pc;  // RIP: x86_64 specific     arm_pc: ARM
 
-  fprintf(stderr, "\n");
+	fprintf(stderr, "\n");
 
-  if (sig_num == SIGSEGV)
-    printf("signal %d (%s), address is %p from %p\n", sig_num, strsignal(sig_num), info->si_addr,
-           (void *) caller_address);
-  else
-    printf("signal %d (%s)\n", sig_num, strsignal(sig_num));
+	if (sig_num == SIGSEGV)
+	printf("signal %d (%s), address is %p from %p\n", sig_num, strsignal(sig_num), info->si_addr,
+	       (void *) caller_address);
+	else
+	printf("signal %d (%s)\n", sig_num, strsignal(sig_num));
 
-  size = backtrace(array, 50);
-  /* overwrite sigaction with caller's address */
-  array[1] = caller_address;
-  messages = backtrace_symbols(array, size);
+	size = backtrace(array, 50);
+	/* overwrite sigaction with caller's address */
+	array[1] = caller_address;
+	messages = backtrace_symbols(array, size);
 
-  /* skip first stack frame (points here) */
-  for (i = 1; i < size && messages != NULL; ++i) {
-    printf("[bt]: (%d) %s\n", i, messages[i]);
-  }
-  free(messages);
-  
-  exit(EXIT_FAILURE);
+	/* skip first stack frame (points here) */
+	for (i = 1; i < size && messages != NULL; ++i) {
+	printf("[bt]: (%d) %s\n", i, messages[i]);
+	}
+	free(messages);
+
+	exit(EXIT_FAILURE);
 }
 
 void installSignal(int __sig) {
-  struct sigaction sigact;
-  sigact.sa_sigaction = crit_err_hdlr;
-  sigact.sa_flags = SA_RESTART | SA_SIGINFO;
-  if (sigaction(__sig, &sigact, (struct sigaction *) NULL) != 0) {
-    fprintf(stderr, "error setting signal handler for %d (%s)\n", __sig, strsignal(__sig));
-    exit(EXIT_FAILURE);
-  }
+	struct sigaction sigact;
+	sigact.sa_sigaction = crit_err_hdlr;
+	sigact.sa_flags = SA_RESTART | SA_SIGINFO;
+	if (sigaction(__sig, &sigact, (struct sigaction *) NULL) != 0) {
+		fprintf(stderr, "error setting signal handler for %d (%s)\n", __sig, strsignal(__sig));
+		exit(EXIT_FAILURE);
+	}
 }
 void __attribute__((constructor)) NewObject()
 {

@@ -45,6 +45,7 @@ public:
 	void Exit_Uart_Thread();
 	int Create_Uart_thread(pthread_t thread);
 	void SetMsgQueue(MsgQueue* msg);
+	void th_delay(int millsec);
 	void InsertArray(int idx, BYTE sz, BYTE* ar);
 	void AppendArray(BYTE sz, int idx, BYTE* ar);
 	void Uart_deleteArray(int idx, int size, BYTE* ar);

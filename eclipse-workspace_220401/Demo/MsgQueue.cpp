@@ -15,6 +15,7 @@ int nLengthCnt =0;
 int nTagidCnt =0;
 int nDataDown =0;
 BYTE m_u8SendData[1024];
+WORD u16TagNumberData[4096];
 
 std::vector<uint8_t*> vec;
 
@@ -64,6 +65,7 @@ MsgQueue:: MsgQueue(void)
 	m_Uart_ServiceStart_TagAssociation_InitFlag =0;
 	memset(m_Test, 0, sizeof(WORD)*4096);
 	memset(m_pu16MsgQueueArrayDataAcknowledge, 0, sizeof(WORD)*4096);
+	memset(u16TagNumberData, 0, sizeof(WORD)*4096);	
 	m_pMsg = NULL;
 }
 
@@ -85,23 +87,25 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 	if(u8Data[MSG_STX] == STX) {
 		if(u8Data[MSGTYPE] == DATA_ACKNOWLEDGEMENT) {
 			if(u8Data[MSG_ACKNOWLEDGE_STATUS] == PAYLOAD_STATUS_SUCCESS) {	
-				Cnt = m_nMapParity;
-				for(int i=0; i<= Cnt; i++) {
-			/*		if( !Redown ) {
-						if(m_pu16MsgQueueArrayDataAcknowledge[i] == ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO]) ) {
-							printf("m_nMapParity Overlap Parity 0x%x\n", m_pu16MsgQueueArrayDataAcknowledge[i]);
-							return 1;
-						}
-					}
-					else {	*/					
-						if(m_pu16MsgQueueArrayDataAcknowledge[i] == ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO]) ) {
-							printf("m_pu16MsgQueueArrayDataAcknowledge, Overlap Parity 0x%x \n", m_pu16MsgQueueArrayDataAcknowledge[i]);
-							return 1;
-						}
-				//	}
-				}
-				size = 4096; 
 				wordPanID = ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO]);
+				
+				Cnt = m_nMapParity;
+				for(int i=0; i<=nDataDown; i++ ) {
+					if(u16TagNumberData[i] == wordPanID ) {						
+						break;
+					}
+					if(i == nDataDown ) {
+						printf("0x43 && TagNumber (%x)not exist  return \n", wordPanID);
+						return 1;
+					}
+				}
+				for(int i=0; i<= Cnt; i++) {
+					if(m_pu16MsgQueueArrayDataAcknowledge[i] == wordPanID) {
+						printf("m_pu16MsgQueueArrayDataAcknowledge, Overlap Parity 0x%x \n", m_pu16MsgQueueArrayDataAcknowledge[i]);
+						return 1;
+					}
+				}
+				size = 4096;
 				printf("m_nMapParity :%d, wordPanID : %d ", m_nMapParity, wordPanID);
 
 				m_Test[m_nMapParity] = wordPanID;
@@ -277,9 +281,11 @@ int MsgQueue::DataSort()
 	return 1;
 }
 
-void MsgQueue::GetDataDown(int cnt)
+void MsgQueue::GetDataDown(int cnt, WORD* TagNumber)
 {
 	nDataDown = cnt;
+	memset(u16TagNumberData, 0, sizeof(WORD)*4096);
+	memcpy(u16TagNumberData, TagNumber, sizeof(WORD)*cnt);
 }
 
 WORD MsgQueue::ByteToWord(BYTE puData, BYTE puData1)

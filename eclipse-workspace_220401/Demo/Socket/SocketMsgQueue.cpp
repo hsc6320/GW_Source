@@ -163,6 +163,38 @@ void Socket_MsgQueue::BSN_MSG_ACK(BYTE* puData)
 
 }
 
+
+void Socket_MsgQueue::Tag_Direct_Update_Ack(BYTE* puData)
+{
+	BYTE pu8data[30];
+	BYTE u8Checksum;
+	int iBufcnt =0;
+
+	pu8data[iBufcnt] = STX;
+	pu8data[++iBufcnt] = (BYTE)QuquePacket.PanID;
+	pu8data[++iBufcnt] = QuquePacket.PanID >> 8;
+	pu8data[++iBufcnt] = (BYTE)QuquePacket.GateWayID;		//gateway ID
+	pu8data[++iBufcnt] = QuquePacket.GateWayID >> 8;		//gateway ID
+	pu8data[++iBufcnt] = QuquePacket.ServerID;
+	pu8data[++iBufcnt] = QuquePacket.ServerID >> 8;
+
+	pu8data[++iBufcnt] = TAG_DIRECT_UPDATE_ACK;	//msg type
+	pu8data[++iBufcnt] = 0x01;
+	pu8data[++iBufcnt] = 0;
+	pu8data[++iBufcnt] = 0x01;
+
+	u8Checksum = GetChecksum(pu8data, iBufcnt);
+	pu8data[++iBufcnt] = u8Checksum; //0x07;
+
+	pu8data[++iBufcnt] = QuquePacket.ext[0];
+	pu8data[++iBufcnt] = QuquePacket.ext[1];
+	pu8data[++iBufcnt] = QuquePacket.ext[2];
+
+	memcpy(puData, pu8data, iBufcnt);
+
+}
+
+
 void Socket_MsgQueue::GetPanID(WORD panid)
 {
 	QuquePacket.PanID = panid;
