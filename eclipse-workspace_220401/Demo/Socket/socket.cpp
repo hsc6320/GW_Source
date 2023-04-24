@@ -79,7 +79,7 @@ int Socket::Socket_Init(/*int argc, char *argv[]*/)
 	int retEpoll = 0;
 	int fd3, n;
 
-	const char *domainName = "haem.rocketsci.io";
+	const char *domainName = "server.haem-esl.com"; //"haem.rocketsci.io"; 
 	char buf2[5];
 	char Mac_addr[20];	
 
@@ -540,9 +540,9 @@ int Socket::Send_Function()
 	memcpy(p8Data, m_p8uSendData, nDataLen);
 
 	printf("socket Send_Function() ");
-	for(int i=0; i < nDataLen; i++) {
+	/*for(int i=0; i < nDataLen; i++) {
 		printf("%x ", m_p8uSendData[i]);
-	}
+	}*/
 	memset(m_p8uSendData, 0, sizeof(BYTE)*4096);
 //	delete[] m_p8uSendData;
 //	m_p8uSendData = NULL;
@@ -721,9 +721,7 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 	DataLen = Len;
 	VectorSocket<BYTE> pMm;	
 	int index =0;
-
-
-	printf("GetSocketMsg()\n");
+//	printf("GetSocketMsg()\n");
 
 	if((p8udata[MSG_STX] == STX) && (p8udata[DataLen-1] == 0x7e) && (p8udata[DataLen-2] == 0x5a) && (p8udata[DataLen-3] == 0xa5))
 	{
@@ -862,10 +860,11 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 			}
 			else if((p8udata[MSGTYPE] == DOWNLOAD_START_REQ) || (p8udata[MSGTYPE] == DATAINDICATION_REQ)) {
 
-				for(int i=0; i<Len; i++) {
+			/*	for(int i=0; i<Len; i++) {
 					printf("%x ", p8udata[i]);
 				}
-				printf("\n");
+				printf("\n");*/
+				printf("MsgType : %x\n", p8udata[MSGTYPE]);
 
 				m_SocketQueue_vec.clear();
 				m_SocketQueue_vec.shrink_to_fit();
@@ -889,7 +888,6 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 					
 					m_pSocMsgqueue->DownLoad_MSG_Start_ACK(p8udata);
 					Send_Message(p8udata, 15);
-					printf("\nm_nSocketArrayDataDown Size : %d\n", m_nSocketArrayDataDownCnt);
 					m_nSocketArrayDataDownCnt++;
 				}
 				else if(m_SocketQueue_vec[MSGTYPE] == DATAINDICATION_REQ) {
@@ -909,7 +907,7 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 					//printf("\n");
 					m_pSocMsgqueue->DataIndication_MSG_Start_ACK(p8udata);
 					Send_Message(p8udata, 16);
-					printf("\nm_nSocketArrayDataIndicate Size : %d\n", m_nSocketArrayDataIndicateCnt);
+					
 					m_nSocketArrayDataIndicateCnt++;
 				}
 				m_iSocketReceiveEnd =1;
@@ -943,12 +941,12 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 			 
 		else if(m_Main_ServiceStart_TagAssociation_InitFlag) {
 			m_SocketMsg_vec.clear();
-			printf("m_Main_ServiceStart_TagAssociation_InitFlag Socket queue Read : ");
+			printf("m_Main_ServiceStart_Read : ");
 			for(int i=0; i< DataLen; i++) {
 				m_SocketMsg_vec.push_back(p8udata[i]);
-				printf("%x ", m_SocketMsg_vec[i]);
+			//	printf("%x ", m_SocketMsg_vec[i]);
 			}
-			printf("\n");
+			//printf("\n");
 
 			if((m_SocketMsg_vec[DataLen-1] == 0x7e) &&
 				(m_SocketMsg_vec[DataLen-2] == 0x5a) &&

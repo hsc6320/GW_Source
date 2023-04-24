@@ -60,6 +60,8 @@ typedef uint16_t WORD;
 #define BSN_DATA_END_ACK						0x74
 #define TAG_ALARM_INDICATION				0x80
 #define TAG_LOWBATT_ALARM_INDICATION		0x82
+#define TAG_DIRECT_CHANGE_INDICATION		0x84
+
 #define CHECKSUM_ERR							0x90
 #define BARCODE_REQ							0x91
 #define MULTI_GATEWAY_SCAN_REQ				0xA0

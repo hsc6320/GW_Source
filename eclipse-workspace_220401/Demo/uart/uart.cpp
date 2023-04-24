@@ -76,7 +76,7 @@ static void *uart_Rx_Thread(void *param)
 				restBufCnt++;
 			}
 
-			printf("\n***************uart_Rx_Thread uart **********%d*********\n", len);
+			printf("\n***************uart_Rx_Thread uart **********%d*********\n", nToTalLen);
 			int i=0;
 			while(1) {
 	 			for( i =0; i<= nToTalLen; i++) {
@@ -84,10 +84,14 @@ static void *uart_Rx_Thread(void *param)
 						underflowcnt =0;
 						if(rx[i-4] != pComm->Uart_GetChecksum(rx ,i)) {
 							printf("Uart Checksum Error \n");
+							for(int k=0; k<i; k++) {
+								printf("%x ", rx[k]);
+							}
+							printf("\n");
 							ChecksumError =1;
 							memset(rx, 0, 1024);
 							break;
-						}			
+						}
 						if(pMsgQueue->PutByte(rx, i) != 1) {
 							printf("putbyte return 0\n");
 						}
@@ -104,7 +108,6 @@ static void *uart_Rx_Thread(void *param)
 				if(ChecksumError)
 					break;
 				if(underflowcnt) {
-			//		printf(" underflowcnt break\n");
 					break;
 				}
 				
@@ -133,7 +136,7 @@ static void *uart_Rx_Thread(void *param)
 					continue;
 				}
 				else if(i == nToTalLen) {
-					printf("%d == %d\n", i, nToTalLen);
+				//	printf("%d == %d\n", i, nToTalLen);
 					nToTalLen =0;
 					nToTalLen2 =0;
 					break;
@@ -146,6 +149,7 @@ static void *uart_Rx_Thread(void *param)
 			}
 
 			reset_buffer();
+			memset(rx2, 0, sizeof(char)*1024);
 			memset(rx_sto, 0, sizeof(char)*1024);
 			nToTalLen =0;
 		}

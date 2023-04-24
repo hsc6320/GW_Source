@@ -82,7 +82,7 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 	memset(u8Data, 0, 1024);
 	memcpy(u8Data, b, 1024);
 
-	printf("PutByte()\n");
+	
 
 	if(u8Data[MSG_STX] == STX) {
 		if(u8Data[MSGTYPE] == DATA_ACKNOWLEDGEMENT) {
@@ -106,7 +106,6 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 					}
 				}
 				size = 4096;
-				printf("m_nMapParity :%d, wordPanID : %d ", m_nMapParity, wordPanID);
 
 				m_Test[m_nMapParity] = wordPanID;
 				
@@ -133,7 +132,7 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 				printf("%x\n",(ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO])));
 			
 				m_nMapParity++;				
-				printf("m_nMapParity : %d\n", m_nMapParity);
+				printf("0x43 Count : %d\n", m_nMapParity);
 				if(m_ServerDisconnect) {
 			//		m_QueueDataAck.push(m_pu16MsgQueueArrayDataAcknowledge);
 				}
@@ -155,7 +154,6 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 		{
 
 			if(u8Data[MSGTYPE] == TAG_ASSOCIATION) {
-
 				m_MsgQueueDataAssocation.clear();
 				memcpy(m_u8SendData, u8Data, len);
 				for(int i=0; i<len; i++) {
@@ -174,7 +172,11 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 				m_MsgQueueDataAssocation.clear();
 				m_nSendTagCount++;
 			
-				printf("m_nSendTagCount : %d\n", m_nSendTagCount );
+			//	printf("m_nSendTagCount : %d\n", m_nSendTagCount );
+			/*	while(1) {
+					if(!m_bReadEnd_UartMessage)
+						break;
+				}*/
 				m_bReadEnd_UartMessage =1;
 				return 1;
 			}
@@ -195,7 +197,7 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 				m_vcemsg.clear();
 				for(int i=0; i<len; i++) {
 					m_vcemsg.push_back(u8Data[i]);
-					printf("[%x] ", m_vcemsg.at(i));
+			//		printf("[%x] ", m_vcemsg.at(i));
 				}
 				if(!m_bUartCommuniFlag && (u8Data[MSGTYPE] == BSN_START_ACK)) {					
 		/*			m_vcemsg[MSGTYPE] = u8Data[MSGTYPE];
@@ -231,12 +233,12 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 			if(m_vcemsg.size() > 0) {
 				m_vcemsg.clear();
 			}
-			printf("m_vcemsg.m_UartMsg_vec.Push_back\n");
+		//	printf("m_vcemsg.m_UartMsg_vec.Push_back\n");
 			for(int i=0; i< len; i++) {
 				m_vcemsg.push_back(u8Data[i]);
-				printf("[%x] ", m_vcemsg[i]);
+			//	printf("[%x] ", m_vcemsg[i]);
 			}
-			printf("\n");
+		//	printf("\n");
 			m_bReadEnd_UartMessage =1;
 		}
 	}
@@ -298,6 +300,23 @@ WORD MsgQueue::ByteToWord(BYTE puData, BYTE puData1)
 	return p16Tempdata_HIGH|p16Tempdata_LOW;
 }
 
+void MsgQueue::th_delay(int millsec)
+{
+	double time;
+	double timedelay = millsec;
+	struct timeval start1 = {};
+	struct timeval end1 = {};
+
+	clock_t end = timedelay* 1000;
+	clock_t start = clock();
+
+	//printf("th_dealy %.2f msec\n", timedelay*2);
+	gettimeofday(&start1 , NULL);
+	while(clock()-start < end) {;}
+	gettimeofday(&end1 , NULL);
+	time = end1.tv_sec + end1.tv_usec / 1000000.0 - start1.tv_sec - start1.tv_usec / 1000000.0;
+	printf("%.2f sec\n", time);
+}
 
 
 void MsgQueue::GetSocket(Socket* soc)

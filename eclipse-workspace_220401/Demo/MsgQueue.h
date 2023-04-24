@@ -66,7 +66,8 @@ public:
 	BYTE m_u8SendData[1024];
 	WORD m_pu16MsgQueueArrayDataAcknowledge[4096];
 	WORD m_Test[4096];
-	
+
+	void th_delay(int millsec);
 	void GetSocket(Socket* soc);
 	int uart_SetTimer();
 	int uart_DelaySend();

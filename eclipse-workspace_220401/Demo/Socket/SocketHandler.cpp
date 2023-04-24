@@ -358,8 +358,7 @@ void SocketHandler::SetMsg_StartCfm_Remalloc(int OnOff)
 	}
 //	printf("SetMsg_StartCfm_Remalloc(%d)\n", nServiceStart_Confirm);
 }
-//std::queue<std::vector<BYTE>> m_Queue;
-//void SocketHandler::TagData(std::vector<std::vector<BYTE>> vec)
+
 void SocketHandler::TagData(std::queue<std::vector<BYTE>> que)
 {
 	BYTE pu8data[1024];
@@ -367,8 +366,6 @@ void SocketHandler::TagData(std::queue<std::vector<BYTE>> que)
 	std::vector<std::vector<BYTE>> vec;
 
 	vTagData = que;
-
-	printf("TagData\n");
 	/*
 	for(int k=m_nTagDataCount; k<pUartQueue->m_nSendTagCount; k++) {
 		printf("m_nTagDataCount : %d, m_nSendTagCount :%d\n", m_nTagDataCount, pUartQueue->m_nSendTagCount);
@@ -409,8 +406,6 @@ void SocketHandler::TagData(std::queue<std::vector<BYTE>> que)
 
 	iBufcnt =0;
 	memset(pu8data, 0, 1024);
-
-	printf("TagData END()\n");
 	
 }
 
