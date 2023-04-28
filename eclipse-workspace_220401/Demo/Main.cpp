@@ -38,7 +38,7 @@ timer_t DataDownTimerID;
 timer_t DataIndecateTimerID;
 int AckFail_Redown =0;
 
-int firstTimerFlag =0, SecondTimerFlag;
+int firstTimerFlag =0, SecondTimerFlag=0;
 
 PRE_DEFINE::S_PACKET	m_GetInforPacket;
 #define BUF_MAX 512
@@ -472,14 +472,28 @@ int Main_ByPass_SocketToUart()
 			}
 			nBeaconValue = (BYTE)m_pMsgQueue->m_vcemsg.at(MSG_BSN_DATA);
 
-			m_pMsgHandler->DataFlag_Initialize(nBeaconValue);
+			
 
 			if(m_pMsgHandler->m_nUartArrayDataDownCnt == m_pMsgQueue->m_nMapParity) {
 				Main_Service_Stop();
 				return 0;
 			}
-
+			
+			
 			if(!bDataAckFlag && !bReDownloadFlag && ((int)nBeaconValue <= BEACON_MAX) && (nBeaconCnt < BEACON_MAX+1)) {				
+				if(m_pMsgHandler->m_iTagDirectDown) {
+					m_pMsgHandler->m_iTagDirectDownCnt++;
+					printf("m_iTagDirectDownCnt : %d\n",m_pMsgHandler->m_iTagDirectDownCnt);
+				
+					if(m_pMsgHandler->m_iTagDirectDownCnt%2 == 0) {
+						m_pMsgHandler->iSmallDataDown = 1;
+					}
+					else if(m_pMsgHandler->m_iTagDirectDownCnt == 11) {
+						m_pMsgHandler->m_iTagDirectDown =0;
+						Main_Service_Stop();
+						return 0;
+					}
+				}	
 				if( m_pMsgHandler->UartPacket_DataDownStart(nBeaconValue ) ) {
 					Set_WaitTimer(&DataDownTimerID, 100, 1);
 					firstTimerFlag = 1;
@@ -487,7 +501,7 @@ int Main_ByPass_SocketToUart()
 				nBeaconCnt++;
 				printf("DataDown nBeaconCnt : %d\n", nBeaconCnt);
 			}
-			else if(bReDownloadFlag && ((int)nBeaconValue <= BEACON_MAX) && (nBeaconCnt < BEACON_MAX+1)) {
+			else if(bReDownloadFlag && ((int)nBeaconValue <= BEACON_MAX) && (nBeaconCnt < BEACON_MAX+1)) {					
 				m_pMsgHandler->UartPacket_ReDataDownStart(nBeaconValue);
 				nBeaconCnt++;
 				printf("ReDown nBeaconCnt : %d\n", nBeaconCnt);
@@ -501,10 +515,12 @@ int Main_ByPass_SocketToUart()
 				int DataSendFail_Redown =0;
 				int j =0;
 				m_pMsgHandler->DataSendFail_RedownCnt =0;
-				m_pMsgHandler->m_nDataSendFail_SuccessCnt =0;
+				m_pMsgHandler->m_nDataSendFail_SuccessCnt =0;				
 
 				nTempBeaconCnt++;
 				printf("nTempBeaconCnt : %d\n", nTempBeaconCnt);
+
+				
 
 				if(nTempBeaconCnt >= 3/*BEACON_MAX/2*/) {
 					bReDownloadFlag =0;

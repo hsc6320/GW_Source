@@ -45,7 +45,7 @@ public:
 	int m_DataFlag;
 	int DataSendFail_RedownCnt;
 	int Beacon_Max;
-	int iSmallDataDown, m_iTagDirectDown;
+	int iSmallDataDown, m_iTagDirectDown, m_iTagDirectDownCnt;
 	UartComThread* m_pCommUart;
 	int m_nUartArrayDataDownCnt, m_nUartArrayDataIndicateCnt;
 	int m_nUartArrayReDataIndicateCnt;
@@ -55,7 +55,7 @@ public:
 	void ServiceIdle();
 	int ServiceStart();
 	int GetTagNumber(int temp);
-	void DataFlag_Initialize(int beacon);
+	int DataFlag_Initialize(int beacon);
 	void BypassSocketToUart(BYTE* p8Data, int DataLen, int msgtype);
 	void BypassUartToSocket();
 	BYTE GetChecksum(BYTE* puData, int len);

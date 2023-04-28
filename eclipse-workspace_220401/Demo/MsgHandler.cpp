@@ -37,6 +37,7 @@ MsgHandler::MsgHandler()
 	m_nUartArrayReDataIndicateCnt =0;
 	iSmallDataDown =0;
 	m_iTagDirectDown =0;
+	m_iTagDirectDownCnt =0;
 	m_UartArrayDataIndicateMsg.reserve(5000);
 	m_UartArrayDataDownMsg.reserve(5000);
 }
@@ -55,6 +56,7 @@ int MsgHandler::bClear()
 	m_UartArrayDataIndicateMsg.clear();
 	Map_dataParityCheck.clear();
 	m_iTagDirectDown =0;
+	m_iTagDirectDownCnt =0;
 	iSmallDataDown =0;
 	
 	return 1;
@@ -861,15 +863,16 @@ void MsgHandler::SetSocketArray(std::vector<std::vector<BYTE>> DataDownmsg, std:
 	BSN_Start_Packet();
 }
 
-void MsgHandler::DataFlag_Initialize(int beacon)
+int MsgHandler::DataFlag_Initialize(int beacon)
 {
 	m_DataFlag =0;
 	m_DataCnt =0;
 	Map_AcknowCnt =0;
 	Map_AcknowCnt2 = (16 * ((int)(beacon)+1))-1;
 	Map_AcknowOverlap =0;
-	Map_AcknowOverlap2 =0;
+	Map_AcknowOverlap2 =0;	
 
+	return 1;
 }
 
 int MsgHandler::GetTagNumber(int temp)
