@@ -62,10 +62,12 @@ MsgQueue:: MsgQueue(void)
 	m_nMapParity =0;
 	m_ServerDisconnect =0;
 	m_nSendTagCount =0;
+	m_niTagDirectflag =0;
 	m_Uart_ServiceStart_TagAssociation_InitFlag =0;
 	memset(m_Test, 0, sizeof(WORD)*4096);
 	memset(m_pu16MsgQueueArrayDataAcknowledge, 0, sizeof(WORD)*4096);
-	memset(u16TagNumberData, 0, sizeof(WORD)*4096);	
+	memset(u16TagNumberData, 0, sizeof(WORD)*4096);
+	memset(m_niTagDirectAck, 0, sizeof(WORD)*1024);
 	m_pMsg = NULL;
 }
 
@@ -88,46 +90,50 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 		if(u8Data[MSGTYPE] == DATA_ACKNOWLEDGEMENT) {
 			if(u8Data[MSG_ACKNOWLEDGE_STATUS] == PAYLOAD_STATUS_SUCCESS) {	
 				wordPanID = ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO]);
+				if(!m_niTagDirectflag) {					
+					Cnt = m_nMapParity;
+					for(int i=0; i<=nDataDown; i++ ) {
+						if(u16TagNumberData[i] == wordPanID ) {						
+							break;
+						}
+						if(i == nDataDown ) {
+							printf("0x43 && TagNumber (%x)not exist  return \n", wordPanID);
+							return 1;
+						}
+					}
+					for(int i=0; i<= Cnt; i++) {
+						if(m_pu16MsgQueueArrayDataAcknowledge[i] == wordPanID) {
+							printf("m_pu16MsgQueueArrayDataAcknowledge, Overlap Parity 0x%x \n", m_pu16MsgQueueArrayDataAcknowledge[i]);
+							return 1;
+						}
+					}
 				
-				Cnt = m_nMapParity;
-				for(int i=0; i<=nDataDown; i++ ) {
-					if(u16TagNumberData[i] == wordPanID ) {						
-						break;
-					}
-					if(i == nDataDown ) {
-						printf("0x43 && TagNumber (%x)not exist  return \n", wordPanID);
-						return 1;
-					}
-				}
-				for(int i=0; i<= Cnt; i++) {
-					if(m_pu16MsgQueueArrayDataAcknowledge[i] == wordPanID) {
-						printf("m_pu16MsgQueueArrayDataAcknowledge, Overlap Parity 0x%x \n", m_pu16MsgQueueArrayDataAcknowledge[i]);
-						return 1;
-					}
-				}
-				size = 4096;
+					size = 4096;
 
-				m_Test[m_nMapParity] = wordPanID;
+					m_Test[m_nMapParity] = wordPanID;
+					
+	//				int size2 =GetSizeArray1(m_Test);
+	//				PrintArray1(m_Test, size2);
+	//				AppendArray1(wordPanID, m_nMapParity, m_Test);
+	//				m_ArrayUtil.InsertArray(m_nMapParity, wordPanID, m_Test);
+	//				size2 =GetSizeArray1(m_Test);
+	//				PrintArray1(m_Test, size2);
 				
-//				int size2 =GetSizeArray1(m_Test);
-//				PrintArray1(m_Test, size2);
-//				AppendArray1(wordPanID, m_nMapParity, m_Test);
-//				m_ArrayUtil.InsertArray(m_nMapParity, wordPanID, m_Test);
-//				size2 =GetSizeArray1(m_Test);
-//				PrintArray1(m_Test, size2);
-			
-				sort(m_Test, m_Test+size);
+					sort(m_Test, m_Test+size);
 
-				int j =0;
-				for(int i=0; i<4096; i++) {
-					if(m_Test[i] > 0) {
-						m_pu16MsgQueueArrayDataAcknowledge[j] = m_Test[i];
-//						printf("%d ",m_pu16MsgQueueArrayDataAcknowledge[j]);
-						j++;
+					int j =0;
+					for(int i=0; i<4096; i++) {
+						if(m_Test[i] > 0) {
+							m_pu16MsgQueueArrayDataAcknowledge[j] = m_Test[i];
+	//						printf("%d ",m_pu16MsgQueueArrayDataAcknowledge[j]);
+							j++;
+						}
 					}
+					printf("\n");
 				}
-				printf("\n");
-
+				if(m_niTagDirectflag) {
+					m_niTagDirectAck[m_nMapParity] = ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO]);
+				}
 				printf("DataAck TagID : ");
 				printf("%x\n",(ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO])));
 			
@@ -172,7 +178,7 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 				m_MsgQueueDataAssocation.clear();
 				m_nSendTagCount++;
 			
-			//	printf("m_nSendTagCount : %d\n", m_nSendTagCount );
+				printf("m_nSendTagCount : %d\n", m_nSendTagCount );
 			/*	while(1) {
 					if(!m_bReadEnd_UartMessage)
 						break;

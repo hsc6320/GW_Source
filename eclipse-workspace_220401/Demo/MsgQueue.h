@@ -56,8 +56,10 @@ public:
 	int m_bReadEnd_UartMessage;
 	int m_bUartCommuniFlag, m_bUartTagAssociFlag;
 	int m_Uart_ServiceStart_TagAssociation_InitFlag;
-	int m_nMapParity, m_ServerDisconnect;
+	int m_nMapParity, m_nDirectMapAck, m_ServerDisconnect;
 	int m_nSendTagCount;
+	WORD  m_niTagDirectflag;
+	WORD m_niTagDirectAck[1024];
 
 	std::queue<std::vector<BYTE>> m_Queue, m_QueueDataAck;
 	std::vector<std::vector<BYTE>> m_ArrayDataAcknowledge;

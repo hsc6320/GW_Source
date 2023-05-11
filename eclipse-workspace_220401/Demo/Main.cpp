@@ -53,6 +53,7 @@ BYTE nBeaconValue =0;
 int bReDownloadFlag =0, bDataAckFlag =0;
 int BEACON_MAX =0;
 int bSocketAlive =1;
+WORD nDirectDownTagNumber[1024] ={0, };
 
 int GetUartMsg(PRE_DEFINE::S_PACKET* Getpacket);
 BYTE GetChecksum(BYTE* puData, int len);
@@ -181,10 +182,11 @@ int uart_SetTimer()
 int Main_ByPass_UartToSocket()
 {
 	int msg = 0;
+	WORD Temp=0;
 	PRE_DEFINE::S_PACKET GetInforPacket;
 
 	if(m_pMsgQueue->m_bReadEnd_UartMessage) {
-	//	printf("Main_ByPass_UartToSocket\n");
+		printf("Main_ByPass_UartToSocket\n");
 		m_pMsgQueue->m_bReadEnd_UartMessage =0;
 		msg = (int)m_pMsgQueue->m_u8SendData[MSGTYPE];
 
@@ -192,10 +194,13 @@ int Main_ByPass_UartToSocket()
 		{
 		case COORDINATOR_RESET_CONFIRM:
 			nBeaconCnt = 0;
+			m_pMsgQueue->m_niTagDirectflag =0;
 			m_pMsgQueue->m_nSendTagCount =0;
 			m_pSocket->m_SocketArrayDataDownMsg.clear();
 			m_pSocket->m_SocketArrayDataIndicateMsg.clear();
 			m_pMsgQueue->m_nMapParity =0;
+			m_pMsgHandler->m_iTagDirectDownCnt2 = 0;
+			memset(nDirectDownTagNumber, 0, sizeof(WORD)*1024);
 			m_pMsgHandler->bClear();
 			m_pSocketHandle->SetMsg_StartCfm_Remalloc(0);
 			m_pSocketHandle->m_nTagDataCount =0;
@@ -206,6 +211,7 @@ int Main_ByPass_UartToSocket()
 			memset(m_pMsgQueue->m_Test, 0, sizeof(WORD)*4096);
 			memset(m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge, 0, sizeof(WORD)*4096);
 			memset(m_pMsgHandler->m_pu16MsgDataAcknowledge, 0, sizeof(WORD)*4096);
+			memset(m_pMsgQueue->m_niTagDirectAck, 0, sizeof(WORD)*4096);
 		
 			m_pMsgHandler->Map_dataParityCheck.erase(m_pMsgHandler->Map_dataParityCheck.begin(), m_pMsgHandler->Map_dataParityCheck.end());
 			m_pMsgHandler->Map_u16AcknowParityCheck.erase(m_pMsgHandler->Map_u16AcknowParityCheck.begin(), m_pMsgHandler->Map_u16AcknowParityCheck.end());
@@ -221,11 +227,30 @@ int Main_ByPass_UartToSocket()
 		//	ServiceStart_Cfm();
 			break;
 		case TAG_DIRECT_CHANGE_INDICATION:
+			m_pMsgQueue->m_niTagDirectflag =1;
 			m_pMsgHandler->iSmallDataDown =1;
 			m_pMsgHandler->m_iTagDirectDown =1;
-			printf("TAG_DIRECT_CHANGE_INDICATION %d\n", m_pMsgHandler->iSmallDataDown);
+
+			Temp = ByteToWord(m_pMsgQueue->m_u8SendData[MSG_SADDRONE], m_pMsgQueue->m_u8SendData[MSG_SADDRZERO]);
+			for(int i=0; i<1024; i++) {
+				if(Temp == nDirectDownTagNumber[i]) {
+					printf("Overlap DirectTagNumber : %x\n", nDirectDownTagNumber[i]);
+					break;
+				}
+				if(i == 1023) {
+					nDirectDownTagNumber[m_pMsgHandler->m_iTagDirectDownCnt2] = Temp;
+//					printf("%x %x\n", Temp, nDirectDownTagNumber[m_pMsgHandler->m_iTagDirectDownCnt2]);
+					m_pMsgHandler->m_iTagDirectDownCnt2++;
+				}
+			}	
+
+			for(int i =0; i<m_pMsgHandler->m_iTagDirectDownCnt2; i++) {
+				printf("%x ", nDirectDownTagNumber[i]);
+			}
+			printf("\nTAG_DIRECT_CHANGE_INDICATION m_iTagDirectDownCnt2 : %d\n", m_pMsgHandler->m_iTagDirectDownCnt2);
 			break;
 		case TAG_ASSOCIATION:
+			printf("TAG_ASSOCIATION\n");
 			if(m_pMsgQueue->m_nSendTagCount > 0) {
 				m_pSocketHandle->SetMsg_StartCfm_Remalloc(1);
 			}
@@ -342,7 +367,7 @@ int Main_ByPass_SocketToUart()
 			m_pSocket->m_iBypassSocketToUart =0;
 			m_pSocket->m_iSocketReceiveEnd =0;
 			return 1;
-		}		
+		}
 		
 		m_pMsgHandler->BypassSocketToUart(m_pSocket->m_p8uData,	m_pSocket->m_ReceiveData_len, m_pSocket->m_SocketMsg_vec[MSGTYPE]);
 
@@ -361,6 +386,8 @@ int Main_ByPass_SocketToUart()
 		
 		m_pMsgQueue->GetDataDown(m_pSocket->m_nSocketArrayDataDownCnt, m_pSocket->m_TagNumber);
 		m_pMsgHandler->SetSocketArray(m_pSocket->m_SocketArrayDataDownMsg, m_pSocket->m_SocketArrayDataIndicateMsg);
+
+
 	//	printf("Socket Communication End\n");
 	}
 	else if(m_pMsgQueue->m_bUartCommuniFlag) {
@@ -427,7 +454,10 @@ int Main_ByPass_SocketToUart()
 					Set_WaitTimer(&DataIndecateTimerID, 100, 1);
 					SecondTimerFlag = 1;
 				}
-				m_pMsgHandler->m_nDataDownCount++;
+				if(!m_pMsgHandler->m_iTagDirectDown) {
+					printf("m_nDataDownCount++ 11\n");
+					m_pMsgHandler->m_nDataDownCount++;
+				}
 			}
 			else if(bDataAckFlag) {
 				m_pMsgHandler->UartPacket_ReDataAcknowledge_DataIndicateStart(nBeaconValue);
@@ -472,28 +502,96 @@ int Main_ByPass_SocketToUart()
 			}
 			nBeaconValue = (BYTE)m_pMsgQueue->m_vcemsg.at(MSG_BSN_DATA);
 
-			
-
-			if(m_pMsgHandler->m_nUartArrayDataDownCnt == m_pMsgQueue->m_nMapParity) {
+			m_pMsgHandler->DataFlag_Initialize(nBeaconValue);
+	
+			if((!m_pMsgHandler->m_iTagDirectDown) && (m_pMsgHandler->m_nUartArrayDataDownCnt == m_pMsgQueue->m_nMapParity) ) {
 				Main_Service_Stop();
 				return 0;
 			}
 			
-			
 			if(!bDataAckFlag && !bReDownloadFlag && ((int)nBeaconValue <= BEACON_MAX) && (nBeaconCnt < BEACON_MAX+1)) {				
 				if(m_pMsgHandler->m_iTagDirectDown) {
 					m_pMsgHandler->m_iTagDirectDownCnt++;
-					printf("m_iTagDirectDownCnt : %d\n",m_pMsgHandler->m_iTagDirectDownCnt);
+					printf("m_iTagDirectDownCnt : %d, 	m_pMsgHandler->m_nDataDownCount : %d\n",m_pMsgHandler->m_iTagDirectDownCnt, m_pMsgHandler->m_nDataDownCount);
 				
 					if(m_pMsgHandler->m_iTagDirectDownCnt%2 == 0) {
 						m_pMsgHandler->iSmallDataDown = 1;
 					}
-					else if(m_pMsgHandler->m_iTagDirectDownCnt == 11) {
-						m_pMsgHandler->m_iTagDirectDown =0;
-						Main_Service_Stop();
-						return 0;
+					if(m_pMsgHandler->m_iTagDirectDownCnt >= 29) {
+	//					m_pMsgHandler->m_nDataDownCount++;						
+					
+						if(m_pMsgHandler->m_nUartArrayDataDownCnt <= m_pMsgHandler->m_nDataDownCount) {
+				//			if (m_pMsgQueue->m_niTagDirectAck > 0) {						
+								for(int j=0; j<1024; j++) {
+									for(int i=0; i<1024; i++) {
+										if(m_pMsgQueue->m_niTagDirectAck[j] == nDirectDownTagNumber[i]) {
+											for(int j=0; j<m_pMsgHandler->m_iTagDirectDownCnt2; j++) {
+												printf("%x ", nDirectDownTagNumber[j]);
+											}
+											printf("\n");
+											Main_deleteArray(i, 1024, nDirectDownTagNumber);
+											for(int j=0; j<m_pMsgHandler->m_iTagDirectDownCnt2; j++) {
+												printf("%x ", nDirectDownTagNumber[j]);
+											}
+											printf("\n");
+											if(m_pMsgHandler->m_iTagDirectDownCnt2 > 0)
+												m_pMsgHandler->m_iTagDirectDownCnt2--;											
+											
+											printf("m_iTagDirectDownCnt2 : %d\n", m_pMsgHandler->m_iTagDirectDownCnt2);
+											m_pMsgQueue->m_niTagDirectAck[j] = 0;
+											nBeaconCnt =0;
+											break;
+										}
+									}
+								}
+				//			}
+							
+							Main_Service_Stop();
+							return 0;
+						}
+						m_pMsgHandler->m_nDataDownCount++;
+						printf("m_nDataDownCount++ 3333\n");
+						m_pMsgHandler->m_iTagDirectDownCnt = 0;
 					}
-				}	
+
+					printf("m_pMsgQueue->m_niTagDirectAck > 0\n");
+
+					for(int j=0; j<1024; j++) {
+						for(int i=0; i<1024; i++) { 
+							if( (m_pMsgQueue->m_niTagDirectAck[j] > 0) && (m_pMsgQueue->m_niTagDirectAck[j] == nDirectDownTagNumber[i]) ) {
+								printf("befor delete\n");
+								for(int j=0; j<m_pMsgHandler->m_iTagDirectDownCnt2; j++) {
+									printf("%x ", nDirectDownTagNumber[j]);
+								}
+								Main_deleteArray(i, 1024, nDirectDownTagNumber);
+								printf("after delete\n");
+								for(int j=0; j<m_pMsgHandler->m_iTagDirectDownCnt2; j++) {
+									printf("%x ", nDirectDownTagNumber[j]);
+								}
+								if(m_pMsgHandler->m_iTagDirectDownCnt2 > 0)
+									m_pMsgHandler->m_iTagDirectDownCnt2--;
+								printf("m_iTagDirectDownCnt2 : %d\n", m_pMsgHandler->m_iTagDirectDownCnt2);
+								m_pMsgQueue->m_niTagDirectAck[j] = 0;
+								nBeaconCnt =0;
+								printf("m_nDataDownCount++ 2233\n");
+								m_pMsgHandler->m_nDataDownCount++;
+								m_pMsgHandler->m_iTagDirectDownCnt = 0;
+								break;
+							}
+						//	if(i==511)
+						//		m_pMsgHandler->m_nDataDownCount--;
+											
+						}	
+					}
+						
+					printf("\n");
+					if(m_pMsgHandler->m_nUartArrayDataDownCnt <= m_pMsgHandler->m_nDataDownCount) {
+						printf(">m_nUartArrayDataDownCnt <= m_pMsgHandler->m_nDataDownCount\n");
+						m_pMsgHandler->m_iTagDirectDownCnt = 0;
+						Main_Service_Stop();
+					}
+				}
+				
 				if( m_pMsgHandler->UartPacket_DataDownStart(nBeaconValue ) ) {
 					Set_WaitTimer(&DataDownTimerID, 100, 1);
 					firstTimerFlag = 1;
@@ -565,6 +663,11 @@ int Main_ByPass_SocketToUart()
 						nTempBeaconCnt =0;
 						nTemp2BeaconCnt++;
 						printf("AckFail_Redown nTemp2BeaconCnt_______ : %d\n", nTemp2BeaconCnt);
+						memset(nDirectDownTagNumber, 0, sizeof(WORD)*1024);
+						m_pMsgHandler->m_iTagDirectDownCnt2 =0;
+						m_pMsgQueue->m_niTagDirectflag =0;
+						m_pMsgHandler->m_iTagDirectDown =0;
+
 						if(nTemp2BeaconCnt > 1) {
 							Main_Service_Stop();
 						}
@@ -581,7 +684,7 @@ int Main_ByPass_SocketToUart()
 void Main_Service_Stop()
 {
 	printf("Beacon Stop\n");
-	th_delay(3);
+	th_delay(30);
 	m_pMsgHandler->BSN_Stop_Packet();
 	m_pSocketHandle->Server_BSN_Stop_Packet();	
 	
@@ -598,8 +701,11 @@ void Main_Service_Stop()
 	m_pSocket->m_SocketArrayDataIndicateMsg.shrink_to_fit();
 	m_pSocket->m_SocketArrayDataDownMsg.reserve(5000);
 	m_pSocket->m_SocketArrayDataIndicateMsg.reserve(5000);
+
 	
-	 
+	if(m_pMsgHandler->m_iTagDirectDownCnt2 == 0) {
+		m_pMsgQueue->m_niTagDirectflag =0;
+	}
 	m_pMsgQueue->m_nMapParity =0;
 	m_pMsgQueue->m_ArrayDataAcknowledge.clear();	
 	m_pMsgHandler->m_DataFlag =0;
@@ -1109,12 +1215,15 @@ void PrintfHello(int sig, siginfo_t* si, void* uc)
 	}
 	else if(*tidp == DataDownTimerID) {
 		firstTimerFlag =0;
-		timer_delete(DataDownTimerID);
-	
 		printf("Kill Timer DataDownTimerID\n");
-		m_pMsgHandler->m_nDataDownCount++;
-		m_pMsgHandler->m_DataCnt++;
-		m_pMsgHandler->UartPacket_DataDownStart(nBeaconValue);
+		timer_delete(DataDownTimerID);
+
+		if(!m_pMsgHandler->m_iTagDirectDown) {
+			printf("m_nDataDownCount++ 155\n");
+			m_pMsgHandler->m_nDataDownCount++;
+			m_pMsgHandler->m_DataCnt++;
+			m_pMsgHandler->UartPacket_DataDownStart(nBeaconValue);
+		}
 	}
 	else if (*tidp == DataIndecateTimerID){
 		SecondTimerFlag =0;		
