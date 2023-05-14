@@ -471,7 +471,7 @@ int Main_ByPass_SocketToUart()
 				timer_delete(DataDownTimerID);
 			}
 			nBeaconValue = (BYTE)m_pMsgQueue->m_vcemsg.at(MSG_BSN_DATA);
-
+			m_pMsgHandler->DataFlag_Initialize(nBeaconValue);
 			
 
 			if(m_pMsgHandler->m_nUartArrayDataDownCnt == m_pMsgQueue->m_nMapParity) {
