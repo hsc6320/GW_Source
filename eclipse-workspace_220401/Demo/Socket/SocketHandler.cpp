@@ -11,7 +11,7 @@ Socket* pSocket;
 MsgQueue* pUartQueue;
 int nServiceStart_Confirm =0, beacon_count =0;
 std::queue<std::vector<BYTE>> vTagData;
-BYTE SERVER_ID=0x06;
+BYTE SERVER_ID=0x01;
 
 SocketHandler::SocketHandler()
 {

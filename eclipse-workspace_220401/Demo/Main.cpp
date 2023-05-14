@@ -200,7 +200,6 @@ int Main_ByPass_UartToSocket()
 			m_pSocket->m_SocketArrayDataIndicateMsg.clear();
 			m_pMsgQueue->m_nMapParity =0;
 			m_pMsgHandler->m_iTagDirectDownCnt2 = 0;
-			memset(nDirectDownTagNumber, 0, sizeof(WORD)*1024);
 			m_pMsgHandler->bClear();
 			m_pSocketHandle->SetMsg_StartCfm_Remalloc(0);
 			m_pSocketHandle->m_nTagDataCount =0;
@@ -211,7 +210,6 @@ int Main_ByPass_UartToSocket()
 			memset(m_pMsgQueue->m_Test, 0, sizeof(WORD)*4096);
 			memset(m_pMsgQueue->m_pu16MsgQueueArrayDataAcknowledge, 0, sizeof(WORD)*4096);
 			memset(m_pMsgHandler->m_pu16MsgDataAcknowledge, 0, sizeof(WORD)*4096);
-			memset(m_pMsgQueue->m_niTagDirectAck, 0, sizeof(WORD)*4096);
 		
 			m_pMsgHandler->Map_dataParityCheck.erase(m_pMsgHandler->Map_dataParityCheck.begin(), m_pMsgHandler->Map_dataParityCheck.end());
 			m_pMsgHandler->Map_u16AcknowParityCheck.erase(m_pMsgHandler->Map_u16AcknowParityCheck.begin(), m_pMsgHandler->Map_u16AcknowParityCheck.end());
@@ -250,7 +248,7 @@ int Main_ByPass_UartToSocket()
 			printf("\nTAG_DIRECT_CHANGE_INDICATION m_iTagDirectDownCnt2 : %d\n", m_pMsgHandler->m_iTagDirectDownCnt2);
 			break;
 		case TAG_ASSOCIATION:
-			printf("TAG_ASSOCIATION\n");
+	//		printf("TAG_ASSOCIATION\n");
 			if(m_pMsgQueue->m_nSendTagCount > 0) {
 				m_pSocketHandle->SetMsg_StartCfm_Remalloc(1);
 			}
@@ -540,12 +538,12 @@ int Main_ByPass_SocketToUart()
 											printf("m_iTagDirectDownCnt2 : %d\n", m_pMsgHandler->m_iTagDirectDownCnt2);
 											m_pMsgQueue->m_niTagDirectAck[j] = 0;
 											nBeaconCnt =0;
+												
 											break;
 										}
-									}
+									}		
 								}
-				//			}
-							
+				//			}							
 							Main_Service_Stop();
 							return 0;
 						}
@@ -586,9 +584,11 @@ int Main_ByPass_SocketToUart()
 						
 					printf("\n");
 					if(m_pMsgHandler->m_nUartArrayDataDownCnt <= m_pMsgHandler->m_nDataDownCount) {
-						printf(">m_nUartArrayDataDownCnt <= m_pMsgHandler->m_nDataDownCount\n");
-						m_pMsgHandler->m_iTagDirectDownCnt = 0;
-						Main_Service_Stop();
+						m_pMsgHandler->m_nDataDownCount++;
+						if(m_pMsgHandler->m_nUartArrayDataDownCnt+1 == m_pMsgHandler->m_nDataDownCount) {
+							m_pMsgHandler->m_iTagDirectDownCnt = 0;
+							Main_Service_Stop();
+						}
 					}
 				}
 				
@@ -940,7 +940,7 @@ int Main_Socket_Init()
 
 int UartToSocket_TagAssociation()
 	{
-	printf("UartToSocket_TagAssociation\n");
+	//printf("UartToSocket_TagAssociation\n");
 	while(!m_pMsgQueue->m_Queue.empty()) {
 		m_pSocketHandle->TagData(m_pMsgQueue->m_Queue);
 		m_pMsgQueue->m_Queue.pop();	

@@ -1,4 +1,4 @@
-17:24:06 **** Build of configuration Debug for project Demo ****
+22:24:33 **** Build of configuration Debug for project Demo ****
 make all 
 Building file: ../uart/uart.cpp
 Invoking: Cross G++ Compiler
