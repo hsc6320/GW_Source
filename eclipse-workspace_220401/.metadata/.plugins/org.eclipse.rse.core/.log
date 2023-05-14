@@ -1,6 +1,10 @@
+<<<<<<< Updated upstream
 Sun May 14 14:20:13 KST 2023
 WARNING org.eclipse.rse.core  RSEDOMImporter: null attr "name" in null
 --------------------------------------------
 Sun May 14 14:20:17 KST 2023
+=======
+Wed Mar 29 17:27:16 KST 2023
+>>>>>>> Stashed changes
 INFO org.eclipse.rse.core  Saved passwords are not available for migration to secure storage. Deprecated authorization classes (org.eclipse.core.runtime.compatibility.auth) are not installed.
 --------------------------------------------
