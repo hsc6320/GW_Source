@@ -46,6 +46,8 @@ PRE_DEFINE::S_PACKET	m_GetInforPacket;
 template <typename T>
 std::vector<uint8_t> vec;
 std::vector<std::vector<BYTE>> m_ArrayDataAcknowledge;
+
+std::map<std::set<WORD>, int> mapTagDirectSet;
 int nlsChecksum =0;
 int socket_fd =0;
 int nBeaconCnt =0, nTempBeaconCnt =0, nTemp2BeaconCnt = 0, nTemp1BeaconCnt=0;
@@ -182,6 +184,8 @@ int Main_ByPass_UartToSocket()
 {
 	int msg = 0;
 	PRE_DEFINE::S_PACKET GetInforPacket;
+	WORD Tag =0;
+	std::set<WORD>::iterator iter;
 
 	if(m_pMsgQueue->m_bReadEnd_UartMessage) {
 	//	printf("Main_ByPass_UartToSocket\n");
@@ -221,9 +225,20 @@ int Main_ByPass_UartToSocket()
 		//	ServiceStart_Cfm();
 			break;
 		case TAG_DIRECT_CHANGE_INDICATION:
-			m_pMsgHandler->iSmallDataDown =1;
-			m_pMsgHandler->m_iTagDirectDown =1;
-			printf("TAG_DIRECT_CHANGE_INDICATION %d\n", m_pMsgHandler->iSmallDataDown);
+			if(m_pMsgQueue->m_u8SendData[MSG_TAG_DIRECT_CHANGE_STATUS] == ENABLE){
+				m_pMsgHandler->iSmallDataDown =1;
+				m_pMsgHandler->m_iTagDirectDown =1;
+				Tag = ByteToWord(m_pMsgQueue->m_u8SendData[MSG_SADDRONE], m_pMsgQueue->m_u8SendData[MSG_SADDRZERO] );
+				m_pMsgQueue->setTagNumber.insert(Tag);
+				iter = m_pMsgQueue->setTagNumber.find(Tag);
+				mapTagDirectSet.insert(*iter, ENABLE);
+				printf("TAG_DIRECT_CHANGE_INDICATION %d\n", m_pMsgHandler->iSmallDataDown);
+			}
+			else {				
+				m_pMsgHandler->iSmallDataDown =0;
+				m_pMsgHandler->m_iTagDirectDown =0;
+				printf("TAG_DIRECT_CHANGE_INDICATION %d\n", m_pMsgHandler->iSmallDataDown);
+			}
 			break;
 		case TAG_ASSOCIATION:
 			if(m_pMsgQueue->m_nSendTagCount > 0) {
@@ -485,10 +500,10 @@ int Main_ByPass_SocketToUart()
 					m_pMsgHandler->m_iTagDirectDownCnt++;
 					printf("m_iTagDirectDownCnt : %d\n",m_pMsgHandler->m_iTagDirectDownCnt);
 				
-					if(m_pMsgHandler->m_iTagDirectDownCnt%4 == 0) {
+					if(m_pMsgHandler->m_iTagDirectDownCnt%2 == 0) {
 						m_pMsgHandler->iSmallDataDown = 1;
 					}
-					else if(m_pMsgHandler->m_iTagDirectDownCnt >= 20) {
+					else if(m_pMsgHandler->m_iTagDirectDownCnt == 11) {
 						m_pMsgHandler->m_iTagDirectDown =0;
 						Main_Service_Stop();
 						return 0;
