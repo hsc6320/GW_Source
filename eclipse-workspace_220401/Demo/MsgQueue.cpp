@@ -82,12 +82,28 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 	memset(u8Data, 0, 1024);
 	memcpy(u8Data, b, 1024);
 
-	
+	std::set<WORD>::iterator iter;
 
 	if(u8Data[MSG_STX] == STX) {
 		if(u8Data[MSGTYPE] == DATA_ACKNOWLEDGEMENT) {
 			if(u8Data[MSG_ACKNOWLEDGE_STATUS] == PAYLOAD_STATUS_SUCCESS) {	
 				wordPanID = ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO]);
+				if(!setTagNumber.empty()) {
+					iter = setTagAckNumber.find(wordPanID);
+					if(iter != setTagAckNumber.end()) {
+						printf("TagAck overlap\n");
+					}
+					else {
+						setTagAckNumber.insert(wordPanID);
+
+						printf("DataAck TagID : ");
+						printf("%x, %d\n", wordPanID, wordPanID);
+					
+						m_nMapParity++;				
+						printf("0x43 Count : %d\n", m_nMapParity);
+					}
+					return 1;
+				}
 				
 				Cnt = m_nMapParity;
 				for(int i=0; i<=nDataDown; i++ ) {
@@ -170,8 +186,8 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 					nTagidCnt++;
 				}*/
 				m_MsgQueueDataAssocation.clear();
-				m_nSendTagCount++;
-			
+				m_nSendTagCount++;				
+				
 			//	printf("m_nSendTagCount : %d\n", m_nSendTagCount );
 			/*	while(1) {
 					if(!m_bReadEnd_UartMessage)

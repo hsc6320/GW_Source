@@ -62,7 +62,8 @@ public:
 	std::queue<std::vector<BYTE>> m_Queue, m_QueueDataAck;
 	std::vector<std::vector<BYTE>> m_ArrayDataAcknowledge;
 	std::vector<BYTE> m_MsgQueueDataAssocation;
-
+	std::set<WORD> setTagNumber, setTagAckNumber;
+	
 	BYTE m_u8SendData[1024];
 	WORD m_pu16MsgQueueArrayDataAcknowledge[4096];
 	WORD m_Test[4096];

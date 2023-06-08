@@ -37,7 +37,7 @@ MsgHandler::MsgHandler()
 	m_nUartArrayReDataIndicateCnt =0;
 	iSmallDataDown =0;
 	m_iTagDirectDown =0;
-	m_iTagDirectDownCnt =0;
+	m_iTagDirectDownCnt =2;
 	m_UartArrayDataIndicateMsg.reserve(5000);
 	m_UartArrayDataDownMsg.reserve(5000);
 }
@@ -56,7 +56,7 @@ int MsgHandler::bClear()
 	m_UartArrayDataIndicateMsg.clear();
 	Map_dataParityCheck.clear();
 	m_iTagDirectDown =0;
-	m_iTagDirectDownCnt =0;
+	m_iTagDirectDownCnt =2;
 	iSmallDataDown =0;
 	
 	return 1;
@@ -262,7 +262,7 @@ int MsgHandler::Send_BeaconData(BYTE ibeaconvalue)
 	BYTE beaconcnt =0;	
 
 	if( iSmallDataDown ) {		
-		m_nDataDownCount =0;
+	//	m_nDataDownCount =0;
 		m_DataCnt =0;
 		m_DataFlag = 1;
 		iSmallDataDown =0;

@@ -248,7 +248,7 @@ int Socket::Socket_Init(/*int argc, char *argv[]*/)
 	}
 
 	printf("m_serv_sock : %d,\n", m_serv_sock);
-
+	printf("----------------------------------2023-05-14----------------------------\n");
 	printf("Socket Init\n");
 
 	return (int)m_serv_sock;

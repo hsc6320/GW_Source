@@ -17,7 +17,6 @@
 #include <stdio.h>
 #include <signal.h>
 #include <string>
-#include <string.h>
 #include <sys/ioctl.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -38,16 +37,13 @@
 #include <queue>
 #include <algorithm>
 #include <execinfo.h>
-#include <errno.h>
 
 //#include <linux/time.h>
 //#include <linux/kernel.h>
 
-#include <netdb.h>
 #include <net/if.h>
 #include <netinet/ether.h>
 #include <net/if.h>
-#include <arpa/inet.h>
 
 
 #include "Msg_Define.h"
@@ -62,14 +58,12 @@
 #define PASS 	1
 #define FAIL 	0
 
-//#define BEACON_MAX		63	//63	//63	//31	//9
-#define LO				0
-#define ETHERNET		1
-#define WIFI			2
+#define BEACON_MAX 19
+
 #define BUILD_UINT16(loByte, hiByte)	((unsigned int )(((loByte) & 0x00FF) + (((hiByte) & 0x00FF) << 8)))
 
 #ifdef  DEBUG_LEVEL_
-#define dp(n, fmt, args...)	if (DEBUG_LEVEL_ <= n) fprintf(stderr, "%s %s:%d,", fmt, __FILE__, __LINE__, ## args)
+#define dp(n, fmt, args...)	if (DEBUG_LEVEL_ <= n) fprintf(stderr, "%s:%d,", fmt, __FILE__, __LINE__, ## args)
 #define dp0(n, fmt)		if (DEBUG_LEVEL_ <= n) fprintf(stderr, "%s:%d,"fmt, __FILE__, __LINE__)
 #define _dp(n, fmt, args...)	if (DEBUG_LEVEL_ <= n) fprintf(stderr, " "fmt, ## args)
 #else	/* DEBUG_LEVEL_ */
