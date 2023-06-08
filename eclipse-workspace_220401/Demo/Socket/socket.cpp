@@ -314,6 +314,8 @@ int Socket::IP_Address_Init()
 		printf("---------------------\n");
 	}
 
+	printf("--------------------06 08-----------------------------\n");
+
 #if 0
 	ifc2.ifc_len = sizeof(ifr2);
 	ifc2.ifc_ifcu.ifcu_req = ifr2;
