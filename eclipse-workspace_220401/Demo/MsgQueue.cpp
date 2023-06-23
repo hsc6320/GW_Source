@@ -78,6 +78,7 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 	BYTE u8Data[1024];
 	int size =0, Cnt =0;
 	WORD wordPanID =0;
+	std::set<WORD>::iterator iterSet;
 	memset(m_u8SendData, 0, 1024);
 	memset(u8Data, 0, 1024);
 	memcpy(u8Data, b, 1024);
@@ -88,7 +89,23 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 		if(u8Data[MSGTYPE] == DATA_ACKNOWLEDGEMENT) {
 			if(u8Data[MSG_ACKNOWLEDGE_STATUS] == PAYLOAD_STATUS_SUCCESS) {	
 				wordPanID = ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO]);
-				if(!setTagNumber.empty()) {
+				
+				iterSet = setTagNumber.find(wordPanID);
+				iter = setTagAckNumber.find(wordPanID);
+				if(iterSet != setTagNumber.end()) {
+					printf("---- Exist ");
+					printf("setTagNumber : %d----\n", *iterSet);  
+				}
+				else {
+					printf("----Not exist ----\n");
+					if(iter != setTagAckNumber.end()) {
+						printf("----BUT Exist ");
+						printf("setAckNumber : %d----\n", *iter);  	
+						return 1;
+					}
+				}
+				
+				if(!setTagNumber.empty() && (iterSet != setTagNumber.end()) ) {
 					iter = setTagAckNumber.find(wordPanID);
 					if(iter != setTagAckNumber.end()) {
 						printf("TagAck overlap\n");
@@ -96,11 +113,11 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 					else {
 						setTagAckNumber.insert(wordPanID);
 
-						printf("DataAck TagID : ");
-						printf("%x, %d\n", wordPanID, wordPanID);
+						printf("----DataAck TagID : ");
+						printf("%x, %d------\n", wordPanID, wordPanID);
 					
-						m_nMapParity++;				
-						printf("0x43 Count : %d\n", m_nMapParity);
+						m_nDirectMapParity++;
+						printf("0x43 Count : %d\n", m_nDirectMapParity);
 					}
 					return 1;
 				}

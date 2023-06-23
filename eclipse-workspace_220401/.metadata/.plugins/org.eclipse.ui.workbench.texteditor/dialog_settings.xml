@@ -1,35 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="init"/>
+		<item key="selection" value="Main_Check_NextTagDirect"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
-		<item key="wholeword" value="true"/>
+		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
-			<item value="init"/>
-			<item value="m_Uart_ServiceStart_TagAssociation_InitFlag"/>
-			<item value="r.haem-esl."/>
-			<item value="UartPacket_ReDataAcknowledge_DownStart"/>
-			<item value="ReDownStart"/>
-			<item value="pAddr2"/>
-			<item value="ev"/>
-			<item value="m_pMsgQueue"/>
-			<item value="m_MainComport"/>
-			<item value="rx_sto2"/>
-			<item value="domainName"/>
-			<item value="sto_count2"/>
-			<item value="nSecondPutByte"/>
-			<item value="cnt"/>
-			<item value="Internet_connected"/>
+			<item value="Main_Check_NextTagDirect"/>
+			<item value="Demo"/>
+			<item value="existTagNumber = nTagNumber;"/>
+			<item value="GetTagNumber"/>
+			<item value="UartPacket_DataIndicateStart"/>
+			<item value="UartToSocket_TagAssociation"/>
+			<item value="m_iTagDirectDown"/>
+			<item value="Main_MsgQueue_Sort_dataAck"/>
+			<item value="&lt;&lt;&lt;&lt;&lt;&lt;&lt; Updated upstream"/>
+			<item value="==="/>
 		</list>
 		<list key="replacehistory">
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="3291"/>
-		<item key="DIALOG_Y_ORIGIN" value="240"/>
+		<item key="DIALOG_X_ORIGIN" value="753"/>
+		<item key="DIALOG_Y_ORIGIN" value="175"/>
 		<item key="DIALOG_WIDTH" value="348"/>
 		<item key="DIALOG_HEIGHT" value="437"/>
 		<item key="DIALOG_FONT_NAME" value="1|Ubuntu|11.0|0|GTK|1|"/>

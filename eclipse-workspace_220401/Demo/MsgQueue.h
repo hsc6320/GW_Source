@@ -56,7 +56,7 @@ public:
 	int m_bReadEnd_UartMessage;
 	int m_bUartCommuniFlag, m_bUartTagAssociFlag;
 	int m_Uart_ServiceStart_TagAssociation_InitFlag;
-	int m_nMapParity, m_ServerDisconnect;
+	int m_nMapParity, m_nDirectMapParity, m_ServerDisconnect;
 	int m_nSendTagCount;
 
 	std::queue<std::vector<BYTE>> m_Queue, m_QueueDataAck;

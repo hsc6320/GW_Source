@@ -1,4 +1,4 @@
-15:07:28 **** Build of configuration Debug for project Demo ****
+12:53:56 **** Build of configuration Debug for project Demo ****
 make all 
 Building file: ../uart/uart.cpp
 Invoking: Cross G++ Compiler
@@ -8,7 +8,7 @@ arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 
      printf("rx[%d] : %x, len : %d continue \n", rx2[0], len);
                                                             ^
 ../uart/uart.cpp: In member function ‘int UartComThread::Uart_Open(const char*, int)’:
-../uart/uart.cpp:270:29: warning: suggest parentheses around assignment used as truth value [-Wparentheses]
+../uart/uart.cpp:274:29: warning: suggest parentheses around assignment used as truth value [-Wparentheses]
     if(ctx->fd = Open_fd(dev))
                              ^
 Finished building: ../uart/uart.cpp
@@ -36,6 +36,10 @@ Finished building: ../Main.cpp
 Building file: ../MsgHandler.cpp
 Invoking: Cross G++ Compiler
 arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgHandler.d" -MT"MsgHandler.o" -o "MsgHandler.o" "../MsgHandler.cpp"
+../MsgHandler.cpp: In member function ‘int MsgHandler::Send_BeaconData(BYTE)’:
+../MsgHandler.cpp:262:6: warning: unused variable ‘iTempTagNum’ [-Wunused-variable]
+  int iTempTagNum =0;
+      ^~~~~~~~~~~
 Finished building: ../MsgHandler.cpp
  
 Building file: ../MsgQueue.cpp
@@ -48,549 +52,108 @@ Invoking: Cross G++ Linker
 arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
 Finished building target: Demo
  
-<<<<<<< Updated upstream
-16:28:09 **** Incremental Build of configuration Debug for project Demo ****
-=======
-15:10:52 **** Incremental Build of configuration Debug for project Demo ****
->>>>>>> Stashed changes
+12:57:48 **** Incremental Build of configuration Debug for project Demo ****
 make all 
-Building file: ../Socket/SocketHandler.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
-Finished building: ../Socket/SocketHandler.cpp
- 
-Building target: Demo
-Invoking: Cross G++ Linker
-arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
-Finished building target: Demo
- 
-<<<<<<< Updated upstream
-16:32:00 **** Incremental Build of configuration Debug for project Demo ****
-=======
-21:48:25 **** Incremental Build of configuration Debug for project Demo ****
-make all 
-Building file: ../Socket/SocketHandler.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
-Finished building: ../Socket/SocketHandler.cpp
- 
-Building target: Demo
-Invoking: Cross G++ Linker
-arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
-Finished building target: Demo
- 
-10:26:32 **** Incremental Build of configuration Debug for project Demo ****
-make all 
-Building file: ../uart/uart.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"uart/uart.d" -MT"uart/uart.o" -o "uart/uart.o" "../uart/uart.cpp"
-../uart/uart.cpp: In function ‘void* uart_Rx_Thread(void*)’:
-../uart/uart.cpp:60:60: warning: format ‘%d’ expects a matching ‘int’ argument [-Wformat=]
-     printf("rx[%d] : %x, len : %d continue \n", rx2[0], len);
-                                                            ^
-../uart/uart.cpp: In member function ‘int UartComThread::Uart_Open(const char*, int)’:
-../uart/uart.cpp:270:29: warning: suggest parentheses around assignment used as truth value [-Wparentheses]
-    if(ctx->fd = Open_fd(dev))
-                             ^
-Finished building: ../uart/uart.cpp
- 
-Building file: ../Socket/SocketHandler.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
-Finished building: ../Socket/SocketHandler.cpp
- 
-Building file: ../Socket/SocketMsgQueue.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/SocketMsgQueue.d" -MT"Socket/SocketMsgQueue.o" -o "Socket/SocketMsgQueue.o" "../Socket/SocketMsgQueue.cpp"
-Finished building: ../Socket/SocketMsgQueue.cpp
- 
-Building file: ../Socket/socket.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
-Finished building: ../Socket/socket.cpp
- 
-Building file: ../Main.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
-../Main.cpp: In function ‘int Main_ByPass_UartToSocket()’:
-../Main.cpp:224:4: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
-    if(m_pMsgQueue->m_u8SendData[MSG_TAG_DIRECT_CHANGE_STATUS] == ENABLE)
-    ^~
-../Main.cpp:226:5: note: ...this statement, but the latter is misleadingly indented as if it is guarded by the ‘if’
-     m_pMsgHandler->m_iTagDirectDown =1;
-     ^~~~~~~~~~~~~
-../Main.cpp:229:4: error: expected ‘}’ before ‘else’
-    else {    
-    ^~~~
-../Main.cpp:234:4: error: break statement not within loop or switch
-    break;
-    ^~~~~
-../Main.cpp:235:3: error: case label ‘33’ not within a switch statement
-   case TAG_ASSOCIATION:
-   ^~~~
-../Main.cpp:240:4: error: break statement not within loop or switch
-    break;
-    ^~~~~
-../Main.cpp:241:3: error: case label not within a switch statement
-   default :
-   ^~~~~~~
-../Main.cpp:250:4: error: break statement not within loop or switch
-    break;
-    ^~~~~
-../Main.cpp:251:3: warning: no return statement in function returning non-void [-Wreturn-type]
-   }
-   ^
-../Main.cpp: At global scope:
-../Main.cpp:252:2: error: expected declaration before ‘}’ token
-  }
-  ^
-make: *** [subdir.mk:26: Main.o] 오류 1
-"make all" terminated with exit code 2. Build might be incomplete.
-10:27:06 **** Incremental Build of configuration Debug for project Demo ****
->>>>>>> Stashed changes
-make all 
-Building file: ../Main.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
-Finished building: ../Main.cpp
- 
-<<<<<<< Updated upstream
-=======
 Building file: ../MsgHandler.cpp
 Invoking: Cross G++ Compiler
 arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgHandler.d" -MT"MsgHandler.o" -o "MsgHandler.o" "../MsgHandler.cpp"
+../MsgHandler.cpp: In member function ‘int MsgHandler::Send_BeaconData(BYTE)’:
+../MsgHandler.cpp:262:6: warning: unused variable ‘iTempTagNum’ [-Wunused-variable]
+  int iTempTagNum =0;
+      ^~~~~~~~~~~
 Finished building: ../MsgHandler.cpp
  
-Building file: ../MsgQueue.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgQueue.d" -MT"MsgQueue.o" -o "MsgQueue.o" "../MsgQueue.cpp"
-Finished building: ../MsgQueue.cpp
- 
->>>>>>> Stashed changes
 Building target: Demo
 Invoking: Cross G++ Linker
 arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
 Finished building target: Demo
  
-<<<<<<< Updated upstream
-11:30:55 **** Incremental Build of configuration Debug for project Demo ****
+12:58:02 **** Incremental Build of configuration Debug for project Demo ****
 make all 
 make: 'all'을(를) 위해 할 일이 없습니다.
-11:38:41 **** Incremental Build of configuration Debug for project Demo ****
+12:58:07 **** Incremental Build of configuration Debug for project Demo ****
 make all 
-=======
-11:46:00 **** Incremental Build of configuration Debug for project Demo ****
+make: 'all'을(를) 위해 할 일이 없습니다.
+13:28:47 **** Incremental Build of configuration Debug for project Demo ****
 make all 
-Building file: ../uart/uart.cpp
+Building file: ../Main.cpp
 Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"uart/uart.d" -MT"uart/uart.o" -o "uart/uart.o" "../uart/uart.cpp"
-../uart/uart.cpp: In function ‘void* uart_Rx_Thread(void*)’:
-../uart/uart.cpp:60:60: warning: format ‘%d’ expects a matching ‘int’ argument [-Wformat=]
-     printf("rx[%d] : %x, len : %d continue \n", rx2[0], len);
-                                                            ^
-../uart/uart.cpp: In member function ‘int UartComThread::Uart_Open(const char*, int)’:
-../uart/uart.cpp:270:29: warning: suggest parentheses around assignment used as truth value [-Wparentheses]
-    if(ctx->fd = Open_fd(dev))
-                             ^
-Finished building: ../uart/uart.cpp
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘int Main_ByPass_SocketToUart()’:
+../Main.cpp:583:106: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+    if((!m_pMsgHandler->m_iTagDirectDown) && (nDataDownTagCount/*m_pMsgHandler->m_nUartArrayDataDownCnt*/ == m_pMsgQueue->m_nMapParity) ) {
+                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:659:45: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+      if(!bDataAckFlag && (nDataDownTagCount > m_pMsgQueue->m_nMapParity) ) {
+                           ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:662:49: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+      else if(bDataAckFlag && (nDataDownTagCount > m_pMsgQueue->m_nMapParity) ) {
+                               ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:689:29: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+      if( (nDataDownTagCount <= m_pMsgQueue->m_nMapParity) && (m_pMsgQueue->setTagNumber.size()==0) ){
+           ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp: In function ‘int Main_TagSort_Arrange2(int*, int*)’:
+../Main.cpp:829:16: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+  for(int i=0; i<nDataDownTagCount; i++) {
+               ~^~~~~~~~~~~~~~~~~~
+../Main.cpp:841:8: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+   if(j ==nDataDownTagCount) {
+      ~~^~~~~~~~~~~~~~~~~~~
+../Main.cpp: In function ‘int Main_Check_TagArrayPassFail(int*, int*)’:
+../Main.cpp:911:13: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+  while(icnt <=nDataDownTagCount/*m_pMsgHandler->m_nUartArrayDataDownCnt*/) {
+        ~~~~~^~~~~~~~~~~~~~~~~~~
+Finished building: ../Main.cpp
  
-Building file: ../Socket/SocketHandler.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
-Finished building: ../Socket/SocketHandler.cpp
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
  
-Building file: ../Socket/SocketMsgQueue.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/SocketMsgQueue.d" -MT"Socket/SocketMsgQueue.o" -o "Socket/SocketMsgQueue.o" "../Socket/SocketMsgQueue.cpp"
-Finished building: ../Socket/SocketMsgQueue.cpp
- 
-Building file: ../Socket/socket.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
-Finished building: ../Socket/socket.cpp
- 
+13:29:14 **** Incremental Build of configuration Debug for project Demo ****
+make all 
 Building file: ../Main.cpp
 Invoking: Cross G++ Compiler
 arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
 Finished building: ../Main.cpp
  
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+13:44:34 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+13:44:44 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+make: 'all'을(를) 위해 할 일이 없습니다.
+13:55:30 **** Incremental Build of configuration Debug for project Demo ****
+make all 
 Building file: ../MsgHandler.cpp
 Invoking: Cross G++ Compiler
 arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgHandler.d" -MT"MsgHandler.o" -o "MsgHandler.o" "../MsgHandler.cpp"
+../MsgHandler.cpp: In member function ‘int MsgHandler::Send_BeaconData(BYTE)’:
+../MsgHandler.cpp:262:6: warning: unused variable ‘iTempTagNum’ [-Wunused-variable]
+  int iTempTagNum =0;
+      ^~~~~~~~~~~
 Finished building: ../MsgHandler.cpp
  
-Building file: ../MsgQueue.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgQueue.d" -MT"MsgQueue.o" -o "MsgQueue.o" "../MsgQueue.cpp"
-Finished building: ../MsgQueue.cpp
- 
 Building target: Demo
 Invoking: Cross G++ Linker
 arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
 Finished building target: Demo
  
-14:20:57 **** Incremental Build of configuration Debug for project Demo ****
-make all 
-Building file: ../Main.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
-../Main.cpp: In function ‘int Main_ByPass_UartToSocket()’:
-../Main.cpp:227:20: error: ‘class MsgHandler’ has no member named ‘setTagNumber’; did you mean ‘GetTagNumber’?
-     m_pMsgHandler->setTagNumber.insert(ByteToWord(m_pMsgQueue->m_u8SendData[MSG_SADDRONE], m_pMsgQueue->m_u8SendData[MSG_SADDRZERO] ));
-                    ^~~~~~~~~~~~
-make: *** [subdir.mk:26: Main.o] 오류 1
-"make all" terminated with exit code 2. Build might be incomplete.
-14:21:13 **** Incremental Build of configuration Debug for project Demo ****
-make all 
-Building file: ../Main.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
-Finished building: ../Main.cpp
- 
-Building file: ../MsgQueue.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgQueue.d" -MT"MsgQueue.o" -o "MsgQueue.o" "../MsgQueue.cpp"
-Finished building: ../MsgQueue.cpp
- 
-Building target: Demo
-Invoking: Cross G++ Linker
-arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
-Finished building target: Demo
- 
-14:35:53 **** Incremental Build of configuration Debug for project Demo ****
-make all 
-Building file: ../Main.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
-../Main.cpp:50:30: error: template argument 2 is invalid
- std::map<std::set<WORD>, <int>> mapTagDirectSet;
-                              ^~
-../Main.cpp:50:30: error: template argument 4 is invalid
-../Main.cpp: In function ‘int Main_ByPass_UartToSocket()’:
-../Main.cpp:234:21: error: request for member ‘insert’ in ‘mapTagDirectSet’, which is of non-class type ‘int’
-     mapTagDirectSet.insert(*iter, ENABLE);
-                     ^~~~~~
-make: *** [subdir.mk:26: Main.o] 오류 1
-"make all" terminated with exit code 2. Build might be incomplete.
-14:38:39 **** Incremental Build of configuration Debug for project Demo ****
-make all 
-Building file: ../Main.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
-../Main.cpp: In function ‘int Main_ByPass_UartToSocket()’:
-../Main.cpp:234:41: error: no matching function for call to ‘std::map<std::set<short unsigned int>, int>::insert(const short unsigned int&, int)’
-     mapTagDirectSet.insert(*iter, ENABLE);
-                                         ^
-In file included from /home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/map:61:0,
-                 from ../pch.h:15,
-                 from ../Main.cpp:8:
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:731:7: note: candidate: std::pair<typename std::_Rb_tree<_Key, std::pair<const _Key, _Tp>, std::_Select1st<std::pair<const _Key, _Tp> >, _Compare, typename __gnu_cxx::__alloc_traits<_Alloc>::rebind<std::pair<const _Key, _Tp> >::other>::iterator, bool> std::map<_Key, _Tp, _Compare, _Alloc>::insert(const value_type&) [with _Key = std::set<short unsigned int>; _Tp = int; _Compare = std::less<std::set<short unsigned int> >; _Alloc = std::allocator<std::pair<const std::set<short unsigned int>, int> >; typename std::_Rb_tree<_Key, std::pair<const _Key, _Tp>, std::_Select1st<std::pair<const _Key, _Tp> >, _Compare, typename __gnu_cxx::__alloc_traits<_Alloc>::rebind<std::pair<const _Key, _Tp> >::other>::iterator = std::_Rb_tree_iterator<std::pair<const std::set<short unsigned int>, int> >; std::map<_Key, _Tp, _Compare, _Alloc>::value_type = std::pair<const std::set<short unsigned int>, int>]
-       insert(const value_type& __x)
-       ^~~~~~
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:731:7: note:   candidate expects 1 argument, 2 provided
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:739:9: note: candidate: template<class _Pair, class> std::pair<typename std::_Rb_tree<_Key, std::pair<const _Key, _Tp>, std::_Select1st<std::pair<const _Key, _Tp> >, _Compare, typename __gnu_cxx::__alloc_traits<_Alloc>::rebind<std::pair<const _Key, _Tp> >::other>::iterator, bool> std::map<_Key, _Tp, _Compare, _Alloc>::insert(_Pair&&) [with _Pair = _Pair; <template-parameter-2-2> = <template-parameter-1-2>; _Key = std::set<short unsigned int>; _Tp = int; _Compare = std::less<std::set<short unsigned int> >; _Alloc = std::allocator<std::pair<const std::set<short unsigned int>, int> >]
-         insert(_Pair&& __x)
-         ^~~~~~
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:739:9: note:   template argument deduction/substitution failed:
-../Main.cpp:234:41: note:   candidate expects 1 argument, 2 provided
-     mapTagDirectSet.insert(*iter, ENABLE);
-                                         ^
-In file included from /home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/map:61:0,
-                 from ../pch.h:15,
-                 from ../Main.cpp:8:
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:752:7: note: candidate: void std::map<_Key, _Tp, _Compare, _Alloc>::insert(std::initializer_list<std::pair<const _Key, _Tp> >) [with _Key = std::set<short unsigned int>; _Tp = int; _Compare = std::less<std::set<short unsigned int> >; _Alloc = std::allocator<std::pair<const std::set<short unsigned int>, int> >]
-       insert(std::initializer_list<value_type> __list)
-       ^~~~~~
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:752:7: note:   candidate expects 1 argument, 2 provided
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:781:7: note: candidate: std::map<_Key, _Tp, _Compare, _Alloc>::iterator std::map<_Key, _Tp, _Compare, _Alloc>::insert(std::map<_Key, _Tp, _Compare, _Alloc>::const_iterator, const value_type&) [with _Key = std::set<short unsigned int>; _Tp = int; _Compare = std::less<std::set<short unsigned int> >; _Alloc = std::allocator<std::pair<const std::set<short unsigned int>, int> >; std::map<_Key, _Tp, _Compare, _Alloc>::iterator = std::_Rb_tree_iterator<std::pair<const std::set<short unsigned int>, int> >; std::map<_Key, _Tp, _Compare, _Alloc>::const_iterator = std::_Rb_tree_const_iterator<std::pair<const std::set<short unsigned int>, int> >; std::map<_Key, _Tp, _Compare, _Alloc>::value_type = std::pair<const std::set<short unsigned int>, int>]
-       insert(const_iterator __position, const value_type& __x)
-       ^~~~~~
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:781:7: note:   no known conversion for argument 1 from ‘const short unsigned int’ to ‘std::map<std::set<short unsigned int>, int>::const_iterator {aka std::_Rb_tree_const_iterator<std::pair<const std::set<short unsigned int>, int> >}’
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:792:9: note: candidate: template<class _Pair, class> std::map<_Key, _Tp, _Compare, _Alloc>::iterator std::map<_Key, _Tp, _Compare, _Alloc>::insert(std::map<_Key, _Tp, _Compare, _Alloc>::const_iterator, _Pair&&) [with _Pair = _Pair; <template-parameter-2-2> = <template-parameter-1-2>; _Key = std::set<short unsigned int>; _Tp = int; _Compare = std::less<std::set<short unsigned int> >; _Alloc = std::allocator<std::pair<const std::set<short unsigned int>, int> >]
-         insert(const_iterator __position, _Pair&& __x)
-         ^~~~~~
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:792:9: note:   template argument deduction/substitution failed:
-../Main.cpp:234:28: note:   cannot convert ‘iter.std::_Rb_tree_const_iterator<_Tp>::operator*<short unsigned int>()’ (type ‘const short unsigned int’) to type ‘std::map<std::set<short unsigned int>, int>::const_iterator {aka std::_Rb_tree_const_iterator<std::pair<const std::set<short unsigned int>, int> >}’
-     mapTagDirectSet.insert(*iter, ENABLE);
-                            ^~~~~
-In file included from /home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/map:61:0,
-                 from ../pch.h:15,
-                 from ../Main.cpp:8:
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:807:9: note: candidate: template<class _InputIterator> void std::map<_Key, _Tp, _Compare, _Alloc>::insert(_InputIterator, _InputIterator) [with _InputIterator = _InputIterator; _Key = std::set<short unsigned int>; _Tp = int; _Compare = std::less<std::set<short unsigned int> >; _Alloc = std::allocator<std::pair<const std::set<short unsigned int>, int> >]
-         insert(_InputIterator __first, _InputIterator __last)
-         ^~~~~~
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:807:9: note:   template argument deduction/substitution failed:
-../Main.cpp:234:41: note:   deduced conflicting types for parameter ‘_InputIterator’ (‘short unsigned int’ and ‘int’)
-     mapTagDirectSet.insert(*iter, ENABLE);
-                                         ^
-make: *** [subdir.mk:26: Main.o] 오류 1
-"make all" terminated with exit code 2. Build might be incomplete.
-14:39:04 **** Incremental Build of configuration Debug for project Demo ****
-make all 
-Building file: ../Main.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
-../Main.cpp: In function ‘int Main_ByPass_UartToSocket()’:
-../Main.cpp:234:36: error: no matching function for call to ‘std::map<std::set<short unsigned int>, int>::insert(const short unsigned int&, int)’
-     mapTagDirectSet.insert(*iter, 0);
-                                    ^
-In file included from /home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/map:61:0,
-                 from ../pch.h:15,
-                 from ../Main.cpp:8:
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:731:7: note: candidate: std::pair<typename std::_Rb_tree<_Key, std::pair<const _Key, _Tp>, std::_Select1st<std::pair<const _Key, _Tp> >, _Compare, typename __gnu_cxx::__alloc_traits<_Alloc>::rebind<std::pair<const _Key, _Tp> >::other>::iterator, bool> std::map<_Key, _Tp, _Compare, _Alloc>::insert(const value_type&) [with _Key = std::set<short unsigned int>; _Tp = int; _Compare = std::less<std::set<short unsigned int> >; _Alloc = std::allocator<std::pair<const std::set<short unsigned int>, int> >; typename std::_Rb_tree<_Key, std::pair<const _Key, _Tp>, std::_Select1st<std::pair<const _Key, _Tp> >, _Compare, typename __gnu_cxx::__alloc_traits<_Alloc>::rebind<std::pair<const _Key, _Tp> >::other>::iterator = std::_Rb_tree_iterator<std::pair<const std::set<short unsigned int>, int> >; std::map<_Key, _Tp, _Compare, _Alloc>::value_type = std::pair<const std::set<short unsigned int>, int>]
-       insert(const value_type& __x)
-       ^~~~~~
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:731:7: note:   candidate expects 1 argument, 2 provided
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:739:9: note: candidate: template<class _Pair, class> std::pair<typename std::_Rb_tree<_Key, std::pair<const _Key, _Tp>, std::_Select1st<std::pair<const _Key, _Tp> >, _Compare, typename __gnu_cxx::__alloc_traits<_Alloc>::rebind<std::pair<const _Key, _Tp> >::other>::iterator, bool> std::map<_Key, _Tp, _Compare, _Alloc>::insert(_Pair&&) [with _Pair = _Pair; <template-parameter-2-2> = <template-parameter-1-2>; _Key = std::set<short unsigned int>; _Tp = int; _Compare = std::less<std::set<short unsigned int> >; _Alloc = std::allocator<std::pair<const std::set<short unsigned int>, int> >]
-         insert(_Pair&& __x)
-         ^~~~~~
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:739:9: note:   template argument deduction/substitution failed:
-../Main.cpp:234:36: note:   candidate expects 1 argument, 2 provided
-     mapTagDirectSet.insert(*iter, 0);
-                                    ^
-In file included from /home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/map:61:0,
-                 from ../pch.h:15,
-                 from ../Main.cpp:8:
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:752:7: note: candidate: void std::map<_Key, _Tp, _Compare, _Alloc>::insert(std::initializer_list<std::pair<const _Key, _Tp> >) [with _Key = std::set<short unsigned int>; _Tp = int; _Compare = std::less<std::set<short unsigned int> >; _Alloc = std::allocator<std::pair<const std::set<short unsigned int>, int> >]
-       insert(std::initializer_list<value_type> __list)
-       ^~~~~~
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:752:7: note:   candidate expects 1 argument, 2 provided
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:781:7: note: candidate: std::map<_Key, _Tp, _Compare, _Alloc>::iterator std::map<_Key, _Tp, _Compare, _Alloc>::insert(std::map<_Key, _Tp, _Compare, _Alloc>::const_iterator, const value_type&) [with _Key = std::set<short unsigned int>; _Tp = int; _Compare = std::less<std::set<short unsigned int> >; _Alloc = std::allocator<std::pair<const std::set<short unsigned int>, int> >; std::map<_Key, _Tp, _Compare, _Alloc>::iterator = std::_Rb_tree_iterator<std::pair<const std::set<short unsigned int>, int> >; std::map<_Key, _Tp, _Compare, _Alloc>::const_iterator = std::_Rb_tree_const_iterator<std::pair<const std::set<short unsigned int>, int> >; std::map<_Key, _Tp, _Compare, _Alloc>::value_type = std::pair<const std::set<short unsigned int>, int>]
-       insert(const_iterator __position, const value_type& __x)
-       ^~~~~~
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:781:7: note:   no known conversion for argument 1 from ‘const short unsigned int’ to ‘std::map<std::set<short unsigned int>, int>::const_iterator {aka std::_Rb_tree_const_iterator<std::pair<const std::set<short unsigned int>, int> >}’
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:792:9: note: candidate: template<class _Pair, class> std::map<_Key, _Tp, _Compare, _Alloc>::iterator std::map<_Key, _Tp, _Compare, _Alloc>::insert(std::map<_Key, _Tp, _Compare, _Alloc>::const_iterator, _Pair&&) [with _Pair = _Pair; <template-parameter-2-2> = <template-parameter-1-2>; _Key = std::set<short unsigned int>; _Tp = int; _Compare = std::less<std::set<short unsigned int> >; _Alloc = std::allocator<std::pair<const std::set<short unsigned int>, int> >]
-         insert(const_iterator __position, _Pair&& __x)
-         ^~~~~~
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:792:9: note:   template argument deduction/substitution failed:
-../Main.cpp:234:28: note:   cannot convert ‘iter.std::_Rb_tree_const_iterator<_Tp>::operator*<short unsigned int>()’ (type ‘const short unsigned int’) to type ‘std::map<std::set<short unsigned int>, int>::const_iterator {aka std::_Rb_tree_const_iterator<std::pair<const std::set<short unsigned int>, int> >}’
-     mapTagDirectSet.insert(*iter, 0);
-                            ^~~~~
-In file included from /home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/map:61:0,
-                 from ../pch.h:15,
-                 from ../Main.cpp:8:
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:807:9: note: candidate: template<class _InputIterator> void std::map<_Key, _Tp, _Compare, _Alloc>::insert(_InputIterator, _InputIterator) [with _InputIterator = _InputIterator; _Key = std::set<short unsigned int>; _Tp = int; _Compare = std::less<std::set<short unsigned int> >; _Alloc = std::allocator<std::pair<const std::set<short unsigned int>, int> >]
-         insert(_InputIterator __first, _InputIterator __last)
-         ^~~~~~
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:807:9: note:   template argument deduction/substitution failed:
-../Main.cpp:234:36: note:   deduced conflicting types for parameter ‘_InputIterator’ (‘short unsigned int’ and ‘int’)
-     mapTagDirectSet.insert(*iter, 0);
-                                    ^
-make: *** [subdir.mk:26: Main.o] 오류 1
-"make all" terminated with exit code 2. Build might be incomplete.
-14:39:33 **** Incremental Build of configuration Debug for project Demo ****
-make all 
-Building file: ../Main.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
-../Main.cpp: In function ‘int Main_ByPass_UartToSocket()’:
-../Main.cpp:234:71: error: no matching function for call to ‘std::map<std::set<short unsigned int>, int>::insert(std::set<short unsigned int>::iterator, int)’
-     mapTagDirectSet.insert(m_pMsgQueue->setTagNumber.find(Tag), ENABLE);
-                                                                       ^
-In file included from /home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/map:61:0,
-                 from ../pch.h:15,
-                 from ../Main.cpp:8:
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:731:7: note: candidate: std::pair<typename std::_Rb_tree<_Key, std::pair<const _Key, _Tp>, std::_Select1st<std::pair<const _Key, _Tp> >, _Compare, typename __gnu_cxx::__alloc_traits<_Alloc>::rebind<std::pair<const _Key, _Tp> >::other>::iterator, bool> std::map<_Key, _Tp, _Compare, _Alloc>::insert(const value_type&) [with _Key = std::set<short unsigned int>; _Tp = int; _Compare = std::less<std::set<short unsigned int> >; _Alloc = std::allocator<std::pair<const std::set<short unsigned int>, int> >; typename std::_Rb_tree<_Key, std::pair<const _Key, _Tp>, std::_Select1st<std::pair<const _Key, _Tp> >, _Compare, typename __gnu_cxx::__alloc_traits<_Alloc>::rebind<std::pair<const _Key, _Tp> >::other>::iterator = std::_Rb_tree_iterator<std::pair<const std::set<short unsigned int>, int> >; std::map<_Key, _Tp, _Compare, _Alloc>::value_type = std::pair<const std::set<short unsigned int>, int>]
-       insert(const value_type& __x)
-       ^~~~~~
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:731:7: note:   candidate expects 1 argument, 2 provided
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:739:9: note: candidate: template<class _Pair, class> std::pair<typename std::_Rb_tree<_Key, std::pair<const _Key, _Tp>, std::_Select1st<std::pair<const _Key, _Tp> >, _Compare, typename __gnu_cxx::__alloc_traits<_Alloc>::rebind<std::pair<const _Key, _Tp> >::other>::iterator, bool> std::map<_Key, _Tp, _Compare, _Alloc>::insert(_Pair&&) [with _Pair = _Pair; <template-parameter-2-2> = <template-parameter-1-2>; _Key = std::set<short unsigned int>; _Tp = int; _Compare = std::less<std::set<short unsigned int> >; _Alloc = std::allocator<std::pair<const std::set<short unsigned int>, int> >]
-         insert(_Pair&& __x)
-         ^~~~~~
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:739:9: note:   template argument deduction/substitution failed:
-../Main.cpp:234:71: note:   candidate expects 1 argument, 2 provided
-     mapTagDirectSet.insert(m_pMsgQueue->setTagNumber.find(Tag), ENABLE);
-                                                                       ^
-In file included from /home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/map:61:0,
-                 from ../pch.h:15,
-                 from ../Main.cpp:8:
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:752:7: note: candidate: void std::map<_Key, _Tp, _Compare, _Alloc>::insert(std::initializer_list<std::pair<const _Key, _Tp> >) [with _Key = std::set<short unsigned int>; _Tp = int; _Compare = std::less<std::set<short unsigned int> >; _Alloc = std::allocator<std::pair<const std::set<short unsigned int>, int> >]
-       insert(std::initializer_list<value_type> __list)
-       ^~~~~~
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:752:7: note:   candidate expects 1 argument, 2 provided
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:781:7: note: candidate: std::map<_Key, _Tp, _Compare, _Alloc>::iterator std::map<_Key, _Tp, _Compare, _Alloc>::insert(std::map<_Key, _Tp, _Compare, _Alloc>::const_iterator, const value_type&) [with _Key = std::set<short unsigned int>; _Tp = int; _Compare = std::less<std::set<short unsigned int> >; _Alloc = std::allocator<std::pair<const std::set<short unsigned int>, int> >; std::map<_Key, _Tp, _Compare, _Alloc>::iterator = std::_Rb_tree_iterator<std::pair<const std::set<short unsigned int>, int> >; std::map<_Key, _Tp, _Compare, _Alloc>::const_iterator = std::_Rb_tree_const_iterator<std::pair<const std::set<short unsigned int>, int> >; std::map<_Key, _Tp, _Compare, _Alloc>::value_type = std::pair<const std::set<short unsigned int>, int>]
-       insert(const_iterator __position, const value_type& __x)
-       ^~~~~~
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:781:7: note:   no known conversion for argument 1 from ‘std::set<short unsigned int>::iterator {aka std::_Rb_tree_const_iterator<short unsigned int>}’ to ‘std::map<std::set<short unsigned int>, int>::const_iterator {aka std::_Rb_tree_const_iterator<std::pair<const std::set<short unsigned int>, int> >}’
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:792:9: note: candidate: template<class _Pair, class> std::map<_Key, _Tp, _Compare, _Alloc>::iterator std::map<_Key, _Tp, _Compare, _Alloc>::insert(std::map<_Key, _Tp, _Compare, _Alloc>::const_iterator, _Pair&&) [with _Pair = _Pair; <template-parameter-2-2> = <template-parameter-1-2>; _Key = std::set<short unsigned int>; _Tp = int; _Compare = std::less<std::set<short unsigned int> >; _Alloc = std::allocator<std::pair<const std::set<short unsigned int>, int> >]
-         insert(const_iterator __position, _Pair&& __x)
-         ^~~~~~
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:792:9: note:   template argument deduction/substitution failed:
-../Main.cpp:234:58: note:   cannot convert ‘m_pMsgQueue->MsgQueue::setTagNumber.std::set<_Key, _Compare, _Alloc>::find<short unsigned int, std::less<short unsigned int>, std::allocator<short unsigned int> >(Tag)’ (type ‘std::set<short unsigned int>::iterator {aka std::_Rb_tree_const_iterator<short unsigned int>}’) to type ‘std::map<std::set<short unsigned int>, int>::const_iterator {aka std::_Rb_tree_const_iterator<std::pair<const std::set<short unsigned int>, int> >}’
-     mapTagDirectSet.insert(m_pMsgQueue->setTagNumber.find(Tag), ENABLE);
-                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~
-In file included from /home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/map:61:0,
-                 from ../pch.h:15,
-                 from ../Main.cpp:8:
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:807:9: note: candidate: template<class _InputIterator> void std::map<_Key, _Tp, _Compare, _Alloc>::insert(_InputIterator, _InputIterator) [with _InputIterator = _InputIterator; _Key = std::set<short unsigned int>; _Tp = int; _Compare = std::less<std::set<short unsigned int> >; _Alloc = std::allocator<std::pair<const std::set<short unsigned int>, int> >]
-         insert(_InputIterator __first, _InputIterator __last)
-         ^~~~~~
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:807:9: note:   template argument deduction/substitution failed:
-../Main.cpp:234:71: note:   deduced conflicting types for parameter ‘_InputIterator’ (‘std::_Rb_tree_const_iterator<short unsigned int>’ and ‘int’)
-     mapTagDirectSet.insert(m_pMsgQueue->setTagNumber.find(Tag), ENABLE);
-                                                                       ^
-make: *** [subdir.mk:26: Main.o] 오류 1
-"make all" terminated with exit code 2. Build might be incomplete.
-14:53:44 **** Incremental Build of configuration Debug for project Demo ****
-make all 
-Building file: ../Main.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
-../Main.cpp: In function ‘int Main_ByPass_UartToSocket()’:
-../Main.cpp:236:73: error: no matching function for call to ‘std::map<std::set<short unsigned int>, int>::insert(std::set<short unsigned int>::iterator, int)’
-       mapTagDirectSet.insert(m_pMsgQueue->setTagNumber.find(Tag), ENABLE);
-                                                                         ^
-In file included from /home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/map:61:0,
-                 from ../pch.h:15,
-                 from ../Main.cpp:8:
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:731:7: note: candidate: std::pair<typename std::_Rb_tree<_Key, std::pair<const _Key, _Tp>, std::_Select1st<std::pair<const _Key, _Tp> >, _Compare, typename __gnu_cxx::__alloc_traits<_Alloc>::rebind<std::pair<const _Key, _Tp> >::other>::iterator, bool> std::map<_Key, _Tp, _Compare, _Alloc>::insert(const value_type&) [with _Key = std::set<short unsigned int>; _Tp = int; _Compare = std::less<std::set<short unsigned int> >; _Alloc = std::allocator<std::pair<const std::set<short unsigned int>, int> >; typename std::_Rb_tree<_Key, std::pair<const _Key, _Tp>, std::_Select1st<std::pair<const _Key, _Tp> >, _Compare, typename __gnu_cxx::__alloc_traits<_Alloc>::rebind<std::pair<const _Key, _Tp> >::other>::iterator = std::_Rb_tree_iterator<std::pair<const std::set<short unsigned int>, int> >; std::map<_Key, _Tp, _Compare, _Alloc>::value_type = std::pair<const std::set<short unsigned int>, int>]
-       insert(const value_type& __x)
-       ^~~~~~
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:731:7: note:   candidate expects 1 argument, 2 provided
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:739:9: note: candidate: template<class _Pair, class> std::pair<typename std::_Rb_tree<_Key, std::pair<const _Key, _Tp>, std::_Select1st<std::pair<const _Key, _Tp> >, _Compare, typename __gnu_cxx::__alloc_traits<_Alloc>::rebind<std::pair<const _Key, _Tp> >::other>::iterator, bool> std::map<_Key, _Tp, _Compare, _Alloc>::insert(_Pair&&) [with _Pair = _Pair; <template-parameter-2-2> = <template-parameter-1-2>; _Key = std::set<short unsigned int>; _Tp = int; _Compare = std::less<std::set<short unsigned int> >; _Alloc = std::allocator<std::pair<const std::set<short unsigned int>, int> >]
-         insert(_Pair&& __x)
-         ^~~~~~
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:739:9: note:   template argument deduction/substitution failed:
-../Main.cpp:236:73: note:   candidate expects 1 argument, 2 provided
-       mapTagDirectSet.insert(m_pMsgQueue->setTagNumber.find(Tag), ENABLE);
-                                                                         ^
-In file included from /home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/map:61:0,
-                 from ../pch.h:15,
-                 from ../Main.cpp:8:
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:752:7: note: candidate: void std::map<_Key, _Tp, _Compare, _Alloc>::insert(std::initializer_list<std::pair<const _Key, _Tp> >) [with _Key = std::set<short unsigned int>; _Tp = int; _Compare = std::less<std::set<short unsigned int> >; _Alloc = std::allocator<std::pair<const std::set<short unsigned int>, int> >]
-       insert(std::initializer_list<value_type> __list)
-       ^~~~~~
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:752:7: note:   candidate expects 1 argument, 2 provided
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:781:7: note: candidate: std::map<_Key, _Tp, _Compare, _Alloc>::iterator std::map<_Key, _Tp, _Compare, _Alloc>::insert(std::map<_Key, _Tp, _Compare, _Alloc>::const_iterator, const value_type&) [with _Key = std::set<short unsigned int>; _Tp = int; _Compare = std::less<std::set<short unsigned int> >; _Alloc = std::allocator<std::pair<const std::set<short unsigned int>, int> >; std::map<_Key, _Tp, _Compare, _Alloc>::iterator = std::_Rb_tree_iterator<std::pair<const std::set<short unsigned int>, int> >; std::map<_Key, _Tp, _Compare, _Alloc>::const_iterator = std::_Rb_tree_const_iterator<std::pair<const std::set<short unsigned int>, int> >; std::map<_Key, _Tp, _Compare, _Alloc>::value_type = std::pair<const std::set<short unsigned int>, int>]
-       insert(const_iterator __position, const value_type& __x)
-       ^~~~~~
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:781:7: note:   no known conversion for argument 1 from ‘std::set<short unsigned int>::iterator {aka std::_Rb_tree_const_iterator<short unsigned int>}’ to ‘std::map<std::set<short unsigned int>, int>::const_iterator {aka std::_Rb_tree_const_iterator<std::pair<const std::set<short unsigned int>, int> >}’
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:792:9: note: candidate: template<class _Pair, class> std::map<_Key, _Tp, _Compare, _Alloc>::iterator std::map<_Key, _Tp, _Compare, _Alloc>::insert(std::map<_Key, _Tp, _Compare, _Alloc>::const_iterator, _Pair&&) [with _Pair = _Pair; <template-parameter-2-2> = <template-parameter-1-2>; _Key = std::set<short unsigned int>; _Tp = int; _Compare = std::less<std::set<short unsigned int> >; _Alloc = std::allocator<std::pair<const std::set<short unsigned int>, int> >]
-         insert(const_iterator __position, _Pair&& __x)
-         ^~~~~~
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:792:9: note:   template argument deduction/substitution failed:
-../Main.cpp:236:60: note:   cannot convert ‘m_pMsgQueue->MsgQueue::setTagNumber.std::set<_Key, _Compare, _Alloc>::find<short unsigned int, std::less<short unsigned int>, std::allocator<short unsigned int> >(Tag)’ (type ‘std::set<short unsigned int>::iterator {aka std::_Rb_tree_const_iterator<short unsigned int>}’) to type ‘std::map<std::set<short unsigned int>, int>::const_iterator {aka std::_Rb_tree_const_iterator<std::pair<const std::set<short unsigned int>, int> >}’
-       mapTagDirectSet.insert(m_pMsgQueue->setTagNumber.find(Tag), ENABLE);
-                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~
-In file included from /home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/map:61:0,
-                 from ../pch.h:15,
-                 from ../Main.cpp:8:
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:807:9: note: candidate: template<class _InputIterator> void std::map<_Key, _Tp, _Compare, _Alloc>::insert(_InputIterator, _InputIterator) [with _InputIterator = _InputIterator; _Key = std::set<short unsigned int>; _Tp = int; _Compare = std::less<std::set<short unsigned int> >; _Alloc = std::allocator<std::pair<const std::set<short unsigned int>, int> >]
-         insert(_InputIterator __first, _InputIterator __last)
-         ^~~~~~
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:807:9: note:   template argument deduction/substitution failed:
-../Main.cpp:236:73: note:   deduced conflicting types for parameter ‘_InputIterator’ (‘std::_Rb_tree_const_iterator<short unsigned int>’ and ‘int’)
-       mapTagDirectSet.insert(m_pMsgQueue->setTagNumber.find(Tag), ENABLE);
-                                                                         ^
-make: *** [subdir.mk:26: Main.o] 오류 1
-"make all" terminated with exit code 2. Build might be incomplete.
-14:55:14 **** Incremental Build of configuration Debug for project Demo ****
-make all 
-Building file: ../Main.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
-../Main.cpp: In function ‘int Main_ByPass_UartToSocket()’:
-../Main.cpp:236:41: error: no matching function for call to ‘std::map<short unsigned int, int>::insert(WORD&, int)’
-       mapTagDirectSet.insert(Tag, ENABLE);
-                                         ^
-In file included from /home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/map:61:0,
-                 from ../pch.h:15,
-                 from ../Main.cpp:8:
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:731:7: note: candidate: std::pair<typename std::_Rb_tree<_Key, std::pair<const _Key, _Tp>, std::_Select1st<std::pair<const _Key, _Tp> >, _Compare, typename __gnu_cxx::__alloc_traits<_Alloc>::rebind<std::pair<const _Key, _Tp> >::other>::iterator, bool> std::map<_Key, _Tp, _Compare, _Alloc>::insert(const value_type&) [with _Key = short unsigned int; _Tp = int; _Compare = std::less<short unsigned int>; _Alloc = std::allocator<std::pair<const short unsigned int, int> >; typename std::_Rb_tree<_Key, std::pair<const _Key, _Tp>, std::_Select1st<std::pair<const _Key, _Tp> >, _Compare, typename __gnu_cxx::__alloc_traits<_Alloc>::rebind<std::pair<const _Key, _Tp> >::other>::iterator = std::_Rb_tree_iterator<std::pair<const short unsigned int, int> >; std::map<_Key, _Tp, _Compare, _Alloc>::value_type = std::pair<const short unsigned int, int>]
-       insert(const value_type& __x)
-       ^~~~~~
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:731:7: note:   candidate expects 1 argument, 2 provided
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:739:9: note: candidate: template<class _Pair, class> std::pair<typename std::_Rb_tree<_Key, std::pair<const _Key, _Tp>, std::_Select1st<std::pair<const _Key, _Tp> >, _Compare, typename __gnu_cxx::__alloc_traits<_Alloc>::rebind<std::pair<const _Key, _Tp> >::other>::iterator, bool> std::map<_Key, _Tp, _Compare, _Alloc>::insert(_Pair&&) [with _Pair = _Pair; <template-parameter-2-2> = <template-parameter-1-2>; _Key = short unsigned int; _Tp = int; _Compare = std::less<short unsigned int>; _Alloc = std::allocator<std::pair<const short unsigned int, int> >]
-         insert(_Pair&& __x)
-         ^~~~~~
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:739:9: note:   template argument deduction/substitution failed:
-../Main.cpp:236:41: note:   candidate expects 1 argument, 2 provided
-       mapTagDirectSet.insert(Tag, ENABLE);
-                                         ^
-In file included from /home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/map:61:0,
-                 from ../pch.h:15,
-                 from ../Main.cpp:8:
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:752:7: note: candidate: void std::map<_Key, _Tp, _Compare, _Alloc>::insert(std::initializer_list<std::pair<const _Key, _Tp> >) [with _Key = short unsigned int; _Tp = int; _Compare = std::less<short unsigned int>; _Alloc = std::allocator<std::pair<const short unsigned int, int> >]
-       insert(std::initializer_list<value_type> __list)
-       ^~~~~~
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:752:7: note:   candidate expects 1 argument, 2 provided
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:781:7: note: candidate: std::map<_Key, _Tp, _Compare, _Alloc>::iterator std::map<_Key, _Tp, _Compare, _Alloc>::insert(std::map<_Key, _Tp, _Compare, _Alloc>::const_iterator, const value_type&) [with _Key = short unsigned int; _Tp = int; _Compare = std::less<short unsigned int>; _Alloc = std::allocator<std::pair<const short unsigned int, int> >; std::map<_Key, _Tp, _Compare, _Alloc>::iterator = std::_Rb_tree_iterator<std::pair<const short unsigned int, int> >; std::map<_Key, _Tp, _Compare, _Alloc>::const_iterator = std::_Rb_tree_const_iterator<std::pair<const short unsigned int, int> >; std::map<_Key, _Tp, _Compare, _Alloc>::value_type = std::pair<const short unsigned int, int>]
-       insert(const_iterator __position, const value_type& __x)
-       ^~~~~~
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:781:7: note:   no known conversion for argument 1 from ‘WORD {aka short unsigned int}’ to ‘std::map<short unsigned int, int>::const_iterator {aka std::_Rb_tree_const_iterator<std::pair<const short unsigned int, int> >}’
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:792:9: note: candidate: template<class _Pair, class> std::map<_Key, _Tp, _Compare, _Alloc>::iterator std::map<_Key, _Tp, _Compare, _Alloc>::insert(std::map<_Key, _Tp, _Compare, _Alloc>::const_iterator, _Pair&&) [with _Pair = _Pair; <template-parameter-2-2> = <template-parameter-1-2>; _Key = short unsigned int; _Tp = int; _Compare = std::less<short unsigned int>; _Alloc = std::allocator<std::pair<const short unsigned int, int> >]
-         insert(const_iterator __position, _Pair&& __x)
-         ^~~~~~
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:792:9: note:   template argument deduction/substitution failed:
-../Main.cpp:236:41: note:   cannot convert ‘Tag’ (type ‘WORD {aka short unsigned int}’) to type ‘std::map<short unsigned int, int>::const_iterator {aka std::_Rb_tree_const_iterator<std::pair<const short unsigned int, int> >}’
-       mapTagDirectSet.insert(Tag, ENABLE);
-                                         ^
-In file included from /home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/map:61:0,
-                 from ../pch.h:15,
-                 from ../Main.cpp:8:
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:807:9: note: candidate: template<class _InputIterator> void std::map<_Key, _Tp, _Compare, _Alloc>::insert(_InputIterator, _InputIterator) [with _InputIterator = _InputIterator; _Key = short unsigned int; _Tp = int; _Compare = std::less<short unsigned int>; _Alloc = std::allocator<std::pair<const short unsigned int, int> >]
-         insert(_InputIterator __first, _InputIterator __last)
-         ^~~~~~
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:807:9: note:   template argument deduction/substitution failed:
-../Main.cpp:236:41: note:   deduced conflicting types for parameter ‘_InputIterator’ (‘short unsigned int’ and ‘int’)
-       mapTagDirectSet.insert(Tag, ENABLE);
-                                         ^
-make: *** [subdir.mk:26: Main.o] 오류 1
-"make all" terminated with exit code 2. Build might be incomplete.
-14:55:42 **** Incremental Build of configuration Debug for project Demo ****
-make all 
-Building file: ../Main.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
-../Main.cpp: In function ‘int Main_ByPass_UartToSocket()’:
-../Main.cpp:236:36: error: no matching function for call to ‘std::map<short unsigned int, int>::insert(WORD&, int)’
-       mapTagDirectSet.insert(Tag, 0);
-                                    ^
-In file included from /home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/map:61:0,
-                 from ../pch.h:15,
-                 from ../Main.cpp:8:
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:731:7: note: candidate: std::pair<typename std::_Rb_tree<_Key, std::pair<const _Key, _Tp>, std::_Select1st<std::pair<const _Key, _Tp> >, _Compare, typename __gnu_cxx::__alloc_traits<_Alloc>::rebind<std::pair<const _Key, _Tp> >::other>::iterator, bool> std::map<_Key, _Tp, _Compare, _Alloc>::insert(const value_type&) [with _Key = short unsigned int; _Tp = int; _Compare = std::less<short unsigned int>; _Alloc = std::allocator<std::pair<const short unsigned int, int> >; typename std::_Rb_tree<_Key, std::pair<const _Key, _Tp>, std::_Select1st<std::pair<const _Key, _Tp> >, _Compare, typename __gnu_cxx::__alloc_traits<_Alloc>::rebind<std::pair<const _Key, _Tp> >::other>::iterator = std::_Rb_tree_iterator<std::pair<const short unsigned int, int> >; std::map<_Key, _Tp, _Compare, _Alloc>::value_type = std::pair<const short unsigned int, int>]
-       insert(const value_type& __x)
-       ^~~~~~
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:731:7: note:   candidate expects 1 argument, 2 provided
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:739:9: note: candidate: template<class _Pair, class> std::pair<typename std::_Rb_tree<_Key, std::pair<const _Key, _Tp>, std::_Select1st<std::pair<const _Key, _Tp> >, _Compare, typename __gnu_cxx::__alloc_traits<_Alloc>::rebind<std::pair<const _Key, _Tp> >::other>::iterator, bool> std::map<_Key, _Tp, _Compare, _Alloc>::insert(_Pair&&) [with _Pair = _Pair; <template-parameter-2-2> = <template-parameter-1-2>; _Key = short unsigned int; _Tp = int; _Compare = std::less<short unsigned int>; _Alloc = std::allocator<std::pair<const short unsigned int, int> >]
-         insert(_Pair&& __x)
-         ^~~~~~
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:739:9: note:   template argument deduction/substitution failed:
-../Main.cpp:236:36: note:   candidate expects 1 argument, 2 provided
-       mapTagDirectSet.insert(Tag, 0);
-                                    ^
-In file included from /home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/map:61:0,
-                 from ../pch.h:15,
-                 from ../Main.cpp:8:
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:752:7: note: candidate: void std::map<_Key, _Tp, _Compare, _Alloc>::insert(std::initializer_list<std::pair<const _Key, _Tp> >) [with _Key = short unsigned int; _Tp = int; _Compare = std::less<short unsigned int>; _Alloc = std::allocator<std::pair<const short unsigned int, int> >]
-       insert(std::initializer_list<value_type> __list)
-       ^~~~~~
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:752:7: note:   candidate expects 1 argument, 2 provided
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:781:7: note: candidate: std::map<_Key, _Tp, _Compare, _Alloc>::iterator std::map<_Key, _Tp, _Compare, _Alloc>::insert(std::map<_Key, _Tp, _Compare, _Alloc>::const_iterator, const value_type&) [with _Key = short unsigned int; _Tp = int; _Compare = std::less<short unsigned int>; _Alloc = std::allocator<std::pair<const short unsigned int, int> >; std::map<_Key, _Tp, _Compare, _Alloc>::iterator = std::_Rb_tree_iterator<std::pair<const short unsigned int, int> >; std::map<_Key, _Tp, _Compare, _Alloc>::const_iterator = std::_Rb_tree_const_iterator<std::pair<const short unsigned int, int> >; std::map<_Key, _Tp, _Compare, _Alloc>::value_type = std::pair<const short unsigned int, int>]
-       insert(const_iterator __position, const value_type& __x)
-       ^~~~~~
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:781:7: note:   no known conversion for argument 1 from ‘WORD {aka short unsigned int}’ to ‘std::map<short unsigned int, int>::const_iterator {aka std::_Rb_tree_const_iterator<std::pair<const short unsigned int, int> >}’
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:792:9: note: candidate: template<class _Pair, class> std::map<_Key, _Tp, _Compare, _Alloc>::iterator std::map<_Key, _Tp, _Compare, _Alloc>::insert(std::map<_Key, _Tp, _Compare, _Alloc>::const_iterator, _Pair&&) [with _Pair = _Pair; <template-parameter-2-2> = <template-parameter-1-2>; _Key = short unsigned int; _Tp = int; _Compare = std::less<short unsigned int>; _Alloc = std::allocator<std::pair<const short unsigned int, int> >]
-         insert(const_iterator __position, _Pair&& __x)
-         ^~~~~~
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:792:9: note:   template argument deduction/substitution failed:
-../Main.cpp:236:36: note:   cannot convert ‘Tag’ (type ‘WORD {aka short unsigned int}’) to type ‘std::map<short unsigned int, int>::const_iterator {aka std::_Rb_tree_const_iterator<std::pair<const short unsigned int, int> >}’
-       mapTagDirectSet.insert(Tag, 0);
-                                    ^
-In file included from /home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/map:61:0,
-                 from ../pch.h:15,
-                 from ../Main.cpp:8:
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:807:9: note: candidate: template<class _InputIterator> void std::map<_Key, _Tp, _Compare, _Alloc>::insert(_InputIterator, _InputIterator) [with _InputIterator = _InputIterator; _Key = short unsigned int; _Tp = int; _Compare = std::less<short unsigned int>; _Alloc = std::allocator<std::pair<const short unsigned int, int> >]
-         insert(_InputIterator __first, _InputIterator __last)
-         ^~~~~~
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/6.5.0/bits/stl_map.h:807:9: note:   template argument deduction/substitution failed:
-../Main.cpp:236:36: note:   deduced conflicting types for parameter ‘_InputIterator’ (‘short unsigned int’ and ‘int’)
-       mapTagDirectSet.insert(Tag, 0);
-                                    ^
-make: *** [subdir.mk:26: Main.o] 오류 1
-"make all" terminated with exit code 2. Build might be incomplete.
-14:56:48 **** Incremental Build of configuration Debug for project Demo ****
+14:06:21 **** Incremental Build of configuration Debug for project Demo ****
 make all 
 Building file: ../Main.cpp
 Invoking: Cross G++ Compiler
@@ -602,107 +165,23 @@ Invoking: Cross G++ Linker
 arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
 Finished building target: Demo
  
-14:57:10 **** Incremental Build of configuration Debug for project Demo ****
+14:09:56 **** Incremental Build of configuration Debug for project Demo ****
 make all 
-Building file: ../Main.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
-Finished building: ../Main.cpp
- 
-Building target: Demo
-Invoking: Cross G++ Linker
-arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
-Finished building target: Demo
- 
-15:04:49 **** Incremental Build of configuration Debug for project Demo ****
-make all 
-Building file: ../Main.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
-Finished building: ../Main.cpp
- 
-Building target: Demo
-Invoking: Cross G++ Linker
-arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
-Finished building target: Demo
- 
-15:37:50 **** Incremental Build of configuration Debug for project Demo ****
-make all 
-Building file: ../uart/uart.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"uart/uart.d" -MT"uart/uart.o" -o "uart/uart.o" "../uart/uart.cpp"
-../uart/uart.cpp: In function ‘void* uart_Rx_Thread(void*)’:
-../uart/uart.cpp:60:60: warning: format ‘%d’ expects a matching ‘int’ argument [-Wformat=]
-     printf("rx[%d] : %x, len : %d continue \n", rx2[0], len);
-                                                            ^
-../uart/uart.cpp: In member function ‘int UartComThread::Uart_Open(const char*, int)’:
-../uart/uart.cpp:270:29: warning: suggest parentheses around assignment used as truth value [-Wparentheses]
-    if(ctx->fd = Open_fd(dev))
-                             ^
-Finished building: ../uart/uart.cpp
- 
-Building file: ../Socket/SocketHandler.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
-Finished building: ../Socket/SocketHandler.cpp
- 
->>>>>>> Stashed changes
-Building file: ../Socket/socket.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
-Finished building: ../Socket/socket.cpp
- 
-<<<<<<< Updated upstream
-=======
-Building file: ../Main.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
-Finished building: ../Main.cpp
- 
 Building file: ../MsgHandler.cpp
 Invoking: Cross G++ Compiler
 arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgHandler.d" -MT"MsgHandler.o" -o "MsgHandler.o" "../MsgHandler.cpp"
+../MsgHandler.cpp: In member function ‘int MsgHandler::Send_BeaconData(BYTE)’:
+../MsgHandler.cpp:262:6: warning: unused variable ‘iTempTagNum’ [-Wunused-variable]
+  int iTempTagNum =0;
+      ^~~~~~~~~~~
 Finished building: ../MsgHandler.cpp
  
-Building file: ../MsgQueue.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgQueue.d" -MT"MsgQueue.o" -o "MsgQueue.o" "../MsgQueue.cpp"
-Finished building: ../MsgQueue.cpp
- 
 Building target: Demo
 Invoking: Cross G++ Linker
 arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
 Finished building target: Demo
  
-15:38:30 **** Incremental Build of configuration Debug for project Demo ****
-make all 
-Building file: ../Main.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
-Finished building: ../Main.cpp
- 
-Building target: Demo
-Invoking: Cross G++ Linker
-arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
-Finished building target: Demo
- 
-17:26:34 **** Incremental Build of configuration Debug for project Demo ****
-make all 
-Building file: ../Main.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
-../Main.cpp: In function ‘int Main_ByPass_UartToSocket()’:
-../Main.cpp:218:53: error: invalid conversion from ‘WORD {aka short unsigned int}’ to ‘void*’ [-fpermissive]
-    memset(nDirectDownTagNumber, 0, sizeof(WORD)*1024);
-                                                     ^
-In file included from ../pch.h:20:0,
-                 from ../Main.cpp:8:
-/home/gw/home/gw/work/Am33x_debian/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/libc/usr/include/string.h:62:14: note:   initializing argument 1 of ‘void* memset(void*, int, size_t)’
- extern void *memset (void *__s, int __c, size_t __n) __THROW __nonnull ((1));
-              ^~~~~~
-make: *** [subdir.mk:26: Main.o] 오류 1
-"make all" terminated with exit code 2. Build might be incomplete.
-17:27:14 **** Incremental Build of configuration Debug for project Demo ****
+14:21:48 **** Incremental Build of configuration Debug for project Demo ****
 make all 
 Building file: ../Main.cpp
 Invoking: Cross G++ Compiler
@@ -712,72 +191,18 @@ Finished building: ../Main.cpp
 Building file: ../MsgHandler.cpp
 Invoking: Cross G++ Compiler
 arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgHandler.d" -MT"MsgHandler.o" -o "MsgHandler.o" "../MsgHandler.cpp"
+../MsgHandler.cpp: In member function ‘int MsgHandler::Send_BeaconData(BYTE)’:
+../MsgHandler.cpp:262:6: warning: unused variable ‘iTempTagNum’ [-Wunused-variable]
+  int iTempTagNum =0;
+      ^~~~~~~~~~~
 Finished building: ../MsgHandler.cpp
- 
->>>>>>> Stashed changes
-Building target: Demo
-Invoking: Cross G++ Linker
-arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
-Finished building target: Demo
- 
-<<<<<<< Updated upstream
-13:09:44 **** Incremental Build of configuration Debug for project Demo ****
-make all 
-=======
-17:33:31 **** Incremental Build of configuration Debug for project Demo ****
-make all 
-Building file: ../uart/uart.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"uart/uart.d" -MT"uart/uart.o" -o "uart/uart.o" "../uart/uart.cpp"
-../uart/uart.cpp: In function ‘void* uart_Rx_Thread(void*)’:
-../uart/uart.cpp:60:60: warning: format ‘%d’ expects a matching ‘int’ argument [-Wformat=]
-     printf("rx[%d] : %x, len : %d continue \n", rx2[0], len);
-                                                            ^
-../uart/uart.cpp: In member function ‘int UartComThread::Uart_Open(const char*, int)’:
-../uart/uart.cpp:270:29: warning: suggest parentheses around assignment used as truth value [-Wparentheses]
-    if(ctx->fd = Open_fd(dev))
-                             ^
-Finished building: ../uart/uart.cpp
- 
->>>>>>> Stashed changes
-Building file: ../Socket/SocketHandler.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
-Finished building: ../Socket/SocketHandler.cpp
- 
-<<<<<<< Updated upstream
-=======
-Building file: ../Socket/SocketMsgQueue.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/SocketMsgQueue.d" -MT"Socket/SocketMsgQueue.o" -o "Socket/SocketMsgQueue.o" "../Socket/SocketMsgQueue.cpp"
-Finished building: ../Socket/SocketMsgQueue.cpp
- 
-Building file: ../Socket/socket.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
-Finished building: ../Socket/socket.cpp
- 
-Building file: ../Main.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
-Finished building: ../Main.cpp
- 
-Building file: ../MsgHandler.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgHandler.d" -MT"MsgHandler.o" -o "MsgHandler.o" "../MsgHandler.cpp"
-Finished building: ../MsgHandler.cpp
- 
-Building file: ../MsgQueue.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgQueue.d" -MT"MsgQueue.o" -o "MsgQueue.o" "../MsgQueue.cpp"
-Finished building: ../MsgQueue.cpp
  
 Building target: Demo
 Invoking: Cross G++ Linker
 arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
 Finished building target: Demo
  
-16:02:22 **** Incremental Build of configuration Debug for project Demo ****
+14:38:57 **** Incremental Build of configuration Debug for project Demo ****
 make all 
 Building file: ../Main.cpp
 Invoking: Cross G++ Compiler
@@ -789,7 +214,47 @@ Invoking: Cross G++ Linker
 arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
 Finished building target: Demo
  
-17:03:26 **** Incremental Build of configuration Debug for project Demo ****
+14:41:00 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+14:59:08 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘int Main_ByPass_SocketToUart()’:
+../Main.cpp:416:45: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+   if(m_pMsgHandler->m_nUartArrayDataDownCnt > m_pMsgQueue->setTagNumber.size())
+      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+14:59:53 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+16:23:07 **** Incremental Build of configuration Debug for project Demo ****
 make all 
 Building file: ../Main.cpp
 Invoking: Cross G++ Compiler
@@ -799,175 +264,18 @@ Finished building: ../Main.cpp
 Building file: ../MsgHandler.cpp
 Invoking: Cross G++ Compiler
 arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgHandler.d" -MT"MsgHandler.o" -o "MsgHandler.o" "../MsgHandler.cpp"
+../MsgHandler.cpp: In member function ‘int MsgHandler::Send_BeaconData(BYTE)’:
+../MsgHandler.cpp:262:6: warning: unused variable ‘iTempTagNum’ [-Wunused-variable]
+  int iTempTagNum =0;
+      ^~~~~~~~~~~
 Finished building: ../MsgHandler.cpp
- 
->>>>>>> Stashed changes
-Building target: Demo
-Invoking: Cross G++ Linker
-arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
-Finished building target: Demo
- 
-23:07:38 **** Incremental Build of configuration Debug for project Demo ****
-make all 
-Building file: ../Main.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
-../Main.cpp: In function ‘int Main_ByPass_SocketToUart()’:
-../Main.cpp:518:5: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
-     if(!Main_TagAck_Arrange())
-     ^~
-../Main.cpp:521:6: note: ...this statement, but the latter is misleadingly indented as if it is guarded by the ‘if’
-      if(m_pMsgHandler->m_iTagDirectDownCnt%4 == 0) {
-      ^~
-../Main.cpp:607:7: error: break statement not within loop or switch
-       break;
-       ^~~~~
-../Main.cpp:630:4: error: break statement not within loop or switch
-    break;
-    ^~~~~
-../Main.cpp: At global scope:
-../Main.cpp:634:2: error: expected unqualified-id before ‘return’
-  return 1;
-  ^~~~~~
-../Main.cpp:635:1: error: expected declaration before ‘}’ token
- }
- ^
-../Main.cpp: In function ‘int Main_ByPass_SocketToUart()’:
-../Main.cpp:632:2: warning: control reaches end of non-void function [-Wreturn-type]
-  }
-  ^
-make: *** [subdir.mk:26: Main.o] 오류 1
-"make all" terminated with exit code 2. Build might be incomplete.
-23:09:39 **** Incremental Build of configuration Debug for project Demo ****
-make all 
-Building file: ../Main.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
-../Main.cpp: In function ‘int Main_ByPass_SocketToUart()’:
-../Main.cpp:518:5: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
-     if(!Main_TagAck_Arrange())
-     ^~
-../Main.cpp:521:6: note: ...this statement, but the latter is misleadingly indented as if it is guarded by the ‘if’
-      if(m_pMsgHandler->m_iTagDirectDownCnt%4 == 0) {
-      ^~
-../Main.cpp:628:4: error: break statement not within loop or switch
-    break;
-    ^~~~~
-../Main.cpp: At global scope:
-../Main.cpp:632:2: error: expected unqualified-id before ‘return’
-  return 1;
-  ^~~~~~
-../Main.cpp:633:1: error: expected declaration before ‘}’ token
- }
- ^
-../Main.cpp: In function ‘int Main_ByPass_SocketToUart()’:
-../Main.cpp:630:2: warning: control reaches end of non-void function [-Wreturn-type]
-  }
-  ^
-make: *** [subdir.mk:26: Main.o] 오류 1
-"make all" terminated with exit code 2. Build might be incomplete.
-23:16:04 **** Incremental Build of configuration Debug for project Demo ****
-make all 
-Building file: ../Main.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
-../Main.cpp: In function ‘int Main_ByPass_SocketToUart()’:
-../Main.cpp:518:5: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
-     if(!Main_TagAck_Arrange())
-     ^~
-../Main.cpp:521:6: note: ...this statement, but the latter is misleadingly indented as if it is guarded by the ‘if’
-      if(m_pMsgHandler->m_iTagDirectDownCnt%4 == 0) {
-      ^~
-../Main.cpp:626:4: error: break statement not within loop or switch
-    break;
-    ^~~~~
-../Main.cpp: At global scope:
-../Main.cpp:630:2: error: expected unqualified-id before ‘return’
-  return 1;
-  ^~~~~~
-../Main.cpp:631:1: error: expected declaration before ‘}’ token
- }
- ^
-../Main.cpp: In function ‘int Main_ByPass_SocketToUart()’:
-../Main.cpp:628:2: warning: control reaches end of non-void function [-Wreturn-type]
-  }
-  ^
-make: *** [subdir.mk:26: Main.o] 오류 1
-"make all" terminated with exit code 2. Build might be incomplete.
-23:17:51 **** Incremental Build of configuration Debug for project Demo ****
-make all 
-Building file: ../Main.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
-../Main.cpp: In function ‘int Main_ByPass_SocketToUart()’:
-../Main.cpp:518:5: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
-     if(!Main_TagAck_Arrange())
-     ^~
-../Main.cpp:521:6: note: ...this statement, but the latter is misleadingly indented as if it is guarded by the ‘if’
-      if(m_pMsgHandler->m_iTagDirectDownCnt%4 == 0) {
-      ^~
-../Main.cpp:626:4: error: break statement not within loop or switch
-    break;
-    ^~~~~
-make: *** [subdir.mk:26: Main.o] 오류 1
-"make all" terminated with exit code 2. Build might be incomplete.
-23:18:11 **** Incremental Build of configuration Debug for project Demo ****
-make all 
-Building file: ../Main.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
-../Main.cpp: In function ‘int Main_ByPass_SocketToUart()’:
-../Main.cpp:518:5: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
-     if(!Main_TagAck_Arrange())
-     ^~
-../Main.cpp:521:6: note: ...this statement, but the latter is misleadingly indented as if it is guarded by the ‘if’
-      if(m_pMsgHandler->m_iTagDirectDownCnt%4 == 0) {
-      ^~
-../Main.cpp:625:5: error: break statement not within loop or switch
-     break;
-     ^~~~~
-make: *** [subdir.mk:26: Main.o] 오류 1
-"make all" terminated with exit code 2. Build might be incomplete.
-23:23:13 **** Incremental Build of configuration Debug for project Demo ****
-make all 
-Building file: ../Main.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
-../Main.cpp: In function ‘int Main_ByPass_SocketToUart()’:
-../Main.cpp:633:1: error: a function-definition is not allowed here before ‘{’ token
- {
- ^
-../Main.cpp:1492:1: error: expected ‘}’ at end of input
- }
- ^
-../Main.cpp:1492:1: warning: control reaches end of non-void function [-Wreturn-type]
- }
- ^
-make: *** [subdir.mk:26: Main.o] 오류 1
-"make all" terminated with exit code 2. Build might be incomplete.
-23:24:15 **** Incremental Build of configuration Debug for project Demo ****
-make all 
-Building file: ../Main.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
-Finished building: ../Main.cpp
- 
-Building file: ../MsgHandler.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgHandler.d" -MT"MsgHandler.o" -o "MsgHandler.o" "../MsgHandler.cpp"
-Finished building: ../MsgHandler.cpp
- 
-Building file: ../MsgQueue.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgQueue.d" -MT"MsgQueue.o" -o "MsgQueue.o" "../MsgQueue.cpp"
-Finished building: ../MsgQueue.cpp
  
 Building target: Demo
 Invoking: Cross G++ Linker
 arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
 Finished building target: Demo
  
-23:24:32 **** Incremental Build of configuration Debug for project Demo ****
+16:32:49 **** Incremental Build of configuration Debug for project Demo ****
 make all 
 Building file: ../Main.cpp
 Invoking: Cross G++ Compiler
@@ -979,3 +287,18 @@ Invoking: Cross G++ Linker
 arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
 Finished building target: Demo
  
+16:38:43 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo"  ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+16:39:01 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+make: 'all'을(를) 위해 할 일이 없습니다.

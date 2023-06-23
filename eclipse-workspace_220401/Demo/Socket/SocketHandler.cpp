@@ -223,7 +223,7 @@ int SocketHandler::Registration_Request()
 	pu8data[iBufcnt] = STX;
 	pu8data[++iBufcnt] = (BYTE)packet.PanID;
 	pu8data[++iBufcnt] = packet.PanID>> 8;
-	pu8data[++iBufcnt] = 0x01;
+	pu8data[++iBufcnt] = 0x06;
 	pu8data[++iBufcnt] = 0;
 	pu8data[++iBufcnt] = (BYTE)packet.GateWayID << 8;		//gateway ID
 	pu8data[++iBufcnt] = packet.GateWayID >> 8;		//gateway ID

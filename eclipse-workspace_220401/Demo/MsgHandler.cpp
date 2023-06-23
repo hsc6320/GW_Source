@@ -15,7 +15,7 @@ int CheckbsnFlag =0;
 int Map_AcknowOverlap =0;
 int Map_AcknowOverlap2 =0;
 
-int nTagNumber =0;
+int nTagNumber =0, existTagNumber =0;
 int BEACON_MAX_COUNT=0;
 int tempBeacon =0;
 
@@ -37,7 +37,7 @@ MsgHandler::MsgHandler()
 	m_nUartArrayReDataIndicateCnt =0;
 	iSmallDataDown =0;
 	m_iTagDirectDown =0;
-	m_iTagDirectDownCnt =2;
+	m_iTagDirectDownCnt =3;
 	m_UartArrayDataIndicateMsg.reserve(5000);
 	m_UartArrayDataDownMsg.reserve(5000);
 }
@@ -51,12 +51,11 @@ int MsgHandler::bClear()
 	m_nDataIndiCount =0;
 	DataSendFail_RedownCnt =0;
 	m_nDataDownCount =0;	
-	Map_dataParityCheck.clear();
 	m_UartArrayDataDownMsg.clear();
 	m_UartArrayDataIndicateMsg.clear();
-	Map_dataParityCheck.clear();
-	m_iTagDirectDown =0;
-	m_iTagDirectDownCnt =2;
+	Map_dataParityCheck.clear();	
+//	m_iTagDirectDown =0;
+	m_iTagDirectDownCnt =3;
 	iSmallDataDown =0;
 	
 	return 1;
@@ -223,7 +222,7 @@ int MsgHandler::UartPacket_DataDownStart(BYTE u8data)
 	}
 
 	if( (!iSmallDataDown) && (m_nDataDownCount >= m_nUartArrayDataDownCnt) ) {		
-	//	printf("UartPacket_DataDownStart() m_nDataDownCount : %d , m_nUartArrayDataDownCnt : %d return 0\n", m_nDataDownCount, m_nUartArrayDataDownCnt);
+		printf("UartPacket_DataDownStart() m_nDataDownCount : %d , m_nUartArrayDataDownCnt : %d return 0\n", m_nDataDownCount, m_nUartArrayDataDownCnt);
 		return 0;
 	}
 	pu8data[iBufcnt] = STX;
@@ -260,12 +259,13 @@ int MsgHandler::UartPacket_DataDownStart(BYTE u8data)
 int MsgHandler::Send_BeaconData(BYTE ibeaconvalue)
 {
 	BYTE beaconcnt =0;	
-
+	int iTempTagNum =0;
 	if( iSmallDataDown ) {		
 	//	m_nDataDownCount =0;
 		m_DataCnt =0;
 		m_DataFlag = 1;
 		iSmallDataDown =0;
+		printf("Send_BeaconData return 1\n");
 		return 1;
 	}
 	
@@ -287,32 +287,37 @@ int MsgHandler::Send_BeaconData(BYTE ibeaconvalue)
 						return 0;
 					}
 					else if(m_DataCnt == 0) {
-						GetTagNumber(0);
-						if( 15 < nTagNumber) {
-							printf(" nTagNumber : %d return 0 \n", nTagNumber);
-							return 0;
-						}
-						
 						if(m_nDataDownCount > 14) 
 							return 0;
-						m_DataFlag =1;
-						m_DataCnt++;
-					//	printf(" nTagNumber : %x\n", m_DataCnt+1);
+						
+						GetTagNumber(0);
+						if( 15 >= nTagNumber) {
+							existTagNumber = nTagNumber;
+							m_DataFlag =1;
+							m_DataCnt++;
+						}
+						else 
+							return 0;
+						
 						break;
 					}
 					else {
+						nTagNumber = (int)ByteToWord(m_UartArrayDataDownMsg[m_nDataDownCount].at(MSG_DADDRONE) ,m_UartArrayDataDownMsg[m_nDataDownCount].at(MSG_DADDRZERO) );
 						if(m_nDataDownCount == m_nUartArrayDataDownCnt) {
-					//		printf("m_nDataDownCount == m_nUartArrayDataDownCnt return 0\n");
-							m_nDataDownCount =0;
+				//			m_nDataDownCount =0;
 							return 0;
 						}
+						else if (nTagNumber == existTagNumber) {
+							return 0;
+						}
+						
+						existTagNumber= nTagNumber;
+						
 						if(!m_DataFlag  && (m_nDataDownCount > 0)) {
 							m_DataFlag =1;
 							m_DataCnt =0;
 						}
-						
 						m_DataCnt++;
-				//		printf(" nTagNumber : %x\n", m_DataCnt+1);
 						break;
 					}
 
@@ -320,12 +325,10 @@ int MsgHandler::Send_BeaconData(BYTE ibeaconvalue)
 			}
 			else {				
 				if( ((nTagNumber/16) != (int)(beaconcnt)+1) && (m_DataFlag) ) {
-		//			printf("TagCount / 16,  m_DataFlag return0\n");
 					return 0;
 				}
 				else {
 					if(m_DataCnt >15) {
-				//		printf("m_DataCnt %d > 15\n", m_DataCnt);
 						return 0;
 					}
 					else if(m_DataCnt == 0) {
@@ -339,7 +342,7 @@ int MsgHandler::Send_BeaconData(BYTE ibeaconvalue)
 						}
 						if(m_nDataDownCount == m_nUartArrayDataDownCnt) {
 					//		printf("m_nDataDownCount == m_nUartArrayDataDownCnt return 0\n");
-							m_nDataDownCount =0;
+					//		m_nDataDownCount =0;
 							return 0;
 						}
 						m_DataFlag =1;
@@ -350,7 +353,8 @@ int MsgHandler::Send_BeaconData(BYTE ibeaconvalue)
 			
 					}
 					else {
-						if(m_nUartArrayDataDownCnt == m_nDataDownCount) {
+						nTagNumber = (int)ByteToWord(m_UartArrayDataDownMsg[m_nDataDownCount].at(MSG_DADDRONE) ,m_UartArrayDataDownMsg[m_nDataDownCount].at(MSG_DADDRZERO) );
+						if( (m_nUartArrayDataDownCnt == m_nDataDownCount) || (nTagNumber == existTagNumber) ) {
 				//			printf("m_nDataDownCount %d = m_nUartArrayDataDownCnt : %d\n", m_nDataDownCount, m_nUartArrayDataDownCnt);
 							return 0;
 						}
@@ -359,11 +363,12 @@ int MsgHandler::Send_BeaconData(BYTE ibeaconvalue)
 							m_DataCnt =0;
 						}
 						
-						nTagNumber = (int)ByteToWord(m_UartArrayDataDownMsg[m_nDataDownCount].at(MSG_DADDRONE) ,m_UartArrayDataDownMsg[m_nDataDownCount].at(MSG_DADDRZERO) );
+						
 						if( ( tempBeacon+1 > nTagNumber) || (tempBeacon+16 < nTagNumber) ) {
 					//		printf("tempBeacon+1 : %d, nTagNumber : %d return 0 \n", tempBeacon+1, nTagNumber);
 							return 0;
 						}
+						existTagNumber = nTagNumber;
 						m_DataCnt++;
 						printf("  nTagNumber : %x\n", nTagNumber);
 						break;
@@ -878,19 +883,44 @@ int MsgHandler::DataFlag_Initialize(int beacon)
 int MsgHandler::GetTagNumber(int temp)
 {
 	int nTemptemp =0;
+	std::set<WORD>::iterator iter;
 
 	if(temp == 0) 
 		nTemptemp = temp+15;
 	else
 		nTemptemp = temp+16;
-	
+ 
+	/*if(m_iTagDirectDown) {
+		nTagNumber = m_CurrentDataDownTag;
+		existTagNumber = nTagNumber;
+		return 1;
+	}*/
 	for(int i=0; i<m_nUartArrayDataDownCnt; i++) {
 		nTagNumber = (int)ByteToWord(m_UartArrayDataDownMsg[i].at(MSG_DADDRONE) ,m_UartArrayDataDownMsg[i].at(MSG_DADDRZERO) );
 		if( (temp+1 <= nTagNumber) && (nTemptemp >= nTagNumber) ) {
 			nTagNumber = (int)ByteToWord(m_UartArrayDataDownMsg[i].at(MSG_DADDRONE) ,m_UartArrayDataDownMsg[i].at(MSG_DADDRZERO) );
-			m_nDataDownCount = i;
-			printf("TagNumber : %d break \n", nTagNumber);			
-			break;
+		
+			printf("m_setTagAckNumber size : %d, nTagNumber : %d\n", m_setTagAckNumber.size(), nTagNumber);
+			iter = m_setTagAckNumber.find(nTagNumber);
+			if(iter != m_setTagAckNumber.end()) {
+				printf(" Exist \n");
+				printf("m_setTagAckNumber : %d\n", *iter);  
+				continue;
+			}
+			else if(existTagNumber == nTagNumber)
+				continue;
+			else {
+				printf("m_setTagAckNumber Not exist \n");
+				if(m_CurrentDataDownTag !=nTagNumber) {
+					continue;
+				}
+				else {
+					m_nDataDownCount = i;
+					printf("TagNumber : %d break \n", nTagNumber);			
+					break;
+				}
+			}
+			
 		}							
 	}
 

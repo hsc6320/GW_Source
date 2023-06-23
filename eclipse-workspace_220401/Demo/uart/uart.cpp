@@ -75,6 +75,10 @@ static void *uart_Rx_Thread(void *param)
 				pComm->AppendArray( rx2[restBufCnt], i, rx);
 				restBufCnt++;
 			}
+			for(int i=0; i<len; i++) {
+				printf("%x ", rx2[i]);
+			}
+			printf("\n");
 
 			printf("\n***************uart_Rx_Thread uart **********%d*********\n", nToTalLen);
 			int i=0;

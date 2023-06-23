@@ -36,7 +36,10 @@ public:
 	std::vector<std::vector<BYTE>> m_UartArrayReDataIndicateMsg;
 	std::map<std::vector<BYTE>, int > Map_dataParityCheck;
 	std::map<WORD, int > Map_u16AcknowParityCheck;
+	std::map<WORD, int> m_mapTagDirectSet;
+	std::set<WORD> setTagDownNumber, m_setTagAckNumber;
 	WORD m_pu16MsgDataAcknowledge[4096];
+	WORD m_CurrentDataDownTag;
 
 	Common_Packet	CommonPacket;
 	int Map_AcknowCnt,Map_AcknowCnt2;
