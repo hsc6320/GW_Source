@@ -76,8 +76,8 @@ int UartToSocket_TagAssociation();
 int Main_SendSocketMsgToUart(int msgtype);
 int Main_ServiceStart_TagAssociation_Init();
 int UartToSocket_Service_cfm();
-int Main_ByPass_SocketToUart();
-int Main_ByPass_UartToSocket();
+int Main_ByPass_Command();
+int Main_ByPass_Command2();
 int uart_SetTimer();
 
 int Set_WaitTimer(timer_t *timerID, int expireMS, int intervalMS);
@@ -189,7 +189,7 @@ int uart_SetTimer()
 }
 
 
-int Main_ByPass_UartToSocket()
+int Main_ByPass_Command2()
 {
 	int msg = 0;
 	PRE_DEFINE::S_PACKET GetInforPacket;
@@ -198,7 +198,7 @@ int Main_ByPass_UartToSocket()
 	std::set<WORD>::iterator iter;
 
 	if(m_pMsgQueue->m_bReadEnd_UartMessage) {
-	//	printf("Main_ByPass_UartToSocket\n");
+	//	printf("Main_ByPass_Command2\n");
 		m_pMsgQueue->m_bReadEnd_UartMessage =0;
 		msg = (int)m_pMsgQueue->m_u8SendData[MSGTYPE];
 
@@ -356,7 +356,7 @@ int Main_ServiceStart_TagAssociation_Init()
 				}
 				break;
 			case 5:
-				Main_ByPass_SocketToUart();
+				Main_ByPass_Command();
 				msg = msg+2;
 				break;
 			default :
@@ -384,7 +384,7 @@ int Main_ServiceStart_TagAssociation_Init()
 		return 1;
 }
 
-int Main_ByPass_SocketToUart()
+int Main_ByPass_Command()
 {	
 	if(m_pSocket->m_iBypassSocketToUart && m_pSocket->m_iSocketReceiveEnd) {
 		timer_delete(firstTimerID);
@@ -397,7 +397,7 @@ int Main_ByPass_SocketToUart()
 			m_pSocket->m_iSocketReceiveEnd =0;
 			return 1;
 		}
-	/*	printf("Main_ByPass_SocketToUart() : ");
+	/*	printf("Main_ByPass_Command() : ");
 		for(int i=0; i<m_pSocket->m_ReceiveData_len; i++) {
 			printf("%x ", m_pSocket->m_p8uData[i]);
 		}*/
@@ -1885,8 +1885,8 @@ int main(int argc, char *argv[])
 
  	while(1)
 	{
-		Main_ByPass_SocketToUart();
-		Main_ByPass_UartToSocket();
+		Main_ByPass_Command();
+		Main_ByPass_Command2();
 
 		if( (m_pSocket->bWorkingThread == 0) || (bSocketAlive == 0) ) {
 			if(!m_pSocket->bWorkingThread)
