@@ -1755,6 +1755,8 @@ BYTE ar[1024] = {0x31, 0x21, 0x22, 0x32, 0x33, 0x51};
 
 int main(int argc, char *argv[])
 {
+
+///aaaaaaaaaaaaaaaaaaaa
 	installSignal(SIGSEGV);
 	pthread_mutex_init(&Main_mutex, NULL);
 	pthread_mutex_init(&Main_Uartmutex, NULL);
