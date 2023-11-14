@@ -88,6 +88,7 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 	if(u8Data[MSG_STX] == STX) {
 		if(u8Data[MSGTYPE] == DATA_ACKNOWLEDGEMENT) {
 			if(u8Data[MSG_ACKNOWLEDGE_STATUS] == PAYLOAD_STATUS_SUCCESS) {	
+				memcpy(m_u8SendData, u8Data, len);
 				wordPanID = ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO]);
 				
 				iterSet = setTagNumber.find(wordPanID);
@@ -141,14 +142,6 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 				size = 4096;
 
 				m_Test[m_nMapParity] = wordPanID;
-				
-//				int size2 =GetSizeArray1(m_Test);
-//				PrintArray1(m_Test, size2);
-//				AppendArray1(wordPanID, m_nMapParity, m_Test);
-//				m_ArrayUtil.InsertArray(m_nMapParity, wordPanID, m_Test);
-//				size2 =GetSizeArray1(m_Test);
-//				PrintArray1(m_Test, size2);
-			
 				sort(m_Test, m_Test+size);
 
 				int j =0;
@@ -166,12 +159,23 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 			
 				m_nMapParity++;				
 				printf("0x43 Count : %d\n", m_nMapParity);
+				
+				iter = setTagAckNumber.find(wordPanID);
+				if(iter != setTagAckNumber.end()) {
+					printf("TagAck overlap\n");
+				}
+				else {
+					setTagAckNumber.insert(wordPanID);
+					printf("TagAck setTagAckNumber : %x\n", wordPanID);
+				}
+				
 				if(m_ServerDisconnect) {
 			//		m_QueueDataAck.push(m_pu16MsgQueueArrayDataAcknowledge);
 				}
 
 			}
 			m_GetSocket->Send_Message(u8Data, len);
+			m_bReadEnd_UartMessage =1;
 		}
 		else if((u8Data[MSGTYPE] == TAG_ASSOCIATION) || (u8Data[MSGTYPE] == DOWNLOAD_START_ACK)
 				|| (u8Data[MSGTYPE] == DATAINDICATION_ACK) || (u8Data[MSGTYPE] == TAG_INFOR_UPDATE)

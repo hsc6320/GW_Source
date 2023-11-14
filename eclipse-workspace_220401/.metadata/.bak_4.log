@@ -1,4 +1,4 @@
-!SESSION 2023-06-21 09:27:34.179 -----------------------------------------------
+!SESSION 2023-10-30 10:32:21.909 -----------------------------------------------
 eclipse.buildId=4.21.0.I20210906-0500
 java.version=17.0.1
 java.vendor=Eclipse Adoptium
@@ -6,76 +6,10 @@ BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=ko_KR
 Framework arguments:  -product org.eclipse.epp.package.cpp.product
 Command-line arguments:  -os linux -ws gtk -arch x86_64 -product org.eclipse.epp.package.cpp.product
 
-This is a continuation of log file /home/gw/GW_Source/GW_Source/eclipse-workspace_220401/.metadata/.bak_3.log
-Created Time: 2023-06-21 15:20:25.044
+This is a continuation of log file /home/gw/github/GW_Source/eclipse-workspace_220401/.metadata/.bak_3.log
+Created Time: 2023-10-30 11:54:19.818
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 15:20:25.045
-!MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
-!STACK 0
-org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
-	at java.xml/com.sun.org.apache.xerces.internal.parsers.DOMParser.parse(DOMParser.java:262)
-	at java.xml/com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderImpl.parse(DocumentBuilderImpl.java:342)
-	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
-	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
-	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getRootElement(DiscoveredScannerInfoStore.java:136)
-	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.loadDiscoveredScannerInfoFromState(DiscoveredScannerInfoStore.java:102)
-	at org.eclipse.cdt.make.internal.core.scannerconfig2.PerProjectSICollector.createPathInfoObject(PerProjectSICollector.java:467)
-	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager.loadPathInfo(CfgDiscoveredPathManager.java:311)
-	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager.getDiscoveredInfo(CfgDiscoveredPathManager.java:177)
-	at org.eclipse.cdt.managedbuilder.internal.dataprovider.ProfileInfoProvider.getEntryValues(ProfileInfoProvider.java:68)
-	at org.eclipse.cdt.managedbuilder.internal.dataprovider.BuildEntryStorage.getDiscoveredEntries(BuildEntryStorage.java:203)
-	at org.eclipse.cdt.managedbuilder.internal.dataprovider.BuildEntryStorage.putEntriesToLevel(BuildEntryStorage.java:193)
-	at org.eclipse.cdt.core.settings.model.util.AbstractEntryStorage.initCache(AbstractEntryStorage.java:74)
-	at org.eclipse.cdt.core.settings.model.util.AbstractEntryStorage.getEntries(AbstractEntryStorage.java:37)
-	at org.eclipse.cdt.managedbuilder.internal.dataprovider.BuildLanguageData.getEntries(BuildLanguageData.java:163)
-	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultLanguageData.getEntriesToCopy(CDefaultLanguageData.java:100)
-	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultLanguageData.createStore(CDefaultLanguageData.java:91)
-	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultLanguageData.copySettingsFrom(CDefaultLanguageData.java:84)
-	at org.eclipse.cdt.internal.core.settings.model.CLanguageSettingCache.copySettingsFrom(CLanguageSettingCache.java:49)
-	at org.eclipse.cdt.internal.core.settings.model.CLanguageSettingCache.<init>(CLanguageSettingCache.java:38)
-	at org.eclipse.cdt.internal.core.settings.model.CFolderDescriptionCache.copyLanguageData(CFolderDescriptionCache.java:82)
-	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultFolderData.copyDataFrom(CDefaultFolderData.java:60)
-	at org.eclipse.cdt.internal.core.settings.model.CFolderDescriptionCache.<init>(CFolderDescriptionCache.java:40)
-	at org.eclipse.cdt.internal.core.settings.model.CConfigurationDescriptionCache.copyFolderData(CConfigurationDescriptionCache.java:242)
-	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultConfigurationData.copySettingsFrom(CDefaultConfigurationData.java:117)
-	at org.eclipse.cdt.internal.core.settings.model.CConfigurationDescriptionCache.applyData(CConfigurationDescriptionCache.java:200)
-	at org.eclipse.cdt.internal.core.settings.model.CProjectDescription.applyDatas(CProjectDescription.java:219)
-	at org.eclipse.cdt.internal.core.settings.model.SetCProjectDescriptionOperation.executeOperation(SetCProjectDescriptionOperation.java:103)
-	at org.eclipse.cdt.internal.core.model.CModelOperation.execute(CModelOperation.java:346)
-	at org.eclipse.cdt.internal.core.model.CModelOperation.run(CModelOperation.java:613)
-	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2313)
-	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2338)
-	at org.eclipse.cdt.internal.core.model.CModelOperation.runOperation(CModelOperation.java:644)
-	at org.eclipse.cdt.internal.core.settings.model.AbstractCProjectDescriptionStorage.setProjectDescription(AbstractCProjectDescriptionStorage.java:209)
-	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionStorageManager.setProjectDescription(CProjectDescriptionStorageManager.java:153)
-	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.setProjectDescription(CProjectDescriptionManager.java:867)
-	at org.eclipse.cdt.managedbuilder.internal.core.BuildSettingsUtil.checkApplyDescription(BuildSettingsUtil.java:210)
-	at org.eclipse.cdt.managedbuilder.core.ManagedBuildManager.updateCoreSettings(ManagedBuildManager.java:1515)
-	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager$1.run(CfgDiscoveredPathManager.java:157)
-	at org.eclipse.cdt.internal.core.model.BatchOperation.executeOperation(BatchOperation.java:36)
-	at org.eclipse.cdt.internal.core.model.CModelOperation.execute(CModelOperation.java:346)
-	at org.eclipse.cdt.internal.core.model.CModelOperation.run(CModelOperation.java:613)
-	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2313)
-	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2338)
-	at org.eclipse.cdt.core.model.CoreModel.run(CoreModel.java:1230)
-	at org.eclipse.cdt.core.model.CoreModel.run(CoreModel.java:1189)
-	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager.updateCoreSettings(CfgDiscoveredPathManager.java:160)
-	at org.eclipse.cdt.build.core.scannerconfig.ScannerConfigBuilder.build(ScannerConfigBuilder.java:129)
-	at org.eclipse.core.internal.events.BuildManager$2.run(BuildManager.java:853)
-	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
-	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:232)
-	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:281)
-	at org.eclipse.core.internal.events.BuildManager$1.run(BuildManager.java:334)
-	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
-	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:337)
-	at org.eclipse.core.internal.events.BuildManager.basicBuildLoop(BuildManager.java:389)
-	at org.eclipse.core.internal.events.BuildManager.build(BuildManager.java:410)
-	at org.eclipse.core.internal.resources.Workspace.buildInternal(Workspace.java:516)
-	at org.eclipse.core.internal.resources.Workspace.build(Workspace.java:406)
-	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
-	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
-
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 15:20:25.047
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 11:54:19.818
 !MESSAGE Error accessing scanner config file for project 
 !STACK 1
 org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
@@ -143,7 +77,7 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소
 	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
 	... 57 more
-!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-06-21 15:20:25.048
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 11:54:19.818
 !MESSAGE Error accessing scanner config file for project 
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -209,7 +143,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 15:20:25.057
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 11:54:19.821
 !MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -274,7 +208,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 15:20:25.057
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 11:54:19.821
 !MESSAGE Error accessing scanner config file for project 
 !STACK 1
 org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
@@ -341,7 +275,7 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소
 	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
 	... 56 more
-!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-06-21 15:20:25.058
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 11:54:19.821
 !MESSAGE Error accessing scanner config file for project 
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -406,7 +340,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 15:20:25.061
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 11:54:19.822
 !MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -471,7 +405,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 15:20:25.062
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 11:54:19.823
 !MESSAGE Error accessing scanner config file for project 
 !STACK 1
 org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
@@ -538,7 +472,7 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소
 	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
 	... 56 more
-!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-06-21 15:20:25.063
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 11:54:19.823
 !MESSAGE Error accessing scanner config file for project 
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -603,7 +537,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 15:20:25.070
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 11:54:19.824
 !MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -668,7 +602,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 15:20:25.076
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 11:54:19.824
 !MESSAGE Error accessing scanner config file for project 
 !STACK 1
 org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
@@ -735,7 +669,7 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소
 	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
 	... 56 more
-!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-06-21 15:20:25.077
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 11:54:19.824
 !MESSAGE Error accessing scanner config file for project 
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -800,7 +734,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 15:20:39.257
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 11:54:27.269
 !MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -865,7 +799,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 15:20:39.257
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 11:54:27.269
 !MESSAGE Error accessing scanner config file for project 
 !STACK 1
 org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
@@ -932,7 +866,7 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소
 	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
 	... 56 more
-!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-06-21 15:20:39.257
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 11:54:27.269
 !MESSAGE Error accessing scanner config file for project 
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -997,7 +931,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 15:20:39.581
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 11:54:27.451
 !MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -1063,7 +997,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 15:20:39.581
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 11:54:27.452
 !MESSAGE Error accessing scanner config file for project 
 !STACK 1
 org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
@@ -1131,7 +1065,7 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소
 	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
 	... 57 more
-!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-06-21 15:20:39.581
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 11:54:27.452
 !MESSAGE Error accessing scanner config file for project 
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -1197,7 +1131,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 15:20:39.585
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 11:54:27.454
 !MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -1262,7 +1196,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 15:20:39.586
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 11:54:27.455
 !MESSAGE Error accessing scanner config file for project 
 !STACK 1
 org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
@@ -1329,7 +1263,7 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소
 	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
 	... 56 more
-!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-06-21 15:20:39.586
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 11:54:27.455
 !MESSAGE Error accessing scanner config file for project 
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -1394,7 +1328,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 15:20:39.796
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 11:54:27.634
 !MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -1460,7 +1394,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 15:20:39.796
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 11:54:27.634
 !MESSAGE Error accessing scanner config file for project 
 !STACK 1
 org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
@@ -1528,7 +1462,7 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소
 	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
 	... 57 more
-!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-06-21 15:20:39.796
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 11:54:27.634
 !MESSAGE Error accessing scanner config file for project 
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -1594,7 +1528,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 15:20:39.800
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 11:54:27.636
 !MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -1659,7 +1593,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 15:20:39.800
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 11:54:27.636
 !MESSAGE Error accessing scanner config file for project 
 !STACK 1
 org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
@@ -1726,7 +1660,7 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소
 	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
 	... 56 more
-!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-06-21 15:20:39.800
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 11:54:27.637
 !MESSAGE Error accessing scanner config file for project 
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -1791,7 +1725,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 15:20:39.803
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 11:54:27.638
 !MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -1856,7 +1790,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 15:20:39.803
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 11:54:27.638
 !MESSAGE Error accessing scanner config file for project 
 !STACK 1
 org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
@@ -1923,7 +1857,7 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소
 	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
 	... 56 more
-!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-06-21 15:20:39.804
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 11:54:27.638
 !MESSAGE Error accessing scanner config file for project 
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -1988,7 +1922,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 15:20:39.808
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 11:54:27.639
 !MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -2053,7 +1987,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 15:20:39.808
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 11:54:27.640
 !MESSAGE Error accessing scanner config file for project 
 !STACK 1
 org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
@@ -2120,7 +2054,7 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소
 	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
 	... 56 more
-!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-06-21 15:20:39.808
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 11:54:27.640
 !MESSAGE Error accessing scanner config file for project 
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -2185,7 +2119,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 15:37:14.248
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 12:44:47.482
 !MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -2250,7 +2184,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 15:37:14.249
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 12:44:47.483
 !MESSAGE Error accessing scanner config file for project 
 !STACK 1
 org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
@@ -2317,7 +2251,7 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소
 	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
 	... 56 more
-!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-06-21 15:37:14.249
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 12:44:47.483
 !MESSAGE Error accessing scanner config file for project 
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -2382,7 +2316,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 15:37:14.570
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 12:44:47.660
 !MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -2448,7 +2382,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 15:37:14.571
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 12:44:47.661
 !MESSAGE Error accessing scanner config file for project 
 !STACK 1
 org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
@@ -2516,7 +2450,7 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소
 	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
 	... 57 more
-!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-06-21 15:37:14.572
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 12:44:47.661
 !MESSAGE Error accessing scanner config file for project 
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -2582,7 +2516,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 15:37:14.580
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 12:44:47.663
 !MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -2647,7 +2581,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 15:37:14.582
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 12:44:47.663
 !MESSAGE Error accessing scanner config file for project 
 !STACK 1
 org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
@@ -2714,7 +2648,7 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소
 	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
 	... 56 more
-!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-06-21 15:37:14.582
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 12:44:47.663
 !MESSAGE Error accessing scanner config file for project 
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -2779,7 +2713,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 15:37:14.902
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 12:44:47.844
 !MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -2845,7 +2779,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 15:37:14.902
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 12:44:47.845
 !MESSAGE Error accessing scanner config file for project 
 !STACK 1
 org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
@@ -2913,7 +2847,7 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소
 	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
 	... 57 more
-!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-06-21 15:37:14.903
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 12:44:47.845
 !MESSAGE Error accessing scanner config file for project 
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -2979,7 +2913,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 15:37:14.912
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 12:44:47.848
 !MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -3044,7 +2978,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 15:37:14.916
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 12:44:47.848
 !MESSAGE Error accessing scanner config file for project 
 !STACK 1
 org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
@@ -3111,7 +3045,7 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소
 	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
 	... 56 more
-!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-06-21 15:37:14.917
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 12:44:47.848
 !MESSAGE Error accessing scanner config file for project 
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -3176,7 +3110,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 15:37:14.920
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 12:44:47.900
 !MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -3241,7 +3175,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 15:37:14.921
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 12:44:47.900
 !MESSAGE Error accessing scanner config file for project 
 !STACK 1
 org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
@@ -3308,7 +3242,7 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소
 	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
 	... 56 more
-!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-06-21 15:37:14.921
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 12:44:47.900
 !MESSAGE Error accessing scanner config file for project 
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -3373,7 +3307,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 15:37:14.929
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 12:44:47.903
 !MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -3438,7 +3372,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 15:37:14.933
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 12:44:47.903
 !MESSAGE Error accessing scanner config file for project 
 !STACK 1
 org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
@@ -3505,7 +3439,7 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소
 	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
 	... 56 more
-!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-06-21 15:37:14.935
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 12:44:47.903
 !MESSAGE Error accessing scanner config file for project 
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -3570,7 +3504,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 16:50:02.047
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 12:45:02.035
 !MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -3635,7 +3569,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 16:50:02.048
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 12:45:02.035
 !MESSAGE Error accessing scanner config file for project 
 !STACK 1
 org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
@@ -3702,7 +3636,7 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소
 	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
 	... 56 more
-!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-06-21 16:50:02.048
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 12:45:02.035
 !MESSAGE Error accessing scanner config file for project 
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -3767,7 +3701,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 16:50:02.393
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 12:45:02.219
 !MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -3833,7 +3767,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 16:50:02.394
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 12:45:02.219
 !MESSAGE Error accessing scanner config file for project 
 !STACK 1
 org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
@@ -3901,7 +3835,7 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소
 	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
 	... 57 more
-!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-06-21 16:50:02.394
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 12:45:02.219
 !MESSAGE Error accessing scanner config file for project 
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -3967,7 +3901,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 16:50:02.398
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 12:45:02.221
 !MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -4032,7 +3966,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 16:50:02.400
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 12:45:02.221
 !MESSAGE Error accessing scanner config file for project 
 !STACK 1
 org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
@@ -4099,7 +4033,7 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소
 	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
 	... 56 more
-!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-06-21 16:50:02.400
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 12:45:02.221
 !MESSAGE Error accessing scanner config file for project 
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -4164,7 +4098,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 16:50:02.737
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 12:45:02.400
 !MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -4230,7 +4164,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 16:50:02.741
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 12:45:02.400
 !MESSAGE Error accessing scanner config file for project 
 !STACK 1
 org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
@@ -4298,7 +4232,7 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소
 	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
 	... 57 more
-!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-06-21 16:50:02.742
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 12:45:02.401
 !MESSAGE Error accessing scanner config file for project 
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -4364,7 +4298,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 16:50:02.761
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 12:45:02.402
 !MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -4429,7 +4363,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 16:50:02.761
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 12:45:02.402
 !MESSAGE Error accessing scanner config file for project 
 !STACK 1
 org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
@@ -4496,7 +4430,7 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소
 	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
 	... 56 more
-!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-06-21 16:50:02.761
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 12:45:02.402
 !MESSAGE Error accessing scanner config file for project 
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -4561,7 +4495,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 16:50:02.767
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 12:45:02.403
 !MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -4626,7 +4560,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 16:50:02.769
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 12:45:02.404
 !MESSAGE Error accessing scanner config file for project 
 !STACK 1
 org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
@@ -4693,7 +4627,7 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소
 	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
 	... 56 more
-!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-06-21 16:50:02.771
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 12:45:02.404
 !MESSAGE Error accessing scanner config file for project 
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -4758,7 +4692,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 16:50:02.775
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 12:45:02.406
 !MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -4823,7 +4757,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 16:50:02.776
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 12:45:02.406
 !MESSAGE Error accessing scanner config file for project 
 !STACK 1
 org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
@@ -4890,7 +4824,7 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소
 	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
 	... 56 more
-!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-06-21 16:50:02.776
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 12:45:02.406
 !MESSAGE Error accessing scanner config file for project 
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -4955,7 +4889,10 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:17:34.583
+!ENTRY org.eclipse.rse.ui 4 0 2023-10-30 12:45:11.107
+!MESSAGE RSEF1002: SUB#0:Sftp: 4: Failure
+
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 12:55:23.510
 !MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -5020,7 +4957,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:17:34.584
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 12:55:23.511
 !MESSAGE Error accessing scanner config file for project 
 !STACK 1
 org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
@@ -5087,7 +5024,7 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소
 	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
 	... 56 more
-!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-06-21 17:17:34.584
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 12:55:23.511
 !MESSAGE Error accessing scanner config file for project 
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -5152,7 +5089,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:17:34.960
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 12:55:23.690
 !MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -5218,7 +5155,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:17:34.963
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 12:55:23.690
 !MESSAGE Error accessing scanner config file for project 
 !STACK 1
 org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
@@ -5286,7 +5223,7 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소
 	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
 	... 57 more
-!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-06-21 17:17:34.964
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 12:55:23.690
 !MESSAGE Error accessing scanner config file for project 
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -5352,7 +5289,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:17:34.972
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 12:55:23.692
 !MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -5417,7 +5354,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:17:34.973
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 12:55:23.692
 !MESSAGE Error accessing scanner config file for project 
 !STACK 1
 org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
@@ -5484,7 +5421,7 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소
 	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
 	... 56 more
-!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-06-21 17:17:34.973
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 12:55:23.693
 !MESSAGE Error accessing scanner config file for project 
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -5549,7 +5486,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:17:35.236
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 12:55:23.870
 !MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -5615,7 +5552,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:17:35.237
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 12:55:23.871
 !MESSAGE Error accessing scanner config file for project 
 !STACK 1
 org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
@@ -5683,7 +5620,7 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소
 	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
 	... 57 more
-!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-06-21 17:17:35.239
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 12:55:23.871
 !MESSAGE Error accessing scanner config file for project 
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -5749,7 +5686,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:17:35.243
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 12:55:23.873
 !MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -5814,7 +5751,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:17:35.244
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 12:55:23.873
 !MESSAGE Error accessing scanner config file for project 
 !STACK 1
 org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
@@ -5881,7 +5818,7 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소
 	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
 	... 56 more
-!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-06-21 17:17:35.244
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 12:55:23.873
 !MESSAGE Error accessing scanner config file for project 
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -5946,7 +5883,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:17:35.264
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 12:55:23.874
 !MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -6011,7 +5948,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:17:35.266
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 12:55:23.875
 !MESSAGE Error accessing scanner config file for project 
 !STACK 1
 org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
@@ -6078,7 +6015,7 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소
 	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
 	... 56 more
-!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-06-21 17:17:35.266
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 12:55:23.875
 !MESSAGE Error accessing scanner config file for project 
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -6143,7 +6080,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:17:35.273
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 12:55:23.877
 !MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -6208,7 +6145,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:17:35.273
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 12:55:23.878
 !MESSAGE Error accessing scanner config file for project 
 !STACK 1
 org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
@@ -6275,7 +6212,7 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소
 	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
 	... 56 more
-!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-06-21 17:17:35.273
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 12:55:23.878
 !MESSAGE Error accessing scanner config file for project 
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -6340,7 +6277,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:24:36.127
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 13:23:25.608
 !MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -6405,7 +6342,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:24:36.130
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 13:23:25.608
 !MESSAGE Error accessing scanner config file for project 
 !STACK 1
 org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
@@ -6472,7 +6409,7 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소
 	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
 	... 56 more
-!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-06-21 17:24:36.131
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 13:23:25.608
 !MESSAGE Error accessing scanner config file for project 
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -6537,7 +6474,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:24:36.461
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 13:23:25.789
 !MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -6603,7 +6540,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:24:36.465
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 13:23:25.789
 !MESSAGE Error accessing scanner config file for project 
 !STACK 1
 org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
@@ -6671,7 +6608,7 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소
 	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
 	... 57 more
-!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-06-21 17:24:36.466
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 13:23:25.789
 !MESSAGE Error accessing scanner config file for project 
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -6737,7 +6674,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:24:36.472
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 13:23:25.791
 !MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -6802,7 +6739,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:24:36.473
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 13:23:25.791
 !MESSAGE Error accessing scanner config file for project 
 !STACK 1
 org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
@@ -6869,7 +6806,7 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소
 	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
 	... 56 more
-!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-06-21 17:24:36.473
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 13:23:25.791
 !MESSAGE Error accessing scanner config file for project 
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -6934,7 +6871,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:24:36.799
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 13:23:25.975
 !MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -7000,7 +6937,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:24:36.800
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 13:23:25.979
 !MESSAGE Error accessing scanner config file for project 
 !STACK 1
 org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
@@ -7068,7 +7005,7 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소
 	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
 	... 57 more
-!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-06-21 17:24:36.800
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 13:23:25.980
 !MESSAGE Error accessing scanner config file for project 
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -7134,7 +7071,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:24:36.805
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 13:23:25.984
 !MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -7199,7 +7136,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:24:36.805
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 13:23:25.984
 !MESSAGE Error accessing scanner config file for project 
 !STACK 1
 org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
@@ -7266,7 +7203,7 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소
 	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
 	... 56 more
-!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-06-21 17:24:36.806
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 13:23:25.984
 !MESSAGE Error accessing scanner config file for project 
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -7331,7 +7268,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:24:36.809
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 13:23:25.988
 !MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -7396,7 +7333,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:24:36.810
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 13:23:25.988
 !MESSAGE Error accessing scanner config file for project 
 !STACK 1
 org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
@@ -7463,7 +7400,7 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소
 	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
 	... 56 more
-!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-06-21 17:24:36.810
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 13:23:25.989
 !MESSAGE Error accessing scanner config file for project 
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -7528,7 +7465,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:24:36.815
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 13:23:25.991
 !MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -7593,7 +7530,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:24:36.816
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 13:23:25.991
 !MESSAGE Error accessing scanner config file for project 
 !STACK 1
 org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
@@ -7660,7 +7597,7 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소
 	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
 	... 56 more
-!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-06-21 17:24:36.817
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 13:23:25.991
 !MESSAGE Error accessing scanner config file for project 
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -7725,7 +7662,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:37:54.579
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 13:42:09.815
 !MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -7790,7 +7727,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:37:54.580
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 13:42:09.815
 !MESSAGE Error accessing scanner config file for project 
 !STACK 1
 org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
@@ -7857,7 +7794,7 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소
 	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
 	... 56 more
-!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-06-21 17:37:54.580
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 13:42:09.815
 !MESSAGE Error accessing scanner config file for project 
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -7922,7 +7859,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:37:54.919
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 13:42:09.995
 !MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -7988,7 +7925,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:37:54.919
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 13:42:09.996
 !MESSAGE Error accessing scanner config file for project 
 !STACK 1
 org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
@@ -8056,7 +7993,7 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소
 	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
 	... 57 more
-!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-06-21 17:37:54.919
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 13:42:09.996
 !MESSAGE Error accessing scanner config file for project 
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -8122,7 +8059,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:37:54.923
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 13:42:09.998
 !MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -8187,7 +8124,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:37:54.924
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 13:42:09.998
 !MESSAGE Error accessing scanner config file for project 
 !STACK 1
 org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
@@ -8254,7 +8191,7 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소
 	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
 	... 56 more
-!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-06-21 17:37:54.924
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 13:42:09.998
 !MESSAGE Error accessing scanner config file for project 
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -8319,7 +8256,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:37:55.352
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 13:42:10.179
 !MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -8385,7 +8322,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:37:55.353
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 13:42:10.179
 !MESSAGE Error accessing scanner config file for project 
 !STACK 1
 org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
@@ -8453,7 +8390,7 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소
 	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
 	... 57 more
-!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-06-21 17:37:55.353
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 13:42:10.179
 !MESSAGE Error accessing scanner config file for project 
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -8519,7 +8456,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:37:55.362
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 13:42:10.181
 !MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -8584,7 +8521,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:37:55.365
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 13:42:10.182
 !MESSAGE Error accessing scanner config file for project 
 !STACK 1
 org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
@@ -8651,7 +8588,7 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소
 	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
 	... 56 more
-!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-06-21 17:37:55.365
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 13:42:10.182
 !MESSAGE Error accessing scanner config file for project 
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -8716,7 +8653,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:37:55.370
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 13:42:10.183
 !MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -8781,7 +8718,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:37:55.373
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 13:42:10.183
 !MESSAGE Error accessing scanner config file for project 
 !STACK 1
 org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
@@ -8848,7 +8785,7 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소
 	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
 	... 56 more
-!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-06-21 17:37:55.373
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 13:42:10.183
 !MESSAGE Error accessing scanner config file for project 
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -8913,7 +8850,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:37:55.375
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 13:42:10.184
 !MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -8978,7 +8915,7 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:37:55.375
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 13:42:10.184
 !MESSAGE Error accessing scanner config file for project 
 !STACK 1
 org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
@@ -9045,7 +8982,7 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소
 	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
 	... 56 more
-!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-06-21 17:37:55.375
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 13:42:10.184
 !MESSAGE Error accessing scanner config file for project 
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -9110,7 +9047,10 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:38:21.407
+!ENTRY org.eclipse.rse.ui 4 0 2023-10-30 13:42:16.540
+!MESSAGE RSEF1002: SUB#0:Sftp: 4: Failure
+
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 14:25:56.564
 !MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -9171,12 +9111,11 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.core.internal.events.BuildManager.basicBuildLoop(BuildManager.java:389)
 	at org.eclipse.core.internal.events.BuildManager.build(BuildManager.java:410)
 	at org.eclipse.core.internal.resources.Workspace.buildInternal(Workspace.java:516)
-	at org.eclipse.core.internal.resources.Workspace.build(Workspace.java:413)
-	at org.eclipse.ui.actions.BuildAction$1.runInWorkspace(BuildAction.java:291)
-	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:42)
+	at org.eclipse.core.internal.resources.Workspace.build(Workspace.java:406)
+	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:38:21.408
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 14:25:56.564
 !MESSAGE Error accessing scanner config file for project 
 !STACK 1
 org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
@@ -9234,9 +9173,207 @@ org.eclipse.core.runtime.CoreException: Error accessing scanner config file for 
 	at org.eclipse.core.internal.events.BuildManager.basicBuildLoop(BuildManager.java:389)
 	at org.eclipse.core.internal.events.BuildManager.build(BuildManager.java:410)
 	at org.eclipse.core.internal.resources.Workspace.buildInternal(Workspace.java:516)
-	at org.eclipse.core.internal.resources.Workspace.build(Workspace.java:413)
-	at org.eclipse.ui.actions.BuildAction$1.runInWorkspace(BuildAction.java:291)
-	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:42)
+	at org.eclipse.core.internal.resources.Workspace.build(Workspace.java:406)
+	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.DOMParser.parse(DOMParser.java:262)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderImpl.parse(DocumentBuilderImpl.java:342)
+	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
+	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
+	... 56 more
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 14:25:56.564
+!MESSAGE Error accessing scanner config file for project 
+!STACK 0
+org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.DOMParser.parse(DOMParser.java:262)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderImpl.parse(DocumentBuilderImpl.java:342)
+	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
+	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
+	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getRootElement(DiscoveredScannerInfoStore.java:136)
+	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.hasInfo(DiscoveredScannerInfoStore.java:123)
+	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager.loadPathInfo(CfgDiscoveredPathManager.java:299)
+	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager.getDiscoveredInfo(CfgDiscoveredPathManager.java:177)
+	at org.eclipse.cdt.managedbuilder.internal.dataprovider.ProfileInfoProvider.getEntryValues(ProfileInfoProvider.java:68)
+	at org.eclipse.cdt.managedbuilder.internal.dataprovider.BuildEntryStorage.getDiscoveredEntries(BuildEntryStorage.java:203)
+	at org.eclipse.cdt.managedbuilder.internal.dataprovider.BuildEntryStorage.putEntriesToLevel(BuildEntryStorage.java:193)
+	at org.eclipse.cdt.core.settings.model.util.AbstractEntryStorage.initCache(AbstractEntryStorage.java:74)
+	at org.eclipse.cdt.core.settings.model.util.AbstractEntryStorage.getEntries(AbstractEntryStorage.java:37)
+	at org.eclipse.cdt.managedbuilder.internal.dataprovider.BuildLanguageData.getEntries(BuildLanguageData.java:163)
+	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultLanguageData.getEntriesToCopy(CDefaultLanguageData.java:100)
+	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultLanguageData.createStore(CDefaultLanguageData.java:91)
+	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultLanguageData.copySettingsFrom(CDefaultLanguageData.java:84)
+	at org.eclipse.cdt.internal.core.settings.model.CLanguageSettingCache.copySettingsFrom(CLanguageSettingCache.java:49)
+	at org.eclipse.cdt.internal.core.settings.model.CLanguageSettingCache.<init>(CLanguageSettingCache.java:38)
+	at org.eclipse.cdt.internal.core.settings.model.CFolderDescriptionCache.copyLanguageData(CFolderDescriptionCache.java:82)
+	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultFolderData.copyDataFrom(CDefaultFolderData.java:60)
+	at org.eclipse.cdt.internal.core.settings.model.CFolderDescriptionCache.<init>(CFolderDescriptionCache.java:40)
+	at org.eclipse.cdt.internal.core.settings.model.CConfigurationDescriptionCache.copyFolderData(CConfigurationDescriptionCache.java:242)
+	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultConfigurationData.copySettingsFrom(CDefaultConfigurationData.java:117)
+	at org.eclipse.cdt.internal.core.settings.model.CConfigurationDescriptionCache.applyData(CConfigurationDescriptionCache.java:200)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescription.applyDatas(CProjectDescription.java:219)
+	at org.eclipse.cdt.internal.core.settings.model.SetCProjectDescriptionOperation.executeOperation(SetCProjectDescriptionOperation.java:103)
+	at org.eclipse.cdt.internal.core.model.CModelOperation.execute(CModelOperation.java:346)
+	at org.eclipse.cdt.internal.core.model.CModelOperation.run(CModelOperation.java:613)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2313)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2338)
+	at org.eclipse.cdt.internal.core.model.CModelOperation.runOperation(CModelOperation.java:644)
+	at org.eclipse.cdt.internal.core.settings.model.AbstractCProjectDescriptionStorage.setProjectDescription(AbstractCProjectDescriptionStorage.java:209)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionStorageManager.setProjectDescription(CProjectDescriptionStorageManager.java:153)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.setProjectDescription(CProjectDescriptionManager.java:867)
+	at org.eclipse.cdt.managedbuilder.internal.core.BuildSettingsUtil.checkApplyDescription(BuildSettingsUtil.java:210)
+	at org.eclipse.cdt.managedbuilder.core.ManagedBuildManager.updateCoreSettings(ManagedBuildManager.java:1515)
+	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager$1.run(CfgDiscoveredPathManager.java:157)
+	at org.eclipse.cdt.internal.core.model.BatchOperation.executeOperation(BatchOperation.java:36)
+	at org.eclipse.cdt.internal.core.model.CModelOperation.execute(CModelOperation.java:346)
+	at org.eclipse.cdt.internal.core.model.CModelOperation.run(CModelOperation.java:613)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2313)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2338)
+	at org.eclipse.cdt.core.model.CoreModel.run(CoreModel.java:1230)
+	at org.eclipse.cdt.core.model.CoreModel.run(CoreModel.java:1189)
+	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager.updateCoreSettings(CfgDiscoveredPathManager.java:160)
+	at org.eclipse.cdt.build.core.scannerconfig.ScannerConfigBuilder.build(ScannerConfigBuilder.java:129)
+	at org.eclipse.core.internal.events.BuildManager$2.run(BuildManager.java:853)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:232)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:281)
+	at org.eclipse.core.internal.events.BuildManager$1.run(BuildManager.java:334)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:337)
+	at org.eclipse.core.internal.events.BuildManager.basicBuildLoop(BuildManager.java:389)
+	at org.eclipse.core.internal.events.BuildManager.build(BuildManager.java:410)
+	at org.eclipse.core.internal.resources.Workspace.buildInternal(Workspace.java:516)
+	at org.eclipse.core.internal.resources.Workspace.build(Workspace.java:406)
+	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 14:25:56.754
+!MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
+!STACK 0
+org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.DOMParser.parse(DOMParser.java:262)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderImpl.parse(DocumentBuilderImpl.java:342)
+	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
+	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
+	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getRootElement(DiscoveredScannerInfoStore.java:136)
+	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.loadDiscoveredScannerInfoFromState(DiscoveredScannerInfoStore.java:102)
+	at org.eclipse.cdt.make.internal.core.scannerconfig2.PerProjectSICollector.createPathInfoObject(PerProjectSICollector.java:467)
+	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager.loadPathInfo(CfgDiscoveredPathManager.java:311)
+	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager.getDiscoveredInfo(CfgDiscoveredPathManager.java:177)
+	at org.eclipse.cdt.managedbuilder.internal.dataprovider.ProfileInfoProvider.getEntryValues(ProfileInfoProvider.java:68)
+	at org.eclipse.cdt.managedbuilder.internal.dataprovider.BuildEntryStorage.getDiscoveredEntries(BuildEntryStorage.java:203)
+	at org.eclipse.cdt.managedbuilder.internal.dataprovider.BuildEntryStorage.putEntriesToLevel(BuildEntryStorage.java:193)
+	at org.eclipse.cdt.core.settings.model.util.AbstractEntryStorage.initCache(AbstractEntryStorage.java:74)
+	at org.eclipse.cdt.core.settings.model.util.AbstractEntryStorage.getEntries(AbstractEntryStorage.java:37)
+	at org.eclipse.cdt.managedbuilder.internal.dataprovider.BuildLanguageData.getEntries(BuildLanguageData.java:163)
+	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultLanguageData.getEntriesToCopy(CDefaultLanguageData.java:100)
+	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultLanguageData.createStore(CDefaultLanguageData.java:91)
+	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultLanguageData.copySettingsFrom(CDefaultLanguageData.java:84)
+	at org.eclipse.cdt.internal.core.settings.model.CLanguageSettingCache.copySettingsFrom(CLanguageSettingCache.java:49)
+	at org.eclipse.cdt.internal.core.settings.model.CLanguageSettingCache.<init>(CLanguageSettingCache.java:38)
+	at org.eclipse.cdt.internal.core.settings.model.CFolderDescriptionCache.copyLanguageData(CFolderDescriptionCache.java:82)
+	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultFolderData.copyDataFrom(CDefaultFolderData.java:60)
+	at org.eclipse.cdt.internal.core.settings.model.CFolderDescriptionCache.<init>(CFolderDescriptionCache.java:40)
+	at org.eclipse.cdt.internal.core.settings.model.CConfigurationDescriptionCache.copyFolderData(CConfigurationDescriptionCache.java:242)
+	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultConfigurationData.copySettingsFrom(CDefaultConfigurationData.java:117)
+	at org.eclipse.cdt.internal.core.settings.model.CConfigurationDescriptionCache.applyData(CConfigurationDescriptionCache.java:200)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescription.applyDatas(CProjectDescription.java:219)
+	at org.eclipse.cdt.internal.core.settings.model.SetCProjectDescriptionOperation.executeOperation(SetCProjectDescriptionOperation.java:103)
+	at org.eclipse.cdt.internal.core.model.CModelOperation.execute(CModelOperation.java:346)
+	at org.eclipse.cdt.internal.core.model.CModelOperation.run(CModelOperation.java:613)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2313)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2338)
+	at org.eclipse.cdt.internal.core.model.CModelOperation.runOperation(CModelOperation.java:644)
+	at org.eclipse.cdt.internal.core.settings.model.AbstractCProjectDescriptionStorage.setProjectDescription(AbstractCProjectDescriptionStorage.java:209)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionStorageManager.setProjectDescription(CProjectDescriptionStorageManager.java:153)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.setProjectDescription(CProjectDescriptionManager.java:867)
+	at org.eclipse.cdt.managedbuilder.internal.core.BuildSettingsUtil.checkApplyDescription(BuildSettingsUtil.java:210)
+	at org.eclipse.cdt.managedbuilder.core.ManagedBuildManager.updateCoreSettings(ManagedBuildManager.java:1515)
+	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager$1.run(CfgDiscoveredPathManager.java:157)
+	at org.eclipse.cdt.internal.core.model.BatchOperation.executeOperation(BatchOperation.java:36)
+	at org.eclipse.cdt.internal.core.model.CModelOperation.execute(CModelOperation.java:346)
+	at org.eclipse.cdt.internal.core.model.CModelOperation.run(CModelOperation.java:613)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2313)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2338)
+	at org.eclipse.cdt.core.model.CoreModel.run(CoreModel.java:1230)
+	at org.eclipse.cdt.core.model.CoreModel.run(CoreModel.java:1189)
+	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager.updateCoreSettings(CfgDiscoveredPathManager.java:160)
+	at org.eclipse.cdt.build.core.scannerconfig.ScannerConfigBuilder.build(ScannerConfigBuilder.java:129)
+	at org.eclipse.core.internal.events.BuildManager$2.run(BuildManager.java:853)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:232)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:281)
+	at org.eclipse.core.internal.events.BuildManager$1.run(BuildManager.java:334)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:337)
+	at org.eclipse.core.internal.events.BuildManager.basicBuildLoop(BuildManager.java:389)
+	at org.eclipse.core.internal.events.BuildManager.build(BuildManager.java:410)
+	at org.eclipse.core.internal.resources.Workspace.buildInternal(Workspace.java:516)
+	at org.eclipse.core.internal.resources.Workspace.build(Workspace.java:406)
+	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 14:25:56.754
+!MESSAGE Error accessing scanner config file for project 
+!STACK 1
+org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
+	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:193)
+	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getRootElement(DiscoveredScannerInfoStore.java:136)
+	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.loadDiscoveredScannerInfoFromState(DiscoveredScannerInfoStore.java:102)
+	at org.eclipse.cdt.make.internal.core.scannerconfig2.PerProjectSICollector.createPathInfoObject(PerProjectSICollector.java:467)
+	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager.loadPathInfo(CfgDiscoveredPathManager.java:311)
+	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager.getDiscoveredInfo(CfgDiscoveredPathManager.java:177)
+	at org.eclipse.cdt.managedbuilder.internal.dataprovider.ProfileInfoProvider.getEntryValues(ProfileInfoProvider.java:68)
+	at org.eclipse.cdt.managedbuilder.internal.dataprovider.BuildEntryStorage.getDiscoveredEntries(BuildEntryStorage.java:203)
+	at org.eclipse.cdt.managedbuilder.internal.dataprovider.BuildEntryStorage.putEntriesToLevel(BuildEntryStorage.java:193)
+	at org.eclipse.cdt.core.settings.model.util.AbstractEntryStorage.initCache(AbstractEntryStorage.java:74)
+	at org.eclipse.cdt.core.settings.model.util.AbstractEntryStorage.getEntries(AbstractEntryStorage.java:37)
+	at org.eclipse.cdt.managedbuilder.internal.dataprovider.BuildLanguageData.getEntries(BuildLanguageData.java:163)
+	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultLanguageData.getEntriesToCopy(CDefaultLanguageData.java:100)
+	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultLanguageData.createStore(CDefaultLanguageData.java:91)
+	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultLanguageData.copySettingsFrom(CDefaultLanguageData.java:84)
+	at org.eclipse.cdt.internal.core.settings.model.CLanguageSettingCache.copySettingsFrom(CLanguageSettingCache.java:49)
+	at org.eclipse.cdt.internal.core.settings.model.CLanguageSettingCache.<init>(CLanguageSettingCache.java:38)
+	at org.eclipse.cdt.internal.core.settings.model.CFolderDescriptionCache.copyLanguageData(CFolderDescriptionCache.java:82)
+	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultFolderData.copyDataFrom(CDefaultFolderData.java:60)
+	at org.eclipse.cdt.internal.core.settings.model.CFolderDescriptionCache.<init>(CFolderDescriptionCache.java:40)
+	at org.eclipse.cdt.internal.core.settings.model.CConfigurationDescriptionCache.copyFolderData(CConfigurationDescriptionCache.java:242)
+	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultConfigurationData.copySettingsFrom(CDefaultConfigurationData.java:117)
+	at org.eclipse.cdt.internal.core.settings.model.CConfigurationDescriptionCache.applyData(CConfigurationDescriptionCache.java:200)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescription.applyDatas(CProjectDescription.java:219)
+	at org.eclipse.cdt.internal.core.settings.model.SetCProjectDescriptionOperation.executeOperation(SetCProjectDescriptionOperation.java:103)
+	at org.eclipse.cdt.internal.core.model.CModelOperation.execute(CModelOperation.java:346)
+	at org.eclipse.cdt.internal.core.model.CModelOperation.run(CModelOperation.java:613)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2313)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2338)
+	at org.eclipse.cdt.internal.core.model.CModelOperation.runOperation(CModelOperation.java:644)
+	at org.eclipse.cdt.internal.core.settings.model.AbstractCProjectDescriptionStorage.setProjectDescription(AbstractCProjectDescriptionStorage.java:209)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionStorageManager.setProjectDescription(CProjectDescriptionStorageManager.java:153)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.setProjectDescription(CProjectDescriptionManager.java:867)
+	at org.eclipse.cdt.managedbuilder.internal.core.BuildSettingsUtil.checkApplyDescription(BuildSettingsUtil.java:210)
+	at org.eclipse.cdt.managedbuilder.core.ManagedBuildManager.updateCoreSettings(ManagedBuildManager.java:1515)
+	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager$1.run(CfgDiscoveredPathManager.java:157)
+	at org.eclipse.cdt.internal.core.model.BatchOperation.executeOperation(BatchOperation.java:36)
+	at org.eclipse.cdt.internal.core.model.CModelOperation.execute(CModelOperation.java:346)
+	at org.eclipse.cdt.internal.core.model.CModelOperation.run(CModelOperation.java:613)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2313)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2338)
+	at org.eclipse.cdt.core.model.CoreModel.run(CoreModel.java:1230)
+	at org.eclipse.cdt.core.model.CoreModel.run(CoreModel.java:1189)
+	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager.updateCoreSettings(CfgDiscoveredPathManager.java:160)
+	at org.eclipse.cdt.build.core.scannerconfig.ScannerConfigBuilder.build(ScannerConfigBuilder.java:129)
+	at org.eclipse.core.internal.events.BuildManager$2.run(BuildManager.java:853)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:232)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:281)
+	at org.eclipse.core.internal.events.BuildManager$1.run(BuildManager.java:334)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:337)
+	at org.eclipse.core.internal.events.BuildManager.basicBuildLoop(BuildManager.java:389)
+	at org.eclipse.core.internal.events.BuildManager.build(BuildManager.java:410)
+	at org.eclipse.core.internal.resources.Workspace.buildInternal(Workspace.java:516)
+	at org.eclipse.core.internal.resources.Workspace.build(Workspace.java:406)
+	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 	at java.xml/com.sun.org.apache.xerces.internal.parsers.DOMParser.parse(DOMParser.java:262)
@@ -9244,8 +9381,74 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소
 	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
 	... 57 more
-!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-06-21 17:38:21.408
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 14:25:56.755
 !MESSAGE Error accessing scanner config file for project 
+!STACK 0
+org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.DOMParser.parse(DOMParser.java:262)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderImpl.parse(DocumentBuilderImpl.java:342)
+	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
+	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
+	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getRootElement(DiscoveredScannerInfoStore.java:136)
+	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.loadDiscoveredScannerInfoFromState(DiscoveredScannerInfoStore.java:102)
+	at org.eclipse.cdt.make.internal.core.scannerconfig2.PerProjectSICollector.createPathInfoObject(PerProjectSICollector.java:467)
+	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager.loadPathInfo(CfgDiscoveredPathManager.java:311)
+	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager.getDiscoveredInfo(CfgDiscoveredPathManager.java:177)
+	at org.eclipse.cdt.managedbuilder.internal.dataprovider.ProfileInfoProvider.getEntryValues(ProfileInfoProvider.java:68)
+	at org.eclipse.cdt.managedbuilder.internal.dataprovider.BuildEntryStorage.getDiscoveredEntries(BuildEntryStorage.java:203)
+	at org.eclipse.cdt.managedbuilder.internal.dataprovider.BuildEntryStorage.putEntriesToLevel(BuildEntryStorage.java:193)
+	at org.eclipse.cdt.core.settings.model.util.AbstractEntryStorage.initCache(AbstractEntryStorage.java:74)
+	at org.eclipse.cdt.core.settings.model.util.AbstractEntryStorage.getEntries(AbstractEntryStorage.java:37)
+	at org.eclipse.cdt.managedbuilder.internal.dataprovider.BuildLanguageData.getEntries(BuildLanguageData.java:163)
+	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultLanguageData.getEntriesToCopy(CDefaultLanguageData.java:100)
+	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultLanguageData.createStore(CDefaultLanguageData.java:91)
+	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultLanguageData.copySettingsFrom(CDefaultLanguageData.java:84)
+	at org.eclipse.cdt.internal.core.settings.model.CLanguageSettingCache.copySettingsFrom(CLanguageSettingCache.java:49)
+	at org.eclipse.cdt.internal.core.settings.model.CLanguageSettingCache.<init>(CLanguageSettingCache.java:38)
+	at org.eclipse.cdt.internal.core.settings.model.CFolderDescriptionCache.copyLanguageData(CFolderDescriptionCache.java:82)
+	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultFolderData.copyDataFrom(CDefaultFolderData.java:60)
+	at org.eclipse.cdt.internal.core.settings.model.CFolderDescriptionCache.<init>(CFolderDescriptionCache.java:40)
+	at org.eclipse.cdt.internal.core.settings.model.CConfigurationDescriptionCache.copyFolderData(CConfigurationDescriptionCache.java:242)
+	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultConfigurationData.copySettingsFrom(CDefaultConfigurationData.java:117)
+	at org.eclipse.cdt.internal.core.settings.model.CConfigurationDescriptionCache.applyData(CConfigurationDescriptionCache.java:200)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescription.applyDatas(CProjectDescription.java:219)
+	at org.eclipse.cdt.internal.core.settings.model.SetCProjectDescriptionOperation.executeOperation(SetCProjectDescriptionOperation.java:103)
+	at org.eclipse.cdt.internal.core.model.CModelOperation.execute(CModelOperation.java:346)
+	at org.eclipse.cdt.internal.core.model.CModelOperation.run(CModelOperation.java:613)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2313)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2338)
+	at org.eclipse.cdt.internal.core.model.CModelOperation.runOperation(CModelOperation.java:644)
+	at org.eclipse.cdt.internal.core.settings.model.AbstractCProjectDescriptionStorage.setProjectDescription(AbstractCProjectDescriptionStorage.java:209)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionStorageManager.setProjectDescription(CProjectDescriptionStorageManager.java:153)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.setProjectDescription(CProjectDescriptionManager.java:867)
+	at org.eclipse.cdt.managedbuilder.internal.core.BuildSettingsUtil.checkApplyDescription(BuildSettingsUtil.java:210)
+	at org.eclipse.cdt.managedbuilder.core.ManagedBuildManager.updateCoreSettings(ManagedBuildManager.java:1515)
+	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager$1.run(CfgDiscoveredPathManager.java:157)
+	at org.eclipse.cdt.internal.core.model.BatchOperation.executeOperation(BatchOperation.java:36)
+	at org.eclipse.cdt.internal.core.model.CModelOperation.execute(CModelOperation.java:346)
+	at org.eclipse.cdt.internal.core.model.CModelOperation.run(CModelOperation.java:613)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2313)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2338)
+	at org.eclipse.cdt.core.model.CoreModel.run(CoreModel.java:1230)
+	at org.eclipse.cdt.core.model.CoreModel.run(CoreModel.java:1189)
+	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager.updateCoreSettings(CfgDiscoveredPathManager.java:160)
+	at org.eclipse.cdt.build.core.scannerconfig.ScannerConfigBuilder.build(ScannerConfigBuilder.java:129)
+	at org.eclipse.core.internal.events.BuildManager$2.run(BuildManager.java:853)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:232)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:281)
+	at org.eclipse.core.internal.events.BuildManager$1.run(BuildManager.java:334)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:337)
+	at org.eclipse.core.internal.events.BuildManager.basicBuildLoop(BuildManager.java:389)
+	at org.eclipse.core.internal.events.BuildManager.build(BuildManager.java:410)
+	at org.eclipse.core.internal.resources.Workspace.buildInternal(Workspace.java:516)
+	at org.eclipse.core.internal.resources.Workspace.build(Workspace.java:406)
+	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 14:25:56.756
+!MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 	at java.xml/com.sun.org.apache.xerces.internal.parsers.DOMParser.parse(DOMParser.java:262)
@@ -9305,87 +9508,18 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.core.internal.events.BuildManager.basicBuildLoop(BuildManager.java:389)
 	at org.eclipse.core.internal.events.BuildManager.build(BuildManager.java:410)
 	at org.eclipse.core.internal.resources.Workspace.buildInternal(Workspace.java:516)
-	at org.eclipse.core.internal.resources.Workspace.build(Workspace.java:413)
-	at org.eclipse.ui.actions.BuildAction$1.runInWorkspace(BuildAction.java:291)
-	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:42)
+	at org.eclipse.core.internal.resources.Workspace.build(Workspace.java:406)
+	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:38:21.630
-!MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
-!STACK 0
-org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
-	at java.xml/com.sun.org.apache.xerces.internal.parsers.DOMParser.parse(DOMParser.java:262)
-	at java.xml/com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderImpl.parse(DocumentBuilderImpl.java:342)
-	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
-	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
-	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getRootElement(DiscoveredScannerInfoStore.java:136)
-	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.loadDiscoveredScannerInfoFromState(DiscoveredScannerInfoStore.java:102)
-	at org.eclipse.cdt.make.internal.core.scannerconfig2.PerProjectSICollector.createPathInfoObject(PerProjectSICollector.java:467)
-	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager.loadPathInfo(CfgDiscoveredPathManager.java:311)
-	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager.getDiscoveredInfo(CfgDiscoveredPathManager.java:177)
-	at org.eclipse.cdt.managedbuilder.internal.dataprovider.ProfileInfoProvider.getEntryValues(ProfileInfoProvider.java:68)
-	at org.eclipse.cdt.managedbuilder.internal.dataprovider.BuildEntryStorage.getDiscoveredEntries(BuildEntryStorage.java:203)
-	at org.eclipse.cdt.managedbuilder.internal.dataprovider.BuildEntryStorage.putEntriesToLevel(BuildEntryStorage.java:193)
-	at org.eclipse.cdt.core.settings.model.util.AbstractEntryStorage.initCache(AbstractEntryStorage.java:74)
-	at org.eclipse.cdt.core.settings.model.util.AbstractEntryStorage.getEntries(AbstractEntryStorage.java:37)
-	at org.eclipse.cdt.managedbuilder.internal.dataprovider.BuildLanguageData.getEntries(BuildLanguageData.java:163)
-	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultLanguageData.getEntriesToCopy(CDefaultLanguageData.java:100)
-	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultLanguageData.createStore(CDefaultLanguageData.java:91)
-	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultLanguageData.copySettingsFrom(CDefaultLanguageData.java:84)
-	at org.eclipse.cdt.internal.core.settings.model.CLanguageSettingCache.copySettingsFrom(CLanguageSettingCache.java:49)
-	at org.eclipse.cdt.internal.core.settings.model.CLanguageSettingCache.<init>(CLanguageSettingCache.java:38)
-	at org.eclipse.cdt.internal.core.settings.model.CFolderDescriptionCache.copyLanguageData(CFolderDescriptionCache.java:82)
-	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultFolderData.copyDataFrom(CDefaultFolderData.java:60)
-	at org.eclipse.cdt.internal.core.settings.model.CFolderDescriptionCache.<init>(CFolderDescriptionCache.java:40)
-	at org.eclipse.cdt.internal.core.settings.model.CConfigurationDescriptionCache.copyFolderData(CConfigurationDescriptionCache.java:242)
-	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultConfigurationData.copySettingsFrom(CDefaultConfigurationData.java:117)
-	at org.eclipse.cdt.internal.core.settings.model.CConfigurationDescriptionCache.applyData(CConfigurationDescriptionCache.java:200)
-	at org.eclipse.cdt.internal.core.settings.model.CProjectDescription.applyDatas(CProjectDescription.java:219)
-	at org.eclipse.cdt.internal.core.settings.model.SetCProjectDescriptionOperation.executeOperation(SetCProjectDescriptionOperation.java:103)
-	at org.eclipse.cdt.internal.core.model.CModelOperation.execute(CModelOperation.java:346)
-	at org.eclipse.cdt.internal.core.model.CModelOperation.run(CModelOperation.java:613)
-	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2313)
-	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2338)
-	at org.eclipse.cdt.internal.core.model.CModelOperation.runOperation(CModelOperation.java:644)
-	at org.eclipse.cdt.internal.core.settings.model.AbstractCProjectDescriptionStorage.setProjectDescription(AbstractCProjectDescriptionStorage.java:209)
-	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionStorageManager.setProjectDescription(CProjectDescriptionStorageManager.java:153)
-	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.setProjectDescription(CProjectDescriptionManager.java:867)
-	at org.eclipse.cdt.managedbuilder.internal.core.BuildSettingsUtil.checkApplyDescription(BuildSettingsUtil.java:210)
-	at org.eclipse.cdt.managedbuilder.core.ManagedBuildManager.updateCoreSettings(ManagedBuildManager.java:1515)
-	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager$1.run(CfgDiscoveredPathManager.java:157)
-	at org.eclipse.cdt.internal.core.model.BatchOperation.executeOperation(BatchOperation.java:36)
-	at org.eclipse.cdt.internal.core.model.CModelOperation.execute(CModelOperation.java:346)
-	at org.eclipse.cdt.internal.core.model.CModelOperation.run(CModelOperation.java:613)
-	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2313)
-	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2338)
-	at org.eclipse.cdt.core.model.CoreModel.run(CoreModel.java:1230)
-	at org.eclipse.cdt.core.model.CoreModel.run(CoreModel.java:1189)
-	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager.updateCoreSettings(CfgDiscoveredPathManager.java:160)
-	at org.eclipse.cdt.build.core.scannerconfig.ScannerConfigBuilder.build(ScannerConfigBuilder.java:129)
-	at org.eclipse.core.internal.events.BuildManager$2.run(BuildManager.java:853)
-	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
-	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:232)
-	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:281)
-	at org.eclipse.core.internal.events.BuildManager$1.run(BuildManager.java:334)
-	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
-	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:337)
-	at org.eclipse.core.internal.events.BuildManager.basicBuildLoop(BuildManager.java:389)
-	at org.eclipse.core.internal.events.BuildManager.build(BuildManager.java:410)
-	at org.eclipse.core.internal.resources.Workspace.buildInternal(Workspace.java:516)
-	at org.eclipse.core.internal.resources.Workspace.build(Workspace.java:413)
-	at org.eclipse.ui.actions.BuildAction$1.runInWorkspace(BuildAction.java:291)
-	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:42)
-	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
-
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:38:21.630
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 14:25:56.756
 !MESSAGE Error accessing scanner config file for project 
 !STACK 1
 org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:193)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getRootElement(DiscoveredScannerInfoStore.java:136)
-	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.loadDiscoveredScannerInfoFromState(DiscoveredScannerInfoStore.java:102)
-	at org.eclipse.cdt.make.internal.core.scannerconfig2.PerProjectSICollector.createPathInfoObject(PerProjectSICollector.java:467)
-	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager.loadPathInfo(CfgDiscoveredPathManager.java:311)
+	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.hasInfo(DiscoveredScannerInfoStore.java:123)
+	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager.loadPathInfo(CfgDiscoveredPathManager.java:299)
 	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager.getDiscoveredInfo(CfgDiscoveredPathManager.java:177)
 	at org.eclipse.cdt.managedbuilder.internal.dataprovider.ProfileInfoProvider.getEntryValues(ProfileInfoProvider.java:68)
 	at org.eclipse.cdt.managedbuilder.internal.dataprovider.BuildEntryStorage.getDiscoveredEntries(BuildEntryStorage.java:203)
@@ -9436,18 +9570,82 @@ org.eclipse.core.runtime.CoreException: Error accessing scanner config file for 
 	at org.eclipse.core.internal.events.BuildManager.basicBuildLoop(BuildManager.java:389)
 	at org.eclipse.core.internal.events.BuildManager.build(BuildManager.java:410)
 	at org.eclipse.core.internal.resources.Workspace.buildInternal(Workspace.java:516)
-	at org.eclipse.core.internal.resources.Workspace.build(Workspace.java:413)
-	at org.eclipse.ui.actions.BuildAction$1.runInWorkspace(BuildAction.java:291)
-	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:42)
+	at org.eclipse.core.internal.resources.Workspace.build(Workspace.java:406)
+	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 	at java.xml/com.sun.org.apache.xerces.internal.parsers.DOMParser.parse(DOMParser.java:262)
 	at java.xml/com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderImpl.parse(DocumentBuilderImpl.java:342)
 	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
-	... 58 more
-!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-06-21 17:38:21.630
+	... 56 more
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 14:25:56.756
 !MESSAGE Error accessing scanner config file for project 
+!STACK 0
+org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.DOMParser.parse(DOMParser.java:262)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderImpl.parse(DocumentBuilderImpl.java:342)
+	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
+	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
+	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getRootElement(DiscoveredScannerInfoStore.java:136)
+	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.hasInfo(DiscoveredScannerInfoStore.java:123)
+	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager.loadPathInfo(CfgDiscoveredPathManager.java:299)
+	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager.getDiscoveredInfo(CfgDiscoveredPathManager.java:177)
+	at org.eclipse.cdt.managedbuilder.internal.dataprovider.ProfileInfoProvider.getEntryValues(ProfileInfoProvider.java:68)
+	at org.eclipse.cdt.managedbuilder.internal.dataprovider.BuildEntryStorage.getDiscoveredEntries(BuildEntryStorage.java:203)
+	at org.eclipse.cdt.managedbuilder.internal.dataprovider.BuildEntryStorage.putEntriesToLevel(BuildEntryStorage.java:193)
+	at org.eclipse.cdt.core.settings.model.util.AbstractEntryStorage.initCache(AbstractEntryStorage.java:74)
+	at org.eclipse.cdt.core.settings.model.util.AbstractEntryStorage.getEntries(AbstractEntryStorage.java:37)
+	at org.eclipse.cdt.managedbuilder.internal.dataprovider.BuildLanguageData.getEntries(BuildLanguageData.java:163)
+	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultLanguageData.getEntriesToCopy(CDefaultLanguageData.java:100)
+	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultLanguageData.createStore(CDefaultLanguageData.java:91)
+	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultLanguageData.copySettingsFrom(CDefaultLanguageData.java:84)
+	at org.eclipse.cdt.internal.core.settings.model.CLanguageSettingCache.copySettingsFrom(CLanguageSettingCache.java:49)
+	at org.eclipse.cdt.internal.core.settings.model.CLanguageSettingCache.<init>(CLanguageSettingCache.java:38)
+	at org.eclipse.cdt.internal.core.settings.model.CFolderDescriptionCache.copyLanguageData(CFolderDescriptionCache.java:82)
+	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultFolderData.copyDataFrom(CDefaultFolderData.java:60)
+	at org.eclipse.cdt.internal.core.settings.model.CFolderDescriptionCache.<init>(CFolderDescriptionCache.java:40)
+	at org.eclipse.cdt.internal.core.settings.model.CConfigurationDescriptionCache.copyFolderData(CConfigurationDescriptionCache.java:242)
+	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultConfigurationData.copySettingsFrom(CDefaultConfigurationData.java:117)
+	at org.eclipse.cdt.internal.core.settings.model.CConfigurationDescriptionCache.applyData(CConfigurationDescriptionCache.java:200)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescription.applyDatas(CProjectDescription.java:219)
+	at org.eclipse.cdt.internal.core.settings.model.SetCProjectDescriptionOperation.executeOperation(SetCProjectDescriptionOperation.java:103)
+	at org.eclipse.cdt.internal.core.model.CModelOperation.execute(CModelOperation.java:346)
+	at org.eclipse.cdt.internal.core.model.CModelOperation.run(CModelOperation.java:613)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2313)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2338)
+	at org.eclipse.cdt.internal.core.model.CModelOperation.runOperation(CModelOperation.java:644)
+	at org.eclipse.cdt.internal.core.settings.model.AbstractCProjectDescriptionStorage.setProjectDescription(AbstractCProjectDescriptionStorage.java:209)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionStorageManager.setProjectDescription(CProjectDescriptionStorageManager.java:153)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.setProjectDescription(CProjectDescriptionManager.java:867)
+	at org.eclipse.cdt.managedbuilder.internal.core.BuildSettingsUtil.checkApplyDescription(BuildSettingsUtil.java:210)
+	at org.eclipse.cdt.managedbuilder.core.ManagedBuildManager.updateCoreSettings(ManagedBuildManager.java:1515)
+	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager$1.run(CfgDiscoveredPathManager.java:157)
+	at org.eclipse.cdt.internal.core.model.BatchOperation.executeOperation(BatchOperation.java:36)
+	at org.eclipse.cdt.internal.core.model.CModelOperation.execute(CModelOperation.java:346)
+	at org.eclipse.cdt.internal.core.model.CModelOperation.run(CModelOperation.java:613)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2313)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2338)
+	at org.eclipse.cdt.core.model.CoreModel.run(CoreModel.java:1230)
+	at org.eclipse.cdt.core.model.CoreModel.run(CoreModel.java:1189)
+	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager.updateCoreSettings(CfgDiscoveredPathManager.java:160)
+	at org.eclipse.cdt.build.core.scannerconfig.ScannerConfigBuilder.build(ScannerConfigBuilder.java:129)
+	at org.eclipse.core.internal.events.BuildManager$2.run(BuildManager.java:853)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:232)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:281)
+	at org.eclipse.core.internal.events.BuildManager$1.run(BuildManager.java:334)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:337)
+	at org.eclipse.core.internal.events.BuildManager.basicBuildLoop(BuildManager.java:389)
+	at org.eclipse.core.internal.events.BuildManager.build(BuildManager.java:410)
+	at org.eclipse.core.internal.resources.Workspace.buildInternal(Workspace.java:516)
+	at org.eclipse.core.internal.resources.Workspace.build(Workspace.java:406)
+	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 14:25:56.909
+!MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 	at java.xml/com.sun.org.apache.xerces.internal.parsers.DOMParser.parse(DOMParser.java:262)
@@ -9508,85 +9706,19 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.core.internal.events.BuildManager.basicBuildLoop(BuildManager.java:389)
 	at org.eclipse.core.internal.events.BuildManager.build(BuildManager.java:410)
 	at org.eclipse.core.internal.resources.Workspace.buildInternal(Workspace.java:516)
-	at org.eclipse.core.internal.resources.Workspace.build(Workspace.java:413)
-	at org.eclipse.ui.actions.BuildAction$1.runInWorkspace(BuildAction.java:291)
-	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:42)
+	at org.eclipse.core.internal.resources.Workspace.build(Workspace.java:406)
+	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:38:21.633
-!MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
-!STACK 0
-org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
-	at java.xml/com.sun.org.apache.xerces.internal.parsers.DOMParser.parse(DOMParser.java:262)
-	at java.xml/com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderImpl.parse(DocumentBuilderImpl.java:342)
-	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
-	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
-	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getRootElement(DiscoveredScannerInfoStore.java:136)
-	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.hasInfo(DiscoveredScannerInfoStore.java:123)
-	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager.loadPathInfo(CfgDiscoveredPathManager.java:299)
-	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager.getDiscoveredInfo(CfgDiscoveredPathManager.java:177)
-	at org.eclipse.cdt.managedbuilder.internal.dataprovider.ProfileInfoProvider.getEntryValues(ProfileInfoProvider.java:68)
-	at org.eclipse.cdt.managedbuilder.internal.dataprovider.BuildEntryStorage.getDiscoveredEntries(BuildEntryStorage.java:203)
-	at org.eclipse.cdt.managedbuilder.internal.dataprovider.BuildEntryStorage.putEntriesToLevel(BuildEntryStorage.java:193)
-	at org.eclipse.cdt.core.settings.model.util.AbstractEntryStorage.initCache(AbstractEntryStorage.java:74)
-	at org.eclipse.cdt.core.settings.model.util.AbstractEntryStorage.getEntries(AbstractEntryStorage.java:37)
-	at org.eclipse.cdt.managedbuilder.internal.dataprovider.BuildLanguageData.getEntries(BuildLanguageData.java:163)
-	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultLanguageData.getEntriesToCopy(CDefaultLanguageData.java:100)
-	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultLanguageData.createStore(CDefaultLanguageData.java:91)
-	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultLanguageData.copySettingsFrom(CDefaultLanguageData.java:84)
-	at org.eclipse.cdt.internal.core.settings.model.CLanguageSettingCache.copySettingsFrom(CLanguageSettingCache.java:49)
-	at org.eclipse.cdt.internal.core.settings.model.CLanguageSettingCache.<init>(CLanguageSettingCache.java:38)
-	at org.eclipse.cdt.internal.core.settings.model.CFolderDescriptionCache.copyLanguageData(CFolderDescriptionCache.java:82)
-	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultFolderData.copyDataFrom(CDefaultFolderData.java:60)
-	at org.eclipse.cdt.internal.core.settings.model.CFolderDescriptionCache.<init>(CFolderDescriptionCache.java:40)
-	at org.eclipse.cdt.internal.core.settings.model.CConfigurationDescriptionCache.copyFolderData(CConfigurationDescriptionCache.java:242)
-	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultConfigurationData.copySettingsFrom(CDefaultConfigurationData.java:117)
-	at org.eclipse.cdt.internal.core.settings.model.CConfigurationDescriptionCache.applyData(CConfigurationDescriptionCache.java:200)
-	at org.eclipse.cdt.internal.core.settings.model.CProjectDescription.applyDatas(CProjectDescription.java:219)
-	at org.eclipse.cdt.internal.core.settings.model.SetCProjectDescriptionOperation.executeOperation(SetCProjectDescriptionOperation.java:103)
-	at org.eclipse.cdt.internal.core.model.CModelOperation.execute(CModelOperation.java:346)
-	at org.eclipse.cdt.internal.core.model.CModelOperation.run(CModelOperation.java:613)
-	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2313)
-	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2338)
-	at org.eclipse.cdt.internal.core.model.CModelOperation.runOperation(CModelOperation.java:644)
-	at org.eclipse.cdt.internal.core.settings.model.AbstractCProjectDescriptionStorage.setProjectDescription(AbstractCProjectDescriptionStorage.java:209)
-	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionStorageManager.setProjectDescription(CProjectDescriptionStorageManager.java:153)
-	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.setProjectDescription(CProjectDescriptionManager.java:867)
-	at org.eclipse.cdt.managedbuilder.internal.core.BuildSettingsUtil.checkApplyDescription(BuildSettingsUtil.java:210)
-	at org.eclipse.cdt.managedbuilder.core.ManagedBuildManager.updateCoreSettings(ManagedBuildManager.java:1515)
-	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager$1.run(CfgDiscoveredPathManager.java:157)
-	at org.eclipse.cdt.internal.core.model.BatchOperation.executeOperation(BatchOperation.java:36)
-	at org.eclipse.cdt.internal.core.model.CModelOperation.execute(CModelOperation.java:346)
-	at org.eclipse.cdt.internal.core.model.CModelOperation.run(CModelOperation.java:613)
-	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2313)
-	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2338)
-	at org.eclipse.cdt.core.model.CoreModel.run(CoreModel.java:1230)
-	at org.eclipse.cdt.core.model.CoreModel.run(CoreModel.java:1189)
-	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager.updateCoreSettings(CfgDiscoveredPathManager.java:160)
-	at org.eclipse.cdt.build.core.scannerconfig.ScannerConfigBuilder.build(ScannerConfigBuilder.java:129)
-	at org.eclipse.core.internal.events.BuildManager$2.run(BuildManager.java:853)
-	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
-	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:232)
-	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:281)
-	at org.eclipse.core.internal.events.BuildManager$1.run(BuildManager.java:334)
-	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
-	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:337)
-	at org.eclipse.core.internal.events.BuildManager.basicBuildLoop(BuildManager.java:389)
-	at org.eclipse.core.internal.events.BuildManager.build(BuildManager.java:410)
-	at org.eclipse.core.internal.resources.Workspace.buildInternal(Workspace.java:516)
-	at org.eclipse.core.internal.resources.Workspace.build(Workspace.java:413)
-	at org.eclipse.ui.actions.BuildAction$1.runInWorkspace(BuildAction.java:291)
-	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:42)
-	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
-
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:38:21.633
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 14:25:56.910
 !MESSAGE Error accessing scanner config file for project 
 !STACK 1
 org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:193)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getRootElement(DiscoveredScannerInfoStore.java:136)
-	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.hasInfo(DiscoveredScannerInfoStore.java:123)
-	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager.loadPathInfo(CfgDiscoveredPathManager.java:299)
+	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.loadDiscoveredScannerInfoFromState(DiscoveredScannerInfoStore.java:102)
+	at org.eclipse.cdt.make.internal.core.scannerconfig2.PerProjectSICollector.createPathInfoObject(PerProjectSICollector.java:467)
+	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager.loadPathInfo(CfgDiscoveredPathManager.java:311)
 	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager.getDiscoveredInfo(CfgDiscoveredPathManager.java:177)
 	at org.eclipse.cdt.managedbuilder.internal.dataprovider.ProfileInfoProvider.getEntryValues(ProfileInfoProvider.java:68)
 	at org.eclipse.cdt.managedbuilder.internal.dataprovider.BuildEntryStorage.getDiscoveredEntries(BuildEntryStorage.java:203)
@@ -9637,9 +9769,8 @@ org.eclipse.core.runtime.CoreException: Error accessing scanner config file for 
 	at org.eclipse.core.internal.events.BuildManager.basicBuildLoop(BuildManager.java:389)
 	at org.eclipse.core.internal.events.BuildManager.build(BuildManager.java:410)
 	at org.eclipse.core.internal.resources.Workspace.buildInternal(Workspace.java:516)
-	at org.eclipse.core.internal.resources.Workspace.build(Workspace.java:413)
-	at org.eclipse.ui.actions.BuildAction$1.runInWorkspace(BuildAction.java:291)
-	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:42)
+	at org.eclipse.core.internal.resources.Workspace.build(Workspace.java:406)
+	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 	at java.xml/com.sun.org.apache.xerces.internal.parsers.DOMParser.parse(DOMParser.java:262)
@@ -9647,209 +9778,7 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소
 	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
 	... 57 more
-!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-06-21 17:38:21.633
-!MESSAGE Error accessing scanner config file for project 
-!STACK 0
-org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
-	at java.xml/com.sun.org.apache.xerces.internal.parsers.DOMParser.parse(DOMParser.java:262)
-	at java.xml/com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderImpl.parse(DocumentBuilderImpl.java:342)
-	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
-	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
-	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getRootElement(DiscoveredScannerInfoStore.java:136)
-	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.hasInfo(DiscoveredScannerInfoStore.java:123)
-	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager.loadPathInfo(CfgDiscoveredPathManager.java:299)
-	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager.getDiscoveredInfo(CfgDiscoveredPathManager.java:177)
-	at org.eclipse.cdt.managedbuilder.internal.dataprovider.ProfileInfoProvider.getEntryValues(ProfileInfoProvider.java:68)
-	at org.eclipse.cdt.managedbuilder.internal.dataprovider.BuildEntryStorage.getDiscoveredEntries(BuildEntryStorage.java:203)
-	at org.eclipse.cdt.managedbuilder.internal.dataprovider.BuildEntryStorage.putEntriesToLevel(BuildEntryStorage.java:193)
-	at org.eclipse.cdt.core.settings.model.util.AbstractEntryStorage.initCache(AbstractEntryStorage.java:74)
-	at org.eclipse.cdt.core.settings.model.util.AbstractEntryStorage.getEntries(AbstractEntryStorage.java:37)
-	at org.eclipse.cdt.managedbuilder.internal.dataprovider.BuildLanguageData.getEntries(BuildLanguageData.java:163)
-	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultLanguageData.getEntriesToCopy(CDefaultLanguageData.java:100)
-	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultLanguageData.createStore(CDefaultLanguageData.java:91)
-	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultLanguageData.copySettingsFrom(CDefaultLanguageData.java:84)
-	at org.eclipse.cdt.internal.core.settings.model.CLanguageSettingCache.copySettingsFrom(CLanguageSettingCache.java:49)
-	at org.eclipse.cdt.internal.core.settings.model.CLanguageSettingCache.<init>(CLanguageSettingCache.java:38)
-	at org.eclipse.cdt.internal.core.settings.model.CFolderDescriptionCache.copyLanguageData(CFolderDescriptionCache.java:82)
-	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultFolderData.copyDataFrom(CDefaultFolderData.java:60)
-	at org.eclipse.cdt.internal.core.settings.model.CFolderDescriptionCache.<init>(CFolderDescriptionCache.java:40)
-	at org.eclipse.cdt.internal.core.settings.model.CConfigurationDescriptionCache.copyFolderData(CConfigurationDescriptionCache.java:242)
-	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultConfigurationData.copySettingsFrom(CDefaultConfigurationData.java:117)
-	at org.eclipse.cdt.internal.core.settings.model.CConfigurationDescriptionCache.applyData(CConfigurationDescriptionCache.java:200)
-	at org.eclipse.cdt.internal.core.settings.model.CProjectDescription.applyDatas(CProjectDescription.java:219)
-	at org.eclipse.cdt.internal.core.settings.model.SetCProjectDescriptionOperation.executeOperation(SetCProjectDescriptionOperation.java:103)
-	at org.eclipse.cdt.internal.core.model.CModelOperation.execute(CModelOperation.java:346)
-	at org.eclipse.cdt.internal.core.model.CModelOperation.run(CModelOperation.java:613)
-	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2313)
-	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2338)
-	at org.eclipse.cdt.internal.core.model.CModelOperation.runOperation(CModelOperation.java:644)
-	at org.eclipse.cdt.internal.core.settings.model.AbstractCProjectDescriptionStorage.setProjectDescription(AbstractCProjectDescriptionStorage.java:209)
-	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionStorageManager.setProjectDescription(CProjectDescriptionStorageManager.java:153)
-	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.setProjectDescription(CProjectDescriptionManager.java:867)
-	at org.eclipse.cdt.managedbuilder.internal.core.BuildSettingsUtil.checkApplyDescription(BuildSettingsUtil.java:210)
-	at org.eclipse.cdt.managedbuilder.core.ManagedBuildManager.updateCoreSettings(ManagedBuildManager.java:1515)
-	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager$1.run(CfgDiscoveredPathManager.java:157)
-	at org.eclipse.cdt.internal.core.model.BatchOperation.executeOperation(BatchOperation.java:36)
-	at org.eclipse.cdt.internal.core.model.CModelOperation.execute(CModelOperation.java:346)
-	at org.eclipse.cdt.internal.core.model.CModelOperation.run(CModelOperation.java:613)
-	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2313)
-	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2338)
-	at org.eclipse.cdt.core.model.CoreModel.run(CoreModel.java:1230)
-	at org.eclipse.cdt.core.model.CoreModel.run(CoreModel.java:1189)
-	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager.updateCoreSettings(CfgDiscoveredPathManager.java:160)
-	at org.eclipse.cdt.build.core.scannerconfig.ScannerConfigBuilder.build(ScannerConfigBuilder.java:129)
-	at org.eclipse.core.internal.events.BuildManager$2.run(BuildManager.java:853)
-	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
-	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:232)
-	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:281)
-	at org.eclipse.core.internal.events.BuildManager$1.run(BuildManager.java:334)
-	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
-	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:337)
-	at org.eclipse.core.internal.events.BuildManager.basicBuildLoop(BuildManager.java:389)
-	at org.eclipse.core.internal.events.BuildManager.build(BuildManager.java:410)
-	at org.eclipse.core.internal.resources.Workspace.buildInternal(Workspace.java:516)
-	at org.eclipse.core.internal.resources.Workspace.build(Workspace.java:413)
-	at org.eclipse.ui.actions.BuildAction$1.runInWorkspace(BuildAction.java:291)
-	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:42)
-	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
-
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:38:21.906
-!MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
-!STACK 0
-org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
-	at java.xml/com.sun.org.apache.xerces.internal.parsers.DOMParser.parse(DOMParser.java:262)
-	at java.xml/com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderImpl.parse(DocumentBuilderImpl.java:342)
-	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
-	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
-	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getRootElement(DiscoveredScannerInfoStore.java:136)
-	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.loadDiscoveredScannerInfoFromState(DiscoveredScannerInfoStore.java:102)
-	at org.eclipse.cdt.make.internal.core.scannerconfig2.PerProjectSICollector.createPathInfoObject(PerProjectSICollector.java:467)
-	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager.loadPathInfo(CfgDiscoveredPathManager.java:311)
-	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager.getDiscoveredInfo(CfgDiscoveredPathManager.java:177)
-	at org.eclipse.cdt.managedbuilder.internal.dataprovider.ProfileInfoProvider.getEntryValues(ProfileInfoProvider.java:68)
-	at org.eclipse.cdt.managedbuilder.internal.dataprovider.BuildEntryStorage.getDiscoveredEntries(BuildEntryStorage.java:203)
-	at org.eclipse.cdt.managedbuilder.internal.dataprovider.BuildEntryStorage.putEntriesToLevel(BuildEntryStorage.java:193)
-	at org.eclipse.cdt.core.settings.model.util.AbstractEntryStorage.initCache(AbstractEntryStorage.java:74)
-	at org.eclipse.cdt.core.settings.model.util.AbstractEntryStorage.getEntries(AbstractEntryStorage.java:37)
-	at org.eclipse.cdt.managedbuilder.internal.dataprovider.BuildLanguageData.getEntries(BuildLanguageData.java:163)
-	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultLanguageData.getEntriesToCopy(CDefaultLanguageData.java:100)
-	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultLanguageData.createStore(CDefaultLanguageData.java:91)
-	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultLanguageData.copySettingsFrom(CDefaultLanguageData.java:84)
-	at org.eclipse.cdt.internal.core.settings.model.CLanguageSettingCache.copySettingsFrom(CLanguageSettingCache.java:49)
-	at org.eclipse.cdt.internal.core.settings.model.CLanguageSettingCache.<init>(CLanguageSettingCache.java:38)
-	at org.eclipse.cdt.internal.core.settings.model.CFolderDescriptionCache.copyLanguageData(CFolderDescriptionCache.java:82)
-	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultFolderData.copyDataFrom(CDefaultFolderData.java:60)
-	at org.eclipse.cdt.internal.core.settings.model.CFolderDescriptionCache.<init>(CFolderDescriptionCache.java:40)
-	at org.eclipse.cdt.internal.core.settings.model.CConfigurationDescriptionCache.copyFolderData(CConfigurationDescriptionCache.java:242)
-	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultConfigurationData.copySettingsFrom(CDefaultConfigurationData.java:117)
-	at org.eclipse.cdt.internal.core.settings.model.CConfigurationDescriptionCache.applyData(CConfigurationDescriptionCache.java:200)
-	at org.eclipse.cdt.internal.core.settings.model.CProjectDescription.applyDatas(CProjectDescription.java:219)
-	at org.eclipse.cdt.internal.core.settings.model.SetCProjectDescriptionOperation.executeOperation(SetCProjectDescriptionOperation.java:103)
-	at org.eclipse.cdt.internal.core.model.CModelOperation.execute(CModelOperation.java:346)
-	at org.eclipse.cdt.internal.core.model.CModelOperation.run(CModelOperation.java:613)
-	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2313)
-	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2338)
-	at org.eclipse.cdt.internal.core.model.CModelOperation.runOperation(CModelOperation.java:644)
-	at org.eclipse.cdt.internal.core.settings.model.AbstractCProjectDescriptionStorage.setProjectDescription(AbstractCProjectDescriptionStorage.java:209)
-	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionStorageManager.setProjectDescription(CProjectDescriptionStorageManager.java:153)
-	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.setProjectDescription(CProjectDescriptionManager.java:867)
-	at org.eclipse.cdt.managedbuilder.internal.core.BuildSettingsUtil.checkApplyDescription(BuildSettingsUtil.java:210)
-	at org.eclipse.cdt.managedbuilder.core.ManagedBuildManager.updateCoreSettings(ManagedBuildManager.java:1515)
-	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager$1.run(CfgDiscoveredPathManager.java:157)
-	at org.eclipse.cdt.internal.core.model.BatchOperation.executeOperation(BatchOperation.java:36)
-	at org.eclipse.cdt.internal.core.model.CModelOperation.execute(CModelOperation.java:346)
-	at org.eclipse.cdt.internal.core.model.CModelOperation.run(CModelOperation.java:613)
-	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2313)
-	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2338)
-	at org.eclipse.cdt.core.model.CoreModel.run(CoreModel.java:1230)
-	at org.eclipse.cdt.core.model.CoreModel.run(CoreModel.java:1189)
-	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager.updateCoreSettings(CfgDiscoveredPathManager.java:160)
-	at org.eclipse.cdt.build.core.scannerconfig.ScannerConfigBuilder.build(ScannerConfigBuilder.java:129)
-	at org.eclipse.core.internal.events.BuildManager$2.run(BuildManager.java:853)
-	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
-	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:232)
-	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:281)
-	at org.eclipse.core.internal.events.BuildManager$1.run(BuildManager.java:334)
-	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
-	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:337)
-	at org.eclipse.core.internal.events.BuildManager.basicBuildLoop(BuildManager.java:389)
-	at org.eclipse.core.internal.events.BuildManager.build(BuildManager.java:410)
-	at org.eclipse.core.internal.resources.Workspace.buildInternal(Workspace.java:516)
-	at org.eclipse.core.internal.resources.Workspace.build(Workspace.java:413)
-	at org.eclipse.ui.actions.BuildAction$1.runInWorkspace(BuildAction.java:291)
-	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:42)
-	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
-
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:38:21.907
-!MESSAGE Error accessing scanner config file for project 
-!STACK 1
-org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
-	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:193)
-	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getRootElement(DiscoveredScannerInfoStore.java:136)
-	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.loadDiscoveredScannerInfoFromState(DiscoveredScannerInfoStore.java:102)
-	at org.eclipse.cdt.make.internal.core.scannerconfig2.PerProjectSICollector.createPathInfoObject(PerProjectSICollector.java:467)
-	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager.loadPathInfo(CfgDiscoveredPathManager.java:311)
-	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager.getDiscoveredInfo(CfgDiscoveredPathManager.java:177)
-	at org.eclipse.cdt.managedbuilder.internal.dataprovider.ProfileInfoProvider.getEntryValues(ProfileInfoProvider.java:68)
-	at org.eclipse.cdt.managedbuilder.internal.dataprovider.BuildEntryStorage.getDiscoveredEntries(BuildEntryStorage.java:203)
-	at org.eclipse.cdt.managedbuilder.internal.dataprovider.BuildEntryStorage.putEntriesToLevel(BuildEntryStorage.java:193)
-	at org.eclipse.cdt.core.settings.model.util.AbstractEntryStorage.initCache(AbstractEntryStorage.java:74)
-	at org.eclipse.cdt.core.settings.model.util.AbstractEntryStorage.getEntries(AbstractEntryStorage.java:37)
-	at org.eclipse.cdt.managedbuilder.internal.dataprovider.BuildLanguageData.getEntries(BuildLanguageData.java:163)
-	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultLanguageData.getEntriesToCopy(CDefaultLanguageData.java:100)
-	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultLanguageData.createStore(CDefaultLanguageData.java:91)
-	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultLanguageData.copySettingsFrom(CDefaultLanguageData.java:84)
-	at org.eclipse.cdt.internal.core.settings.model.CLanguageSettingCache.copySettingsFrom(CLanguageSettingCache.java:49)
-	at org.eclipse.cdt.internal.core.settings.model.CLanguageSettingCache.<init>(CLanguageSettingCache.java:38)
-	at org.eclipse.cdt.internal.core.settings.model.CFolderDescriptionCache.copyLanguageData(CFolderDescriptionCache.java:82)
-	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultFolderData.copyDataFrom(CDefaultFolderData.java:60)
-	at org.eclipse.cdt.internal.core.settings.model.CFolderDescriptionCache.<init>(CFolderDescriptionCache.java:40)
-	at org.eclipse.cdt.internal.core.settings.model.CConfigurationDescriptionCache.copyFolderData(CConfigurationDescriptionCache.java:242)
-	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultConfigurationData.copySettingsFrom(CDefaultConfigurationData.java:117)
-	at org.eclipse.cdt.internal.core.settings.model.CConfigurationDescriptionCache.applyData(CConfigurationDescriptionCache.java:200)
-	at org.eclipse.cdt.internal.core.settings.model.CProjectDescription.applyDatas(CProjectDescription.java:219)
-	at org.eclipse.cdt.internal.core.settings.model.SetCProjectDescriptionOperation.executeOperation(SetCProjectDescriptionOperation.java:103)
-	at org.eclipse.cdt.internal.core.model.CModelOperation.execute(CModelOperation.java:346)
-	at org.eclipse.cdt.internal.core.model.CModelOperation.run(CModelOperation.java:613)
-	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2313)
-	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2338)
-	at org.eclipse.cdt.internal.core.model.CModelOperation.runOperation(CModelOperation.java:644)
-	at org.eclipse.cdt.internal.core.settings.model.AbstractCProjectDescriptionStorage.setProjectDescription(AbstractCProjectDescriptionStorage.java:209)
-	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionStorageManager.setProjectDescription(CProjectDescriptionStorageManager.java:153)
-	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.setProjectDescription(CProjectDescriptionManager.java:867)
-	at org.eclipse.cdt.managedbuilder.internal.core.BuildSettingsUtil.checkApplyDescription(BuildSettingsUtil.java:210)
-	at org.eclipse.cdt.managedbuilder.core.ManagedBuildManager.updateCoreSettings(ManagedBuildManager.java:1515)
-	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager$1.run(CfgDiscoveredPathManager.java:157)
-	at org.eclipse.cdt.internal.core.model.BatchOperation.executeOperation(BatchOperation.java:36)
-	at org.eclipse.cdt.internal.core.model.CModelOperation.execute(CModelOperation.java:346)
-	at org.eclipse.cdt.internal.core.model.CModelOperation.run(CModelOperation.java:613)
-	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2313)
-	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2338)
-	at org.eclipse.cdt.core.model.CoreModel.run(CoreModel.java:1230)
-	at org.eclipse.cdt.core.model.CoreModel.run(CoreModel.java:1189)
-	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager.updateCoreSettings(CfgDiscoveredPathManager.java:160)
-	at org.eclipse.cdt.build.core.scannerconfig.ScannerConfigBuilder.build(ScannerConfigBuilder.java:129)
-	at org.eclipse.core.internal.events.BuildManager$2.run(BuildManager.java:853)
-	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
-	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:232)
-	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:281)
-	at org.eclipse.core.internal.events.BuildManager$1.run(BuildManager.java:334)
-	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
-	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:337)
-	at org.eclipse.core.internal.events.BuildManager.basicBuildLoop(BuildManager.java:389)
-	at org.eclipse.core.internal.events.BuildManager.build(BuildManager.java:410)
-	at org.eclipse.core.internal.resources.Workspace.buildInternal(Workspace.java:516)
-	at org.eclipse.core.internal.resources.Workspace.build(Workspace.java:413)
-	at org.eclipse.ui.actions.BuildAction$1.runInWorkspace(BuildAction.java:291)
-	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:42)
-	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
-Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
-	at java.xml/com.sun.org.apache.xerces.internal.parsers.DOMParser.parse(DOMParser.java:262)
-	at java.xml/com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderImpl.parse(DocumentBuilderImpl.java:342)
-	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
-	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
-	... 58 more
-!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-06-21 17:38:21.907
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 14:25:56.910
 !MESSAGE Error accessing scanner config file for project 
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -9911,12 +9840,11 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.core.internal.events.BuildManager.basicBuildLoop(BuildManager.java:389)
 	at org.eclipse.core.internal.events.BuildManager.build(BuildManager.java:410)
 	at org.eclipse.core.internal.resources.Workspace.buildInternal(Workspace.java:516)
-	at org.eclipse.core.internal.resources.Workspace.build(Workspace.java:413)
-	at org.eclipse.ui.actions.BuildAction$1.runInWorkspace(BuildAction.java:291)
-	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:42)
+	at org.eclipse.core.internal.resources.Workspace.build(Workspace.java:406)
+	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:38:21.911
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 14:25:56.912
 !MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -9977,12 +9905,11 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.core.internal.events.BuildManager.basicBuildLoop(BuildManager.java:389)
 	at org.eclipse.core.internal.events.BuildManager.build(BuildManager.java:410)
 	at org.eclipse.core.internal.resources.Workspace.buildInternal(Workspace.java:516)
-	at org.eclipse.core.internal.resources.Workspace.build(Workspace.java:413)
-	at org.eclipse.ui.actions.BuildAction$1.runInWorkspace(BuildAction.java:291)
-	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:42)
+	at org.eclipse.core.internal.resources.Workspace.build(Workspace.java:406)
+	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:38:21.911
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 14:25:56.913
 !MESSAGE Error accessing scanner config file for project 
 !STACK 1
 org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
@@ -10040,17 +9967,16 @@ org.eclipse.core.runtime.CoreException: Error accessing scanner config file for 
 	at org.eclipse.core.internal.events.BuildManager.basicBuildLoop(BuildManager.java:389)
 	at org.eclipse.core.internal.events.BuildManager.build(BuildManager.java:410)
 	at org.eclipse.core.internal.resources.Workspace.buildInternal(Workspace.java:516)
-	at org.eclipse.core.internal.resources.Workspace.build(Workspace.java:413)
-	at org.eclipse.ui.actions.BuildAction$1.runInWorkspace(BuildAction.java:291)
-	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:42)
+	at org.eclipse.core.internal.resources.Workspace.build(Workspace.java:406)
+	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 	at java.xml/com.sun.org.apache.xerces.internal.parsers.DOMParser.parse(DOMParser.java:262)
 	at java.xml/com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderImpl.parse(DocumentBuilderImpl.java:342)
 	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
 	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
-	... 57 more
-!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-06-21 17:38:21.912
+	... 56 more
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 14:25:56.913
 !MESSAGE Error accessing scanner config file for project 
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -10111,12 +10037,11 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.core.internal.events.BuildManager.basicBuildLoop(BuildManager.java:389)
 	at org.eclipse.core.internal.events.BuildManager.build(BuildManager.java:410)
 	at org.eclipse.core.internal.resources.Workspace.buildInternal(Workspace.java:516)
-	at org.eclipse.core.internal.resources.Workspace.build(Workspace.java:413)
-	at org.eclipse.ui.actions.BuildAction$1.runInWorkspace(BuildAction.java:291)
-	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:42)
+	at org.eclipse.core.internal.resources.Workspace.build(Workspace.java:406)
+	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
-!ENTRY org.eclipse.cdt.make.core 4 0 2023-06-21 17:38:21.919
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 14:25:56.916
 !MESSAGE 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
@@ -10177,7 +10102,138 @@ org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠�
 	at org.eclipse.core.internal.events.BuildManager.basicBuildLoop(BuildManager.java:389)
 	at org.eclipse.core.internal.events.BuildManager.build(BuildManager.java:410)
 	at org.eclipse.core.internal.resources.Workspace.buildInternal(Workspace.java:516)
-	at org.eclipse.core.internal.resources.Workspace.build(Workspace.java:413)
-	at org.eclipse.ui.actions.BuildAction$1.runInWorkspace(BuildAction.java:291)
-	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:42)
+	at org.eclipse.core.internal.resources.Workspace.build(Workspace.java:406)
+	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.cdt.make.core 4 0 2023-10-30 14:25:56.916
+!MESSAGE Error accessing scanner config file for project 
+!STACK 1
+org.eclipse.core.runtime.CoreException: Error accessing scanner config file for project 
+	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:193)
+	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getRootElement(DiscoveredScannerInfoStore.java:136)
+	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.hasInfo(DiscoveredScannerInfoStore.java:123)
+	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager.loadPathInfo(CfgDiscoveredPathManager.java:299)
+	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager.getDiscoveredInfo(CfgDiscoveredPathManager.java:177)
+	at org.eclipse.cdt.managedbuilder.internal.dataprovider.ProfileInfoProvider.getEntryValues(ProfileInfoProvider.java:68)
+	at org.eclipse.cdt.managedbuilder.internal.dataprovider.BuildEntryStorage.getDiscoveredEntries(BuildEntryStorage.java:203)
+	at org.eclipse.cdt.managedbuilder.internal.dataprovider.BuildEntryStorage.putEntriesToLevel(BuildEntryStorage.java:193)
+	at org.eclipse.cdt.core.settings.model.util.AbstractEntryStorage.initCache(AbstractEntryStorage.java:74)
+	at org.eclipse.cdt.core.settings.model.util.AbstractEntryStorage.getEntries(AbstractEntryStorage.java:37)
+	at org.eclipse.cdt.managedbuilder.internal.dataprovider.BuildLanguageData.getEntries(BuildLanguageData.java:183)
+	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultLanguageData.getEntriesToCopy(CDefaultLanguageData.java:100)
+	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultLanguageData.createStore(CDefaultLanguageData.java:91)
+	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultLanguageData.copySettingsFrom(CDefaultLanguageData.java:84)
+	at org.eclipse.cdt.internal.core.settings.model.CLanguageSettingCache.copySettingsFrom(CLanguageSettingCache.java:49)
+	at org.eclipse.cdt.internal.core.settings.model.CLanguageSettingCache.<init>(CLanguageSettingCache.java:38)
+	at org.eclipse.cdt.internal.core.settings.model.CFolderDescriptionCache.copyLanguageData(CFolderDescriptionCache.java:82)
+	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultFolderData.copyDataFrom(CDefaultFolderData.java:60)
+	at org.eclipse.cdt.internal.core.settings.model.CFolderDescriptionCache.<init>(CFolderDescriptionCache.java:40)
+	at org.eclipse.cdt.internal.core.settings.model.CConfigurationDescriptionCache.copyFolderData(CConfigurationDescriptionCache.java:242)
+	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultConfigurationData.copySettingsFrom(CDefaultConfigurationData.java:117)
+	at org.eclipse.cdt.internal.core.settings.model.CConfigurationDescriptionCache.applyData(CConfigurationDescriptionCache.java:200)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescription.applyDatas(CProjectDescription.java:219)
+	at org.eclipse.cdt.internal.core.settings.model.SetCProjectDescriptionOperation.executeOperation(SetCProjectDescriptionOperation.java:103)
+	at org.eclipse.cdt.internal.core.model.CModelOperation.execute(CModelOperation.java:346)
+	at org.eclipse.cdt.internal.core.model.CModelOperation.run(CModelOperation.java:613)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2313)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2338)
+	at org.eclipse.cdt.internal.core.model.CModelOperation.runOperation(CModelOperation.java:644)
+	at org.eclipse.cdt.internal.core.settings.model.AbstractCProjectDescriptionStorage.setProjectDescription(AbstractCProjectDescriptionStorage.java:209)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionStorageManager.setProjectDescription(CProjectDescriptionStorageManager.java:153)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.setProjectDescription(CProjectDescriptionManager.java:867)
+	at org.eclipse.cdt.managedbuilder.internal.core.BuildSettingsUtil.checkApplyDescription(BuildSettingsUtil.java:210)
+	at org.eclipse.cdt.managedbuilder.core.ManagedBuildManager.updateCoreSettings(ManagedBuildManager.java:1515)
+	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager$1.run(CfgDiscoveredPathManager.java:157)
+	at org.eclipse.cdt.internal.core.model.BatchOperation.executeOperation(BatchOperation.java:36)
+	at org.eclipse.cdt.internal.core.model.CModelOperation.execute(CModelOperation.java:346)
+	at org.eclipse.cdt.internal.core.model.CModelOperation.run(CModelOperation.java:613)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2313)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2338)
+	at org.eclipse.cdt.core.model.CoreModel.run(CoreModel.java:1230)
+	at org.eclipse.cdt.core.model.CoreModel.run(CoreModel.java:1189)
+	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager.updateCoreSettings(CfgDiscoveredPathManager.java:160)
+	at org.eclipse.cdt.build.core.scannerconfig.ScannerConfigBuilder.build(ScannerConfigBuilder.java:129)
+	at org.eclipse.core.internal.events.BuildManager$2.run(BuildManager.java:853)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:232)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:281)
+	at org.eclipse.core.internal.events.BuildManager$1.run(BuildManager.java:334)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:337)
+	at org.eclipse.core.internal.events.BuildManager.basicBuildLoop(BuildManager.java:389)
+	at org.eclipse.core.internal.events.BuildManager.build(BuildManager.java:410)
+	at org.eclipse.core.internal.resources.Workspace.buildInternal(Workspace.java:516)
+	at org.eclipse.core.internal.resources.Workspace.build(Workspace.java:406)
+	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.DOMParser.parse(DOMParser.java:262)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderImpl.parse(DocumentBuilderImpl.java:342)
+	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
+	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
+	... 56 more
+!SUBENTRY 1 org.eclipse.cdt.make.core 4 -1 2023-10-30 14:25:56.916
+!MESSAGE Error accessing scanner config file for project 
+!STACK 0
+org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; 요소 콘텐츠는 올바른 형식의 문자 데이터 또는 마크업으로 구성되어야 합니다.
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.DOMParser.parse(DOMParser.java:262)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderImpl.parse(DocumentBuilderImpl.java:342)
+	at java.xml/javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:122)
+	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getDocument(DiscoveredScannerInfoStore.java:167)
+	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.getRootElement(DiscoveredScannerInfoStore.java:136)
+	at org.eclipse.cdt.make.internal.core.scannerconfig.DiscoveredScannerInfoStore.hasInfo(DiscoveredScannerInfoStore.java:123)
+	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager.loadPathInfo(CfgDiscoveredPathManager.java:299)
+	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager.getDiscoveredInfo(CfgDiscoveredPathManager.java:177)
+	at org.eclipse.cdt.managedbuilder.internal.dataprovider.ProfileInfoProvider.getEntryValues(ProfileInfoProvider.java:68)
+	at org.eclipse.cdt.managedbuilder.internal.dataprovider.BuildEntryStorage.getDiscoveredEntries(BuildEntryStorage.java:203)
+	at org.eclipse.cdt.managedbuilder.internal.dataprovider.BuildEntryStorage.putEntriesToLevel(BuildEntryStorage.java:193)
+	at org.eclipse.cdt.core.settings.model.util.AbstractEntryStorage.initCache(AbstractEntryStorage.java:74)
+	at org.eclipse.cdt.core.settings.model.util.AbstractEntryStorage.getEntries(AbstractEntryStorage.java:37)
+	at org.eclipse.cdt.managedbuilder.internal.dataprovider.BuildLanguageData.getEntries(BuildLanguageData.java:183)
+	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultLanguageData.getEntriesToCopy(CDefaultLanguageData.java:100)
+	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultLanguageData.createStore(CDefaultLanguageData.java:91)
+	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultLanguageData.copySettingsFrom(CDefaultLanguageData.java:84)
+	at org.eclipse.cdt.internal.core.settings.model.CLanguageSettingCache.copySettingsFrom(CLanguageSettingCache.java:49)
+	at org.eclipse.cdt.internal.core.settings.model.CLanguageSettingCache.<init>(CLanguageSettingCache.java:38)
+	at org.eclipse.cdt.internal.core.settings.model.CFolderDescriptionCache.copyLanguageData(CFolderDescriptionCache.java:82)
+	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultFolderData.copyDataFrom(CDefaultFolderData.java:60)
+	at org.eclipse.cdt.internal.core.settings.model.CFolderDescriptionCache.<init>(CFolderDescriptionCache.java:40)
+	at org.eclipse.cdt.internal.core.settings.model.CConfigurationDescriptionCache.copyFolderData(CConfigurationDescriptionCache.java:242)
+	at org.eclipse.cdt.core.settings.model.extension.impl.CDefaultConfigurationData.copySettingsFrom(CDefaultConfigurationData.java:117)
+	at org.eclipse.cdt.internal.core.settings.model.CConfigurationDescriptionCache.applyData(CConfigurationDescriptionCache.java:200)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescription.applyDatas(CProjectDescription.java:219)
+	at org.eclipse.cdt.internal.core.settings.model.SetCProjectDescriptionOperation.executeOperation(SetCProjectDescriptionOperation.java:103)
+	at org.eclipse.cdt.internal.core.model.CModelOperation.execute(CModelOperation.java:346)
+	at org.eclipse.cdt.internal.core.model.CModelOperation.run(CModelOperation.java:613)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2313)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2338)
+	at org.eclipse.cdt.internal.core.model.CModelOperation.runOperation(CModelOperation.java:644)
+	at org.eclipse.cdt.internal.core.settings.model.AbstractCProjectDescriptionStorage.setProjectDescription(AbstractCProjectDescriptionStorage.java:209)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionStorageManager.setProjectDescription(CProjectDescriptionStorageManager.java:153)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.setProjectDescription(CProjectDescriptionManager.java:867)
+	at org.eclipse.cdt.managedbuilder.internal.core.BuildSettingsUtil.checkApplyDescription(BuildSettingsUtil.java:210)
+	at org.eclipse.cdt.managedbuilder.core.ManagedBuildManager.updateCoreSettings(ManagedBuildManager.java:1515)
+	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager$1.run(CfgDiscoveredPathManager.java:157)
+	at org.eclipse.cdt.internal.core.model.BatchOperation.executeOperation(BatchOperation.java:36)
+	at org.eclipse.cdt.internal.core.model.CModelOperation.execute(CModelOperation.java:346)
+	at org.eclipse.cdt.internal.core.model.CModelOperation.run(CModelOperation.java:613)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2313)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2338)
+	at org.eclipse.cdt.core.model.CoreModel.run(CoreModel.java:1230)
+	at org.eclipse.cdt.core.model.CoreModel.run(CoreModel.java:1189)
+	at org.eclipse.cdt.build.internal.core.scannerconfig.CfgDiscoveredPathManager.updateCoreSettings(CfgDiscoveredPathManager.java:160)
+	at org.eclipse.cdt.build.core.scannerconfig.ScannerConfigBuilder.build(ScannerConfigBuilder.java:129)
+	at org.eclipse.core.internal.events.BuildManager$2.run(BuildManager.java:853)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:232)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:281)
+	at org.eclipse.core.internal.events.BuildManager$1.run(BuildManager.java:334)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:337)
+	at org.eclipse.core.internal.events.BuildManager.basicBuildLoop(BuildManager.java:389)
+	at org.eclipse.core.internal.events.BuildManager.build(BuildManager.java:410)
+	at org.eclipse.core.internal.resources.Workspace.buildInternal(Workspace.java:516)
+	at org.eclipse.core.internal.resources.Workspace.build(Workspace.java:406)
+	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)

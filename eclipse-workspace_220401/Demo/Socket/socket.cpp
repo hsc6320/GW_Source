@@ -139,7 +139,8 @@ int Socket::Socket_Init(/*int argc, char *argv[]*/)
 
 	events = (struct epoll_event *)malloc(sizeof(*events) * EPOLL_SIZE);
 	if( (efd = epoll_create(100)) < 0) {
-		printf("epoll error\n");
+		printf("///epoll error\n");
+		th_delay(1000);
 		return -1;
 	}
 
@@ -248,7 +249,7 @@ int Socket::Socket_Init(/*int argc, char *argv[]*/)
 	}
 
 	printf("m_serv_sock : %d,\n", m_serv_sock);
-	printf("----------------------------------2023-05-14----------------------------\n");
+	printf("----------------------------------2023-10-21----------------------------\n");
 	printf("Socket Init\n");
 
 	return (int)m_serv_sock;
@@ -314,7 +315,6 @@ int Socket::IP_Address_Init()
 		printf("---------------------\n");
 	}
 
-	printf("--------------------06 08-----------------------------\n");
 
 #if 0
 	ifc2.ifc_len = sizeof(ifr2);
@@ -495,7 +495,7 @@ void Socket::Exit_Socket_Thread()
 	reclose = close(m_serv_sock);
 	printf("reclose : %d\n", reclose);
 	
-	m_iWorkingAlive =0;
+	//m_iWorkingAlive =0;
 	pthread_join(p_thread, (void**)&retval);
 	printf("Socket Exit Thread ,%d\n", retval);
 	switch(retval)
@@ -768,9 +768,10 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 				}
 				printf("\n");				
 				m_nSocketArrayDataDownCnt =0;
-				m_nSocketArrayDataIndicateCnt =0;		
+				m_nSocketArrayDataIndicateCnt =0;
 				Send_Message(p8udata, 15);
 				m_nServerMessge_End =0;
+				m_iSocketReceiveQueue = 1;
 				return 1;
 			}
 			else if (p8udata[MSGTYPE] == CONNECT_SOCKET_ALIVE_CHECK) {
@@ -1036,6 +1037,7 @@ int Socket::Socket_fd_Select(int fd, int timeout_ms)
 //	printf("Socket_fd_Select() epoll_wait : %d\n", n);
 	if( n== -1) {
 		printf("epoll error\n");
+		th_delay(3000);
 		return -1;
 	}
 
