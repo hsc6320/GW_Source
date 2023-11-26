@@ -11,6 +11,7 @@ Socket* pSocket;
 MsgQueue* pUartQueue;
 int nServiceStart_Confirm =0, beacon_count =0;
 std::queue<std::vector<BYTE>> vTagData;
+WORD severid = 0x0a;
 
 SocketHandler::SocketHandler()
 {
@@ -214,7 +215,7 @@ int SocketHandler::Registration_Request()
 	uint8_t pu8data[25];
 	BYTE u8Checksum;
 	int iBufcnt =0, ret =0;
-
+	packet.ServerID = 0x0a;
 	packet.GateWayID = packet.PanID;
 
 	printf("packet.GateWayID : %x\n", packet.GateWayID);
@@ -225,7 +226,7 @@ int SocketHandler::Registration_Request()
 	pu8data[++iBufcnt] = packet.PanID>> 8;
 	pu8data[++iBufcnt] = packet.ServerID;
 	pu8data[++iBufcnt] = packet.ServerID>>8;
-	pu8data[++iBufcnt] = (BYTE)packet.GateWayID << 8;		//gateway ID
+	pu8data[++iBufcnt] = (BYTE)packet.GateWayID;		//gateway ID
 	pu8data[++iBufcnt] = packet.GateWayID >> 8;		//gateway ID
 	
 	pu8data[++iBufcnt] = REGISTRATION_REQUEST;	//msg type

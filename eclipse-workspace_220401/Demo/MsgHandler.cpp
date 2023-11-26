@@ -891,8 +891,7 @@ void MsgHandler::SetSocketArray(std::vector<std::vector<BYTE>> DataDownmsg, std:
 	m_nUartArrayDataDownCnt = (int)DataDownmsg.size();
 	m_nUartArrayDataIndicateCnt = (int)DataIndimsg.size();
 
-	printf("DataDown Count : %d\n", m_nUartArrayDataDownCnt);
-	BSN_Start_Packet();
+	printf("DataDown Count : %d\n", m_nUartArrayDataDownCnt);	
 }
 
 int MsgHandler::DataFlag_Initialize(int beacon)

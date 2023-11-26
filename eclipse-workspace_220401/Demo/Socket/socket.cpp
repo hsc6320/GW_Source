@@ -144,6 +144,12 @@ int Socket::Socket_Init(/*int argc, char *argv[]*/)
 		return -1;
 	}
 
+	ev.events = EPOLLIN;
+	ev.data.fd = m_serv_sock;
+	if(epoll_ctl(efd, EPOLL_CTL_ADD, m_serv_sock, &ev) == -1) {
+		printf("Failed to Add epoll_ctl\n");
+	}	
+
 //	fd2 = open("ip", O_RDONLY);
 //	if(fd2 < 0) {
 //		printf("IP file open error\n");
@@ -542,9 +548,9 @@ int Socket::Send_Function()
 	memcpy(p8Data, m_p8uSendData, nDataLen);
 
 	printf("socket Send_Function() ");
-	/*for(int i=0; i < nDataLen; i++) {
+	for(int i=0; i < nDataLen; i++) {
 		printf("%x ", m_p8uSendData[i]);
-	}*/
+	}
 	memset(m_p8uSendData, 0, sizeof(BYTE)*4096);
 //	delete[] m_p8uSendData;
 //	m_p8uSendData = NULL;
@@ -1028,10 +1034,12 @@ int Socket::Socket_fd_Select(int fd, int timeout_ms)
 {
 	int n;
 	//printf("Socket_fd_Select()\n");
-	ev.events = EPOLLIN;
+	
+/*	ev.events = EPOLLIN;
 	ev.data.fd = m_serv_sock;
-	epoll_ctl(efd, EPOLL_CTL_ADD, m_serv_sock, &ev);
-//	printf("Socket_fd_Select() epoll_ctl\n");
+	if(epoll_ctl(efd, EPOLL_CTL_ADD, m_serv_sock, &ev) == -1) {
+		printf("Failed to Add epoll_ctl\n");
+	}*/
 
 	n = epoll_wait(efd, events, EPOLL_SIZE, 10);
 //	printf("Socket_fd_Select() epoll_wait : %d\n", n);
