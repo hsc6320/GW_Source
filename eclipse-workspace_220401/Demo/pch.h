@@ -56,6 +56,7 @@
 #include <pthread.h>
 #include <cstdlib>
 #include <unistd.h>
+#define BUF_MAX 4096
 
 #define DEBUG_LEVEL_	3
 

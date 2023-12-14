@@ -29,8 +29,8 @@ public:
 
 	std::vector<BYTE> m_UartReDataDownMsg;
 
-	std::vector<std::vector<BYTE>> m_UartArrayDataDownMsg;
-	std::vector<std::vector<BYTE>> m_UartArrayDataIndicateMsg;
+	std::vector<std::vector<BYTE>> m_UartArrayDataDownMsg, m_UartArrayThreadDataDownMsg;
+	std::vector<std::vector<BYTE>> m_UartArrayDataIndicateMsg, m_UartArrayThreadDataIndecateMsg;
 
 	std::vector<std::vector<BYTE>> m_UartArrayReDataDownMsg;
 	std::vector<std::vector<BYTE>> m_UartArrayReDataIndicateMsg;
@@ -39,18 +39,16 @@ public:
 	std::map<WORD, int> m_mapTagDirectSet;
 	std::set<WORD> setTagDownNumber, m_setTagAckNumber;
 	WORD m_pu16MsgDataAcknowledge[4096];
-	WORD m_CurrentDataDownTag;
 
 	Common_Packet	CommonPacket;
 	int Map_AcknowCnt,Map_AcknowCnt2;
-	int m_nDataDownCount, m_nDataIndiCount;
+	unsigned int m_nDataDownCount, m_nDataIndiCount, m_nThreadDataDownCount, m_nThreadDataIndiCount;
 	int m_DataCnt;
 	int m_DataFlag;
 	int DataSendFail_RedownCnt;
 	int Beacon_Max;
-	int iSmallDataDown, m_iTagDirectDown, m_iTagDirectDownCnt;
 	UartComThread* m_pCommUart;
-	int m_nUartArrayDataDownCnt, m_nUartArrayDataIndicateCnt;
+	unsigned int m_nUartArrayDataDownCnt, m_nUartArrayDataIndicateCnt, m_nThreadUartArrayDataDownCnt, m_nThreadUartArrayDataIndecateCnt;
 	int m_nUartArrayReDataIndicateCnt;
 	int m_nDataSendFail_SuccessCnt;
 	void SetHandle(UartComThread* msg);
@@ -67,6 +65,8 @@ public:
 	void SetBeacon(int a);
 	int BSN_Start_Packet(/*BYTE* u8data*/);
 	int BSN_Stop_Packet();
+	int UartPacket_ThreadDataDownStart();
+	int UartPacket_ThreadDataIndicateStart();
 	int UartPacket_DataDownStart(BYTE u8data);
 	int UartPacket_ReDataDownStart(BYTE u8data);
 	int UartPacket_DataIndicateStart(BYTE u8data);

@@ -9,8 +9,6 @@
 #include <thread>
 #include <sstream>
 
-#define BUF_MAX 512
-
 using namespace std;
 int fd =0;
 int nToTalLen = 0, nToTalLen2 =0;
@@ -19,7 +17,6 @@ pthread_t mthreads;
 MsgQueue* pMsgQueue;
 
 UartComThread* mpComm;
-uint8_t buf[BUF_MAX];
 
 pthread_mutex_t mutex2;
 
@@ -75,12 +72,14 @@ static void *uart_Rx_Thread(void *param)
 				pComm->AppendArray( rx2[restBufCnt], i, rx);
 				restBufCnt++;
 			}
+			
+			printf("\n");
 			for(int i=0; i<len; i++) {
 				printf("%x ", rx2[i]);
 			}
 			printf("\n");
 
-			printf("\n***************uart_Rx_Thread uart **********%d*********\n", nToTalLen);
+			printf("***************uart_Rx_Thread uart **********%d*********\n", nToTalLen);
 			int i=0;
 			while(1) {
 	 			for( i =0; i<= nToTalLen; i++) {

@@ -60,7 +60,6 @@ MsgQueue:: MsgQueue(void)
 	m_bUartCommuniFlag = 0;
 	m_bUartTagAssociFlag =0;
 	m_nMapParity =0;
-	m_ServerDisconnect =0;
 	m_nSendTagCount =0;
 	m_Uart_ServiceStart_TagAssociation_InitFlag =0;
 	memset(m_Test, 0, sizeof(WORD)*4096);
@@ -165,12 +164,9 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 					printf("TagAck overlap\n");
 				}
 				else {
+					setTagNumber.erase(wordPanID);
 					setTagAckNumber.insert(wordPanID);
 					printf("TagAck setTagAckNumber : %x\n", wordPanID);
-				}
-				
-				if(m_ServerDisconnect) {
-			//		m_QueueDataAck.push(m_pu16MsgQueueArrayDataAcknowledge);
 				}
 
 			}

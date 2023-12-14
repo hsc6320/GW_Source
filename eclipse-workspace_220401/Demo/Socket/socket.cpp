@@ -143,12 +143,12 @@ int Socket::Socket_Init(/*int argc, char *argv[]*/)
 		th_delay(1000);
 		return -1;
 	}
-
+/*
 	ev.events = EPOLLIN;
 	ev.data.fd = m_serv_sock;
 	if(epoll_ctl(efd, EPOLL_CTL_ADD, m_serv_sock, &ev) == -1) {
 		printf("Failed to Add epoll_ctl\n");
-	}	
+	}	*/
 
 //	fd2 = open("ip", O_RDONLY);
 //	if(fd2 < 0) {
@@ -548,9 +548,9 @@ int Socket::Send_Function()
 	memcpy(p8Data, m_p8uSendData, nDataLen);
 
 	printf("socket Send_Function() ");
-	for(int i=0; i < nDataLen; i++) {
+/*	for(int i=0; i < nDataLen; i++) {
 		printf("%x ", m_p8uSendData[i]);
-	}
+	}*/
 	memset(m_p8uSendData, 0, sizeof(BYTE)*4096);
 //	delete[] m_p8uSendData;
 //	m_p8uSendData = NULL;
@@ -596,7 +596,7 @@ void *Recieve_Function(void* rcvDt)
 	//socket_ctx_t* ctx = (socket_ctx_t *)pSoc->m_serv_sock;
 	while(pSoc->m_iWorkingAlive)
 	{
-		if(pSoc->Ready_to_Read(Socketd,10)) {			
+		if(pSoc->Ready_to_Read(Socketd,10)) {
 			pthread_mutex_lock(&pSoc->Socket_mutex);			
 			pSoc->m_nServerMessge_End =1;
 			str_len = pSoc->Read_Message(u8data/*pSoc->m_p8uData*/);
@@ -609,11 +609,11 @@ void *Recieve_Function(void* rcvDt)
 			int TempCnt =0, TempCnt2 =0;
 			printf("\n*********Socket Read Thread ******%d-%d-%d:%d:%d***** %d\n", tm.tm_mon+1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec,str_len);
 			if(str_len > 0) {				
+				
 				pSoc->m_ReceiveData_len = str_len;
 				while(1) {
-					u8data2[TempCnt2] = u8data[TempCnt];					
+					u8data2[TempCnt2] = u8data[TempCnt];				
 					if(TempCnt2 > MSG_LENGTHONE) {
-
 						CheckSumIndex = pSoc->ByteToWord(u8data[MSG_LENGTHONE], u8data[MSG_LENGTHZERO]);
 					//	printf("CheckSumIndex : %d u8data2(CheckSumIndex) : %x\n",CheckSumIndex, u8data2[CheckSumIndex]);
 						CheckSumIndex = CheckSumIndex+ MSG_HEADER;					
@@ -777,7 +777,7 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 				m_nSocketArrayDataIndicateCnt =0;
 				Send_Message(p8udata, 15);
 				m_nServerMessge_End =0;
-				m_iSocketReceiveQueue = 1;
+			//	m_iSocketReceiveQueue = 1;
 				return 1;
 			}
 			else if (p8udata[MSGTYPE] == CONNECT_SOCKET_ALIVE_CHECK) {
@@ -953,9 +953,9 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 			printf("m_Main_ServiceStart_Read : ");
 			for(int i=0; i< DataLen; i++) {
 				m_SocketMsg_vec.push_back(p8udata[i]);
-			//	printf("%x ", m_SocketMsg_vec[i]);
+				printf("%x ", m_SocketMsg_vec[i]);
 			}
-			//printf("\n");
+			printf("\n");
 
 			if((m_SocketMsg_vec[DataLen-1] == 0x7e) &&
 				(m_SocketMsg_vec[DataLen-2] == 0x5a) &&
@@ -1033,11 +1033,11 @@ void Socket::deleteArray(int idx, int size, BYTE* ar)
 int Socket::Socket_fd_Select(int fd, int timeout_ms)
 {
 	int n;
-	//printf("Socket_fd_Select()\n");
 	
-/*	ev.events = EPOLLIN;
+	ev.events = EPOLLIN;
 	ev.data.fd = m_serv_sock;
-	if(epoll_ctl(efd, EPOLL_CTL_ADD, m_serv_sock, &ev) == -1) {
+	epoll_ctl(efd, EPOLL_CTL_ADD, m_serv_sock, &ev);
+	/*if(epoll_ctl(efd, EPOLL_CTL_ADD, m_serv_sock, &ev) == -1) {
 		printf("Failed to Add epoll_ctl\n");
 	}*/
 
@@ -1048,7 +1048,6 @@ int Socket::Socket_fd_Select(int fd, int timeout_ms)
 		th_delay(3000);
 		return -1;
 	}
-
 	for(int i=0; i<n; i++) {
 	//	printf("epoll N : %d\n", events[i].data.fd );
 		if(events[i].data.fd == m_serv_sock) {
