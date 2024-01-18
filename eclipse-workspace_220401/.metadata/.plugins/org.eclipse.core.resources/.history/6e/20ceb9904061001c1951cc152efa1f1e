@@ -1,0 +1,363 @@
+/*
+ * uart.cpp
+ *
+ *  Created on: 2021. 11. 29.
+ *      Author: hong
+ */
+
+#include "uart.h"
+#define BUF_MAX 512
+
+using namespace std;
+int fd =0;
+int ii = 0;
+pthread_t mthreads;
+
+
+UartComThread* mpComm;
+uint8_t buf[BUF_MAX];
+
+
+UartComThread::UartComThread()
+{
+	m_uartd = 0;
+	bWorkingUart =0;
+	m_pMsgQueue = NULL;
+	m_p8uUartData = NULL;
+}
+
+UartComThread::~UartComThread()
+{
+}
+
+
+static void *uart_Rx_Thread(void *param)
+{
+
+   UartComThread* pComm = NULL;
+   pComm = (UartComThread* )mpComm;
+	int uartd = (int)param;
+	int len =0, cnt =0;
+
+	uart_ctx_t* ctx = (uart_ctx_t *)uartd;
+	//uint8_t* rx = (uint8_t *)malloc(sizeof(uint8_t)*512);
+
+	while(1) {
+		pComm->m_p8uUartData = new BYTE[1024];
+	//	printf("***************uart_Rx_Thread uart cnt %d*********************\n", cnt++);
+
+
+		if(pComm->Ready_to_Read(uartd,5)) {
+			pthread_mutex_lock(&ctx->mutex);
+			len = pComm->Uart_Read(uartd, pComm->m_p8uUartData, 512);
+			pthread_mutex_unlock(&ctx->mutex);
+
+			if(len > 0) {
+				mpComm->m_pMsgQueue->PutByte(pComm->m_p8uUartData);
+			//	memset(pComm->m_p8uUartData, 0, sizeof(uint8_t)*1024);
+			}
+			if(mpComm->m_pMsgQueue->m_bReadEnd_UartMessage) {
+				printf("Uart Read End\n");
+			}
+		}
+		delete[] pComm->m_p8uUartData;
+		usleep(1);
+
+	}
+//	free(rx);
+
+	return 0;
+}
+
+void UartComThread::Exit_Uart_Thread()
+{
+	void *status;
+	int ait, ret =0;
+
+	ret = pthread_join(mthreads,&status);
+	wait(&ait);
+
+	printf("Uart Exit Thread , ");
+
+	if(status == PTHREAD_CANCELED)
+		printf("The thread was canceled - \n");
+	else
+		printf("Returned value %d - \n", (int)status);
+
+	switch(ret) {
+	case 0:
+		printf("The thread joined successfully\n");
+		break;
+	case EDEADLK:
+		printf("Deadlock detected\n");
+		break;
+	case EINVAL:
+		printf("The thread is not joinable\n");
+		break;
+	case ESRCH:
+		printf("No thread with given ID is found\n");
+		break;
+	default:
+		printf("Error occurred when joining the thread\n");
+		break;
+	}
+
+	bWorkingUart =0;
+
+	//pthread_exit(NULL);
+	printf("Exit_Uart_Thread() : [%d] \n", (int)status);
+
+}
+
+int UartComThread::uart_init()
+{
+	m_uartd = Uart_Open("/dev/ttyS1", 230400);
+
+	if(m_uartd <= 0)
+		return 0;
+
+#if 0
+	//fd = open("/dev/ttyS1", O_RDWR | O_NOCTTY);
+	//printf("!!!Hello Welcome to Haemcom World~~2!!! %d\n", fd);
+
+	if (fd < 0) {
+		fprintf(stderr, "ERR\n");
+		exit(-1);
+	}
+
+	struct termios newtio;
+	memset(&newtio, 0, sizeof(struct termios));
+	newtio.c_cflag = B230400 | CS8 | CLOCAL | CREAD;
+	newtio.c_iflag = IGNPAR /*| ICRNL*/;
+	newtio.c_oflag = 0;
+	newtio.c_lflag = ~(ICANON | ECHO | ECHOE | ISIG);
+
+	tcflush(fd, TCIFLUSH);
+	tcsetattr(fd, TCSANOW, &newtio);
+
+#endif
+
+	return 1;
+}
+
+int UartComThread::Create_Uart_thread()
+{
+	int rc=0, status;
+
+	rc = pthread_create(&mthreads, NULL, uart_Rx_Thread, (void *)m_uartd);
+	printf("uart_thread init m_uartd, %d rc %d\n", m_uartd, rc);
+	wait(&status);
+	if (rc) {
+		printf("Error:unable to create thread, %d\n", rc);
+		exit(-1);
+	}
+	bWorkingUart = 1;
+	return 1;
+}
+
+int UartComThread::Uart_Open(const char *dev, int baud_rate)
+{
+	uart_ctx_t* ctx = NULL;
+	if(!dev)	return 0;
+
+	ctx = (uart_ctx_t*)malloc(sizeof(uart_ctx_t));
+
+	if(ctx) {
+		printf("Uart_Open baud_rate :%d\n", baud_rate);
+		memset(ctx, 0, sizeof(uart_ctx_t));
+		pthread_mutex_init(&ctx->mutex, NULL);
+
+		ctx->fd = Open_fd(dev);
+		printf("Uart_Open ctx->fd : %d\n", ctx->fd);
+		if(ctx->fd <= 0) {
+			printf("Uart_Close\n");
+			Uart_Close((int)ctx);
+			return 0;
+		}
+		Uart_Config(ctx, baud_rate);
+	}
+	return (int)ctx;
+
+}
+
+int UartComThread::Uart_Close(int uartd)
+{
+	void* result;
+	int status;
+	uart_ctx_t *ctx = (uart_ctx_t *)uartd;
+
+	if(ctx) {
+		if(ctx->fd > 0) {
+			tcsetattr(ctx->fd, TCSANOW, &ctx->oldtio);
+			close(ctx->fd);
+			ctx->fd =0;
+		}
+		free(ctx);
+	}
+	pthread_join(mthreads, &result);
+	wait(&status);
+	printf("pthread_join UART result : %d\n", (int)result);
+
+	return 1;
+}
+
+int UartComThread::Uart_Config(uart_ctx_t* ctx, int baudrate)
+{
+	if(!ctx || (ctx->fd <= 0)) return -1;
+	tcgetattr(ctx->fd, &ctx->oldtio);		//save current port setting.
+
+	//set new port Setting
+	switch(baudrate)
+	{
+	case 9600:
+		ctx->newtio.c_cflag = B9600;
+		break;
+	case 115200:
+		ctx->newtio.c_cflag = B115200;
+		break;
+	case 230400:
+		ctx->newtio.c_cflag = B230400;
+		break;
+	}
+
+	ctx->newtio.c_cflag |= (CS8 | CLOCAL | CREAD);
+	ctx->newtio.c_iflag = IGNPAR /*| ICRNL*/;
+	ctx->newtio.c_oflag = 0;
+	ctx->newtio.c_lflag = ~(ICANON | ECHO | ECHOE | ISIG);
+
+	tcflush(ctx->fd, TCIFLUSH);
+	tcsetattr(ctx->fd, TCSANOW, &ctx->newtio);
+	return 0;
+
+}
+
+int UartComThread::Open_fd(const char *dev)
+{
+	int fd =0;
+	if(!dev) return -1;
+
+	 fd = open(dev, O_RDWR | O_NOCTTY | O_NONBLOCK);
+	 printf("Open_fd %d\n", fd);
+	if (fd < 0) {
+		fprintf(stderr, "ERR\n");
+		exit(-1);
+	}
+
+	return fd;
+}
+
+int UartComThread::Ready_to_Read(int uartd, int timeoutms)
+{
+	uart_ctx_t* ctx = (uart_ctx_t *)uartd;
+
+	if(!ctx) return -1;
+
+	//printf("Ready_to_Read ctx->fd : %d\n", ctx->fd);
+	pthread_mutex_lock(&ctx->mutex);
+	if(Uart_fd_Select(ctx->fd, timeoutms) == ctx->fd) {
+	//	printf("Ready_to_Read return 1\n");
+		pthread_mutex_unlock(&ctx->mutex);
+		return 1;
+	}
+	pthread_mutex_unlock(&ctx->mutex);
+	return 0;
+
+}
+
+int UartComThread::Uart_Read(int uartd, uint8_t* data, int size)
+{
+	int readlen =0;
+	uart_ctx_t* ctx = (uart_ctx_t *)uartd;
+
+	if(!ctx || ctx->fd <= 0 || !data || size <= 0) return 0;
+
+//	pthread_mutex_lock(&ctx->mutex);
+	readlen = read(ctx->fd, data, size*sizeof(uint8_t));
+//	pthread_mutex_unlock(&ctx->mutex);
+
+	return readlen;
+}
+
+int UartComThread::Uart_Write(int uartd, uint8_t* data, int size)
+{
+	int wrotelen =0;
+	int failcnt =0;
+	uart_ctx_t* ctx = (uart_ctx_t *)uartd;
+	if(!ctx || ctx->fd <= 0 || !data || size <= 0) return 0;
+
+
+	pthread_mutex_lock(&ctx->mutex);
+	while(wrotelen < size && failcnt < 10) {
+		int ret  =0;
+		int towritelen = size - wrotelen;
+		uint8_t* ptr = data + wrotelen;
+
+		printf("Uart_Write ptr : ");
+		for(int i=0; i<size; i++) {
+			printf("Uart_Write ptr %x ", ptr[i]);
+		}
+		printf("[size :%d]\n", size);
+
+		ret = write(ctx->fd, ptr, towritelen*sizeof(uint8_t));
+		if(ret > 0) {
+			wrotelen += ret;
+		}
+		else {
+			printf("failcnt : %d", failcnt);
+			failcnt++;
+		}
+	}
+	pthread_mutex_unlock(&ctx->mutex);
+
+	return wrotelen;
+
+}
+
+int UartComThread::Uart_fd_Select(int fd, int timeout_ms)
+{
+	fd_set	io_fds;
+	int retval =0;
+	struct timeval timeout;
+
+	if(fd<=0) return -1;
+	if(timeout_ms < 0) timeout_ms =0;
+
+
+	FD_ZERO(&io_fds);
+	//FD_SET(STDIN_FILENO, &io_fds);
+	FD_SET(fd, &io_fds);
+
+	timeout.tv_sec =0;
+	timeout.tv_usec = 1000*timeout_ms;
+
+	retval = select(fd+1, &io_fds, 0,0,&timeout);
+
+	if(retval == -1) {
+		return -1;
+	}
+	else if(retval == 0) {
+		//printf("Uart_fd_Select timeout\n");
+	}
+
+
+	if(FD_ISSET(fd,&io_fds)) {
+		return fd;
+	}
+
+	return -1;
+
+}
+
+
+void UartComThread::SetMsgQueue(MsgQueue* msg)
+{
+	m_pMsgQueue = msg;
+}
+
+void UartComThread::SetUartComm(UartComThread* msg)
+{
+	mpComm = msg;
+}
+
+
+

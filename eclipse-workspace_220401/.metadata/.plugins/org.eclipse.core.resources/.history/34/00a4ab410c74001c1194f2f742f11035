@@ -1,0 +1,104 @@
+/*
+ * MsgQueue.cpp
+ *
+ *  Created on: 2021. 11. 29.
+ *      Author: hong
+ */
+
+#include "MsgQueue.h"
+
+int m_uiPos =0;
+int nLengthCnt =0;
+int nDatalength =0;
+
+std::vector<uint8_t*> vec;
+std::vector<uint8_t> vec2;
+msgform* m_pMsg;
+Socket* m_GetSocket;
+
+MsgQueue:: MsgQueue(void)
+{
+	m_bReadEnd_UartMessage =0;
+	m_pMsg = NULL;
+}
+MsgQueue::~MsgQueue(void)
+{
+	Clear();
+}
+
+bool MsgQueue::PutByte(uint8_t* b, int len)
+{
+	int size =0;
+	BYTE u8Data[1024];
+
+
+	memset(u8Data, 0, 1024);
+	memcpy(u8Data, b, 1024);
+
+	printf("PutByte\n");
+
+	if(u8Data[0] == STX) {
+		if((u8Data[MSGTYPE] == TAG_ASSOCIATION) || (u8Data[MSGTYPE] == DOWNLOAD_START_ACK)
+				|| (u8Data[MSGTYPE] == DATAINDICATION_ACK)) {
+			/*for(int i=0; i< len; i++) {
+			m_vcemsg.m_UartMsg_vec.push_back(b[i]);
+				printf("[%s] ", m_vcemsg.m_UartMsg_vec.push_back[i]);
+			}
+			printf("\n");*/
+			m_GetSocket->Send_Message(u8Data, len);
+			return 1;
+		}
+		else {
+			for(int i=0; i< len; i++) {
+				m_vcemsg.m_UartMsg_vec.push_back(u8Data[i]);
+				printf("[%x] ", m_vcemsg.m_UartMsg_vec[i]);
+			}
+			printf("\n");
+			m_bReadEnd_UartMessage =1;
+		}
+	}
+
+	//if((vec[len-1] == 0x7e) && (vec[len-2] == 0x5a) && (vec[len-3] == 0xa5)) {
+	/*size = vec.size();
+	for(int i=0; i<size; i++) {
+		m_vcemsg.m_UartMsg_vec.push_back(vec2[i]);
+	}
+	m_bReadEnd_UartMessage =1;*/
+	//}
+	///else
+	//	return 0;
+
+	return 1;
+
+}
+
+WORD MsgQueue::ByteToWord(BYTE puData, BYTE puData1)
+{
+	WORD p16Tempdata_HIGH, p16Tempdata_LOW;
+
+	p16Tempdata_HIGH = (puData << 8);
+	p16Tempdata_LOW = puData1;
+
+	return p16Tempdata_HIGH|p16Tempdata_LOW;
+}
+
+
+void MsgQueue::Clear()
+{
+	if(m_pMsg)
+	{
+	//	printf("Clear\n");
+		if(m_pMsg->data)
+			delete[] m_pMsg->data;
+		delete m_pMsg;
+		m_pMsg = NULL;
+	}
+	m_uiPos =0;
+}
+void MsgQueue::GetSocket(Socket* soc)
+{
+	m_GetSocket = soc;
+}
+
+
+

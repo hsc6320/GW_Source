@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.cdt.launch.remoteApplicationLaunchType">
+    <stringAttribute key="org.eclipse.cdt.launch.COREFILE_PATH" value=""/>
+    <stringAttribute key="org.eclipse.cdt.launch.PROGRAM_NAME" value="Debug/CrossGcc"/>
+    <stringAttribute key="org.eclipse.cdt.launch.PROJECT_ATTR" value="CrossGcc"/>
+    <booleanAttribute key="org.eclipse.cdt.launch.PROJECT_BUILD_CONFIG_AUTO_ATTR" value="true"/>
+    <stringAttribute key="org.eclipse.cdt.launch.PROJECT_BUILD_CONFIG_ID_ATTR" value="ilg.gnuarmeclipse.managedbuild.cross.config.elf.debug.1201328677"/>
+    <booleanAttribute key="org.eclipse.debug.core.ATTR_AUTO_PATH_MAPPING_FROM_LOCAL_TO_REMOTE" value="true"/>
+    <booleanAttribute key="org.eclipse.debug.core.ATTR_AUTO_PATH_MAPPING_FROM_REMOTE_TO_LOCAL" value="true"/>
+    <booleanAttribute key="org.eclipse.debug.core.ATTR_LAUNCH_REMOTE_USER" value="false"/>
+    <booleanAttribute key="org.eclipse.debug.core.ATTR_SKIP_DOWNLOAD_TO_TARGET" value="false"/>
+    <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+        <listEntry value="/CrossGcc"/>
+    </listAttribute>
+    <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+        <listEntry value="4"/>
+    </listAttribute>
+    <stringAttribute key="process_factory_id" value="org.eclipse.cdt.dsf.gdb.GdbProcessFactory"/>
+</launchConfiguration>

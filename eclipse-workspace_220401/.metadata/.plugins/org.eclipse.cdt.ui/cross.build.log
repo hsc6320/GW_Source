@@ -1,0 +1,11 @@
+14:08:51 **** Build of configuration Debug for project cross ****
+make all 
+Building file: ../src/cross.cpp
+Invoking: GCC C++ Compiler
+arm-linux-gneuabi-gcc -I/usr/arm-linux-gnueabi/include -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/cross.d" -MT"src/cross.o" -o "src/cross.o" "../src/cross.cpp"
+/bin/sh: 1: arm-linux-gneuabi-gcc: not found
+make: *** [src/subdir.mk:20: src/cross.o] 오류 127
+"make all" terminated with exit code 2. Build might be incomplete.
+
+14:08:51 Build Failed. 1 errors, 0 warnings. (took 643ms)
+

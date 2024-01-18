@@ -1,0 +1,11 @@
+11:47:46 **** Incremental Build of configuration Debug for project HelloWorlkTest ****
+make all 
+Building file: ../src/HelloWorlkTest.cpp
+Invoking: GCC C++ Compiler
+arm-linux-gnueabi- -I/usr/arm-linux-gnueabi/include -I/usr/include/c++/9 -I/usr/include -I/usr/include/i386-linux-gnu -I/usr/local/include -I/usr/include/c++/9/backward -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/HelloWorlkTest.d" -MT"src/HelloWorlkTest.o" -o "src/HelloWorlkTest.o" "../src/HelloWorlkTest.cpp"
+/bin/sh: 1: arm-linux-gnueabi-: not found
+make: *** [src/subdir.mk:20: src/HelloWorlkTest.o] 오류 127
+"make all" terminated with exit code 2. Build might be incomplete.
+
+11:47:47 Build Failed. 1 errors, 0 warnings. (took 506ms)
+

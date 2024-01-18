@@ -1,0 +1,6 @@
+09:12:30 **** Incremental Build of configuration Debug for project HelloWorldTest ****
+make all 
+make: 'all'을(를) 위해 할 일이 없습니다.
+
+09:12:30 Build Finished. 0 errors, 0 warnings. (took 638ms)
+

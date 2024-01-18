@@ -1,0 +1,167 @@
+/*
+ * MsgHandler.cpp
+ *
+ *  Created on: 2021. 11. 30.
+ *      Author: hong
+ */
+
+#include "MsgHandler.h"
+
+
+MsgHandler::MsgHandler()
+{
+	m_pCommUart = NULL;
+}
+
+MsgHandler::~MsgHandler()
+{
+	// TODO Auto-generated destructor stub
+}
+
+int MsgHandler::ServiceStart()
+{
+	int ret =0;
+	uint8_t pu8data[15] = {0xaa, 0, 0xfc, 0x01, 0, 0x01, 0, 0x05, 0x01, 0, 0, 0x04, 0xa5, 0x5a, 0x7e};
+	printf("ServiceStart\n");
+	ret = m_pCommUart->Uart_Write(m_pCommUart->m_uartd, pu8data, 16);
+
+	return ret;
+}
+
+void MsgHandler::ServiceIdle()
+{
+	uint8_t pu8data[14] = {0xaa, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x10, 0, 0, 0x0a, 0xa5, 0x5a, 0x7e};
+	printf("ServiceIdle\n");
+	m_pCommUart->Uart_Write(m_pCommUart->m_uartd, pu8data, 16);
+}
+
+void MsgHandler::BypassSocketToUart(BYTE* p8Data, int DataLen, int msgtype)
+{
+	int status;
+	printf("msgtype: %d, DataLen: %d \n", msgtype, DataLen);
+
+	switch(msgtype)
+	{
+	case SERVICESTART_REQUEST:
+		printf("SERVICESTART_REQUEST UART_WRITE\n");
+		m_pCommUart->m_grun =1;
+		m_pCommUart->Uart_Write(m_pCommUart->m_uartd, p8Data, DataLen);
+		wait(&status);
+		break;
+	case COORDINATOR_RESET_REQ:
+		m_pCommUart->m_grun =1;
+		m_pCommUart->Uart_Write(m_pCommUart->m_uartd, p8Data, DataLen);
+		wait(&status);
+		break;
+	}
+
+}
+
+
+SENDPACKET::PAC MsgHandler::SetUartMsg(Vector<uint8_t> vec)
+{
+	SENDPACKET::SOCKET_PACKET	Getpacket;
+	int size =0;
+	int ipos =0;
+	int loopEnd =0;
+	int nlsChecksum =0;
+	printf("GetUartMsg\n");
+
+	while(!loopEnd) {
+		switch(ipos)
+		{
+		case 0:
+			if(vec[MSG_STX] != STX) {
+				return 0;
+				break;
+			}
+			else {
+				Getpacket.header.stx = vec[MSG_STX];
+				ipos++;
+			}
+			break;
+		case 1:
+			Getpacket.header.panID = ByteToWord(vec[MSG_PANIDONE], vec[MSG_PANIDZERO]);
+			printf("panID [%x], ", Getpacket.header.panID);
+			ipos = ipos +2;
+			break;
+		case 3:
+			Getpacket.header.dAddr = ByteToWord(vec[MSG_DADDRZERO], vec[MSG_DADDRONE]);
+			printf("Daddr[%x] , ",Getpacket.header.dAddr);
+			ipos = ipos +2;
+			break;
+		case 5:
+			Getpacket.header.sAddr = ByteToWord(vec[MSG_SADDRZERO], vec[MSG_SADDRONE]);
+			printf("Saddr[%x], ", Getpacket.header.sAddr);
+			ipos = ipos +2;
+			break;
+		case 7:
+			Getpacket.header.type = vec[MSGTYPE];
+			printf("MsgType[%x], ", Getpacket.header.type);
+			ipos++;
+			break;
+		case 8:
+			Getpacket.header.length = ByteToWord(vec[MSG_LENGTHONE], vec[MSG_LENGTHZERO]);
+			printf("DataLen[%x], ", Getpacket.header.length);
+			ipos = ipos +2;
+			break;
+		case 10:
+			Getpacket.pu8Data = new BYTE[Getpacket.header.length];
+			for(int i =0; i< Getpacket.header.length; i++) {
+				Getpacket.pu8Data[i] = vec[MSG_LENGTHONE+1+i];
+				printf("pu8Data [%x] ", Getpacket.pu8Data[i]);
+			}
+			ipos = ipos + (int)Getpacket.header.length;
+			break;
+		default:
+			if(!nlsChecksum) {
+				Getpacket.tail.checksum = vec[ipos];
+				printf("checksum Val :%x ", Getpacket.tail.checksum);
+				nlsChecksum =1;
+			//	GetChecksum((BYTE *)&Getpacket.header.panID, (int)Getpacket.header.length);
+				ipos++;
+				break;
+			}
+			else {
+				Getpacket.tail.ext[0] = vec[ipos];
+				Getpacket.tail.ext[1] = vec[++ipos];
+				Getpacket.tail.ext[2] = vec[++ipos];
+
+				if((Getpacket.tail.ext[0] != 0xA5) || (Getpacket.tail.ext[1] != 0x5A) || (Getpacket.tail.ext[2] != 0x7E)) {
+					printf("etx error return 0\n");
+					size = vec.size();
+					vec.remove(size+1);
+					return 0;
+				}
+				else {
+					printf("pos[%d]etx : %x %x %x\n", ipos, Getpacket.tail.ext[0], Getpacket.tail.ext[1], Getpacket.tail.ext[2]);
+					loopEnd =1;
+					nlsChecksum =0;
+					size = vec.size();
+					vec.remove(size+1);
+					break;
+				}
+			}
+
+		}		//END SWITCH
+	}		//END WHILE
+#endif
+	printf("return 1\n");
+	return Getpacket;
+}
+
+WORD MsgHandler::ByteToWord(BYTE puData, BYTE puData1)
+{
+	WORD p16Tempdata_HIGH, p16Tempdata_LOW;
+
+	p16Tempdata_HIGH = (puData << 8);
+	p16Tempdata_LOW = puData1;
+
+	return p16Tempdata_HIGH|p16Tempdata_LOW;
+
+}
+
+void MsgHandler::SetHandle(UartComThread* msg)
+{
+	m_pCommUart = msg;
+}

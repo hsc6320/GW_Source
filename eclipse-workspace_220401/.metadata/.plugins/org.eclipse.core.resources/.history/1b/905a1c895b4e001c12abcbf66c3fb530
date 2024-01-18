@@ -1,0 +1,87 @@
+/*
+ * Main.cpp
+ *
+ *  Created on: 2021. 10. 22.
+ *      Author: hong
+ */
+
+
+#ifdef __WINDOWS__
+#include <Windows.h>
+#endif
+
+#include <iostream>
+#include <stdio.h>
+#include <sys/ioctl.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <stdint.h>
+#include <sys/types.h>
+#include <termios.h>
+#include <fcntl.h>
+#include <assert.h>
+
+using namespace std;
+
+#define BUF_MAX 512
+
+int main(void) {
+	//cout << "!!!Hello World!!!" << endl; // prints !!!Hello World!!!
+
+	int fd;
+	int ii;
+	ii = 0;
+	uint8_t buf[BUF_MAX];
+
+	fd = open("/dev/ttyO1", O_RDWR | O_NOCTTY);
+	printf("!!!Hello Welcome to Haemcom World~~2!!! %d\n", fd);
+
+	if (fd < 0) {
+		fprintf(stderr, "ERR\n");
+		exit(-1);
+	}
+
+	struct termios newtio;
+	// newtio <-- serial port setting.
+	memset(&newtio, 0, sizeof(struct termios));
+	newtio.c_cflag = B230400 | CS8 | CLOCAL | CREAD;
+	newtio.c_iflag = IGNPAR /*| ICRNL*/;
+	newtio.c_oflag = 0;
+	newtio.c_lflag = ~(ICANON | ECHO | ECHOE | ISIG);
+
+	tcflush(fd, TCIFLUSH);
+	tcsetattr(fd, TCSANOW, &newtio);
+
+
+	//uint8_t pu8data[15] = {0xaa, 0, 0xfc, 0x01, 0, 0x01, 0, 0x05, 0x01, 0, 0, 0x04, 0xa5, 0x5a, 0x7e};
+
+	const char *str = "hello, first serial program. \n";
+	write(fd, str, strlen(str) + 1);
+	//write(fd, pu8data, 16);
+	printf("Write result %d ", fd);
+
+	if (fd < 0) {
+			fprintf(stderr, "ERR\n");
+			printf("error\n");
+			exit(-1);
+	}
+	/*else {
+		for(int i=0; i< 15; i++) {
+			printf("%x ", pu8data[i]);
+		}
+	}
+*/
+	while (1) {
+		ii = read(fd, buf, BUF_MAX);
+		printf("Read result %d", ii);
+		buf[ii] = '\n';
+		printf("%s", buf);
+		memset(buf, 0, sizeof(buf));
+		sleep(1);
+	}
+	close(fd);
+
+	return 0;
+}

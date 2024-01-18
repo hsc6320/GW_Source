@@ -1,0 +1,223 @@
+/*
+ * MsgHandler.cpp
+ *
+ *  Created on: 2021. 11. 30.
+ *      Author: hong
+ */
+
+#include "MsgHandler.h"
+
+int nTagidCOunt =0;
+
+
+MsgHandler::MsgHandler()
+{
+	m_pCommUart = NULL;
+	m_nDataDownCount = 0;
+	m_nUartArrayDataDownCnt =0;
+	m_nUartArrayDataIndicateCnt =0;
+}
+
+MsgHandler::~MsgHandler()
+{
+	// TODO Auto-generated destructor stub
+}
+
+int MsgHandler::ServiceStart()
+{
+	int ret =0;
+	uint8_t pu8data[15] = {0xaa, 0, 0xfc, 0x01, 0, 0x01, 0, 0x05, 0x01, 0, 0, 0x04, 0xa5, 0x5a, 0x7e};
+	printf("ServiceStart\n");
+	ret = m_pCommUart->Uart_Write(m_pCommUart->m_uartd, pu8data, 16);
+
+	return ret;
+}
+
+void MsgHandler::ServiceIdle()
+{
+	uint8_t pu8data[14] = {0xaa, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x10, 0, 0, 0x0a, 0xa5, 0x5a, 0x7e};
+	printf("ServiceIdle\n");
+	m_pCommUart->Uart_Write(m_pCommUart->m_uartd, pu8data, 14);
+}
+
+int MsgHandler::BSN_Start_Packet(/*BYTE* u8data*/)
+{
+	BYTE pu8data[30];
+	BYTE u8Checksum;
+	int iBufcnt =0;
+
+	pu8data[iBufcnt] = STX;
+	pu8data[++iBufcnt] = CommonPacket.PanID << 8;
+	pu8data[++iBufcnt] = CommonPacket.PanID >> 8;
+	pu8data[++iBufcnt] = CommonPacket.ServerID;
+	pu8data[++iBufcnt] = CommonPacket.ServerID >> 8;
+	pu8data[++iBufcnt] = 0x01;		//gateway ID
+	pu8data[++iBufcnt] = 0xfb;		//gateway ID
+	pu8data[++iBufcnt] = BSN_START;	//msg type
+	pu8data[++iBufcnt] = 0x01;
+	pu8data[++iBufcnt] = 0;
+	pu8data[++iBufcnt] = 0;
+
+	u8Checksum = GetChecksum(pu8data, iBufcnt);
+	pu8data[++iBufcnt] = u8Checksum; //0x07;
+
+	pu8data[++iBufcnt] = CommonPacket.ext[0];
+	pu8data[++iBufcnt] = CommonPacket.ext[1];
+	pu8data[++iBufcnt] = CommonPacket.ext[2];
+
+	m_pCommUart->Uart_Write(m_pCommUart->m_uartd, pu8data, iBufcnt);
+
+	return 1;
+}
+
+int MsgHandler::UartPacket_DataDownStart(/*BYTE* u8data*/)
+{
+	SENDPACKET::SOCKET_PACKET sendPacket;
+	BYTE pu8data[30];
+	BYTE u8Checksum;
+	int iBufcnt =0;
+	if(m_nUartArrayDataDownCnt >= nDataDownCount) {
+		return 0;
+	}
+
+
+	pu8data[iBufcnt] = STX;
+	pu8data[++iBufcnt] = m_UartArrayDataDownMsg[m_nDataDownCount][nTagidCOunt];
+	pu8data[++iBufcnt] = m_UartArrayDataDownMsg[m_nDataDownCount][++nTagidCOunt];
+	pu8data[++iBufcnt] = m_UartArrayDataDownMsg[m_nDataDownCount][++nTagidCOunt];
+	pu8data[++iBufcnt] = m_UartArrayDataDownMsg[m_nDataDownCount][++nTagidCOunt];
+	pu8data[++iBufcnt] = 0x01;		//Server ID
+	pu8data[++iBufcnt] = 0xfb;		//Server ID
+	pu8data[++iBufcnt] = BSN_START;	//msg type
+	pu8data[++iBufcnt] = m_UartArrayDataDownMsg[m_nDataDownCount][++nTagidCOunt];		//Data Length
+	pu8data[++iBufcnt] = m_UartArrayDataDownMsg[m_nDataDownCount][++nTagidCOunt];		//Data Length
+	pu8data[++iBufcnt] = m_UartArrayDataDownMsg[m_nDataDownCount][++nTagidCOunt];		//Total Data Length
+	pu8data[++iBufcnt] = m_UartArrayDataDownMsg[m_nDataDownCount][++nTagidCOunt];		//Total Data Length
+
+	pu8data[++iBufcnt] = m_UartArrayDataDownMsg[m_nDataDownCount][++nTagidCOunt];		//Fragment Number
+
+
+	pu8data[++iBufcnt] = m_UartArrayDataDownMsg[m_nDataDownCount][++nTagidCOunt]; 		//Check Sum
+
+	pu8data[++iBufcnt] = m_UartArrayDataDownMsg[m_nDataDownCount][++nTagidCOunt];		//etx0
+	pu8data[++iBufcnt] = m_UartArrayDataDownMsg[m_nDataDownCount][++nTagidCOunt];		//etx1
+	pu8data[++iBufcnt] = m_UartArrayDataDownMsg[m_nDataDownCount][++nTagidCOunt];		//etx2
+
+	m_pCommUart->Uart_Write(m_pCommUart->m_uartd, pu8data, iBufcnt);
+
+
+	return 1;
+}
+
+void MsgHandler::BypassSocketToUart(BYTE* p8Data, int DataLen, int msgtype)
+{
+	//printf("BypassSocketToUart() msgtype: %x, DataLen: %d \n", msgtype, DataLen);
+
+	switch(msgtype)
+	{
+	case SERVICESTART_REQUEST:
+		printf("SERVICESTART_REQUEST UART_WRITE\n");
+		m_pCommUart->Uart_Write(m_pCommUart->m_uartd, p8Data, DataLen);
+		break;
+	case DOWNLOAD_START_REQ:
+		printf("DOWNLOAD_START_REQ UART_WRITE\n");
+		m_pCommUart->Uart_Write(m_pCommUart->m_uartd, p8Data, DataLen);
+		break;
+	case DATAINDICATION_REQ:
+		printf("DATAINDICATION_REQ UART_WRITE\n");
+		m_pCommUart->Uart_Write(m_pCommUart->m_uartd, p8Data, DataLen);
+		break;
+	case TAG_INFOR_UPDATE_REQ:
+		printf("TAG_INFOR_UPDATE_REQ UART_WRITE\n");
+		m_pCommUart->Uart_Write(m_pCommUart->m_uartd, p8Data, DataLen);
+		break;
+	case COORDINATOR_RESET_REQ:
+		printf("COORDINATOR_RESET_REQ UART_WRITE\n");
+		m_pCommUart->Uart_Write(m_pCommUart->m_uartd, p8Data, DataLen);
+		break;
+	case BSN_START:
+		printf("BSN_START UART_WRITE\n");
+		m_pCommUart->Uart_Write(m_pCommUart->m_uartd, p8Data, DataLen);
+		break;
+	case BSN_DATA_END_REQ:
+		printf("BSN_DATA_END_REQ UART_WRITE\n");
+		m_pCommUart->Uart_Write(m_pCommUart->m_uartd, p8Data, DataLen);
+		break;
+	case TAG_ALARM_INDICATION:
+		printf("TAG_ALARM_INDICATION UART_WRITE\n");
+		m_pCommUart->Uart_Write(m_pCommUart->m_uartd, p8Data, DataLen);
+		break;
+	}
+	//printf("BypassSocketToUart() End\n");
+}
+
+void MsgHandler::SetSocketArray(std::vector<std::vector<BYTE>> DataDownmsg, std::vector<std::vector<BYTE>> DataIndimsg, int Downcnt, int Indicnt)
+{
+	printf("SetSocketArray()\n");
+	m_UartArrayDataDownMsg = DataDownmsg;
+	m_UartArrayDataIndicateMsg = DataIndimsg;
+
+	m_nUartArrayDataDownCnt = Downcnt;
+	m_nUartArrayDataIndicateCnt = Indicnt;
+
+	BSN_Start_Packet();
+#if 0
+	for(int i =0; i < m_nUartArrayDataDownCnt; i++) {
+		printf("<<<<<DataDown Size : [%d]>>>>>>\n",m_UartArrayDataDownMsg[i].size());
+
+	}
+
+	for(int i =0; i < m_nUartArrayDataIndicateCnt; i++) {
+		printf("<<<<<DataIndi Size : [%d]>>>>>>\n\n",m_UartArrayDataIndicateMsg[i].size());
+	}
+
+	printf("\nMsgHandler m_nSocketArrayDataDownCnt : %d, m_SocketQueue_vec Size : %d\n", m_nUartArrayDataDownCnt, (int)m_UartArrayDataDownMsg[0].size());
+
+	for(int i=0; i < m_nUartArrayDataDownCnt; i++)
+	{
+		for(int j=0; j<(int)m_UartArrayDataDownMsg[i].size(); j++) {
+			printf("%x ", m_UartArrayDataDownMsg[i].at(j));
+		}
+		printf("\n");
+	}
+
+	for(int i=0; i < m_nUartArrayDataIndicateCnt; i++)
+	{
+		for(int j=0; j<(int)m_UartArrayDataIndicateMsg[i].size(); j++) {
+			printf("%x ", m_UartArrayDataIndicateMsg[i].at(j));
+		}
+		printf("\n");
+	}
+#endif
+
+
+}
+
+BYTE MsgHandler::GetChecksum(BYTE* puData, int len)
+{
+	BYTE sum =0;
+
+	for(int i=1; i< len; i++) {
+	//	printf("%x ", puData[i]);
+		sum += puData[i];
+	}
+	//printf("(check nsum : %x) ", sum);
+
+	return sum;
+}
+
+void MsgHandler::GetPanID(WORD panid)
+{
+	CommonPacket.PanID = panid;
+}
+
+void MsgHandler::GetServerID(WORD severid)
+{
+	CommonPacket.ServerID = severid;
+}
+
+
+void MsgHandler::SetHandle(UartComThread* msg)
+{
+	m_pCommUart = msg;
+}

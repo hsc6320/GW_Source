@@ -1,0 +1,214 @@
+/*
+ * MsgQueue.cpp
+ *
+ *  Created on: 2021. 11. 29.
+ *      Author: hong
+ */
+
+#include "MsgQueue.h"
+#include <queue>
+
+using namespace std;
+
+int m_uiPos =0;
+int nLengthCnt =0;
+int nDatalength =0;
+BYTE m_u8SendData[1024];
+
+std::vector<uint8_t*> vec;
+
+int m_nAssoCnt =0;
+int iTimerflag =0;
+std::queue<BYTE> que2;
+msgform* m_pMsg;
+Socket* m_GetSocket;
+pthread_mutex_t Queuemutex;
+struct itimerval timer;
+
+MsgQueue:: MsgQueue(void)
+{
+	m_bReadEnd_UartMessage = 0;
+	m_bUartCommuniFlag = 0;
+	m_pMsg = NULL;
+}
+
+MsgQueue::~MsgQueue(void)
+{
+	Clear();
+}
+
+static void timer_handler(int signum)
+{
+	int i=0;
+
+	//printf("\nTimer Data : ");
+	while(!que2.empty()) {
+		m_u8SendData[i] = que2.front();
+		//printf("%x ", m_u8SendData[i]);
+		que2.pop();
+		if((m_u8SendData[i-3] == 0xa5) && (m_u8SendData[i-2] == 0x5a) && (m_u8SendData[i-1] == 0x7e) && (i > 18)) {
+			//printf("\n");
+			nDatalength = 23;
+			m_GetSocket->Send_Message(m_u8SendData, nDatalength);
+			memset(m_u8SendData, 0, 1024);
+			m_nAssoCnt--;
+			printf("m_nAssoCnt %d\n", m_nAssoCnt);
+			break;
+		}
+		i++;
+	}
+	if(!m_nAssoCnt && !iTimerflag) {
+		timer.it_interval.tv_usec =0;
+		timer.it_value.tv_sec = 0;
+		timer.it_value.tv_usec = 0;
+		setitimer(ITIMER_VIRTUAL, &timer, NULL);
+	}
+
+	usleep(100);
+#if 0
+	while(1) {
+		if(vec2[i] == 0xaa) {
+			printf("iiiiii : %d ", i);
+			if((vec2[i+22] == 0x7e) && (vec2[i+21] == 0x5a) && (vec2[i+20] == 0xa5)) {
+				printf("%x, %x, %x\n", vec2[i+20], vec2[i+21], vec2[i+22]);
+
+				for(int j=0; j<23; j++) {
+					m_u8SendData[j] = vec2[i];
+					printf("%x ", m_u8SendData[j]);
+					vec2.erase(vec2.begin());
+				}
+				nDatalength = 23;
+				m_GetSocket->Send_Message(m_u8SendData, nDatalength);
+				memset(m_u8SendData, 0, 1024);
+
+				printf("\n");
+				uart_SetTimer();
+				break;
+			}
+		}
+		i++;
+
+	}
+#endif
+
+}
+
+
+int MsgQueue::uart_SetTimer()
+{
+	struct sigaction sa;
+	struct itimerval timer;
+
+	memset(&sa, 0, sizeof(sa));
+	sa.sa_handler = &timer_handler;
+	sigaction(SIGVTALRM, &sa, NULL);
+
+
+	timer.it_interval.tv_sec = 0;
+	timer.it_interval.tv_usec = 8000;
+
+	timer.it_value.tv_sec = 0;
+	timer.it_value.tv_usec = 90000;
+
+	printf("SetTimer() \n");
+	setitimer(ITIMER_VIRTUAL, &timer, NULL);
+
+	return 1;
+}
+
+
+bool MsgQueue::PutByte(uint8_t* b, int len)
+{
+	BYTE u8Data[1024];
+	int i=0;
+	memset(m_u8SendData, 0, 1024);
+	memset(u8Data, 0, 1024);
+	memcpy(u8Data, b, 1024);
+
+
+	printf("PutByte\n");
+
+	if(u8Data[MSG_STX] == STX) {
+		if(u8Data[MSGTYPE] == DATA_ACKNOWLEDGEMENT) {
+		//	printf("\nDATA_ACKNOWLEDGEMENT : 0x%x%x 0x%x\n", u8Data[MSG_DADDRZERO],u8Data[MSG_DADDRONE], u8Data[MSGTYPE]);
+			return 0;
+		}
+		else if((u8Data[MSGTYPE] == TAG_ASSOCIATION) || (u8Data[MSGTYPE] == DOWNLOAD_START_ACK)
+				|| (u8Data[MSGTYPE] == DATAINDICATION_ACK) || (u8Data[MSGTYPE] == TAG_INFOR_UPDATE)
+				|| (u8Data[MSGTYPE] == BSN_START_ACK)
+				|| (u8Data[MSGTYPE] == BSN_DATA_END_ACK)
+				|| (u8Data[MSGTYPE] == COORDINATOR_RESET_CONFIRM)
+				|| (u8Data[MSGTYPE] == TAG_INFOR_UPDATE_ACK)) {
+
+			if(u8Data[MSGTYPE] == TAG_ASSOCIATION) {
+				//for(int i=0; i<len; i++) {
+				while(1) {
+					que2.push(u8Data[i]);
+					printf("<%x> ", u8Data[i]);
+					if((u8Data[i-3] == 0xa5) && (u8Data[i-2] == 0x5a) && (u8Data[i-1] == 0x7e) && (i > 18)) {
+						printf("\nQueue Stack : %x, %x, %x %x %x", u8Data[0],u8Data[5], u8Data[20], u8Data[21],u8Data[22]);
+						break;
+					}
+					i++;
+				}
+
+				m_nAssoCnt++;
+				printf("\nm_nAssoCnt++ : %d\n", m_nAssoCnt);
+				if(!iTimerflag/*m_nAssoCnt == 1*/) {
+					iTimerflag =1;
+					uart_SetTimer();
+				}
+			}
+			else {
+				if(u8Data[MSGTYPE] == BSN_START_ACK) {
+					iTimerflag =0;
+				}
+				if( (u8Data[MSGTYPE] == BSN_START_ACK) || (u8Data[MSGTYPE] == DATAINDICATION_ACK) || (u8Data[MSGTYPE] == DOWNLOAD_START_ACK) ){
+					m_bUartCommuniFlag = 1;
+					m_vcemsg.MsgPacket->u8MsgType = u8Data[MSGTYPE];
+				}
+			}
+		}
+		else {
+			for(int i=0; i< len; i++) {
+				m_vcemsg.m_UartMsg_vec.push_back(u8Data[i]);
+				printf("[%x] ", m_vcemsg.m_UartMsg_vec[i]);
+			}
+			printf("\n");
+			m_bReadEnd_UartMessage =1;
+		}
+	}
+
+	return 1;
+}
+
+WORD MsgQueue::ByteToWord(BYTE puData, BYTE puData1)
+{
+	WORD p16Tempdata_HIGH, p16Tempdata_LOW;
+
+	p16Tempdata_HIGH = (puData << 8);
+	p16Tempdata_LOW = puData1;
+
+	return p16Tempdata_HIGH|p16Tempdata_LOW;
+}
+
+
+void MsgQueue::Clear()
+{
+	if(m_pMsg)
+	{
+	//	printf("Clear\n");
+		if(m_pMsg->data)
+			delete[] m_pMsg->data;
+		delete m_pMsg;
+		m_pMsg = NULL;
+	}
+	m_uiPos =0;
+}
+void MsgQueue::GetSocket(Socket* soc)
+{
+	m_GetSocket = soc;
+}
+
+
+

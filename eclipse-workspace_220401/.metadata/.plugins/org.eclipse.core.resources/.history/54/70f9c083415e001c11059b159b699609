@@ -1,0 +1,59 @@
+/*
+ * MsgHandler.h
+ *
+ *  Created on: 2021. 11. 30.
+ *      Author: hong
+ */
+
+#ifndef MSGHANDLER_H_
+#define MSGHANDLER_H_
+
+#include "pch.h"
+#include "uart/uart.h"
+#include "Vector_queue.h"
+
+class MsgHandler {
+
+public:
+	MsgHandler();
+	virtual ~MsgHandler();
+
+	UartComThread* m_pCommUart;
+
+	void SetHandle(UartComThread* msg);
+	void ServiceIdle();
+	int ServiceStart();
+	int SetUartMsg(Vector<uint8_t> vec);
+	void BypassSocketToUart(BYTE* p8Data, int DataLen, int msgtype);
+	WORD ByteToWord(BYTE puData, BYTE puData1);
+};
+
+namespace SENDPACKET {
+#pragma pack(push, 1)
+	typedef struct _HEADER {
+		BYTE	stx;
+		WORD	panID;
+		WORD	dAddr;
+		WORD	sAddr;
+		BYTE	type;
+		WORD	length;
+		_HEADER() {stx = 0xAA;}
+	}SEND_HEADER, *PS_SOCKET_HEADER;
+
+	typedef struct _TAIL {
+		BYTE	checksum;
+		BYTE	ext[3];
+	}SEND_TAIL, *PS_SOCKET_TAIL;
+
+	typedef struct _SOCKET_PACKET {
+		SEND_HEADER		header;
+		SEND_TAIL			tail;
+		BYTE* 			pu8Data;
+	}SOCKET_PACKET, *PS_SOCKET_PACKET;
+
+#pragma pack(pop)
+}
+using namespace SENDPACKET;
+
+#endif /* MSGHANDLER_H_ */
+

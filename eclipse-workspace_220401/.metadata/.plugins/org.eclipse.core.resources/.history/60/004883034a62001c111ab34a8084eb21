@@ -1,0 +1,59 @@
+/*
+ * pch.h
+ *
+ *  Created on: 2021. 11. 29.
+ *      Author: hong
+ */
+
+#ifndef PCH_H_
+#define PCH_H_
+
+
+#include <iostream>
+#include <list>
+#include <map>
+#include <stdio.h>
+#include <signal.h>
+#include <sys/ioctl.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <stdint.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <termios.h>
+#include <sys/select.h>
+#include <fcntl.h>
+#include <assert.h>
+#include <sys/time.h>
+
+#include <linux/time.h>
+#include <linux/kernel.h>
+#include <asm/delay.h>
+#include <net/if.h>
+#include <netinet/ether.h>
+#include <net/if.h>
+
+
+#include "Msg_Define.h"
+#include "PreDefine.h"
+
+#include <pthread.h>
+#include <cstdlib>
+#include <unistd.h>
+
+#define DEBUG_LEVEL_	3
+
+#ifdef  DEBUG_LEVEL_
+#define dp(n, fmt, args...)	if (DEBUG_LEVEL_ <= n) fprintf(stderr, "%s:%d,", fmt, __FILE__, __LINE__, ## args)
+#define dp0(n, fmt)		if (DEBUG_LEVEL_ <= n) fprintf(stderr, "%s:%d,"fmt, __FILE__, __LINE__)
+#define _dp(n, fmt, args...)	if (DEBUG_LEVEL_ <= n) fprintf(stderr, " "fmt, ## args)
+#else	/* DEBUG_LEVEL_ */
+#define dp(n, fmt, args...)
+#define dp0(n, fmt)
+#define _dp(n, fmt, args...)
+#endif	/* DEBUG_LEVEL_ */
+
+
+#endif /* PCH_H_ */

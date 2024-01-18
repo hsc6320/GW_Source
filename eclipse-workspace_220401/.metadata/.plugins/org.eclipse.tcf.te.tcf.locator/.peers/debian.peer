@@ -1,0 +1,8 @@
+{
+  "Host": "172.16.20.37",
+  "ID": "7e80b089-c5b1-41ad-be75-37fd545bd9e2",
+  "Name": "debian",
+  "Port": "1534",
+  "TransportName": "TCP",
+  "autoConnect": "true"
+}
