@@ -124,7 +124,6 @@ int Socket::Socket_Init(/*int argc, char *argv[]*/)
 			printf("EPOLL CTL DEFAULT: %d\n", retEpoll);
 			break;
 		}
-		free(events);
 		efd =0;
 		printf("Re-Connect efd : %d\n", efd);
 	}
@@ -143,12 +142,6 @@ int Socket::Socket_Init(/*int argc, char *argv[]*/)
 		th_delay(1000);
 		return -1;
 	}
-/*
-	ev.events = EPOLLIN;
-	ev.data.fd = m_serv_sock;
-	if(epoll_ctl(efd, EPOLL_CTL_ADD, m_serv_sock, &ev) == -1) {
-		printf("Failed to Add epoll_ctl\n");
-	}	*/
 
 //	fd2 = open("ip", O_RDONLY);
 //	if(fd2 < 0) {
@@ -170,6 +163,12 @@ int Socket::Socket_Init(/*int argc, char *argv[]*/)
 	}
 	else {
 		printf("\nSocket Val : %d\n", m_serv_sock);
+	}
+	
+	ev.events = EPOLLIN | EPOLLET;
+	ev.data.fd = m_serv_sock;
+	if(epoll_ctl(efd, EPOLL_CTL_ADD, m_serv_sock, &ev) == -1) {
+		printf("Failed to Add epoll_ctl\n");
 	}
 	
 	while(1) {
@@ -438,6 +437,12 @@ void Socket::Exit_Socket_Thread()
 		
 	retEpoll = epoll_ctl(efd, EPOLL_CTL_DEL, m_serv_sock/*events[0].data.fd*/, events);
 	
+	reclose = close(m_serv_sock);
+	printf("reclose : %d\n", reclose);
+	
+	m_iWorkingAlive =0;
+	th_delay(2000);
+	
 	switch(retEpoll)
 	{
 	case 0:
@@ -473,35 +478,8 @@ void Socket::Exit_Socket_Thread()
 		printf("EPOLL CTL DEFAULT\n");
 	
 	}
-/*	if(retval == PTHREAD_CANCELED)
-		printf("The thread was canceled - \n");
-	else
-		printf("Returned value %d \n", (int)retval);
-
-	switch(ret)
-	{
-	case 0:
-		printf("The thread joined successfully\n");
-		break;
-	case EDEADLK:
-		printf("Deadlock detected\n");
-		break;
-	case EINVAL:
-		printf("The thread is not joinable\n");
-		break;
-	case ESRCH:
-		printf("No thread with given ID is found\n");
-		break;
-	default:
-		printf("Error occurred when joining the thread\n");
-		break;
-	}*/
-	printf("Exit_Socket_Thread() \n");
-
-	reclose = close(m_serv_sock);
-	printf("reclose : %d\n", reclose);
+	free(events);
 	
-	//m_iWorkingAlive =0;
 	pthread_join(p_thread, (void**)&retval);
 	printf("Socket Exit Thread ,%d\n", retval);
 	switch(retval)
@@ -1032,24 +1010,20 @@ void Socket::deleteArray(int idx, int size, BYTE* ar)
 
 int Socket::Socket_fd_Select(int fd, int timeout_ms)
 {
-	int n;
-	
-	ev.events = EPOLLIN;
-	ev.data.fd = m_serv_sock;
-	epoll_ctl(efd, EPOLL_CTL_ADD, m_serv_sock, &ev);
-	/*if(epoll_ctl(efd, EPOLL_CTL_ADD, m_serv_sock, &ev) == -1) {
-		printf("Failed to Add epoll_ctl\n");
-	}*/
+	int eventCnt =0;
 
-	n = epoll_wait(efd, events, EPOLL_SIZE, 10);
+	eventCnt = epoll_wait(efd, events, EPOLL_SIZE, timeout_ms);
 //	printf("Socket_fd_Select() epoll_wait : %d\n", n);
-	if( n== -1) {
+
+	if( eventCnt== -1) {
 		printf("epoll error\n");
 		th_delay(3000);
 		return -1;
 	}
-	for(int i=0; i<n; i++) {
-	//	printf("epoll N : %d\n", events[i].data.fd );
+	if(eventCnt > 1)
+		printf(" eventCnt : %d \n", eventCnt);
+	
+	for(int i=0; i<eventCnt; i++) {
 		if(events[i].data.fd == m_serv_sock) {
 			return m_serv_sock;
 		}

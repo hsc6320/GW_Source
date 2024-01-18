@@ -36,7 +36,7 @@ public:
 	void SetMsgQueueHwnd(MsgQueue* soc);
 	int SendMessage(int msg, PRE_DEFINE::S_PACKET packet);
 	void GetPanID(WORD panid);
-	void GetServerID(WORD severid);
+	void GetServerID();
 	int Registration_Request();
 	int Server_BSN_Stop_Packet();
 	WORD ByteToWord(BYTE puData, BYTE puData1);

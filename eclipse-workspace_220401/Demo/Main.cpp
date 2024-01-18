@@ -709,19 +709,18 @@ int Main_ServiceStart_TagAssociation_Init()
 	while(1) {
 		switch(msg) {
 			case 0:
+				m_pSocketHandle->GetServerID();
 				Socket_Registration_Req();
 				msg++;
 				break;
 			case 1:
 				if(m_pSocket->m_iSocketReceiveEnd) {
 					m_pSocket->m_iSocketReceiveEnd =0;
-					m_pSocketHandle->GetServerID(ByteToWord(m_pSocket->m_SocketMsg_vec[MSG_DADDRONE], m_pSocket->m_SocketMsg_vec[MSG_DADDRZERO]));
-					
+					Socket_Connect_Req();
 					msg++;
 				}
 				break;
 			case 2:
-				Socket_Connect_Req();
 				msg++;
 				break;
 			case 3:	
@@ -1570,10 +1569,6 @@ int GetUartMsg(PRE_DEFINE::S_PACKET* Getpacket)
 	}		//END WHILE
 	//m_GetInforPacket = Getpacket;
 
-	if(Getpacket->header.type == REGISTRATION_CONFIRM) {
-		m_pSocketHandle->GetServerID(Getpacket->header.sAddr);
-	//	m_pSocket->m_pSocMsgqueue->GetServerID(Getpacket.header.sAddr);
-	}
 	if(Getpacket->header.type == GATEWAYID_RESPONSE) {
 		m_pSocketHandle->GetPanID(Getpacket->header.panID);
 	//	m_pSocket->m_pSocMsgqueue->GetPanID(Getpacket.header.panID);
