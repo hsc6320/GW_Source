@@ -627,9 +627,6 @@ void *Recieve_Function(void* rcvDt)
 									break;
 								}
 							}
-						/*	else {
-								printf("%x == %x\n", u8CheckSum, u8data[CheckSumIndex]);
-							}*/
 						}
 					}
 					if( (u8data2[MSG_STX] == STX) && (u8data2[TempCnt2-1] == 0x7e) && (u8data2[TempCnt2-2] == 0x5a) && (u8data2[TempCnt2-3] == 0xa5) ) {						
@@ -657,8 +654,7 @@ void *Recieve_Function(void* rcvDt)
 					}
 					
 					if( (!restBufCnt) && (TempCnt == str_len) ) {
-						printf("&&&&&&&&&&&&& %d %d\n", TempCnt, str_len);
-						
+						printf("&&&&&&&&&&&&& %d %d\n", TempCnt, str_len);						
 						memset(u8data, 0, 1024);
 						memset(u8data2, 0, 1024);
 						break;

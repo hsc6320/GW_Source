@@ -340,7 +340,7 @@ void SocketHandler::GetPanID(WORD panid)
 
 void SocketHandler::GetServerID()
 {
-	packet.ServerID = 0x0a;
+	packet.ServerID = 0x7;
 
 	printf("GetServerID %x\n", packet.ServerID);
 }

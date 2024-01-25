@@ -325,3 +325,411 @@ Finished building target: Demo
 15:21:32 **** Incremental Build of configuration Debug for project Demo ****
 make all 
 make: Nothing to be done for 'all'.
+15:44:21 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+Finished building: ../Socket/socket.cpp
+ 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘int Main_DeleteThread(WORD)’:
+../Main.cpp:242:18: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+    for(int i=0; i<m_pMsgHandler->m_nThreadUartArrayDataDownCnt; i++) {
+                 ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:257:20: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+     for(int j=0; j < sizeof(setTagNumber)/sizeof(setTagNumber[0]); j++) {
+                  ~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:264:17: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+     if(nWORDcnt == m_pMsgQueue->setTagNumber.size())
+        ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:269:18: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+    for(int i=0; i<m_pMsgHandler->m_nThreadUartArrayDataDownCnt; i++) {
+                 ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:253:21: warning: variable ‘nTotalDataCount’ set but not used [-Wunused-but-set-variable]
+    int nWORDcnt =0, nTotalDataCount =0;
+                     ^~~~~~~~~~~~~~~
+../Main.cpp: In function ‘void* Main_TagDownload_Thread(void*)’:
+../Main.cpp:309:108: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+  printf(" Main_TagDownload_Thread() Tag thread Number : %d , iTagthreadID: %lu \n",  id, (int)iTagthreadNum);
+                                                                                                            ^
+../Main.cpp:429:83: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+     printf("Tag thread Number : %d , iTagthreadID: %lu \n", id, (int)iTagthreadNum);
+                                                                                   ^
+../Main.cpp: In function ‘int Main_ByPass_Command3()’:
+../Main.cpp:819:20: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+      for(int i=0; i<m_SocketArraySortDataDownMsg.size(); i++) {
+                   ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:820:21: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+       for(int j=0; j<m_SocketArraySortDataDownMsg[i].size(); j++) {
+                    ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:831:18: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+    for(int i=0; i<m_SocketArraySortDataDownMsg.size(); i++) {
+                 ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:778:6: warning: unused variable ‘nChoiceNumber’ [-Wunused-variable]
+  int nChoiceNumber =0;
+      ^~~~~~~~~~~~~
+../Main.cpp: In function ‘bool Main_Cmp(const std::vector<unsigned char>&, const std::vector<unsigned char>&)’:
+../Main.cpp:1596:18: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+    for(int i=0; i<m_pMsgHandler->m_nUartArrayDataDownCnt; i++) {
+                 ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:1606:18: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+    for(int i=0; i<m_pMsgHandler->m_nUartArrayDataDownCnt; i++) {
+                 ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:1614:18: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+    for(int i=0; i<m_pMsgHandler->m_nUartArrayDataDownCnt; i++) {
+                 ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:1615:19: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+     for(int j=0; j<m_pMsgHandler->m_UartArrayDataDownMsg[i].size(); j++) {
+                  ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:1583:6: warning: unused variable ‘temp’ [-Wunused-variable]
+  int temp =0, temp2 =0;
+      ^~~~
+../Main.cpp:1583:15: warning: unused variable ‘temp2’ [-Wunused-variable]
+  int temp =0, temp2 =0;
+               ^~~~~
+../Main.cpp: In function ‘bool Main_ArrayCmp(const WORD&, const WORD&)’:
+../Main.cpp:1630:6: warning: unused variable ‘temp’ [-Wunused-variable]
+  int temp =0, temp2 =0;
+      ^~~~
+../Main.cpp:1630:15: warning: unused variable ‘temp2’ [-Wunused-variable]
+  int temp =0, temp2 =0;
+               ^~~~~
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo" ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+17:27:28 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘int Main_DeleteThread(WORD)’:
+../Main.cpp:242:18: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+    for(int i=0; i<m_pMsgHandler->m_nThreadUartArrayDataDownCnt; i++) {
+                 ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:257:20: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+     for(int j=0; j < sizeof(setTagNumber)/sizeof(setTagNumber[0]); j++) {
+                  ~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:264:17: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+     if(nWORDcnt == m_pMsgQueue->setTagNumber.size())
+        ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:269:18: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+    for(int i=0; i<m_pMsgHandler->m_nThreadUartArrayDataDownCnt; i++) {
+                 ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:253:21: warning: variable ‘nTotalDataCount’ set but not used [-Wunused-but-set-variable]
+    int nWORDcnt =0, nTotalDataCount =0;
+                     ^~~~~~~~~~~~~~~
+../Main.cpp: In function ‘void* Main_TagDownload_Thread(void*)’:
+../Main.cpp:309:108: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+  printf(" Main_TagDownload_Thread() Tag thread Number : %d , iTagthreadID: %lu \n",  id, (int)iTagthreadNum);
+                                                                                                            ^
+../Main.cpp:429:83: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+     printf("Tag thread Number : %d , iTagthreadID: %lu \n", id, (int)iTagthreadNum);
+                                                                                   ^
+../Main.cpp: In function ‘int Main_ByPass_Command3()’:
+../Main.cpp:819:20: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+      for(int i=0; i<m_SocketArraySortDataDownMsg.size(); i++) {
+                   ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:820:21: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+       for(int j=0; j<m_SocketArraySortDataDownMsg[i].size(); j++) {
+                    ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:831:18: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+    for(int i=0; i<m_SocketArraySortDataDownMsg.size(); i++) {
+                 ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:778:6: warning: unused variable ‘nChoiceNumber’ [-Wunused-variable]
+  int nChoiceNumber =0;
+      ^~~~~~~~~~~~~
+../Main.cpp: In function ‘int Main_TagSort_Arrange2(int*, int*)’:
+../Main.cpp:1231:16: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+  for(int i=0; i<m_pMsgHandler->m_nUartArrayDataDownCnt; i++) {
+               ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp: In function ‘bool Main_Cmp(const std::vector<unsigned char>&, const std::vector<unsigned char>&)’:
+../Main.cpp:1596:18: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+    for(int i=0; i<m_pMsgHandler->m_nUartArrayDataDownCnt; i++) {
+                 ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:1606:18: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+    for(int i=0; i<m_pMsgHandler->m_nUartArrayDataDownCnt; i++) {
+                 ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:1614:18: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+    for(int i=0; i<m_pMsgHandler->m_nUartArrayDataDownCnt; i++) {
+                 ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:1615:19: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+     for(int j=0; j<m_pMsgHandler->m_UartArrayDataDownMsg[i].size(); j++) {
+                  ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:1583:6: warning: unused variable ‘temp’ [-Wunused-variable]
+  int temp =0, temp2 =0;
+      ^~~~
+../Main.cpp:1583:15: warning: unused variable ‘temp2’ [-Wunused-variable]
+  int temp =0, temp2 =0;
+               ^~~~~
+../Main.cpp: In function ‘bool Main_ArrayCmp(const WORD&, const WORD&)’:
+../Main.cpp:1630:6: warning: unused variable ‘temp’ [-Wunused-variable]
+  int temp =0, temp2 =0;
+      ^~~~
+../Main.cpp:1630:15: warning: unused variable ‘temp2’ [-Wunused-variable]
+  int temp =0, temp2 =0;
+               ^~~~~
+Finished building: ../Main.cpp
+ 
+Building file: ../MsgQueue.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgQueue.d" -MT"MsgQueue.o" -o "MsgQueue.o" "../MsgQueue.cpp"
+../MsgQueue.cpp: In member function ‘bool MsgQueue::PutByte(uint8_t*, int)’:
+../MsgQueue.cpp:111:42: warning: format ‘%d’ expects a matching ‘int’ argument [-Wformat=]
+       printf("TagAck overlap : %d, %x \n");
+                                          ^
+../MsgQueue.cpp:111:42: warning: format ‘%x’ expects a matching ‘unsigned int’ argument [-Wformat=]
+Finished building: ../MsgQueue.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo" ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+11:45:32 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘int Main_DeleteThread(WORD)’:
+../Main.cpp:242:18: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+    for(int i=0; i<m_pMsgHandler->m_nThreadUartArrayDataDownCnt; i++) {
+                 ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:257:20: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+     for(int j=0; j < sizeof(setTagNumber)/sizeof(setTagNumber[0]); j++) {
+                  ~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:264:17: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+     if(nWORDcnt == m_pMsgQueue->setTagNumber.size())
+        ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:269:18: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+    for(int i=0; i<m_pMsgHandler->m_nThreadUartArrayDataDownCnt; i++) {
+                 ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:253:21: warning: variable ‘nTotalDataCount’ set but not used [-Wunused-but-set-variable]
+    int nWORDcnt =0, nTotalDataCount =0;
+                     ^~~~~~~~~~~~~~~
+../Main.cpp: In function ‘void* Main_TagDownload_Thread(void*)’:
+../Main.cpp:309:108: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+  printf(" Main_TagDownload_Thread() Tag thread Number : %d , iTagthreadID: %lu \n",  id, (int)iTagthreadNum);
+                                                                                                            ^
+../Main.cpp:429:83: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+     printf("Tag thread Number : %d , iTagthreadID: %lu \n", id, (int)iTagthreadNum);
+                                                                                   ^
+../Main.cpp: In function ‘int Main_ByPass_Command3()’:
+../Main.cpp:819:20: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+      for(int i=0; i<m_SocketArraySortDataDownMsg.size(); i++) {
+                   ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:820:21: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+       for(int j=0; j<m_SocketArraySortDataDownMsg[i].size(); j++) {
+                    ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:831:18: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+    for(int i=0; i<m_SocketArraySortDataDownMsg.size(); i++) {
+                 ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:778:6: warning: unused variable ‘nChoiceNumber’ [-Wunused-variable]
+  int nChoiceNumber =0;
+      ^~~~~~~~~~~~~
+../Main.cpp: In function ‘bool Main_Cmp(const std::vector<unsigned char>&, const std::vector<unsigned char>&)’:
+../Main.cpp:1596:18: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+    for(int i=0; i<m_pMsgHandler->m_nUartArrayDataDownCnt; i++) {
+                 ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:1606:18: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+    for(int i=0; i<m_pMsgHandler->m_nUartArrayDataDownCnt; i++) {
+                 ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:1614:18: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+    for(int i=0; i<m_pMsgHandler->m_nUartArrayDataDownCnt; i++) {
+                 ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:1615:19: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+     for(int j=0; j<m_pMsgHandler->m_UartArrayDataDownMsg[i].size(); j++) {
+                  ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:1583:6: warning: unused variable ‘temp’ [-Wunused-variable]
+  int temp =0, temp2 =0;
+      ^~~~
+../Main.cpp:1583:15: warning: unused variable ‘temp2’ [-Wunused-variable]
+  int temp =0, temp2 =0;
+               ^~~~~
+../Main.cpp: In function ‘bool Main_ArrayCmp(const WORD&, const WORD&)’:
+../Main.cpp:1630:6: warning: unused variable ‘temp’ [-Wunused-variable]
+  int temp =0, temp2 =0;
+      ^~~~
+../Main.cpp:1630:15: warning: unused variable ‘temp2’ [-Wunused-variable]
+  int temp =0, temp2 =0;
+               ^~~~~
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo" ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+13:18:08 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+make: Nothing to be done for 'all'.
+15:15:03 **** Build of configuration Debug for project Demo ****
+make all 
+make: Nothing to be done for 'all'.
+15:18:46 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/SocketHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
+Finished building: ../Socket/SocketHandler.cpp
+ 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘int Main_DeleteThread(WORD)’:
+../Main.cpp:242:18: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+    for(int i=0; i<m_pMsgHandler->m_nThreadUartArrayDataDownCnt; i++) {
+                 ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:257:20: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+     for(int j=0; j < sizeof(setTagNumber)/sizeof(setTagNumber[0]); j++) {
+                  ~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:264:17: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+     if(nWORDcnt == m_pMsgQueue->setTagNumber.size())
+        ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:269:18: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+    for(int i=0; i<m_pMsgHandler->m_nThreadUartArrayDataDownCnt; i++) {
+                 ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:253:21: warning: variable ‘nTotalDataCount’ set but not used [-Wunused-but-set-variable]
+    int nWORDcnt =0, nTotalDataCount =0;
+                     ^~~~~~~~~~~~~~~
+../Main.cpp: In function ‘void* Main_TagDownload_Thread(void*)’:
+../Main.cpp:309:108: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+  printf(" Main_TagDownload_Thread() Tag thread Number : %d , iTagthreadID: %lu \n",  id, (int)iTagthreadNum);
+                                                                                                            ^
+../Main.cpp:429:83: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+     printf("Tag thread Number : %d , iTagthreadID: %lu \n", id, (int)iTagthreadNum);
+                                                                                   ^
+../Main.cpp: In function ‘int Main_ByPass_Command3()’:
+../Main.cpp:820:20: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+      for(int i=0; i<m_SocketArraySortDataDownMsg.size(); i++) {
+                   ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:821:21: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+       for(int j=0; j<m_SocketArraySortDataDownMsg[i].size(); j++) {
+                    ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:832:18: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+    for(int i=0; i<m_SocketArraySortDataDownMsg.size(); i++) {
+                 ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:779:6: warning: unused variable ‘nChoiceNumber’ [-Wunused-variable]
+  int nChoiceNumber =0;
+      ^~~~~~~~~~~~~
+../Main.cpp: In function ‘bool Main_Cmp(const std::vector<unsigned char>&, const std::vector<unsigned char>&)’:
+../Main.cpp:1597:18: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+    for(int i=0; i<m_pMsgHandler->m_nUartArrayDataDownCnt; i++) {
+                 ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:1607:18: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+    for(int i=0; i<m_pMsgHandler->m_nUartArrayDataDownCnt; i++) {
+                 ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:1615:18: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+    for(int i=0; i<m_pMsgHandler->m_nUartArrayDataDownCnt; i++) {
+                 ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:1616:19: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+     for(int j=0; j<m_pMsgHandler->m_UartArrayDataDownMsg[i].size(); j++) {
+                  ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:1584:6: warning: unused variable ‘temp’ [-Wunused-variable]
+  int temp =0, temp2 =0;
+      ^~~~
+../Main.cpp:1584:15: warning: unused variable ‘temp2’ [-Wunused-variable]
+  int temp =0, temp2 =0;
+               ^~~~~
+../Main.cpp: In function ‘bool Main_ArrayCmp(const WORD&, const WORD&)’:
+../Main.cpp:1631:6: warning: unused variable ‘temp’ [-Wunused-variable]
+  int temp =0, temp2 =0;
+      ^~~~
+../Main.cpp:1631:15: warning: unused variable ‘temp2’ [-Wunused-variable]
+  int temp =0, temp2 =0;
+               ^~~~~
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo" ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+16:16:02 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/SocketHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
+Finished building: ../Socket/SocketHandler.cpp
+ 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘int Main_DeleteThread(WORD)’:
+../Main.cpp:242:18: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+    for(int i=0; i<m_pMsgHandler->m_nThreadUartArrayDataDownCnt; i++) {
+                 ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:257:20: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+     for(int j=0; j < sizeof(setTagNumber)/sizeof(setTagNumber[0]); j++) {
+                  ~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:264:17: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+     if(nWORDcnt == m_pMsgQueue->setTagNumber.size())
+        ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:269:18: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+    for(int i=0; i<m_pMsgHandler->m_nThreadUartArrayDataDownCnt; i++) {
+                 ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:253:21: warning: variable ‘nTotalDataCount’ set but not used [-Wunused-but-set-variable]
+    int nWORDcnt =0, nTotalDataCount =0;
+                     ^~~~~~~~~~~~~~~
+../Main.cpp: In function ‘void* Main_TagDownload_Thread(void*)’:
+../Main.cpp:309:108: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+  printf(" Main_TagDownload_Thread() Tag thread Number : %d , iTagthreadID: %lu \n",  id, (int)iTagthreadNum);
+                                                                                                            ^
+../Main.cpp:429:83: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+     printf("Tag thread Number : %d , iTagthreadID: %lu \n", id, (int)iTagthreadNum);
+                                                                                   ^
+../Main.cpp: In function ‘int Main_ByPass_Command3()’:
+../Main.cpp:820:20: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+      for(int i=0; i<m_SocketArraySortDataDownMsg.size(); i++) {
+                   ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:821:21: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+       for(int j=0; j<m_SocketArraySortDataDownMsg[i].size(); j++) {
+                    ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:832:18: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+    for(int i=0; i<m_SocketArraySortDataDownMsg.size(); i++) {
+                 ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:779:6: warning: unused variable ‘nChoiceNumber’ [-Wunused-variable]
+  int nChoiceNumber =0;
+      ^~~~~~~~~~~~~
+../Main.cpp: In function ‘bool Main_Cmp(const std::vector<unsigned char>&, const std::vector<unsigned char>&)’:
+../Main.cpp:1597:18: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+    for(int i=0; i<m_pMsgHandler->m_nUartArrayDataDownCnt; i++) {
+                 ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:1607:18: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+    for(int i=0; i<m_pMsgHandler->m_nUartArrayDataDownCnt; i++) {
+                 ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:1615:18: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+    for(int i=0; i<m_pMsgHandler->m_nUartArrayDataDownCnt; i++) {
+                 ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:1616:19: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+     for(int j=0; j<m_pMsgHandler->m_UartArrayDataDownMsg[i].size(); j++) {
+                  ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Main.cpp:1584:6: warning: unused variable ‘temp’ [-Wunused-variable]
+  int temp =0, temp2 =0;
+      ^~~~
+../Main.cpp:1584:15: warning: unused variable ‘temp2’ [-Wunused-variable]
+  int temp =0, temp2 =0;
+               ^~~~~
+../Main.cpp: In function ‘bool Main_ArrayCmp(const WORD&, const WORD&)’:
+../Main.cpp:1631:6: warning: unused variable ‘temp’ [-Wunused-variable]
+  int temp =0, temp2 =0;
+      ^~~~
+../Main.cpp:1631:15: warning: unused variable ‘temp2’ [-Wunused-variable]
+  int temp =0, temp2 =0;
+               ^~~~~
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo" ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+16:24:12 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+make: Nothing to be done for 'all'.

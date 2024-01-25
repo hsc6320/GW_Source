@@ -91,24 +91,24 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 				wordPanID = ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO]);
 				
 				iterSet = setTagNumber.find(wordPanID);
-				iter = setTagAckNumber.find(wordPanID);
+		//		iter = setTagAckNumber.find(wordPanID);
 				if(iterSet != setTagNumber.end()) {
 					printf("---- Exist ");
 					printf("setTagNumber : %d----\n", *iterSet);  
 				}
-				else {
+			/*	else {
 					printf("----Not exist ----\n");
 					if(iter != setTagAckNumber.end()) {
 						printf("----BUT Exist ");
 						printf("setAckNumber : %d----\n", *iter);  	
 						return 1;
 					}
-				}
+				}*/
 				
 				if(!setTagNumber.empty() && (iterSet != setTagNumber.end()) ) {
 					iter = setTagAckNumber.find(wordPanID);
 					if(iter != setTagAckNumber.end()) {
-						printf("TagAck overlap\n");
+						printf("TagAck overlap : %d, %x \n");
 					}
 					else {
 						setTagAckNumber.insert(wordPanID);
@@ -158,7 +158,7 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 			
 				m_nMapParity++;				
 				printf("0x43 Count : %d\n", m_nMapParity);
-				
+			/*	
 				iter = setTagAckNumber.find(wordPanID);
 				if(iter != setTagAckNumber.end()) {
 					printf("TagAck overlap\n");
@@ -167,7 +167,7 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 					setTagNumber.erase(wordPanID);
 					setTagAckNumber.insert(wordPanID);
 					printf("TagAck setTagAckNumber : %x\n", wordPanID);
-				}
+				}*/
 
 			}
 			m_GetSocket->Send_Message(u8Data, len);
