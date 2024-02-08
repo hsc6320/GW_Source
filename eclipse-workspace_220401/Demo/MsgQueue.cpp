@@ -38,22 +38,6 @@ int GetSizeArray (T* ar)
 	return ret;
 }
 
-bool ZeroCompare2(WORD a, WORD b)
-{
-//	if( (a != 0) && ( b !=0) )
-		return a < b;
-//	else
-//		return 0;
-}
-bool ZeroCompare3(WORD a, WORD b)
-{
-	if( (a != 0) && ( b !=0) )
-		return a < b;
-	else
-		return 0;
-}
-
-
 MsgQueue:: MsgQueue(void)
 {
 	m_bReadEnd_UartMessage = 0;
@@ -115,9 +99,6 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 
 						printf("----DataAck TagID : ");
 						printf("%x, %d------\n", wordPanID, wordPanID);
-					
-						m_nDirectMapParity++;
-						printf("0x43 Count : %d\n", m_nDirectMapParity);
 					}
 					return 1;
 				}
@@ -147,7 +128,6 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 				for(int i=0; i<4096; i++) {
 					if(m_Test[i] > 0) {
 						m_pu16MsgQueueArrayDataAcknowledge[j] = m_Test[i];
-//						printf("%d ",m_pu16MsgQueueArrayDataAcknowledge[j]);
 						j++;
 					}
 				}
@@ -194,22 +174,11 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 					printf("%x ", m_MsgQueueDataAssocation[i]);
 				}
 				printf("\n");
-				m_Queue.push(m_MsgQueueDataAssocation);
-				
-			/*	if(u8Data[MSG_ASSOCIATION_STATUS] == PAYLOAD_STATUS_SUCCESS) {
-					m_MsgTempTagIDAssociation[nTagidCnt] = ByteToWord(m_MsgQueueDataAssocation.at(MSG_SADDRONE), m_MsgQueueDataAssocation.at(MSG_SADDRZERO)) ;
-					printf("Association TAG ID : %d\n", m_MsgTempTagIDAssociation[nTagidCnt]);
-					
-					nTagidCnt++;
-				}*/
+				m_Queue.push(m_MsgQueueDataAssocation);				
+			
 				m_MsgQueueDataAssocation.clear();
-				m_nSendTagCount++;				
-				
-			//	printf("m_nSendTagCount : %d\n", m_nSendTagCount );
-			/*	while(1) {
-					if(!m_bReadEnd_UartMessage)
-						break;
-				}*/
+				m_nSendTagCount++;			
+		
 				m_bReadEnd_UartMessage =1;
 				return 1;
 			}
@@ -275,43 +244,6 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 			m_bReadEnd_UartMessage =1;
 		}
 	}
-
-	return 1;
-}
-
-int MsgQueue::DataSort()
-{
-	
-	printf("DataSort()\n");
-	printf("Before Sort  m_ArrayDataAcknowledge.size %d\n", (int)m_ArrayDataAcknowledge.size());
-	for(int j=0; j<(int)m_ArrayDataAcknowledge.size(); j++) {
-		for(int i=0; i<(int)m_ArrayDataAcknowledge[j].size(); i++) {
-			printf("[%x] ", m_ArrayDataAcknowledge[j].at(i));
-		}
-	}
-	printf("\n");
-	sort(m_ArrayDataAcknowledge.begin(), m_ArrayDataAcknowledge.end());
-	m_ArrayDataAcknowledge.erase(unique(m_ArrayDataAcknowledge.begin(), m_ArrayDataAcknowledge.end()),
-																			m_ArrayDataAcknowledge.end()); 	//Delete overlap
-	//printf("Sort , Delete 0 and Overlap after\n");
-	for(int j=0; j<nDataDown; j++) {
-		for(int i=0; i<(int)m_ArrayDataAcknowledge[j].size(); i++) {
-			if(m_ArrayDataAcknowledge[j].at(i) == 0) {
-			//	printf("Erase %x[%d] ", m_ArrayDataAcknowledge[j].at(i), j);
-				m_ArrayDataAcknowledge.erase(m_ArrayDataAcknowledge.begin()+j, m_ArrayDataAcknowledge.begin()+j+1);
-			}
-		}
-	}
-	sort(m_ArrayDataAcknowledge.begin(), m_ArrayDataAcknowledge.end());
-
-	printf("Final Sort after m_ArrayDataAcknowledge.size %d\n", (int)m_ArrayDataAcknowledge.size());
-	for(int j=0; j<nDataDown; j++) {
-		for(int i=0; i<(int)m_ArrayDataAcknowledge[j].size(); i++) {
-			printf("[%x] ", m_ArrayDataAcknowledge[j].at(i));
-		}
-		
-	}
-	printf("\n");
 
 	return 1;
 }

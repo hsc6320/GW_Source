@@ -47,20 +47,17 @@ public :
 	MsgQueue(void);
 	~MsgQueue(void);
 public:
-	VectorSocket<WORD> m_ArrayUtil;
 
 	std::queue<BYTE> que;
-
-	//vecmsgform m_vcemsg;
 	std::vector<BYTE> m_vcemsg;
+	
 	int m_bReadEnd_UartMessage;
 	int m_bUartCommuniFlag, m_bUartTagAssociFlag;
 	int m_Uart_ServiceStart_TagAssociation_InitFlag;
-	int m_nMapParity, m_nDirectMapParity;
+	int m_nMapParity;
 	int m_nSendTagCount;
 
-	std::queue<std::vector<BYTE>> m_Queue, m_QueueDataAck;
-	std::vector<std::vector<BYTE>> m_ArrayDataAcknowledge;
+	std::queue<std::vector<BYTE>> m_Queue;
 	std::vector<BYTE> m_MsgQueueDataAssocation;
 	std::set<WORD> setTagNumber, setTagAckNumber;
 	
@@ -74,7 +71,6 @@ public:
 	int uart_DelaySend();
 	WORD ByteToWord(BYTE puData, BYTE puData1);
 	bool PutByte(uint8_t* b, int len);
-	int DataSort();
 	void GetDataDown(int cnt, WORD* TagNumber);
 	int GetSizeArray1(WORD* ar);
 	void AppendArray1(WORD sz, int size1, WORD* ar);

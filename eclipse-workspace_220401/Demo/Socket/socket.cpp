@@ -70,7 +70,6 @@ Socket::~Socket()
 
 int Socket::Socket_Init(/*int argc, char *argv[]*/)
 {
-	//socket_ctx_t* ctx = NULL;
 
 	struct ifreq	ifrMac;
 	struct sockaddr_in serv_addr;
@@ -271,13 +270,7 @@ int Socket::IP_Address_Init()
 
 	ifc.ifc_len = sizeof(ifr);
 	ifc.ifc_ifcu.ifcu_req = ifr;
-/*
-	nRet = ioctl(m_serv_sock, SIOCGIFCONF, &ifc);
-	if(nRet == -1) {
-		printf("Get ip error\n");
-		return 0;
-	}*/
-#if 1
+
 	nRet = ioctl(m_serv_sock, SIOCGIFCONF, &ifc);
 	if(nRet == -1) {
 		printf("Get ip error 1\n");
@@ -313,73 +306,13 @@ int Socket::IP_Address_Init()
 				m_IP_String.append(" ");
 			}
 		}
-
-#endif
 		printf("-------------MY IP ADDRESS : ");
 		printf("MY IP %s", m_IP_String.c_str());
 		printf("---------------------\n");
 	}
 
-
-#if 0
-	ifc2.ifc_len = sizeof(ifr2);
-	ifc2.ifc_ifcu.ifcu_req = ifr2;
-	strncpy(ifr2->ifr_name, ifName, IFNAMSIZ);
-	nRet = ioctl(m_serv_sock, SIOCGIFCONF, &ifc2);
-	if(nRet == -1) {
-		printf("Get ip error 2\n");
-		return 0;
-	}
-	else {
-		nNIC = ifc2.ifc_len / sizeof(struct ifreq);
-
-		for(size_t i =0; i< nNIC; i++) {
-			if(PF_INET == ifc2.ifc_ifcu.ifcu_req[i].ifr_ifru.ifru_addr.sa_family)
-			{
-				pAddr2 = (&ifc2.ifc_ifcu.ifcu_req[i].ifr_ifru.ifru_addr);
-			}
-		}
-
-		for(int i=0; i<15; i++) {
-			if(pAddr2->sa_data[i] != NULL) {
-				m_IP_String += std::to_string(pAddr2->sa_data[i]);
-				m_IP_String.append(" ");
-			}
-		}
-#endif
 	return 1;
 }
-
-
-
-int Socket::Internet_connected()
-{
-	FILE *fpp2;
-	char bbuff2[1024];
-	//fpp = popen("sudo ping www.falinux.com -c 1 -w 10 | grep \"1 received\" | wc -l", "r");
-	fpp2 = popen(" sudo su", "w");
-	//fpp = popen("sudo su", "r");
-	if(NULL != fpp2) {		
-		
-
-		while( fgets(bbuff2, 1024, fpp2)) {			
-			printf("%s \n", bbuff2);
-			break;
-		}
-
-		if("[sudo] password for debian") {
-			printf("temppwd\n");
-			memset(bbuff2, 0x00, sizeof(bbuff2));
-			sprintf(bbuff2, "temppwd\n");
-			fwrite(bbuff2, sizeof(char), sizeof(bbuff2), fpp2);
-			printf("temppwd\n");
-			fprintf(fpp2, " temppwd\n");
-		}
-		pclose(fpp2);
-	}
-	return 1;
-}
-
 
 
 void Socket::Convert_mac(const char* data, char* cvrt_str, int sz)
@@ -408,7 +341,6 @@ void Socket::Create_Socket_Thread(pthread_t thread, int strucData)
 
 	int status;
 	printf("Create_Socket_Thread() m_serv_sock : %d\n", m_serv_sock);
-	//socket_ctx_t* ctx = (socket_ctx_t *)strucData;
 	p_thread = thread;
 
 	if(pthread_create(&p_thread, NULL, Recieve_Function,(void* )m_serv_sock) < 0) {
@@ -518,7 +450,6 @@ int Socket::Send_Message(BYTE* msg, int len)
 
 int Socket::Send_Function()
 {
-	//socket_ctx_t* ctx = (socket_ctx_t *)m_serv_sock;
 	int ret =0;
 	BYTE p8Data[1024];
 
@@ -526,7 +457,7 @@ int Socket::Send_Function()
 	memcpy(p8Data, m_p8uSendData, nDataLen);
 
 	printf("socket Send_Function() ");
-/*	for(int i=0; i < nDataLen; i++) {
+	/*for(int i=0; i < nDataLen; i++) {
 		printf("%x ", m_p8uSendData[i]);
 	}*/
 	memset(m_p8uSendData, 0, sizeof(BYTE)*4096);
@@ -546,7 +477,6 @@ int Socket::Send_Function()
 
 int Socket::Read_Message(BYTE* msg)
 {
-	//socket_ctx_t* ctx = (socket_ctx_t *)m_serv_sock;
 	//int str_len = read(ctx->fd,msg,sizeof(BYTE)*1024);
 	int str_len = read(events[0].data.fd,msg,sizeof(BYTE)*1024);
 
@@ -571,7 +501,6 @@ void *Recieve_Function(void* rcvDt)
 	
 	printf("Recieve_Function() Socketd : %d, m_serv_sock : %d\n", Socketd, pSoc->m_serv_sock);
 
-	//socket_ctx_t* ctx = (socket_ctx_t *)pSoc->m_serv_sock;
 	while(pSoc->m_iWorkingAlive)
 	{
 		if(pSoc->Ready_to_Read(Socketd,10)) {
@@ -751,7 +680,6 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 				m_nSocketArrayDataIndicateCnt =0;
 				Send_Message(p8udata, 15);
 				m_nServerMessge_End =0;
-			//	m_iSocketReceiveQueue = 1;
 				return 1;
 			}
 			else if (p8udata[MSGTYPE] == CONNECT_SOCKET_ALIVE_CHECK) {
@@ -787,7 +715,6 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 					//	printf("%x ", OneData[i][j]);
 						if( (OneData[i][j-3] == 0xa5) && (OneData[i][j-2] == 0x5a) && (OneData[i][j-1] == 0x7e) ) {
 							index = j;
-						//	printf("Index : %d\n", index);
 							break;
 						}
 					}
@@ -1026,69 +953,12 @@ int Socket::Socket_fd_Select(int fd, int timeout_ms)
 	}
 
 	return -1;
-
-#if 0
-
-	fd_set	io_fds;
-	int retval =0;
-	struct timeval timeout;
-
-	if(fd<=0) return -1;
-	if(timeout_ms < 0) timeout_ms =0;
-
-	FD_ZERO(&io_fds);
-	printf("FD_ZERO\n");
-	FD_SET(STDIN_FILENO, &io_fds);
-	//FD_SET(fd, &io_fds);
-	printf("FD_SET : %d\n", fd);
-
-	timeout.tv_sec =0;
-	timeout.tv_usec = 1000*timeout_ms;
-
-	retval = select(fd+1, &io_fds, 0,0,&timeout);
-
-	if(retval == -1) {
-		return -1;
-	}
-	else if(retval == 0) {
-		printf("Socket_fd_Select timeout\n");
-		return -1;
-	}
-
-	if(FD_ISSET(fd,&io_fds)) {
-		printf("FD_ISSET : %d\n", fd);
-		return fd;
-	}
-
-	return -1;
-#endif
-}
-
-
-
-
-void Socket::th_Socket_delay(int millsec)
-{
-	double time;
-	double timedelay = millsec;
-	struct timeval start1 = {};
-	struct timeval end1 = {};
-
-	clock_t end = timedelay* 1000;
-	clock_t start = clock();
-
-	//printf("th_dealy %.2f msec\n", timedelay*2);
-	gettimeofday(&start1 , NULL);
-	while(clock()-start < end) {;}
-	gettimeofday(&end1 , NULL);
-	time = end1.tv_sec + end1.tv_usec / 1000000.0 - start1.tv_sec - start1.tv_usec / 1000000.0;
-	printf("%.2f sec\n", time);
+	
 }
 
 
 void Socket::SetMutex(pthread_mutex_t mutex, int fd)
 {
-	//Socket_mutex = mutex;
 	Socket_mutex = mutex;
 	printf("SetMutex()\n");
 }
@@ -1169,26 +1039,12 @@ void crit_err_hdlr2(int sig_num, siginfo_t * info, void * ucontext)
   exit(EXIT_FAILURE);
 }
 
-void Socket::installSignal2(int __sig)
-{
-  struct sigaction sigact;
-  sigact.sa_sigaction = crit_err_hdlr2;
-  sigact.sa_flags = SA_RESTART | SA_SIGINFO;
-  if (sigaction(__sig, &sigact, (struct sigaction *) NULL) != 0) {
-	  fprintf(stderr, "error setting signal handler for %d (%s)\n", __sig, strsignal(__sig));
-  }
-	exit(EXIT_FAILURE);
-}
 /*
 void Socket::SetMsgQueue(MsgQueue* msgqueue)
 {
 	m_pQueueMsg = msgqueue;
 }
 */
-void Socket::SetSocketQueue(Socket_MsgQueue* socketqueue)
-{
-	m_pSocMsgqueue = socketqueue;
-}
 
 void Socket::SetMsgHwnd(Socket* soc)
 {

@@ -73,11 +73,11 @@ static void *uart_Rx_Thread(void *param)
 				restBufCnt++;
 			}
 			
-			printf("\n");
+		/*	printf("\n");
 			for(int i=0; i<len; i++) {
 				printf("%x ", rx2[i]);
 			}
-			printf("\n");
+			printf("\n");*/
 
 			printf("***************uart_Rx_Thread uart **********%d*********\n", nToTalLen);
 			int i=0;
@@ -423,7 +423,7 @@ int UartComThread::Uart_Write(int uartd, uint8_t* data, int size)
 		//		for(int i=0; i<size; i++) {
 		//			printf("%x ", ptr[i]);
 		//		}
-				printf(" End\n");
+				printf(" End\n\n");
 				wrotelen += ret;
 			}
 			else {

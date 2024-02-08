@@ -11,6 +11,10 @@
 #include "pch.h"
 #include "uart/uart.h"
 //#include "Vector_queue.h"
+typedef WORD TAG;
+typedef WORD ACK_TAG;
+
+typedef int RESULT;
 
 typedef struct _HandlerPacket {
 	WORD PanID;
@@ -21,38 +25,46 @@ typedef struct _HandlerPacket {
 	BYTE ext[3] = {0xA5, 0x5A, 0x7E};
 }Common_Packet;
 
+typedef struct TagAckCheck {
+	std::map<TAG, RESULT > Map_AcknowParityCheck;
+	std::map<TAG, ACK_TAG> Map_AssoAckCheck;
+	std::set<WORD> m_setTagAckNumber, m_AssoTagNumber;
+}TagAckCheck_t;
+
+typedef struct TagDownInfor {
+	std::map<TAG,int> Map_TagSequence;
+	std::set<TAG> existTagNumber;
+}TagDownInfor_t;
+
 class MsgHandler {
 
 public:
 	MsgHandler();
 	virtual ~MsgHandler();
-
+	TagAckCheck_t	m_TagAckCheck;
+	TagDownInfor_t	m_TagDownInfor;
+	
 	std::vector<BYTE> m_UartReDataDownMsg;
 
 	std::vector<std::vector<BYTE>> m_UartArrayDataDownMsg, m_UartArrayThreadDataDownMsg;
 	std::vector<std::vector<BYTE>> m_UartArrayDataIndicateMsg, m_UartArrayThreadDataIndecateMsg;
 
-	std::vector<std::vector<BYTE>> m_UartArrayReDataDownMsg;
-	std::vector<std::vector<BYTE>> m_UartArrayReDataIndicateMsg;
-	std::map<std::vector<BYTE>, int > Map_dataParityCheck;
-	std::map<WORD, int > Map_u16AcknowParityCheck;
 	std::map<WORD, int> m_mapTagDirectSet;
-	std::set<WORD> setTagDownNumber, m_setTagAckNumber;
-	WORD m_pu16MsgDataAcknowledge[4096];
+
 
 	Common_Packet	CommonPacket;
-	int Map_AcknowCnt,Map_AcknowCnt2;
+	int iexistTagNumber;
 	unsigned int m_nDataDownCount, m_nDataIndiCount, m_nThreadDataDownCount, m_nThreadDataIndiCount;
 	int m_DataCnt;
 	int m_DataFlag;
 	int DataSendFail_RedownCnt;
-	int Beacon_Max;
 	UartComThread* m_pCommUart;
 	unsigned int m_nUartArrayDataDownCnt, m_nUartArrayDataIndicateCnt, m_nThreadUartArrayDataDownCnt, m_nThreadUartArrayDataIndecateCnt;
 	int m_nUartArrayReDataIndicateCnt;
 	int m_nDataSendFail_SuccessCnt;
+	
 	void SetHandle(UartComThread* msg);
-	void SetSocketArray(std::vector<std::vector<BYTE>> DataDownmsg, std::vector<std::vector<BYTE>> DataIndimsg);
+	void SetSocketArray(std::vector<std::vector<BYTE>> DataDownmsg, std::vector<std::vector<BYTE>> DataIndimsg, WORD *TagNumber);
 	void ServiceIdle();
 	int ServiceStart();
 	int GetTagNumber(int temp);
@@ -68,9 +80,7 @@ public:
 	int UartPacket_ThreadDataDownStart();
 	int UartPacket_ThreadDataIndicateStart();
 	int UartPacket_DataDownStart(BYTE u8data);
-	int UartPacket_ReDataDownStart(BYTE u8data);
 	int UartPacket_DataIndicateStart(BYTE u8data);
-	int UartPacket_ReDataIndicateStart(BYTE u8data);
 	int UartPacket_ReDataAcknowledge_DownStart(BYTE u8data);
 	int UartPacket_ReDataAcknowledge_DataIndicateStart(BYTE u8data);
 	int Send_BeaconData(BYTE ibeaconvalue);

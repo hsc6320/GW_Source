@@ -217,14 +217,14 @@ int SocketHandler::Registration_Request()
 	packet.GateWayID = packet.PanID;
 
 	printf("packet.GateWayID : %x\n", packet.GateWayID);
-	printf("packet.GateWayID : %x\n", (BYTE)packet.GateWayID);
+	printf("packet.PanID : %x\n", packet.PanID);
 
 	pu8data[iBufcnt] = STX;
-	pu8data[++iBufcnt] = (BYTE)packet.PanID<<8;
+	pu8data[++iBufcnt] = (BYTE)packet.PanID;
 	pu8data[++iBufcnt] = packet.PanID>> 8;
 	pu8data[++iBufcnt] = packet.ServerID;
 	pu8data[++iBufcnt] = packet.ServerID>>8;
-	pu8data[++iBufcnt] = (BYTE)packet.GateWayID<<8;		//gateway ID
+	pu8data[++iBufcnt] = (BYTE)packet.GateWayID;		//gateway ID
 	pu8data[++iBufcnt] = packet.GateWayID >> 8;		//gateway ID
 	
 	pu8data[++iBufcnt] = REGISTRATION_REQUEST;	//msg type
@@ -340,7 +340,7 @@ void SocketHandler::GetPanID(WORD panid)
 
 void SocketHandler::GetServerID()
 {
-	packet.ServerID = 0x7;
+	packet.ServerID = 0x0a;
 
 	printf("GetServerID %x\n", packet.ServerID);
 }
