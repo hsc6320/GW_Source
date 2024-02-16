@@ -202,37 +202,10 @@ void UartComThread::Exit_Uart_Thread()
 		break;
 	}
 
-
-	//pthread_exit(NULL);
 	printf("Exit_Uart_Thread() : [%d] \n", (int)status);
 
 }
 
-void timer_handler(int signum)
-{
-    printf("Uart Read expired \t");
-
-}
-
-int UartComThread::uart_SetTimer()
-{
-	struct sigaction sa;
-	struct itimerval timer;
-
-	memset(&sa, 0, sizeof(sa));
-	sa.sa_handler = &timer_handler;
-	sigaction(SIGVTALRM, &sa, NULL);
-
-	//timer.it_interval.tv_sec = 0;
-	//timer.it_interval.tv_usec = 0;
-
-	timer.it_value.tv_sec = 1;
-	timer.it_value.tv_usec = 0;
-
-	setitimer(ITIMER_VIRTUAL, &timer, NULL);
-
-	return 1;
-}
 int UartComThread::uart_init()
 {
 	m_uartd = Uart_Open("/dev/ttyS1", 230400);
@@ -365,10 +338,8 @@ int UartComThread::Ready_to_Read(int uartd, int timeoutms)
 
 	if(!ctx) return -1;
 
-	//printf("Ready_to_Read ctx->fd : %d\n", ctx->fd);
 	pthread_mutex_lock(&ctx->mutex);
 	if(Uart_fd_Select(ctx->fd, timeoutms,0) == ctx->fd) {
-	//	printf("Ready_to_Read return 1\n");
 		pthread_mutex_unlock(&ctx->mutex);
 		return 1;
 	}
@@ -447,7 +418,6 @@ int UartComThread::Uart_fd_Select(int fd, int timeout_ms, int rw)
 	if(timeout_ms < 0) timeout_ms =0;
 
 	FD_ZERO(&io_fds);
-	//FD_SET(STDIN_FILENO, &io_fds);
 	FD_SET(fd, &io_fds);
 
 	timeout.tv_sec =0;
@@ -481,7 +451,6 @@ BYTE UartComThread::Uart_GetChecksum(BYTE* puData, int len)
 		//printf("%x ", puData[i]);
 		sum += puData[i];
 	}
-	//printf("(check nsum : %x) ", sum);
 
 	return sum;
 }
@@ -496,7 +465,6 @@ void UartComThread::th_delay(int millsec)
 	clock_t end = timedelay* 1000;
 	clock_t start = clock();
 
-	//printf("th_dealy %.2f msec\n", timedelay*2);
 	gettimeofday(&start1 , NULL);
 	while(clock()-start < end) {;}
 	gettimeofday(&end1 , NULL);
@@ -512,7 +480,6 @@ void UartComThread::InsertArray(int idx, BYTE sz, BYTE* ar)
 	int size = (sizeof(arr)/sizeof(*arr));
 	memmove(ar+idx+1, ar+idx, size-idx+1);
 	ar[idx] = sz;
-	//printf("Insert [%d]%x, size : %d\n", idx, ar[idx], size);
 }
 
 void UartComThread::AppendArray(BYTE sz, int idx, BYTE* ar)

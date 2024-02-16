@@ -10,7 +10,7 @@ LaunchTargetManager/org.eclipse.cdt.dsf.gdb.remoteTCPLaunchTargetType,debian/org
 LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/arch=x86_64
 LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/name=Local
 LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/os=linux
-configDescList=org.eclipse.launchbar.core.descriptorType.default\:CrossGcc Debug,org.eclipse.launchbar.core.descriptorType.default\:Demo (1),org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:Demo
+configDescList=org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:Demo,org.eclipse.launchbar.core.descriptorType.default\:CrossGcc Debug,org.eclipse.launchbar.core.descriptorType.default\:Demo (1)
 eclipse.preferences.version=1
 org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:Demo\ (1)/activeLaunchTarget=null\:---
 org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:Demo\ Debug\ (1)/activeLaunchTarget=null\:---

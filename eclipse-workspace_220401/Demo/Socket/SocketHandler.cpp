@@ -25,8 +25,6 @@ SocketHandler::~SocketHandler() {
 int SocketHandler::SendMessage(int msg, PRE_DEFINE::S_PACKET packet)
 {
 	int msgtype =0;
-	//uint8_t pu8data[15] = {0xaa, 0, 0xfc, 0x01, 0, 0x01, 0, 0x05, 0x01, 0, 0, 0x04, 0xa5, 0x5a, 0x7e};
-	//printf("SocketHandler SendMessage\n");
 	msgtype = msg;
 
 	switch(msgtype)
@@ -46,7 +44,6 @@ int SocketHandler::SendMessage(int msg, PRE_DEFINE::S_PACKET packet)
 		printf("Socket SendMsg : TAG_ASSOCIATION\n");
 		break;
 	case CONNECT_ALIVE_CHECK:
-	//	printf("Socket SendMsg : CONNECT_ALIVE_CHECK\n");
 		m_iSocketArive = GateWay_Status_Check();
 		break;
 	case SERVICESTART_CONFIRM:
@@ -354,7 +351,6 @@ void SocketHandler::SetMsg_StartCfm_Remalloc(int OnOff)
 		m_nTagDataCount = 0; 
 		pUartQueue->m_nSendTagCount = 0;
 	}
-//	printf("SetMsg_StartCfm_Remalloc(%d)\n", nServiceStart_Confirm);
 }
 
 void SocketHandler::TagData(std::queue<std::vector<BYTE>> que)
@@ -364,28 +360,6 @@ void SocketHandler::TagData(std::queue<std::vector<BYTE>> que)
 	std::vector<std::vector<BYTE>> vec;
 
 	vTagData = que;
-	/*
-	for(int k=m_nTagDataCount; k<pUartQueue->m_nSendTagCount; k++) {
-		printf("m_nTagDataCount : %d, m_nSendTagCount :%d\n", m_nTagDataCount, pUartQueue->m_nSendTagCount);
-		for(int i=0; i<(int)vTagData[k].size(); i++) {
-			printf("%x ", vTagData[k][i]);
-			pu8data[iBufcnt] = vTagData[k][i];
-			iBufcnt++;
-		}
-		printf("\n");
-
-		if(pSocket->Send_Message(pu8data, iBufcnt) > 0 ) {
-			printf("Socket Write Sucess\n");
-		}
-		else
-			printf("Socket Re-Write\n");
-
-		iBufcnt =0;
-		memset(pu8data, 0, 1024);
-		m_nTagDataCount++;
-	
-	}
-	*/
 	vec.push_back(vTagData.front());
 	for(int i=0; i<(int)vec.size(); i++) {
 		for(int k=0; k<(int)vec[i].size(); k++) {

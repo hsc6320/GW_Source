@@ -192,11 +192,13 @@ int Main_DeleteThread(WORD Tg)
 	WORD Tag =Tg;
 	std::set<WORD>::iterator iterTag;
 	std::set<WORD>::iterator iter;
+	void *status;
+	int ait;
 
 				
 	iter = m_pMsgQueue->setTagNumber.find(Tag);
 	if(iter != m_pMsgQueue->setTagNumber.end()) {
-		if(Tag_Thread.TagDownload_Thread_ThreadVal.find(Tag) != Tag_Thread.TagDownload_Thread_ThreadVal.end()) {			
+		if(Tag_Thread.TagDownload_Thread_ThreadVal.find(Tag) != Tag_Thread.TagDownload_Thread_ThreadVal.end()) {
 			printf("TAG_DIRECT_CHANGE_INDICATION DISABLE Tag : %d\n", Tag); 
 			m_pMsgQueue->setTagNumber.erase(Tag);
 	
@@ -205,7 +207,15 @@ int Main_DeleteThread(WORD Tg)
 				return 0;
 			}
 			mapTagDirectSet[Tag] = DISABLE;
-			pthread_detach(Tag_Thread.TagDownload_Thread_ThreadVal[Tag]);
+//			pthread_detach(Tag_Thread.TagDownload_Thread_ThreadVal[Tag]);
+			pthread_join(Tag_Thread.TagDownload_Thread_ThreadVal[Tag], &status);
+			wait(&ait);
+
+			if(status == PTHREAD_CANCELED)
+				printf("The thread was canceled - \n");
+			else
+				printf("Returned value %d - \n", (int)status);
+
 			printf(" pthread_detach, Tag	: %d, %lu \n", Tag, Tag_Thread.TagDownload_Thread_ThreadVal[Tag]);
 
 			Tag_Thread.nThreadCount--;
@@ -216,7 +226,7 @@ int Main_DeleteThread(WORD Tg)
 					temp = it->first;
 				}
 			}
-			Tag_Thread.mapThread_TagNumber.erase(temp); 					
+			Tag_Thread.mapThread_TagNumber.erase(temp);
 			
 			m_pMsgHandler->m_UartArrayThreadDataDownMsg.erase(m_pMsgHandler->m_UartArrayThreadDataDownMsg.begin() + Tag_Thread.mapTag_DataDownCnt[Tag]);
 			m_pMsgHandler->m_UartArrayThreadDataIndecateMsg.erase(m_pMsgHandler->m_UartArrayThreadDataIndecateMsg.begin() + Tag_Thread.mapTag_DataDownCnt[Tag]);
@@ -235,16 +245,15 @@ int Main_DeleteThread(WORD Tg)
 			}
 			m_pMsgHandler->m_nThreadUartArrayDataDownCnt--;
 			m_pMsgHandler->m_nThreadUartArrayDataIndecateCnt--; 			
-			
+
 
 			WORD tempWORD[4096] = {0, };
-			int nWORDcnt =0, nTotalDataCount =0;
-			printf("setTagNumber size : %d, m_nThreadUartArrayDataDownCnt size :%d \n", sizeof(setTagNumber)/sizeof(setTagNumber[0]), m_pMsgHandler->m_nThreadUartArrayDataDownCnt);
+			int nWORDcnt =0;//, nTotalDataCount =0;
 			for (auto it = m_pMsgQueue->setTagNumber.begin(); it != m_pMsgQueue->setTagNumber.end(); it++) {
 				tempWORD[nWORDcnt] = *it;
 				for(int j=0; j < sizeof(setTagNumber)/sizeof(setTagNumber[0]); j++) {
 					if(setTagNumber[j] == tempWORD[nWORDcnt] ) {
-						printf("tempWORD[%d] : %d\n", nWORDcnt, tempWORD[nWORDcnt]);
+						printf("Some Tag left [%d] : %d\n", nWORDcnt, tempWORD[nWORDcnt]);
 						nWORDcnt++;
 						break;
 					}
@@ -256,13 +265,13 @@ int Main_DeleteThread(WORD Tg)
 		
 			for(int i=0; i<m_pMsgHandler->m_nThreadUartArrayDataDownCnt; i++) {
 				Tag_Thread.mapTag_DataDownCnt[tempWORD[i]] = i;
-				printf("Tag : %d DataDownCnt : %d\n", tempWORD[i], Tag_Thread.mapTag_DataDownCnt[tempWORD[i]]);
+			//	printf("Tag : %d DataDownCnt : %d\n", tempWORD[i], Tag_Thread.mapTag_DataDownCnt[tempWORD[i]]);
 			}						
 
 			if(Tag_Thread.mapThread_TagNumber.size() == 0) {
 				Tag_Thread.ThreadBusy =0;
 			}
-			nTotalDataCount = m_pMsgHandler->m_nUartArrayDataDownCnt + m_pMsgHandler->m_nThreadUartArrayDataDownCnt;
+		//	nTotalDataCount = m_pMsgHandler->m_nUartArrayDataDownCnt + m_pMsgHandler->m_nThreadUartArrayDataDownCnt;
 			if(Tag_Thread.ThreadBusy == 0) {
 				printf("ThreadBusy :%d, m_nUartArrayDataDownCnt : %d\n", Tag_Thread.ThreadBusy, m_pMsgHandler->m_nThreadUartArrayDataDownCnt );
 				mapTagDirectSet.clear();
@@ -276,6 +285,7 @@ int Main_DeleteThread(WORD Tg)
 			}
 		}
 		else {
+			printf("--//TAG_DIRECT_CHANGE_INDICATION DISABLE Tag : %d\n", Tag); 
 			m_pMsgQueue->setTagNumber.erase(Tag);
 			
 			mapTagDirectSet[Tag] = DISABLE;
@@ -344,37 +354,28 @@ void* Main_TagDownload_Thread(void *arg)
 			switch((int)m_pMsgQueue->m_vcemsg.at(MSGTYPE)) 
 			{
 			case DOWNLOAD_START_ACK:
-		/*		if(firstTimerFlag) {
-					firstTimerFlag =0;
-					timer_delete(DataDownTimerID);
-				}
-				
+		/*		
 				CurrentDataDownTag = ByteToWord(m_pMsgHandler->m_UartArrayThreadDataDownMsg[m_pMsgHandler->m_nThreadDataDownCount][MSG_DADDRONE]
 						, m_pMsgHandler->m_UartArrayThreadDataDownMsg[m_pMsgHandler->m_nThreadDataDownCount][MSG_DADDRZERO]);
 		*/
-				if(Tag_Thread.TagDownload_Thread_ThreadVal[Tagkey] != iTagthreadNum ) {
+		/*		if(Tag_Thread.TagDownload_Thread_ThreadVal[Tagkey] != iTagthreadNum ) {
 					m_pMsgQueue->m_bUartCommuniFlag =1;		
 					break;
-				}
-				printf("Tagkey : %d\n", Tagkey);
+				}*/
+				printf("[%lu]Tagkey : %x\n", iTagthreadNum, Tagkey);
 				if(ByteToWord(m_pMsgQueue->m_vcemsg.at(MSG_SADDRONE), m_pMsgQueue->m_vcemsg.at(MSG_SADDRZERO)) !=
 					ByteToWord(m_pMsgHandler->m_UartArrayThreadDataDownMsg[m_pMsgHandler->m_nThreadDataDownCount].at(MSG_DADDRONE), 
 								m_pMsgHandler->m_UartArrayThreadDataDownMsg[m_pMsgHandler->m_nThreadDataDownCount].at(MSG_DADDRZERO)) )
 				{
 					printf("Parity Fail\n");						
-				}				
-
-				if (m_pMsgHandler->UartPacket_ThreadDataIndicateStart() ) {
-				//	Set_WaitTimer(&DataIndecateTimerID, 100, 1);
-				//	SecondTimerFlag = 1;
 				}
+				printf("DOWNLOAD_START_ACK : %x\n", ByteToWord(m_pMsgHandler->m_UartArrayThreadDataDownMsg[m_pMsgHandler->m_nThreadDataDownCount].at(MSG_DADDRONE), 
+								m_pMsgHandler->m_UartArrayThreadDataDownMsg[m_pMsgHandler->m_nThreadDataDownCount].at(MSG_DADDRZERO)) );
+
+				m_pMsgHandler->UartPacket_ThreadDataIndicateStart();
 				break; 
 	
 			case DATAINDICATION_ACK:
-		/*		if(SecondTimerFlag) {
-					SecondTimerFlag =0;
-					timer_delete(DataIndecateTimerID);
-				}*/
 				printf("[%lu]DATAINDICATION_ACK, TagKey : %d\n", iTagthreadNum, Tagkey);
 				
 				if (Tag_Thread.nThreadCount <= m_pMsgHandler->m_nThreadDataDownCount) {
@@ -407,8 +408,6 @@ void* Main_TagDownload_Thread(void *arg)
 				}
 				
 				if( m_pMsgHandler->UartPacket_ThreadDataDownStart() ) {
-				//	Set_WaitTimer(&DataDownTimerID, 100, 1);
-				//	firstTimerFlag =1;
 					Tag_Thread.mapTagNumber_WriteFlag[CurrentDataDownTag] =1;					
 				}
 				break;
@@ -461,11 +460,11 @@ void* Main_TagDownload_Thread(void *arg)
 				mapVal = Tag_Thread.mapThread_TagDirectCount[iTagthreadNum];
 				mapVal++;
 				Tag_Thread.mapThread_TagDirectCount[iTagthreadNum] = mapVal;
-				printf("[%d, %lu] : %d,  %d \n", ep.condition,iTagthreadNum, Tag_Thread.mapThread_TagDirectCount[iTagthreadNum] , Tagkey);
+				printf("[%lu] : %d,  Try Count : %d \n", iTagthreadNum, Tag_Thread.mapThread_TagDirectCount[iTagthreadNum] , Tagkey);
 				
 				if(Tag_Thread.mapThread_TagDirectCount[iTagthreadNum]%4 == 0) {
 					m_pMsgHandler->m_nThreadDataDownCount = Tag_Thread.mapTag_DataDownCnt[Tagkey];
-					printf("Tag :%d %d, Tag_Thread.mapTag_DataDownCnt :%d\n ", Tagkey, CurrentDataDownTag, Tag_Thread.mapTag_DataDownCnt[Tagkey]);
+					printf("Tag :%x, Tag_Thread.mapTag_DataDownCnt :%d\n ", Tagkey, Tag_Thread.mapTag_DataDownCnt[Tagkey]);
 
 					if(m_pMsgHandler->m_UartArrayThreadDataDownMsg.size() < m_pMsgHandler->m_nThreadDataDownCount ) {
 						printf("m_UartArrayThreadDataDownMsg.size()  : %d m_nThreadDataDownCount  :%d\n", m_pMsgHandler->m_UartArrayThreadDataDownMsg.size(), 
@@ -476,8 +475,6 @@ void* Main_TagDownload_Thread(void *arg)
 						, m_pMsgHandler->m_UartArrayThreadDataDownMsg[m_pMsgHandler->m_nThreadDataDownCount][MSG_DADDRZERO]);
 				
 					if( m_pMsgHandler->UartPacket_ThreadDataDownStart( ) ) {
-				//		Set_WaitTimer(&DataDownTimerID, 100, 1);
-				//		firstTimerFlag = 1;
 						Tag_Thread.mapTagNumber_WriteFlag[Tagkey] =1;
 						TagDownThread.iReturnAck =0;
 						TagDownThread.tempCnt =0;
@@ -543,7 +540,7 @@ int Main_Socket_Alive()
 {
 	if(m_pSocket->m_iBypassSocketToUart && m_pSocket->m_iSocketReceiveEnd) {
 		timer_delete(firstTimerID);
-		Set_WaitTimer(&firstTimerID, 30, 0);
+		Set_WaitTimer(&firstTimerID, 20, 0);
 
 		if(m_pSocket->m_iStatusAlive) {
 			m_pSocket->m_iStatusAlive =0;
@@ -593,7 +590,7 @@ int Main_ByPass_Command2()
 		switch(msg)
 		{
 		case DATA_ACKNOWLEDGEMENT:
-			Tag = ByteToWord(m_pMsgQueue->m_u8SendData[MSG_SADDRONE], m_pMsgQueue->m_u8SendData[MSG_SADDRZERO] );		
+			Tag = ByteToWord(m_pMsgQueue->m_u8SendData[MSG_SADDRONE], m_pMsgQueue->m_u8SendData[MSG_SADDRZERO] );
 			iter = m_pMsgHandler->m_TagAckCheck.m_setTagAckNumber.find(Tag);
 			if(iter != m_pMsgHandler->m_TagAckCheck.m_setTagAckNumber.end()) {
 				printf("setTagNumber overlap\n");
@@ -636,7 +633,7 @@ int Main_ByPass_Command2()
 				Tag = ByteToWord(m_pMsgQueue->m_u8SendData[MSG_SADDRONE], m_pMsgQueue->m_u8SendData[MSG_SADDRZERO] );
 				iter = m_pMsgQueue->setTagNumber.find(Tag);
 				if(iter != m_pMsgQueue->setTagNumber.end()) {
-					printf("Tag overlap\n");
+					printf("Tag overlap : %x\n", Tag);
 				}
 				else {
 					printf("Tag Insert : [%d] \n", Tag);
@@ -651,7 +648,7 @@ int Main_ByPass_Command2()
 			}
 			else {
 				Tag = ByteToWord(m_pMsgQueue->m_u8SendData[MSG_SADDRONE], m_pMsgQueue->m_u8SendData[MSG_SADDRZERO] );
-				Main_DeleteThread(Tag);								
+				Main_DeleteThread(Tag);
 			}
 			break;
 		case TAG_ASSOCIATION:
@@ -812,21 +809,16 @@ int Main_ByPass_Command3()
 
 			std::copy(m_SocketArraySortDataDownMsg.begin(), m_SocketArraySortDataDownMsg.end() , m_pSocket->m_SocketArrayDataDownMsg.begin());
 			std::copy(m_SocketArraySortDataIndicateMsg.begin(), m_SocketArraySortDataIndicateMsg.end() , m_pSocket->m_SocketArrayDataIndicateMsg.begin());
-			
-			printf("m_SocketArrayDataDownMsg Size : %d\n", m_pSocket->m_SocketArrayDataDownMsg.size());
-		
+					
 			m_pMsgHandler->m_nThreadUartArrayDataDownCnt = m_pMsgHandler->m_UartArrayThreadDataDownMsg.size();
 			m_pMsgHandler->m_nThreadUartArrayDataIndecateCnt = m_pMsgHandler->m_UartArrayThreadDataIndecateMsg.size();
-			printf("m_nThreadUartArrayDataDownCnt :%d\n\n", m_pMsgHandler->m_nThreadUartArrayDataDownCnt);
+			printf("Direct Down Tag Count :%d\n\n", m_pMsgHandler->m_nThreadUartArrayDataDownCnt);
 			
 		}
 		m_pMsgHandler->SetSocketArray(m_pSocket->m_SocketArrayDataDownMsg, m_pSocket->m_SocketArrayDataIndicateMsg, TagNumber);
 		
-		nTotalDataCount = m_pMsgHandler->m_nUartArrayDataDownCnt + m_pMsgHandler->m_nThreadUartArrayDataDownCnt;		
-		
-		printf("nDirectDownTagNumber.size()  : %d m_pMsgHandler->m_nUartArrayDataDownCnt : %d\n", (int)nDirectDownTagNumber.size(), m_pMsgHandler->m_nUartArrayDataDownCnt);
+		nTotalDataCount = m_pMsgHandler->m_nUartArrayDataDownCnt + m_pMsgHandler->m_nThreadUartArrayDataDownCnt;
 		if((int)nDirectDownTagNumber.size() == (int)m_pMsgHandler->m_nUartArrayDataDownCnt ) {
-			printf("Map All Initialise\n");
 			for (auto it = mapTagDirectSet.begin(); it != mapTagDirectSet.end(); it++) {
 				it->second = DISABLE; 
 			}
@@ -853,7 +845,7 @@ int Main_ByPass_Command3()
 				wait(&status);
 				Tag_Thread.mapThread_TagNumber[i] = setTagNumber[i];
 				Tag_Thread.TagDownload_Thread_ThreadVal[setTagNumber[i]] = Tag_Thread.TagDownload_Thread[i];
-				printf("Tag :%d , pthread ID : %lu\n", setTagNumber[i], Tag_Thread.TagDownload_Thread_ThreadVal[setTagNumber[i]]);
+				printf("Tag :%x , pthread ID : %lu\n", setTagNumber[i], Tag_Thread.TagDownload_Thread_ThreadVal[setTagNumber[i]]);
 				
 				Tag_Thread.mapTag_DataDownCnt[setTagNumber[i]] = i;
 		//		printf("Tag : %d, DataDownCnt : %d\n", setTagNumber[i], Tag_Thread.mapTag_DataDownCnt[setTagNumber[i]]);
@@ -959,7 +951,7 @@ int Main_ByPass_Command()
 
 		case BSN_START_ACK:
 			if(!m_pMsgHandler->m_nUartArrayDataDownCnt ||( m_pSocket->m_Main_ServiceStart_TagAssociation_InitFlag && m_pMsgQueue->m_Uart_ServiceStart_TagAssociation_InitFlag) )
-				return 1;			
+				return 1;
 	
 			if(firstTimerFlag) {
 				firstTimerFlag =0;
@@ -985,7 +977,7 @@ int Main_ByPass_Command()
 					beforeTagNumber = ByteToWord(m_pMsgHandler->m_UartArrayDataDownMsg[m_pMsgHandler->m_nDataDownCount].at(MSG_DADDRONE), 
 											m_pMsgHandler->m_UartArrayDataDownMsg[m_pMsgHandler->m_nDataDownCount].at(MSG_DADDRZERO));
 					Set_WaitTimer2(&DataDownTimerID, 50, 1);
-					firstTimerFlag = 1;					
+					firstTimerFlag = 1;
 				}
 				nBeaconCnt++;
 				printf("DataDown nBeaconCnt : %d\n", nBeaconCnt);
@@ -1061,7 +1053,7 @@ void Main_Service_Stop()
 	printf("Beacon Stop\n");
 	th_delay(3);
 	m_pMsgHandler->BSN_Stop_Packet();
-	m_pSocketHandle->Server_BSN_Stop_Packet();	
+	m_pSocketHandle->Server_BSN_Stop_Packet();
 	
 	nBeaconCnt = 0;
 	for(int i=0; i<m_pSocket->m_nSocketArrayDataDownCnt; i++) {
@@ -1071,7 +1063,7 @@ void Main_Service_Stop()
 	m_pSocket->m_nSocketArrayDataDownCnt = 0;
 	m_pSocket->m_nSocketArrayDataIndicateCnt = 0;
 	m_pSocket->m_SocketArrayDataDownMsg.clear();
-	m_pSocket->m_SocketArrayDataIndicateMsg.clear();	
+	m_pSocket->m_SocketArrayDataIndicateMsg.clear();
 	m_pSocket->m_SocketArrayDataDownMsg.shrink_to_fit();
 	m_pSocket->m_SocketArrayDataIndicateMsg.shrink_to_fit();
 	m_pSocket->m_SocketArrayDataDownMsg.reserve(5000);
@@ -1082,7 +1074,7 @@ void Main_Service_Stop()
 	m_pMsgHandler->m_DataFlag =0;
 	m_pMsgHandler->m_DataCnt =0;
 	memset (m_pSocket->m_TagNumber, 0, sizeof(WORD)*BUF_MAX);
-	memset(m_pMsgQueue->m_Test, 0, sizeof(WORD)*BUF_MAX);	
+	memset(m_pMsgQueue->m_Test, 0, sizeof(WORD)*BUF_MAX);
 	
 	m_pMsgHandler->bClear();
 	memset(setTagNumber, 0, sizeof(WORD)*4096);
@@ -1184,7 +1176,6 @@ int Main_Socket_Init()
 				m_pSocket->Create_Socket_Thread(Main_thread[1], socket_fd);
 
 				printf("Socket End\n");
-				m_pSocket->bWorkingThread = 1;
 				m_pMsgQueue->m_bReadEnd_UartMessage =0;
 				Ret =1;
 				break;
@@ -1205,7 +1196,7 @@ void Main_Init_CondThread()
 	Tag_Thread.ThreadBusy = 0;
 	Tag_Thread.nThreadCount =0;
 	Tag_Thread.mapThread_TagNumber.clear();
-	Tag_Thread.mapThread_TagDirectCount.clear();	
+	Tag_Thread.mapThread_TagDirectCount.clear();
 	Tag_Thread.TagDownload_Thread_ThreadVal.clear();
 	Tag_Thread.mapTagNumber_WriteFlag.clear();
 	Tag_Thread.mapTag_DataDownCnt.clear();
@@ -1249,9 +1240,9 @@ int ServiceStart_Cfm()
 	int Ret =0;
 	PRE_DEFINE::S_PACKET	GetInforPacket;
 	while(1) {
-		if(m_pMsgQueue->m_bReadEnd_UartMessage && GetUartMsg(&GetInforPacket)) {			
-			if(GetInforPacket.header.type == SERVICESTART_CONFIRM) {				
-				m_pSocketHandle->SendMessage(SERVICESTART_CONFIRM, GetInforPacket);	
+		if(m_pMsgQueue->m_bReadEnd_UartMessage && GetUartMsg(&GetInforPacket)) {
+			if(GetInforPacket.header.type == SERVICESTART_CONFIRM) {
+				m_pSocketHandle->SendMessage(SERVICESTART_CONFIRM, GetInforPacket);
 				m_pSocketHandle->SetBeconCount(&BEACON_MAX);
 				m_pMsgHandler->SetBeacon(BEACON_MAX);
 				m_pMsgQueue->m_bReadEnd_UartMessage =0;
@@ -1518,17 +1509,17 @@ void PrintfHello(int sig, siginfo_t* si, void* uc)
 		if( (m_pSocket->bWorkingThread == 0) || (bSocketAlive == 0) ) {
 			if(!m_pSocket->bWorkingThread)
 				printf("//-------m_pSocket->bWorkingThread  false\n");
-			else if(!bSocketAlive) {
-				ct = time(NULL);
-				tm = *localtime(&ct);
-				printf("\n**********%d-%d-%d:%d:%d***** \n", tm.tm_mon+1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
-				printf("//------bSocketAlive  false\n");
+			else if(!bSocketAlive) {				
+				printf("//------bSocketAlive  Disconnect \n");
 			}
 			
-			printf("delete Timer \n");
+			ct = time(NULL);
+			tm = *localtime(&ct);
+			printf("\n**********Disconnect Time : %d-%d-%d:%d:%d************* \n", tm.tm_mon+1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
+			printf("delete Timer \n Socket Re-Init\n");
 			ServerReConn();
-			bSocketAlive = 1;			
-			Set_WaitTimer(&firstTimerID, 30, 0);
+			bSocketAlive = 1;
+			Set_WaitTimer(&firstTimerID, 20, 0);
 			TagAssociation_Init();
 			printf("Main TagData\n");
 			while(!m_pMsgQueue->m_Queue.empty()) {
@@ -1604,14 +1595,11 @@ int ServerReConn()
 		printf("Main bWorkingThread : %d\n", m_pSocket->bWorkingThread);
 		m_pSocket->Exit_Socket_Thread();
 		m_pSocket->m_IP_String = "";
-		th_delay(500);
 		socket_fd = m_pSocket->Socket_Init();
 		if(socket_fd == -1)
 			continue;
-		th_delay(1000);
 		m_pSocket->Create_Socket_Thread(Main_thread[1], socket_fd);
 		printf("Socket Re-Init End\n");
-		m_pSocket->bWorkingThread = 1;
 		m_pMsgQueue->m_bReadEnd_UartMessage =0;
 
 		break;
@@ -1677,7 +1665,7 @@ int main(int argc, char *argv[])
 	Main_Socket_Init();
 	th_delay(100);
 	th_delay(200);	
-	Set_WaitTimer(&firstTimerID, 30, 0);
+	Set_WaitTimer(&firstTimerID, 20, 0);
 	TagAssociation_Init();
 
 	//pthread_mutex_init(&ep.Main_Tagmutex, NULL);
@@ -1694,19 +1682,19 @@ int main(int argc, char *argv[])
 
 		if( (m_pSocket->bWorkingThread == 0) || (bSocketAlive == 0) ) {
 			if(!m_pSocket->bWorkingThread)
-				printf("m_pSocket->bWorkingThread  false\n");
+				printf("m_pSocket->bWorkingThread  FALSE\n");
 			else if(!bSocketAlive) {
-				ct = time(NULL);
-				tm = *localtime(&ct);
-				printf("\n**********%d-%d-%d:%d:%d***** \n", tm.tm_mon+1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
 				printf("bSocketAlive  false\n");
 			}
 			
+			ct = time(NULL);
+			tm = *localtime(&ct);
+			printf("\n**********Disconnect Time : %d-%d-%d:%d:%d************* \n", tm.tm_mon+1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
 			printf("delete Timer \n");
 			timer_delete(firstTimerID);
 			ServerReConn();
-			bSocketAlive = 1;			
-			Set_WaitTimer(&firstTimerID, 30, 0);
+			bSocketAlive = 1;
+			Set_WaitTimer(&firstTimerID, 20, 0);
 			TagAssociation_Init();
 			printf("Main TagData\n");
 			while(!m_pMsgQueue->m_Queue.empty()) {

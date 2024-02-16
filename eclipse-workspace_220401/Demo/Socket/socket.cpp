@@ -10,7 +10,7 @@
 #include "../uart/uart.h"
 #include "../Vector_SocketQueue.h"
 
-#define EPOLL_SIZE 20
+#define EPOLL_SIZE 1024
 
 void *Recieve_Function(void* rcvDt);
 
@@ -18,7 +18,7 @@ Socket* m_pSoc;
 
 int nDataLen=0, nHostLength =0;
 int serv_sockfd;
-int efd;
+int efd, iEplleventCnt =0;
 int bConf =0;
 
 struct epoll_event	ev, *events;
@@ -66,6 +66,7 @@ Socket::Socket()
 Socket::~Socket()
 {
 	delete m_pSocMsgqueue;
+	m_pSocMsgqueue = NULL;
 }
 
 int Socket::Socket_Init(/*int argc, char *argv[]*/)
@@ -73,8 +74,6 @@ int Socket::Socket_Init(/*int argc, char *argv[]*/)
 
 	struct ifreq	ifrMac;
 	struct sockaddr_in serv_addr;
-
-
 	int retEpoll = 0;
 	int fd3, n;
 
@@ -84,10 +83,9 @@ int Socket::Socket_Init(/*int argc, char *argv[]*/)
 
 	if(m_pSocMsgqueue == NULL)
 		m_pSocMsgqueue = new Socket_MsgQueue;
-
 		
-	if(efd != 0) {
-		retEpoll = epoll_ctl(efd, EPOLL_CTL_DEL, m_serv_sock/*events[0].data.fd*/, events);
+	if(efd < 0) {
+		retEpoll = epoll_ctl(efd, EPOLL_CTL_DEL, /*m_serv_sock*/events[0].data.fd, NULL);
 		switch(retEpoll)
 		{
 		case 0:
@@ -134,28 +132,19 @@ int Socket::Socket_Init(/*int argc, char *argv[]*/)
 		m_serv_sock = 0;
 	}
 
-
 	events = (struct epoll_event *)malloc(sizeof(*events) * EPOLL_SIZE);
-	if( (efd = epoll_create(100)) < 0) {
-		printf("///epoll error\n");
+	efd = epoll_create(1024);
+	if( efd < 0) {
+		printf("///epoll error, efd : %d\n", efd);
 		th_delay(1000);
 		return -1;
 	}
+	else 
+		printf("create efd : %d\n", efd);
 
-//	fd2 = open("ip", O_RDONLY);
-//	if(fd2 < 0) {
-//		printf("IP file open error\n");
-//		exit(1);
-//	}
-
-//	n = read(fd2, buf, 1024);
-//	printf("Domain Address(%d) : ", n);
-//	for(int i=0; i<n; i++) {
-//		printf("%c",buf[i]);
-//	}
 
 	m_serv_sock = socket(PF_INET, SOCK_STREAM, 0);
-	//ctx->fd = socket(PF_INET, SOCK_STREAM,  0);	
+	//ctx->fd = socket(PF_INET, SOCK_STREAM,  0);
 
 	if(m_serv_sock == -1) {
 		printf("Socket Error\n");
@@ -169,7 +158,20 @@ int Socket::Socket_Init(/*int argc, char *argv[]*/)
 	if(epoll_ctl(efd, EPOLL_CTL_ADD, m_serv_sock, &ev) == -1) {
 		printf("Failed to Add epoll_ctl\n");
 	}
-	
+
+#if 0	
+	fd2 = open("ip", O_RDONLY);
+	if(fd2 < 0) {
+		printf("IP file open error\n");
+		exit(1);
+	}
+
+	n = read(fd2, buf, 1024);
+	printf("Domain Address(%d) : ", n);
+	for(int i=0; i<n; i++) {
+		printf("%c",buf[i]);
+	}
+#endif
 	while(1) {
 		if(IP_Address_Init())
 			break;
@@ -178,8 +180,8 @@ int Socket::Socket_Init(/*int argc, char *argv[]*/)
 	}
  	
 	if((hostinfo == NULL) && (nHostLength <= 0) ) {
-		hostinfo= gethostbyname(domainName);
 		while(1) {
+			hostinfo= gethostbyname(domainName);
 			if(hostinfo != NULL) {
 				for(int k=0; hostinfo->h_addr_list[k] != NULL; k++) {
 					printf("addrList : %s\n", inet_ntoa(*(struct in_addr*)hostinfo->h_addr_list[k]));
@@ -208,7 +210,6 @@ int Socket::Socket_Init(/*int argc, char *argv[]*/)
 	::string str = "";
 	for(int i=0; i<20; i++) {
 		str += m_szMac_addr[i];
-	//	printf("%c[%d] ", m_szMac_addr[i], i);
 	}
 	
 	m_Mac_String = str;
@@ -352,33 +353,55 @@ void Socket::Create_Socket_Thread(pthread_t thread, int strucData)
 		m_iWorkingAlive = 1;
 		bWorkingThread = 1;
 	}
-	//printf("Create_Socket_Thread sock %d %d %d\n\n", ctx->fd, (int)ctx, m_serv_sock);
 	printf("Create_Socket_Thread sock %d \n\n", m_serv_sock);
 }
 
 void Socket::Exit_Socket_Thread()
 {
-	int retEpoll =0, reclose =0;
+	int retEpoll, reclose;
 	int retval;
+	struct epoll_event epollev;
 
 	if(m_serv_sock != 0) {
 		if(close(m_serv_sock) == -1)
 			printf("Exit_Socket_Thread close(m_serv_sock) error : %d\n", m_serv_sock);
-		m_serv_sock = 0;
+		else {
+			m_serv_sock = 0;
+			printf("m_serv_sock [%d] Success\n", m_serv_sock);
+		}
 	}
-		
-	retEpoll = epoll_ctl(efd, EPOLL_CTL_DEL, m_serv_sock/*events[0].data.fd*/, events);
-	
-	reclose = close(m_serv_sock);
-	printf("reclose : %d\n", reclose);
 	
 	m_iWorkingAlive =0;
 	th_delay(2000);
+	epollev.events = EPOLLIN;
+	epollev.data.fd = m_serv_sock;
+	retEpoll = epoll_ctl(efd, EPOLL_CTL_DEL, m_serv_sock/*events[0].data.fd*/, &epollev);				
+	printf("retEpoll : %d\n", retEpoll);
+	reclose = close(efd);
+	printf("efd close : %d\n", reclose );
+#if 0
+	if(!iEplleventCnt) {
+		retEpoll = epoll_ctl(efd, EPOLL_CTL_DEL, events[0].data.fd, NULL);
+		reclose = close(events[0].data.fd);
+		printf("close : %d\n", reclose);
+		reclose = close(efd);		printf("efd close : %d\n", reclose );
+	}
+	else {
+		printf("iEplleventCnt[%d]\n", iEplleventCnt);
+		for(int i=0; i < iEplleventCnt; i++) {
+			retEpoll = epoll_ctl(efd, EPOLL_CTL_DEL, events[i].data.fd, NULL);
+			reclose = close(events[i].data.fd);
+			printf("close : %d\n", reclose);
+			reclose = close(efd);
+			printf("efd close : %d\n", efd);
+		}
+	}
 	
 	switch(retEpoll)
 	{
 	case 0:
 		printf("epoll_ctl delete Success\n");
+		break;
 	case EBADF:
 		printf("EBADF\n");
 		break;
@@ -410,6 +433,7 @@ void Socket::Exit_Socket_Thread()
 		printf("EPOLL CTL DEFAULT\n");
 	
 	}
+#endif 
 	free(events);
 	
 	pthread_join(p_thread, (void**)&retval);
@@ -439,7 +463,6 @@ void Socket::Exit_Socket_Thread()
 int Socket::Send_Message(BYTE* msg, int len)
 {
 	int ret =0;
-//	m_p8uSendData = new BYTE[len];
 	memcpy(m_p8uSendData, msg, len);
 	nDataLen = len;
 
@@ -461,8 +484,6 @@ int Socket::Send_Function()
 		printf("%x ", m_p8uSendData[i]);
 	}*/
 	memset(m_p8uSendData, 0, sizeof(BYTE)*4096);
-//	delete[] m_p8uSendData;
-//	m_p8uSendData = NULL;
 
 	ret = write(m_serv_sock,p8Data,nDataLen);
 	//ret = write(m_serv_sock,&vecTagData,sizeof(vecTagData));
@@ -486,7 +507,9 @@ int Socket::Read_Message(BYTE* msg)
 void *Recieve_Function(void* rcvDt)
 {
 	Socket* pSoc = NULL;
+	struct epoll_event epollev;
 	int Socketd = 0;//pSoc->m_serv_sock;
+	int retEpoll, reclose;
 	pSoc = (Socket* )m_pSoc;
 
 	time_t ct;
@@ -497,7 +520,6 @@ void *Recieve_Function(void* rcvDt)
 	BYTE u8data[1024] = {0, };
 	BYTE u8data2[1024] = {0, };
 
-	
 	
 	printf("Recieve_Function() Socketd : %d, m_serv_sock : %d\n", Socketd, pSoc->m_serv_sock);
 
@@ -615,9 +637,11 @@ void *Recieve_Function(void* rcvDt)
 		}
 		usleep(10);
 	}
+	printf("while(m_iWorkingAlive) %d end\n", pSoc->m_iWorkingAlive);
 
 	if(pSoc->m_iWorkingAlive == 0) {
 		printf("Disconnect Server  m_iWorkingAlive : %d \n", pSoc->m_iWorkingAlive);
+		
 		pSoc->bWorkingThread = 0;
 		pSoc->m_nServerMessge_End =0;
 	}
@@ -632,7 +656,6 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 	DataLen = Len;
 	VectorSocket<BYTE> pMm;	
 	int index =0;
-//	printf("GetSocketMsg()\n");
 
 	if((p8udata[MSG_STX] == STX) && (p8udata[DataLen-1] == 0x7e) && (p8udata[DataLen-2] == 0x5a) && (p8udata[DataLen-3] == 0xa5))
 	{
@@ -650,8 +673,7 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 		    p8udata[MSGTYPE] != MULTI_GATEWAY_SCAN_REQ &&
 		    p8udata[MSGTYPE] != POWEROFF_REQ &&
 		    p8udata[MSGTYPE] != DISPLAY_ENABLE_REQ )
-		{
-			//printf("Msg VAL : %x %x %x %x %x\n", p8udata[MSG_STX], p8udata[MSGTYPE], p8udata[DataLen-3], p8udata[DataLen-2], p8udata[DataLen-1]);
+		{		
 			if(p8udata[MSGTYPE] == BSN_START) {
 				m_nServerMessge_End =1;
 				
@@ -668,8 +690,7 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 						OneData[i][j] =0;
 						TwoData[i][j] =0;
 					}
-				}
-				
+				}				
 				
 				m_pSocMsgqueue->BSN_MSG_ACK(p8udata);
 				for(int i=0; i<15; i++) {
@@ -712,23 +733,16 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 				
 				for(int i=0; i<m_nSocketArrayDataDownCnt; i++) {
 					for(int j =1; j<4095; j++) {
-					//	printf("%x ", OneData[i][j]);
 						if( (OneData[i][j-3] == 0xa5) && (OneData[i][j-2] == 0x5a) && (OneData[i][j-1] == 0x7e) ) {
 							index = j;
 							break;
 						}
 					}
 					
-				//	printf("OneData[%d] size : %d\n", i, index);
 					for(int j=0; j<index; j++) {
 						m_SocketQueue_vec.push_back(OneData[i][j]);
 					}
-				//	printf("\n");
 
-				/*	for(int i=0; i<(int)m_SocketQueue_vec.size(); i++) {
-						printf("%x ", m_SocketQueue_vec.at(i));
-					}
-					printf("\n");*/
 					m_SocketArrayDataDownMsg.push_back(m_SocketQueue_vec);
 					m_SocketQueue_vec.clear();
 					m_SocketQueue_vec.shrink_to_fit();
@@ -740,21 +754,13 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 					for(int j =1; j<4095; j++) {
 						if( (TwoData[i][j-3] == 0xa5) && (TwoData[i][j-2] == 0x5a) && (TwoData[i][j-1] == 0x7e) ) {
 							index = j;
-					//		printf("\nIndex : %d\n", index);
 							break;
 						}
 					}
-			//		printf("\n");
-					
-				//	printf("TwoData[%d] size : %d\n", i, index);
 					for(int j=0; j<index; j++) {
 						m_SocketQueue_vec.push_back(TwoData[i][j]);
 					}
-				//	free(TwoData1[i]);
-				/*	for(int i=0; i<(int)m_SocketQueue_vec.size(); i++) {
-						printf("%x ", m_SocketQueue_vec.at(i));
-					}
-					printf("\n");*/
+		
 					m_SocketArrayDataIndicateMsg.push_back(m_SocketQueue_vec);
 					m_SocketQueue_vec.clear();
 					m_SocketQueue_vec.shrink_to_fit();
@@ -788,14 +794,6 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 					for(int i=0; i< DataLen; i++) {
 						OneData[m_nSocketArrayDataDownCnt][i] = p8udata[i];
 					}
-					
-				//	OneData1[m_nSocketArrayDataDownCnt] = (BYTE*)malloc(sizeof(BYTE) * DataLen);
-				//	for(int i = 0; i<DataLen; i++) {
-				//		OneData1[m_nSocketArrayDataDownCnt][i] = OneData[m_nSocketArrayDataDownCnt][i];
-					//	printf("[%x] ", OneData1[m_nSocketArrayDataDownCnt][i]);
-				//	}
-					//printf("\n");
-					
 					m_pSocMsgqueue->DownLoad_MSG_Start_ACK(p8udata);
 					Send_Message(p8udata, 15);
 					m_nSocketArrayDataDownCnt++;
@@ -807,14 +805,8 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 						TwoData[m_nSocketArrayDataIndicateCnt][i] = p8udata[i];
 					}
 					m_TagNumber[m_nSocketArrayDataIndicateCnt] = (int)ByteToWord(TwoData[m_nSocketArrayDataIndicateCnt][MSG_DADDRONE], TwoData[m_nSocketArrayDataIndicateCnt][MSG_DADDRZERO]);				
-					printf("Tag Number[%d] : %d\n", m_nSocketArrayDataIndicateCnt, m_TagNumber[m_nSocketArrayDataIndicateCnt]);
-					
-			//		TwoData1[m_nSocketArrayDataIndicateCnt] = (BYTE*)malloc(sizeof(BYTE) * DataLen);
-			//		for(int i = 0; i<DataLen; i++) {
-			//			TwoData1[m_nSocketArrayDataIndicateCnt][i] = TwoData[m_nSocketArrayDataIndicateCnt][i];
-					//	printf("[%x] ", OneData1[m_nSocketArrayDataIndicateCnt][i]);
-			//		}
-					//printf("\n");
+					printf("Tag Number[%d] : %d\n", m_nSocketArrayDataIndicateCnt, m_TagNumber[m_nSocketArrayDataIndicateCnt]);					
+
 					m_pSocMsgqueue->DataIndication_MSG_Start_ACK(p8udata);
 					Send_Message(p8udata, 16);
 					
@@ -906,7 +898,6 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 		}
 
 	}
-//	printf("Socket GetSocketMsg ReceiveData_len %d\n", Len);
 
 	return 1;
 }
@@ -914,7 +905,6 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 int Socket::Ready_to_Read(int uartd, int timeoutms)
 {
 
-//	printf("Ready_to_Read m_serv_sock : %d\n", m_serv_sock);
 	pthread_mutex_lock(&Socket_mutex);
 	if(Socket_fd_Select(m_serv_sock, timeoutms) == m_serv_sock) {
 	//	printf("Ready_to_Read return 1\n");
@@ -933,20 +923,17 @@ void Socket::deleteArray(int idx, int size, BYTE* ar)
 
 int Socket::Socket_fd_Select(int fd, int timeout_ms)
 {
-	int eventCnt =0;
+	iEplleventCnt = epoll_wait(efd, events, EPOLL_SIZE, timeout_ms);
 
-	eventCnt = epoll_wait(efd, events, EPOLL_SIZE, timeout_ms);
-//	printf("Socket_fd_Select() epoll_wait : %d\n", n);
-
-	if( eventCnt== -1) {
+	if( iEplleventCnt== -1) {
 		printf("epoll error\n");
 		th_delay(3000);
 		return -1;
 	}
-	if(eventCnt > 1)
-		printf(" eventCnt : %d \n", eventCnt);
+	if(iEplleventCnt > 1)
+		printf(" iEplleventCnt : %d \n", iEplleventCnt);
 	
-	for(int i=0; i<eventCnt; i++) {
+	for(int i=0; i<iEplleventCnt; i++) {
 		if(events[i].data.fd == m_serv_sock) {
 			return m_serv_sock;
 		}

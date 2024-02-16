@@ -351,7 +351,7 @@ int MsgHandler::Send_BeaconData(BYTE ibeaconvalue)
 						printf("BEACON_MAX_COUNT m_DataCnt %d > 15\n", m_DataCnt);
 						return 0;
 					}
-					else if(m_DataCnt == 0) {						
+					else if(m_DataCnt == 0) {
 						printf("BEACON_MAX_COUNT\n");
 						GetTagNumber(0);
 						if( 15 >= nTagNumber) {
@@ -447,7 +447,7 @@ int MsgHandler::Send_BeaconData(BYTE ibeaconvalue)
 							return 0;
 						}
 						iexistTagNumber = nTagNumber;
-						m_DataCnt++;						
+						m_DataCnt++;
 						tempTag = nTagNumber;
 						m_nDataDownCount = m_TagDownInfor.Map_TagSequence[tempTag];
 						printf("  nTagNumber : %d %x\n", nTagNumber, nTagNumber);
@@ -464,7 +464,7 @@ int MsgHandler::Send_BeaconData(BYTE ibeaconvalue)
 
 int MsgHandler::UartPacket_ReDataAcknowledge_DownStart(BYTE u8data)
 {
-	std::set<WORD>::iterator iter, iter2;	
+	std::set<WORD>::iterator iter, iter2;
 	WORD tempTag = 0;
 	int ibeaconvalue =0;
 	BYTE pu8data[1024];
@@ -761,7 +761,7 @@ void MsgHandler::SetSocketArray(std::vector<std::vector<BYTE>> DataDownmsg, std:
 		m_TagAckCheck.m_AssoTagNumber.insert(TagNumber[i]);
 	}
 
-	printf("Beacon DataDown Count : %d\n", m_nUartArrayDataDownCnt);	
+	printf("Beacon DataDown Count : %d\n", m_nUartArrayDataDownCnt);
 }
 
 int MsgHandler::DataFlag_Initialize(int beacon)
@@ -790,10 +790,10 @@ int MsgHandler::GetTagNumber(int temp)
 		if( (temp+1 <= nTagNumber) && (nTemptemp >= nTagNumber)) {
 			nTagNumber = (int)ByteToWord(m_UartArrayDataDownMsg[i].at(MSG_DADDRONE) ,m_UartArrayDataDownMsg[i].at(MSG_DADDRZERO) );
 		
-		//	printf("TagNumber : %d, m_nDataDownCount : %d break \n",  nTagNumber, m_nDataDownCount);			
+		//	printf("TagNumber : %d, m_nDataDownCount : %d break \n",  nTagNumber, m_nDataDownCount);
 			break;
 			
-		}							
+		}
 	}
 
 	return 1;
@@ -802,11 +802,11 @@ int MsgHandler::GetTagNumber(int temp)
 void MsgHandler::SetBeacon(int a)
 {
 	BEACON_MAX_COUNT = a;
-}
+} 
 	
 BYTE MsgHandler::GetChecksum(BYTE* puData, int len)
 {
-	BYTE sum =0;
+	BYTE sum =0; 
 
 	for(int i=1; i< len; i++) {
 	//	printf("%x ", puData[i]);
@@ -814,7 +814,7 @@ BYTE MsgHandler::GetChecksum(BYTE* puData, int len)
 	}
 	//printf("(check nsum : %x) ", sum);
 
-	return sum;
+	return sum;  
 }
 
 void MsgHandler::GetPanID(WORD panid)

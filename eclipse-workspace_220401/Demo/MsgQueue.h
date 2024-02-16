@@ -67,7 +67,6 @@ public:
 
 	void th_delay(int millsec);
 	void GetSocket(Socket* soc);
-	int uart_SetTimer();
 	int uart_DelaySend();
 	WORD ByteToWord(BYTE puData, BYTE puData1);
 	bool PutByte(uint8_t* b, int len);

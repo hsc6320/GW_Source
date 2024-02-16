@@ -48,7 +48,7 @@ MsgQueue:: MsgQueue(void)
 	m_Uart_ServiceStart_TagAssociation_InitFlag =0;
 	memset(m_Test, 0, sizeof(WORD)*4096);
 	memset(m_pu16MsgQueueArrayDataAcknowledge, 0, sizeof(WORD)*4096);
-	memset(u16TagNumberData, 0, sizeof(WORD)*4096);	
+	memset(u16TagNumberData, 0, sizeof(WORD)*4096);
 	m_pMsg = NULL;
 }
 
@@ -84,7 +84,7 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 					printf("----Not exist ----\n");
 					if(iter != setTagAckNumber.end()) {
 						printf("----BUT Exist ");
-						printf("setAckNumber : %d----\n", *iter);  	
+						printf("setAckNumber : %d----\n", *iter);
 						return 1;
 					}
 				}*/
@@ -92,7 +92,7 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 				if(!setTagNumber.empty() && (iterSet != setTagNumber.end()) ) {
 					iter = setTagAckNumber.find(wordPanID);
 					if(iter != setTagAckNumber.end()) {
-						printf("TagAck overlap : %d, %x \n");
+						printf("TagAck overlap : %d, %x \n", wordPanID, wordPanID);
 					}
 					else {
 						setTagAckNumber.insert(wordPanID);
@@ -136,7 +136,7 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 				printf("DataAck TagID : ");
 				printf("%x\n",(ByteToWord(u8Data[MSG_SADDRONE], u8Data[MSG_SADDRZERO])));
 			
-				m_nMapParity++;				
+				m_nMapParity++;
 				printf("0x43 Count : %d\n", m_nMapParity);
 			/*	
 				iter = setTagAckNumber.find(wordPanID);
@@ -174,10 +174,10 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 					printf("%x ", m_MsgQueueDataAssocation[i]);
 				}
 				printf("\n");
-				m_Queue.push(m_MsgQueueDataAssocation);				
+				m_Queue.push(m_MsgQueueDataAssocation);
 			
 				m_MsgQueueDataAssocation.clear();
-				m_nSendTagCount++;			
+				m_nSendTagCount++;
 		
 				m_bReadEnd_UartMessage =1;
 				return 1;
@@ -201,7 +201,7 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 					m_vcemsg.push_back(u8Data[i]);
 			//		printf("[%x] ", m_vcemsg.at(i));
 				}
-				if(!m_bUartCommuniFlag && (u8Data[MSGTYPE] == BSN_START_ACK)) {					
+				if(!m_bUartCommuniFlag && (u8Data[MSGTYPE] == BSN_START_ACK)) {
 		/*			m_vcemsg[MSGTYPE] = u8Data[MSGTYPE];
 					m_vcemsg[MSG_BSN_DATA] = u8Data[MSG_DATA];
 				*/
