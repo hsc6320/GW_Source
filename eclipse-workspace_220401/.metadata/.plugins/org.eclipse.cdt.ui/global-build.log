@@ -1032,3 +1032,6 @@ Finished building target: Demo
 18:47:50 **** Incremental Build of configuration Debug for project Demo ****
 make all 
 make: Nothing to be done for 'all'.
+09:22:49 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+make: Nothing to be done for 'all'.
