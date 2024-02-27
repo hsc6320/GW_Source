@@ -163,6 +163,7 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 				|| (u8Data[MSGTYPE] == MULTI_GATEWAY_SCAN_CONFIRM)
 				|| (u8Data[MSGTYPE] == MULTI_GATEWAY_SCAN_RESPONESE)
 				|| (u8Data[MSGTYPE] == TAG_LOWBATT_ALARM_INDICATION)
+				|| (u8Data[MSGTYPE] == TAG_POWEROFF_INDICATION)
 				/*|| (u8Data[MSGTYPE] == SERVICESTART_CONFIRM)*/)
 		{
 
@@ -184,8 +185,9 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 			}
 			else if((u8Data[MSGTYPE] == COORDINATOR_RESET_CONFIRM) || (u8Data[MSGTYPE] == TAG_INFOR_UPDATE) || (u8Data[MSGTYPE] == TAG_INFOR_UPDATE_ACK)
 					|| (u8Data[MSGTYPE] == TAG_ALARM_INDICATION) || (u8Data[MSGTYPE] == MULTI_GATEWAY_SCAN_CONFIRM) || (u8Data[MSGTYPE] == MULTI_GATEWAY_SCAN_RESPONESE)
-					|| (u8Data[MSGTYPE] == TAG_LOWBATT_ALARM_INDICATION) )
+					|| (u8Data[MSGTYPE] == TAG_LOWBATT_ALARM_INDICATION) || (u8Data[MSGTYPE] == TAG_POWEROFF_INDICATION) )
 			{
+				printf("MSGTYPE [%x]\n", u8Data[MSGTYPE]);
 
 				if(u8Data[MSGTYPE] == COORDINATOR_RESET_CONFIRM) {
 					memcpy(m_u8SendData, u8Data, len);
@@ -202,12 +204,6 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 			//		printf("[%x] ", m_vcemsg.at(i));
 				}
 				if(!m_bUartCommuniFlag && (u8Data[MSGTYPE] == BSN_START_ACK)) {
-		/*			m_vcemsg[MSGTYPE] = u8Data[MSGTYPE];
-					m_vcemsg[MSG_BSN_DATA] = u8Data[MSG_DATA];
-				*/
-		/*			printf("BSN_START ACK :%x \n", m_vcemsg[MSGTYPE] );
-					printf("MSGTYPE  :%x \n", m_vcemsg[MSGTYPE] );
-					printf("MSG_BSN_DATA  :%x \n", m_vcemsg[MSG_BSN_DATA] );*/
 					m_bUartCommuniFlag = 1;
 					return 1;
 				}

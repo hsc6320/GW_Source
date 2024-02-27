@@ -225,14 +225,14 @@ int MsgHandler::UartPacket_DataIndicateStart(BYTE u8data)
 	SENDPACKET::SOCKET_PACKET sendPacket;
 	BYTE pu8data[1024];
 	int dataLength =0;
-	int iBufcnt =0, ibeaconvalue =0;
+	int iBufcnt =0;
 
 	printf("DataIndicateStart() \n");
 
 	nTagidCOunt =0;
 	memset(pu8data, 0, 1024);
 
-	ibeaconvalue = (int)u8data;
+	//ibeaconvalue = (int)u8data;
 
 	m_nDataIndiCount = m_nDataDownCount;
 
@@ -536,7 +536,7 @@ int MsgHandler::UartPacket_ReDataAcknowledge_DownStart(BYTE u8data)
 				}			
 				
 				if( ( j+1 > nTagNumber) || (jend < nTagNumber) ) {
-					printf("No Down Tag Data \n", j+1, nTagNumber);
+					printf("No Down Tag Data \n");
 					return 0;
 				}
 				else {
@@ -738,6 +738,11 @@ void MsgHandler::BypassSocketToUart(BYTE* p8Data, int DataLen, int msgtype)
 		printf("DISPLAY_ENABLE_REQ UART_WRITE\n");
 		m_pCommUart->Uart_Write(m_pCommUart->m_uartd, p8Data, DataLen);
 		break;
+	case TAG_POWEROFF_INDICATION:
+		printf("TAG_POWEROFF_INDICATION UART_WRITE\n");
+		m_pCommUart->Uart_Write(m_pCommUart->m_uartd, p8Data, DataLen);
+		break;
+			
 	}
 	//printf("BypassSocketToUart() End\n");
 }
@@ -756,7 +761,7 @@ void MsgHandler::SetSocketArray(std::vector<std::vector<BYTE>> DataDownmsg, std:
 	m_nUartArrayDataDownCnt = (int)DataDownmsg.size();
 	m_nUartArrayDataIndicateCnt = (int)DataIndimsg.size();
 	
-	for(int i=0; i<m_nUartArrayDataDownCnt; i++) {
+	for(unsigned int i=0; i<m_nUartArrayDataDownCnt; i++) {
 		m_TagDownInfor.Map_TagSequence[TagNumber[i]] =i;
 		m_TagAckCheck.m_AssoTagNumber.insert(TagNumber[i]);
 	}
@@ -785,7 +790,7 @@ int MsgHandler::GetTagNumber(int temp)
 	else
 		nTemptemp = temp+16;
  
-	for(int i=0; i<m_nUartArrayDataDownCnt; i++) {
+	for(unsigned int i=0; i<m_nUartArrayDataDownCnt; i++) {
 		nTagNumber = (int)ByteToWord(m_UartArrayDataDownMsg[i].at(MSG_DADDRONE) ,m_UartArrayDataDownMsg[i].at(MSG_DADDRZERO) );
 		if( (temp+1 <= nTagNumber) && (nTemptemp >= nTagNumber)) {
 			nTagNumber = (int)ByteToWord(m_UartArrayDataDownMsg[i].at(MSG_DADDRONE) ,m_UartArrayDataDownMsg[i].at(MSG_DADDRZERO) );

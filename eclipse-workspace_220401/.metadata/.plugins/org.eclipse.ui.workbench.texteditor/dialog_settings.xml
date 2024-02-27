@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="PTHREAD_CANCELED"/>
+		<item key="selection" value="retEpoll"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
-		<item key="wholeword" value="false"/>
+		<item key="wholeword" value="true"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="retEpoll"/>
+			<item value="epollev"/>
+			<item value="BypassSocketToUart"/>
+			<item value="mapTag_MacAddr"/>
+			<item value="Tagnum"/>
+			<item value="serv_addr"/>
+			<item value="sockaddr"/>
 			<item value="PTHREAD_CANCELED"/>
 			<item value="timer_t"/>
 			<item value="nTotalDataCount"/>
@@ -16,13 +23,6 @@
 			<item value="GetTagNumber"/>
 			<item value="nTemptemp"/>
 			<item value="Main_Check_NextTagDirect"/>
-			<item value="Demo"/>
-			<item value="existTagNumber = nTagNumber;"/>
-			<item value="UartPacket_DataIndicateStart"/>
-			<item value="UartToSocket_TagAssociation"/>
-			<item value="m_iTagDirectDown"/>
-			<item value="Main_MsgQueue_Sort_dataAck"/>
-			<item value="&lt;&lt;&lt;&lt;&lt;&lt;&lt; Updated upstream"/>
 		</list>
 		<list key="replacehistory">
 		</list>

@@ -373,9 +373,9 @@ void Socket::Exit_Socket_Thread()
 	
 	m_iWorkingAlive =0;
 	th_delay(2000);
-	epollev.events = EPOLLIN;
+	epollev.events = EPOLLIN|EPOLLET;
 	epollev.data.fd = m_serv_sock;
-	retEpoll = epoll_ctl(efd, EPOLL_CTL_DEL, m_serv_sock/*events[0].data.fd*/, &epollev);				
+	retEpoll = epoll_ctl(efd, EPOLL_CTL_DEL, m_serv_sock/*events[0].data.fd*/, &epollev);
 	printf("retEpoll : %d\n", retEpoll);
 	reclose = close(efd);
 	printf("efd close : %d\n", reclose );
@@ -480,9 +480,9 @@ int Socket::Send_Function()
 	memcpy(p8Data, m_p8uSendData, nDataLen);
 
 	printf("socket Send_Function() ");
-	/*for(int i=0; i < nDataLen; i++) {
+	for(int i=0; i < nDataLen; i++) {
 		printf("%x ", m_p8uSendData[i]);
-	}*/
+	}
 	memset(m_p8uSendData, 0, sizeof(BYTE)*4096);
 
 	ret = write(m_serv_sock,p8Data,nDataLen);
@@ -499,7 +499,12 @@ int Socket::Send_Function()
 int Socket::Read_Message(BYTE* msg)
 {
 	//int str_len = read(ctx->fd,msg,sizeof(BYTE)*1024);
-	int str_len = read(events[0].data.fd,msg,sizeof(BYTE)*1024);
+	int str_len = 0;
+
+	for(int i=0; i<iEplleventCnt; i++) {
+		str_len = read(events[i].data.fd,msg,sizeof(BYTE)*1024);
+	}
+	
 
 	return str_len;
 }
@@ -507,9 +512,7 @@ int Socket::Read_Message(BYTE* msg)
 void *Recieve_Function(void* rcvDt)
 {
 	Socket* pSoc = NULL;
-	struct epoll_event epollev;
 	int Socketd = 0;//pSoc->m_serv_sock;
-	int retEpoll, reclose;
 	pSoc = (Socket* )m_pSoc;
 
 	time_t ct;
@@ -923,7 +926,7 @@ void Socket::deleteArray(int idx, int size, BYTE* ar)
 
 int Socket::Socket_fd_Select(int fd, int timeout_ms)
 {
-	iEplleventCnt = epoll_wait(efd, events, EPOLL_SIZE, timeout_ms);
+	iEplleventCnt = epoll_wait(efd, events, 1, timeout_ms);
 
 	if( iEplleventCnt== -1) {
 		printf("epoll error\n");
