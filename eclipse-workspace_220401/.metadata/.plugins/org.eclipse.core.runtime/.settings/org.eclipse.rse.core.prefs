@@ -1,4 +1,4 @@
 activeuserprofiles=Team;gw-VirtualBox;hong-PC
 eclipse.preferences.version=1
 org.eclipse.rse.systemtype.local.systemType.defaultUserId=hong
-useridperkey=hong-PC.f100\=debian;gw-VirtualBox.f102\=gw;hong-PC.TEST\=debian;gw-VirtualBox.192.168.40.11\=debian;gw-VirtualBox.192.168.1.90\=debian;gw-VirtualBox.172.16.20.98\=debian;hong-PC.f104\=debian;hong-PC.f103\=debian;hong-PC.f102\=debian;hong-PC.Local\=hong;hong-PC.f101\=debian;
+useridperkey=hong-PC.f100\=debian;gw-VirtualBox.f102\=gw;gw-VirtualBox.192.168.40.5\=debian;hong-PC.TEST\=debian;gw-VirtualBox.192.168.1.90\=debian;gw-VirtualBox.192.168.40.11\=debian;hong-PC.f104\=debian;hong-PC.f103\=debian;hong-PC.f102\=debian;hong-PC.Local\=hong;hong-PC.f101\=debian;

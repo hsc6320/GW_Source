@@ -170,17 +170,18 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 			if(u8Data[MSGTYPE] == TAG_ASSOCIATION) {
 				m_MsgQueueDataAssocation.clear();
 				memcpy(m_u8SendData, u8Data, len);
-				for(int i=0; i<len; i++) {
-					m_MsgQueueDataAssocation.push_back(u8Data[i]);
-					printf("%x ", m_MsgQueueDataAssocation[i]);
-				}
-				printf("\n");
-				m_Queue.push(m_MsgQueueDataAssocation);
-			
-				m_MsgQueueDataAssocation.clear();
-				m_nSendTagCount++;
-		
-				m_bReadEnd_UartMessage =1;
+			//	if(u8Data[MSG_ASSOCIATION_STATUS] == PAYLOAD_STATUS_SUCCESS) {					
+					for(int i=0; i<len; i++) {
+						m_MsgQueueDataAssocation.push_back(u8Data[i]);
+					//	printf("%x ", m_MsgQueueDataAssocation[i]);
+					}
+				//	printf("\n");
+					m_Queue.push(m_MsgQueueDataAssocation);
+					m_QueueBackup.push(m_MsgQueueDataAssocation);
+					m_MsgQueueDataAssocation.clear();
+					m_nSendTagCount++;			
+			//	}
+				//m_bReadEnd_UartMessage =1;
 				return 1;
 			}
 			else if((u8Data[MSGTYPE] == COORDINATOR_RESET_CONFIRM) || (u8Data[MSGTYPE] == TAG_INFOR_UPDATE) || (u8Data[MSGTYPE] == TAG_INFOR_UPDATE_ACK)
@@ -191,6 +192,9 @@ bool MsgQueue::PutByte(uint8_t* b, int len)
 
 				if(u8Data[MSGTYPE] == COORDINATOR_RESET_CONFIRM) {
 					memcpy(m_u8SendData, u8Data, len);
+					if(u8Data[MSG_RESET_CONFIRM_STATUS] == RESET_STATUS_FAIL) {
+						printf("Reset Fail\n");
+					}
 					m_bUartCommuniFlag = 0;
 					m_bReadEnd_UartMessage=1;
 					printf("m_bUartCommuniFlag %d\n", m_bUartCommuniFlag);

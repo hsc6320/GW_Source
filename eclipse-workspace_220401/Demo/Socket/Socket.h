@@ -69,6 +69,8 @@ public:
 	int Socket_Init();
 	void Create_Socket_Thread(pthread_t thread, int strucData);
 	int Send_Function();
+	int TagSend_Function(std::vector<std::vector<BYTE>> msg);
+	int TagSend_Message(std::vector<std::vector<BYTE>> msg);
 	int Send_Message(BYTE* msg, int len);
 	int Read_Message(BYTE* msg);
 	void SetMsgHwnd(Socket* soc);

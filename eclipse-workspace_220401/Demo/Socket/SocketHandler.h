@@ -31,6 +31,9 @@ public:
 	Get_Packet		packet;
 	int m_iSocketArive;
 
+	void th_delay(int millsec);
+	
+
 	BYTE GetChecksum(BYTE* puData, int len);
 	void SetSocketHwnd(Socket* soc);
 	void SetMsgQueueHwnd(MsgQueue* soc);
@@ -43,10 +46,11 @@ public:
 	int Connect_Request();
 	int DownLoad_Start_Ack();
 	int SendSocket_Data(PRE_DEFINE::S_PACKET packet);
+	int Server_BSN_Start_Req_Packet();
 	void SetMsg_StartCfm_Remalloc(int OnOff);
 	void SetBeconCount(int* cnt);
 	int GateWay_Status_Check();
-	void TagData(std::queue<std::vector<BYTE>> que);
+	std::vector<std::vector<BYTE>> TagData(std::queue<std::vector<BYTE>> que);
 };
 
 #endif /* SOCKET_SOCKETHANDLER_H_ */

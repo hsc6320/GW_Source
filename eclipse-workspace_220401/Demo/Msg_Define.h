@@ -27,10 +27,14 @@ typedef uint16_t WORD;
 #define MSG_LENGTHONE			9
 #define MSG_DATA					10
 #define MSG_ACKNOWLEDGE_STATUS		10
+#define MSG_RESET_CONFIRM_STATUS		10
+
 #define MSG_TAG_DIRECT_CHANGE_STATUS		10
 #define MSG_CFM_DATAINDICATE_STATUS		11
 #define MSG_BSN_DATA				10
 #define MSG_ASSOCIATION_STATUS 	19
+#define MSG_ASSOCIATION_CHECKSUM 	21
+
 
 
 #define REGISTRATION_REQUEST				0x01
@@ -56,6 +60,8 @@ typedef uint16_t WORD;
 #define TAG_DIRECT_UPDATE_ACK				0x52
 #define COORDINATOR_RESET_REQ				0x60
 #define COORDINATOR_RESET_CONFIRM			0x61
+
+#define BSN_START_REQ							0x70
 #define BSN_START								0x71
 #define BSN_START_ACK						0x72
 #define BSN_DATA_END_REQ						0x73
@@ -83,6 +89,8 @@ typedef uint16_t WORD;
 
 #define PAYLOAD_STATUS_SUCCESS		0x01
 #define PAYLOAD_STATUS_FAIL			0x02
+#define RESET_STATUS_FAIL			0x02
+
 
 #define ENABLE						0x00
 #define DISABLE						0x01

@@ -83,8 +83,25 @@ static void *uart_Rx_Thread(void *param)
 			int i=0;
 			while(1) {
 	 			for( i =0; i<= nToTalLen; i++) {
+					int iChecksumLength =0;
+					
+						
 					if( (rx[0] == STX) && (rx[i-3] == 0xa5) && (rx[i-2] == 0x5a) && (rx[i-1] == 0x7e) ) {					
 						underflowcnt =0;
+						if(rx[MSGTYPE] == TAG_ASSOCIATION) {
+							for(int i=0; i<nToTalLen; i++) {
+								printf("%x ", rx[i]);
+							}
+							printf("\n");
+						}
+						#if 0
+					/*------------------------------*/
+						iChecksumLength = (int)ByteToWord(rx[MSG_LENGTHONE], rx[MSG_LENGTHZERO] );
+						if(iChecksumLength == (MSG_ASSOCIATION_CHECKSUM -iChecksumLength) ) {
+							
+						}
+					/*------------------------------*/
+						#endif
 						if(rx[i-4] != pComm->Uart_GetChecksum(rx ,i)) {
 							printf("Uart Checksum Error \n");
 							for(int k=0; k<i; k++) {
@@ -107,23 +124,23 @@ static void *uart_Rx_Thread(void *param)
 						underflowcnt =1;
 					}
 	 			}
-				
-				if(ChecksumError)
+				if(ChecksumError) {
+					nToTalLen =0;
+					memset(rx2, 0, 1024);
+					memset(rx, 0, 1024);
 					break;
+				}
 				if(underflowcnt) {
 					break;
 				}
-				
 				if(i < nToTalLen ) {
 					int tempCnt =i;
 					printf("%d < %d\n", i, nToTalLen);
 					
 					for(int j=0; j<nToTalLen; j++) {
 						rx_sto[j] = rx[tempCnt];
-						printf("%x ", rx_sto[j]);
 						tempCnt++;
 					}
-					printf("\n");
 					memset(rx, 0, 1024);
 					memcpy(rx, rx_sto, 1024);
 					
@@ -156,7 +173,7 @@ static void *uart_Rx_Thread(void *param)
 			memset(rx_sto, 0, sizeof(char)*1024);
 			nToTalLen =0;
 		}
-		usleep(10);
+		usleep(100);
 	}
 	free(rx_sto);
 	free(rx);
@@ -447,6 +464,15 @@ BYTE UartComThread::Uart_GetChecksum(BYTE* puData, int len)
 {
 	BYTE sum =0;
 
+	#if 0
+//*******************************************************//
+	for(int i=1; i< len; i++) {
+		//printf("%x ", puData[i]);
+		sum += puData[i];
+	}
+	
+//*******************************************************//
+	#endif
 	for(int i=1; i< len-4; i++) {
 		//printf("%x ", puData[i]);
 		sum += puData[i];
@@ -454,6 +480,17 @@ BYTE UartComThread::Uart_GetChecksum(BYTE* puData, int len)
 
 	return sum;
 }
+
+WORD UartComThread::ByteToWord(BYTE puData, BYTE puData1)
+{
+	WORD p16Tempdata_HIGH, p16Tempdata_LOW;
+
+	p16Tempdata_HIGH = (puData << 8);
+	p16Tempdata_LOW = puData1;
+
+	return p16Tempdata_HIGH|p16Tempdata_LOW;
+}
+
 
 void UartComThread::th_delay(int millsec)
 {

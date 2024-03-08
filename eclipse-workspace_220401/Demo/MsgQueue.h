@@ -58,6 +58,7 @@ public:
 	int m_nSendTagCount;
 
 	std::queue<std::vector<BYTE>> m_Queue;
+	std::queue<std::vector<BYTE>> m_QueueBackup;
 	std::vector<BYTE> m_MsgQueueDataAssocation;
 	std::set<WORD> setTagNumber, setTagAckNumber;
 	

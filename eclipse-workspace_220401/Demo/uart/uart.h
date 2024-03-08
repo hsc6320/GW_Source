@@ -31,6 +31,7 @@ public:
 
 	void SetMutex(pthread_mutex_t mutex);
 	int uart_init();
+	WORD ByteToWord(BYTE puData, BYTE puData1);
 	int Uart_Open(const char *dev, int baud_rate);
 	int Uart_Close(int uartd);
 	int Open_fd(const char *dev);

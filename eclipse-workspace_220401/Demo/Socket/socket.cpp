@@ -75,10 +75,11 @@ int Socket::Socket_Init(/*int argc, char *argv[]*/)
 	struct ifreq	ifrMac;
 	struct sockaddr_in serv_addr;
 	int retEpoll = 0;
-	int fd3, n;
+	int fd3,fd2, n;
 
 	const char *domainName = "server.haem-esl.com"; //"haem.rocketsci.io"; 
 	char buf2[5];
+	char buf[20];
 	char Mac_addr[20];	
 
 	if(m_pSocMsgqueue == NULL)
@@ -460,6 +461,30 @@ void Socket::Exit_Socket_Thread()
 	
 }
 
+int Socket::TagSend_Message(std::vector<std::vector<BYTE>> msg)
+{
+	int ret =0;
+
+	ret = TagSend_Function(msg);
+
+	return ret;
+}
+
+int Socket::TagSend_Function(std::vector<std::vector<BYTE>> msg)
+{
+	int ret =0;
+
+	ret = write(m_serv_sock,&msg,sizeof(msg));
+
+	if(ret == 0)
+		printf("Send Server Fail\n");
+	else 
+		printf(" Send Server ret :%d \n", ret);
+
+	return ret;
+}
+
+
 int Socket::Send_Message(BYTE* msg, int len)
 {
 	int ret =0;
@@ -480,9 +505,10 @@ int Socket::Send_Function()
 	memcpy(p8Data, m_p8uSendData, nDataLen);
 
 	printf("socket Send_Function() ");
-	for(int i=0; i < nDataLen; i++) {
+/*	for(int i=0; i < nDataLen; i++) {
 		printf("%x ", m_p8uSendData[i]);
 	}
+*/
 	memset(m_p8uSendData, 0, sizeof(BYTE)*4096);
 
 	ret = write(m_serv_sock,p8Data,nDataLen);
@@ -491,7 +517,7 @@ int Socket::Send_Function()
 	if(ret == 0)
 		printf("SendFail\n");
 	else 
-		printf(" ret :%d <--SERVER\n\n", ret);
+		printf(" ret :%d <--SERVER\n", ret);
 
 	return ret;
 }
@@ -638,7 +664,7 @@ void *Recieve_Function(void* rcvDt)
 			pSoc->m_nServerMessge_End =0;
 			pthread_mutex_unlock(&pSoc->Socket_mutex);
 		}
-		usleep(10);
+		usleep(200);
 	}
 	printf("while(m_iWorkingAlive) %d end\n", pSoc->m_iWorkingAlive);
 
@@ -680,28 +706,11 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 			if(p8udata[MSGTYPE] == BSN_START) {
 				m_nServerMessge_End =1;
 				
-				m_SocketArrayDataDownMsg.clear();
-				m_SocketArrayDataDownMsg.shrink_to_fit();
-				m_SocketArrayDataDownMsg.reserve(5000);
-
-				m_SocketArrayDataIndicateMsg.clear();
-				m_SocketArrayDataIndicateMsg.shrink_to_fit();
-				m_SocketArrayDataIndicateMsg.reserve(5000);
-
-				for(int i=0; i<4096; i++) {
-					for(int j=0; j<2048; j++) {
-						OneData[i][j] =0;
-						TwoData[i][j] =0;
-					}
-				}				
-				
 				m_pSocMsgqueue->BSN_MSG_ACK(p8udata);
 				for(int i=0; i<15; i++) {
 					printf("%x ", p8udata[i]);
 				}
-				printf("\n");				
-				m_nSocketArrayDataDownCnt =0;
-				m_nSocketArrayDataIndicateCnt =0;
+				printf("\n");
 				Send_Message(p8udata, 15);
 				m_nServerMessge_End =0;
 				return 1;
@@ -767,6 +776,13 @@ bool Socket::GetSocketMsg(BYTE* p8udata, int Len)
 					m_SocketArrayDataIndicateMsg.push_back(m_SocketQueue_vec);
 					m_SocketQueue_vec.clear();
 					m_SocketQueue_vec.shrink_to_fit();
+				}
+
+				for(int i=0; i<4096; i++) {
+					for(int j=0; j<2048; j++) {
+						OneData[i][j] =0;
+						TwoData[i][j] =0;
+					}
 				}
 
 				m_pSocMsgqueue->BSN_MSG_END_ACK(p8udata);

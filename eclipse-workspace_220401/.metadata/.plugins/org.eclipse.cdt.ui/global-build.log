@@ -1,4 +1,4 @@
-10:26:57 **** Build of configuration Debug for project Demo ****
+09:20:00 **** Build of configuration Debug for project Demo ****
 make all 
 Building file: ../uart/uart.cpp
 Invoking: Cross G++ Compiler
@@ -8,7 +8,7 @@ arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 
      printf("rx[%d] : %x, len : %d continue \n", rx2[0], len);
                                                             ^
 ../uart/uart.cpp: In member function ‘int UartComThread::Uart_Open(const char*, int)’:
-../uart/uart.cpp:246:29: warning: suggest parentheses around assignment used as truth value [-Wparentheses]
+../uart/uart.cpp:247:29: warning: suggest parentheses around assignment used as truth value [-Wparentheses]
     if(ctx->fd = Open_fd(dev))
                              ^
 Finished building: ../uart/uart.cpp
@@ -26,32 +26,41 @@ Finished building: ../Socket/SocketMsgQueue.cpp
 Building file: ../Socket/socket.cpp
 Invoking: Cross G++ Compiler
 arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:78:10: warning: unused variable ‘fd2’ [-Wunused-variable]
+  int fd3,fd2, n;
+          ^~~
+../Socket/socket.cpp:82:7: warning: unused variable ‘buf’ [-Wunused-variable]
+  char buf[20];
+       ^~~
 Finished building: ../Socket/socket.cpp
  
 Building file: ../Main.cpp
 Invoking: Cross G++ Compiler
 arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
-../Main.cpp: In function ‘int Main_DeleteThread(WORD)’:
-../Main.cpp:297:20: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
-     for(int j=0; j < sizeof(setTagNumber)/sizeof(setTagNumber[0]); j++) {
-                  ~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ../Main.cpp: In function ‘void* Main_TagDownload_Thread(void*)’:
-../Main.cpp:350:108: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+../Main.cpp:354:108: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
   printf(" Main_TagDownload_Thread() Tag thread Number : %d , iTagthreadID: %lu \n",  id, (int)iTagthreadNum);
                                                                                                             ^
-../Main.cpp:459:83: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+../Main.cpp:463:83: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
      printf("Tag thread Number : %d , iTagthreadID: %lu \n", id, (int)iTagthreadNum);
                                                                                    ^
+../Main.cpp: In function ‘int UartToSocket_TagAssociation()’:
+../Main.cpp:1343:56: warning: statement has no effect [-Wunused-value]
+   ("The Socket_Reconnect_Thread joined successfully\n");
+                                                        ^
+../Main.cpp: In function ‘void* Socket_Reconnect_Thread(void*)’:
+../Main.cpp:1549:8: warning: unused variable ‘pu8data’ [-Wunused-variable]
+  BYTE* pu8data;
+        ^~~~~~~
 ../Main.cpp: In function ‘void PrintfHello(int, siginfo_t*, void*)’:
-../Main.cpp:1563:47: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 2 has type ‘timer_t {aka void*}’ [-Wformat=]
-  printf("PrintfHello : %lu, %lu\n",*tidp, tidp);
-                                               ^
-../Main.cpp:1563:47: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘void**’ [-Wformat=]
-../Main.cpp: In function ‘void PrintfHello2(int, siginfo_t*, void*)’:
-../Main.cpp:1616:48: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 2 has type ‘timer_t {aka void*}’ [-Wformat=]
-  printf("PrintfHello2 : %lu, %lu\n",*tidp, tidp);
-                                                ^
-../Main.cpp:1616:48: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘void**’ [-Wformat=]
+../Main.cpp:1700:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+../Main.cpp: In function ‘int main(int, char**)’:
+../Main.cpp:1875:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
 Finished building: ../Main.cpp
  
 Building file: ../MsgHandler.cpp
@@ -69,37 +78,34 @@ Invoking: Cross G++ Linker
 arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo" ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
 Finished building target: Demo
  
-16:01:05 **** Incremental Build of configuration Debug for project Demo ****
+09:24:52 **** Incremental Build of configuration Debug for project Demo ****
 make all 
-Building file: ../Socket/socket.cpp
-Invoking: Cross G++ Compiler
-arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
-Finished building: ../Socket/socket.cpp
- 
 Building file: ../Main.cpp
 Invoking: Cross G++ Compiler
 arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
-../Main.cpp: In function ‘int Main_DeleteThread(WORD)’:
-../Main.cpp:297:20: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
-     for(int j=0; j < sizeof(setTagNumber)/sizeof(setTagNumber[0]); j++) {
-                  ~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ../Main.cpp: In function ‘void* Main_TagDownload_Thread(void*)’:
-../Main.cpp:350:108: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+../Main.cpp:354:108: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
   printf(" Main_TagDownload_Thread() Tag thread Number : %d , iTagthreadID: %lu \n",  id, (int)iTagthreadNum);
                                                                                                             ^
-../Main.cpp:459:83: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+../Main.cpp:463:83: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
      printf("Tag thread Number : %d , iTagthreadID: %lu \n", id, (int)iTagthreadNum);
                                                                                    ^
+../Main.cpp: In function ‘int UartToSocket_TagAssociation()’:
+../Main.cpp:1336:21: warning: unused variable ‘retval’ [-Wunused-variable]
+  int rc =0, status, retval;
+                     ^~~~~~
+../Main.cpp: In function ‘void* Socket_Reconnect_Thread(void*)’:
+../Main.cpp:1550:8: warning: unused variable ‘pu8data’ [-Wunused-variable]
+  BYTE* pu8data;
+        ^~~~~~~
 ../Main.cpp: In function ‘void PrintfHello(int, siginfo_t*, void*)’:
-../Main.cpp:1564:47: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 2 has type ‘timer_t {aka void*}’ [-Wformat=]
-  printf("PrintfHello : %lu, %lu\n",*tidp, tidp);
-                                               ^
-../Main.cpp:1564:47: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘void**’ [-Wformat=]
-../Main.cpp: In function ‘void PrintfHello2(int, siginfo_t*, void*)’:
-../Main.cpp:1617:48: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 2 has type ‘timer_t {aka void*}’ [-Wformat=]
-  printf("PrintfHello2 : %lu, %lu\n",*tidp, tidp);
-                                                ^
-../Main.cpp:1617:48: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘void**’ [-Wformat=]
+../Main.cpp:1701:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+../Main.cpp: In function ‘int main(int, char**)’:
+../Main.cpp:1877:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
 Finished building: ../Main.cpp
  
 Building target: Demo
@@ -107,3 +113,1450 @@ Invoking: Cross G++ Linker
 arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo" ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
 Finished building target: Demo
  
+09:27:09 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘void* Main_TagDownload_Thread(void*)’:
+../Main.cpp:354:108: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+  printf(" Main_TagDownload_Thread() Tag thread Number : %d , iTagthreadID: %lu \n",  id, (int)iTagthreadNum);
+                                                                                                            ^
+../Main.cpp:463:83: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+     printf("Tag thread Number : %d , iTagthreadID: %lu \n", id, (int)iTagthreadNum);
+                                                                                   ^
+../Main.cpp: In function ‘int UartToSocket_TagAssociation()’:
+../Main.cpp:1337:21: warning: unused variable ‘retval’ [-Wunused-variable]
+  int rc =0, status, retval;
+                     ^~~~~~
+../Main.cpp: In function ‘void* Socket_Reconnect_Thread(void*)’:
+../Main.cpp:1551:8: warning: unused variable ‘pu8data’ [-Wunused-variable]
+  BYTE* pu8data;
+        ^~~~~~~
+../Main.cpp: In function ‘void PrintfHello(int, siginfo_t*, void*)’:
+../Main.cpp:1702:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+../Main.cpp: In function ‘int main(int, char**)’:
+../Main.cpp:1878:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo" ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+09:30:06 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘void* Main_TagDownload_Thread(void*)’:
+../Main.cpp:354:108: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+  printf(" Main_TagDownload_Thread() Tag thread Number : %d , iTagthreadID: %lu \n",  id, (int)iTagthreadNum);
+                                                                                                            ^
+../Main.cpp:463:83: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+     printf("Tag thread Number : %d , iTagthreadID: %lu \n", id, (int)iTagthreadNum);
+                                                                                   ^
+../Main.cpp: In function ‘int UartToSocket_TagAssociation()’:
+../Main.cpp:1339:21: warning: unused variable ‘retval’ [-Wunused-variable]
+  int rc =0, status, retval;
+                     ^~~~~~
+../Main.cpp: In function ‘void* Socket_Reconnect_Thread(void*)’:
+../Main.cpp:1553:8: warning: unused variable ‘pu8data’ [-Wunused-variable]
+  BYTE* pu8data;
+        ^~~~~~~
+../Main.cpp: In function ‘void PrintfHello(int, siginfo_t*, void*)’:
+../Main.cpp:1704:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+../Main.cpp: In function ‘int main(int, char**)’:
+../Main.cpp:1880:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo" ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+09:36:22 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘void* Main_TagDownload_Thread(void*)’:
+../Main.cpp:354:108: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+  printf(" Main_TagDownload_Thread() Tag thread Number : %d , iTagthreadID: %lu \n",  id, (int)iTagthreadNum);
+                                                                                                            ^
+../Main.cpp:463:83: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+     printf("Tag thread Number : %d , iTagthreadID: %lu \n", id, (int)iTagthreadNum);
+                                                                                   ^
+../Main.cpp: In function ‘int UartToSocket_TagAssociation()’:
+../Main.cpp:1352:21: warning: unused variable ‘retval’ [-Wunused-variable]
+  int rc =0, status, retval;
+                     ^~~~~~
+../Main.cpp: In function ‘void* Socket_Reconnect_Thread(void*)’:
+../Main.cpp:1566:8: warning: unused variable ‘pu8data’ [-Wunused-variable]
+  BYTE* pu8data;
+        ^~~~~~~
+../Main.cpp: In function ‘void PrintfHello(int, siginfo_t*, void*)’:
+../Main.cpp:1717:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+../Main.cpp: In function ‘int main(int, char**)’:
+../Main.cpp:1893:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo" ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+09:46:16 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘void* Main_TagDownload_Thread(void*)’:
+../Main.cpp:354:108: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+  printf(" Main_TagDownload_Thread() Tag thread Number : %d , iTagthreadID: %lu \n",  id, (int)iTagthreadNum);
+                                                                                                            ^
+../Main.cpp:463:83: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+     printf("Tag thread Number : %d , iTagthreadID: %lu \n", id, (int)iTagthreadNum);
+                                                                                   ^
+../Main.cpp: In function ‘int UartToSocket_TagAssociation()’:
+../Main.cpp:1340:21: warning: unused variable ‘retval’ [-Wunused-variable]
+  int rc =0, status, retval;
+                     ^~~~~~
+../Main.cpp: In function ‘void* Socket_Reconnect_Thread(void*)’:
+../Main.cpp:1554:8: warning: unused variable ‘pu8data’ [-Wunused-variable]
+  BYTE* pu8data;
+        ^~~~~~~
+../Main.cpp: In function ‘void PrintfHello(int, siginfo_t*, void*)’:
+../Main.cpp:1705:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+../Main.cpp: In function ‘int main(int, char**)’:
+../Main.cpp:1881:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo" ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+10:01:31 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘void* Main_TagDownload_Thread(void*)’:
+../Main.cpp:354:108: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+  printf(" Main_TagDownload_Thread() Tag thread Number : %d , iTagthreadID: %lu \n",  id, (int)iTagthreadNum);
+                                                                                                            ^
+../Main.cpp:463:83: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+     printf("Tag thread Number : %d , iTagthreadID: %lu \n", id, (int)iTagthreadNum);
+                                                                                   ^
+../Main.cpp: In function ‘int UartToSocket_TagAssociation()’:
+../Main.cpp:1340:21: warning: unused variable ‘retval’ [-Wunused-variable]
+  int rc =0, status, retval;
+                     ^~~~~~
+../Main.cpp: In function ‘void* Socket_Reconnect_Thread(void*)’:
+../Main.cpp:1554:8: warning: unused variable ‘pu8data’ [-Wunused-variable]
+  BYTE* pu8data;
+        ^~~~~~~
+../Main.cpp: In function ‘void PrintfHello(int, siginfo_t*, void*)’:
+../Main.cpp:1705:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+../Main.cpp: In function ‘int main(int, char**)’:
+../Main.cpp:1881:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo" ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+10:02:17 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/SocketHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
+Finished building: ../Socket/SocketHandler.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo" ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+10:07:20 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../uart/uart.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"uart/uart.d" -MT"uart/uart.o" -o "uart/uart.o" "../uart/uart.cpp"
+../uart/uart.cpp: In function ‘void* uart_Rx_Thread(void*)’:
+../uart/uart.cpp:57:60: warning: format ‘%d’ expects a matching ‘int’ argument [-Wformat=]
+     printf("rx[%d] : %x, len : %d continue \n", rx2[0], len);
+                                                            ^
+../uart/uart.cpp: In member function ‘int UartComThread::Uart_Open(const char*, int)’:
+../uart/uart.cpp:247:29: warning: suggest parentheses around assignment used as truth value [-Wparentheses]
+    if(ctx->fd = Open_fd(dev))
+                             ^
+Finished building: ../uart/uart.cpp
+ 
+Building file: ../Socket/SocketHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
+Finished building: ../Socket/SocketHandler.cpp
+ 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:78:10: warning: unused variable ‘fd2’ [-Wunused-variable]
+  int fd3,fd2, n;
+          ^~~
+../Socket/socket.cpp:82:7: warning: unused variable ‘buf’ [-Wunused-variable]
+  char buf[20];
+       ^~~
+../Socket/socket.cpp: In member function ‘int Socket::Send_Message(BYTE*, int)’:
+../Socket/socket.cpp:494:25: error: no matching function for call to ‘Socket::Send_Function(BYTE*&)’
+  ret = Send_Function(msg);
+                         ^
+In file included from ../Socket/socket.cpp:9:0:
+../Socket/Socket.h:71:6: note: candidate: int Socket::Send_Function()
+  int Send_Function();
+      ^~~~~~~~~~~~~
+../Socket/Socket.h:71:6: note:   candidate expects 0 arguments, 1 provided
+make: *** [Socket/subdir.mk:26: Socket/socket.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+10:07:41 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:78:10: warning: unused variable ‘fd2’ [-Wunused-variable]
+  int fd3,fd2, n;
+          ^~~
+../Socket/socket.cpp:82:7: warning: unused variable ‘buf’ [-Wunused-variable]
+  char buf[20];
+       ^~~
+Finished building: ../Socket/socket.cpp
+ 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘void* Main_TagDownload_Thread(void*)’:
+../Main.cpp:354:108: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+  printf(" Main_TagDownload_Thread() Tag thread Number : %d , iTagthreadID: %lu \n",  id, (int)iTagthreadNum);
+                                                                                                            ^
+../Main.cpp:463:83: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+     printf("Tag thread Number : %d , iTagthreadID: %lu \n", id, (int)iTagthreadNum);
+                                                                                   ^
+../Main.cpp: In function ‘int UartToSocket_TagAssociation()’:
+../Main.cpp:1340:21: warning: unused variable ‘retval’ [-Wunused-variable]
+  int rc =0, status, retval;
+                     ^~~~~~
+../Main.cpp: In function ‘void* Socket_Reconnect_Thread(void*)’:
+../Main.cpp:1554:8: warning: unused variable ‘pu8data’ [-Wunused-variable]
+  BYTE* pu8data;
+        ^~~~~~~
+../Main.cpp: In function ‘void PrintfHello(int, siginfo_t*, void*)’:
+../Main.cpp:1705:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+../Main.cpp: In function ‘int main(int, char**)’:
+../Main.cpp:1881:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+Finished building: ../Main.cpp
+ 
+Building file: ../MsgHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgHandler.d" -MT"MsgHandler.o" -o "MsgHandler.o" "../MsgHandler.cpp"
+Finished building: ../MsgHandler.cpp
+ 
+Building file: ../MsgQueue.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgQueue.d" -MT"MsgQueue.o" -o "MsgQueue.o" "../MsgQueue.cpp"
+Finished building: ../MsgQueue.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo" ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+10:08:27 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/SocketHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
+../Socket/SocketHandler.cpp: In member function ‘std::vector<std::vector<unsigned char> > SocketHandler::TagData(std::queue<std::vector<unsigned char> >)’:
+../Socket/SocketHandler.cpp:412:46: error: no matching function for call to ‘Socket::TagSend_Message(BYTE [1024], int&)’
+  if(pSocket->TagSend_Message(pu8data, iBufcnt) > 0 ) {
+                                              ^
+In file included from ../Socket/SocketHandler.h:13:0,
+                 from ../Socket/SocketHandler.cpp:8:
+../Socket/Socket.h:73:6: note: candidate: int Socket::TagSend_Message(std::vector<std::vector<unsigned char> >)
+  int TagSend_Message(std::vector<std::vector<BYTE>> msg);
+      ^~~~~~~~~~~~~~~
+../Socket/Socket.h:73:6: note:   candidate expects 1 argument, 2 provided
+make: *** [Socket/subdir.mk:26: Socket/SocketHandler.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+10:08:57 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/SocketHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
+Finished building: ../Socket/SocketHandler.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo" ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+10:09:41 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/SocketHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
+../Socket/SocketHandler.cpp: In member function ‘std::vector<std::vector<unsigned char> > SocketHandler::TagData(std::queue<std::vector<unsigned char> >)’:
+../Socket/SocketHandler.cpp:395:6: warning: unused variable ‘iBufcnt’ [-Wunused-variable]
+  int iBufcnt =0;
+      ^~~~~~~
+Finished building: ../Socket/SocketHandler.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo" ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+10:11:42 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:78:10: warning: unused variable ‘fd2’ [-Wunused-variable]
+  int fd3,fd2, n;
+          ^~~
+../Socket/socket.cpp:82:7: warning: unused variable ‘buf’ [-Wunused-variable]
+  char buf[20];
+       ^~~
+Finished building: ../Socket/socket.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo" ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+10:21:05 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/SocketHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
+Finished building: ../Socket/SocketHandler.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo" ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+10:53:55 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘void* Main_TagDownload_Thread(void*)’:
+../Main.cpp:354:108: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+  printf(" Main_TagDownload_Thread() Tag thread Number : %d , iTagthreadID: %lu \n",  id, (int)iTagthreadNum);
+                                                                                                            ^
+../Main.cpp:463:83: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+     printf("Tag thread Number : %d , iTagthreadID: %lu \n", id, (int)iTagthreadNum);
+                                                                                   ^
+../Main.cpp: In function ‘int UartToSocket_TagAssociation()’:
+../Main.cpp:1340:21: warning: unused variable ‘retval’ [-Wunused-variable]
+  int rc =0, status, retval;
+                     ^~~~~~
+../Main.cpp: In function ‘void* Socket_Reconnect_Thread(void*)’:
+../Main.cpp:1554:8: warning: unused variable ‘pu8data’ [-Wunused-variable]
+  BYTE* pu8data;
+        ^~~~~~~
+../Main.cpp: In function ‘void PrintfHello(int, siginfo_t*, void*)’:
+../Main.cpp:1706:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+../Main.cpp: In function ‘int main(int, char**)’:
+../Main.cpp:1882:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo" ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+11:45:12 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../uart/uart.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"uart/uart.d" -MT"uart/uart.o" -o "uart/uart.o" "../uart/uart.cpp"
+../uart/uart.cpp: In function ‘void* uart_Rx_Thread(void*)’:
+../uart/uart.cpp:57:60: warning: format ‘%d’ expects a matching ‘int’ argument [-Wformat=]
+     printf("rx[%d] : %x, len : %d continue \n", rx2[0], len);
+                                                            ^
+../uart/uart.cpp: In member function ‘int UartComThread::Uart_Open(const char*, int)’:
+../uart/uart.cpp:247:29: warning: suggest parentheses around assignment used as truth value [-Wparentheses]
+    if(ctx->fd = Open_fd(dev))
+                             ^
+Finished building: ../uart/uart.cpp
+ 
+Building file: ../Socket/SocketHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
+Finished building: ../Socket/SocketHandler.cpp
+ 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:78:10: warning: unused variable ‘fd2’ [-Wunused-variable]
+  int fd3,fd2, n;
+          ^~~
+../Socket/socket.cpp:82:7: warning: unused variable ‘buf’ [-Wunused-variable]
+  char buf[20];
+       ^~~
+Finished building: ../Socket/socket.cpp
+ 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘void* Main_TagDownload_Thread(void*)’:
+../Main.cpp:354:108: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+  printf(" Main_TagDownload_Thread() Tag thread Number : %d , iTagthreadID: %lu \n",  id, (int)iTagthreadNum);
+                                                                                                            ^
+../Main.cpp:463:83: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+     printf("Tag thread Number : %d , iTagthreadID: %lu \n", id, (int)iTagthreadNum);
+                                                                                   ^
+../Main.cpp: In function ‘int UartToSocket_TagAssociation()’:
+../Main.cpp:1340:21: warning: unused variable ‘retval’ [-Wunused-variable]
+  int rc =0, status, retval;
+                     ^~~~~~
+../Main.cpp: In function ‘void* Socket_Reconnect_Thread(void*)’:
+../Main.cpp:1554:8: warning: unused variable ‘pu8data’ [-Wunused-variable]
+  BYTE* pu8data;
+        ^~~~~~~
+../Main.cpp: In function ‘void PrintfHello(int, siginfo_t*, void*)’:
+../Main.cpp:1707:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+../Main.cpp: In function ‘int main(int, char**)’:
+../Main.cpp:1883:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+Finished building: ../Main.cpp
+ 
+Building file: ../MsgHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgHandler.d" -MT"MsgHandler.o" -o "MsgHandler.o" "../MsgHandler.cpp"
+Finished building: ../MsgHandler.cpp
+ 
+Building file: ../MsgQueue.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgQueue.d" -MT"MsgQueue.o" -o "MsgQueue.o" "../MsgQueue.cpp"
+Finished building: ../MsgQueue.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo" ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+11:46:26 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘void* Main_TagDownload_Thread(void*)’:
+../Main.cpp:354:108: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+  printf(" Main_TagDownload_Thread() Tag thread Number : %d , iTagthreadID: %lu \n",  id, (int)iTagthreadNum);
+                                                                                                            ^
+../Main.cpp:463:83: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+     printf("Tag thread Number : %d , iTagthreadID: %lu \n", id, (int)iTagthreadNum);
+                                                                                   ^
+../Main.cpp: In function ‘int UartToSocket_TagAssociation()’:
+../Main.cpp:1340:21: warning: unused variable ‘retval’ [-Wunused-variable]
+  int rc =0, status, retval;
+                     ^~~~~~
+../Main.cpp: In function ‘void* Socket_Reconnect_Thread(void*)’:
+../Main.cpp:1554:8: warning: unused variable ‘pu8data’ [-Wunused-variable]
+  BYTE* pu8data;
+        ^~~~~~~
+../Main.cpp: In function ‘void PrintfHello(int, siginfo_t*, void*)’:
+../Main.cpp:1708:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+../Main.cpp: In function ‘int main(int, char**)’:
+../Main.cpp:1884:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo" ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+11:53:20 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘void* Main_TagDownload_Thread(void*)’:
+../Main.cpp:354:108: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+  printf(" Main_TagDownload_Thread() Tag thread Number : %d , iTagthreadID: %lu \n",  id, (int)iTagthreadNum);
+                                                                                                            ^
+../Main.cpp:463:83: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+     printf("Tag thread Number : %d , iTagthreadID: %lu \n", id, (int)iTagthreadNum);
+                                                                                   ^
+../Main.cpp: In function ‘int UartToSocket_TagAssociation()’:
+../Main.cpp:1340:21: warning: unused variable ‘retval’ [-Wunused-variable]
+  int rc =0, status, retval;
+                     ^~~~~~
+../Main.cpp: In function ‘void* Socket_Reconnect_Thread(void*)’:
+../Main.cpp:1554:8: warning: unused variable ‘pu8data’ [-Wunused-variable]
+  BYTE* pu8data;
+        ^~~~~~~
+../Main.cpp: In function ‘void PrintfHello(int, siginfo_t*, void*)’:
+../Main.cpp:1711:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+../Main.cpp: In function ‘int main(int, char**)’:
+../Main.cpp:1887:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo" ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+11:57:31 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘void* Main_TagDownload_Thread(void*)’:
+../Main.cpp:354:108: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+  printf(" Main_TagDownload_Thread() Tag thread Number : %d , iTagthreadID: %lu \n",  id, (int)iTagthreadNum);
+                                                                                                            ^
+../Main.cpp:463:83: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+     printf("Tag thread Number : %d , iTagthreadID: %lu \n", id, (int)iTagthreadNum);
+                                                                                   ^
+../Main.cpp: In function ‘int UartToSocket_TagAssociation()’:
+../Main.cpp:1340:21: warning: unused variable ‘retval’ [-Wunused-variable]
+  int rc =0, status, retval;
+                     ^~~~~~
+../Main.cpp: In function ‘void* Socket_Reconnect_Thread(void*)’:
+../Main.cpp:1554:8: warning: unused variable ‘pu8data’ [-Wunused-variable]
+  BYTE* pu8data;
+        ^~~~~~~
+../Main.cpp: In function ‘void PrintfHello(int, siginfo_t*, void*)’:
+../Main.cpp:1711:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+../Main.cpp: In function ‘int main(int, char**)’:
+../Main.cpp:1887:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo" ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+11:59:10 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘void* Main_TagDownload_Thread(void*)’:
+../Main.cpp:354:108: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+  printf(" Main_TagDownload_Thread() Tag thread Number : %d , iTagthreadID: %lu \n",  id, (int)iTagthreadNum);
+                                                                                                            ^
+../Main.cpp:463:83: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+     printf("Tag thread Number : %d , iTagthreadID: %lu \n", id, (int)iTagthreadNum);
+                                                                                   ^
+../Main.cpp: In function ‘int UartToSocket_TagAssociation()’:
+../Main.cpp:1340:21: warning: unused variable ‘retval’ [-Wunused-variable]
+  int rc =0, status, retval;
+                     ^~~~~~
+../Main.cpp: In function ‘void* Socket_Reconnect_Thread(void*)’:
+../Main.cpp:1554:8: warning: unused variable ‘pu8data’ [-Wunused-variable]
+  BYTE* pu8data;
+        ^~~~~~~
+../Main.cpp: In function ‘void PrintfHello(int, siginfo_t*, void*)’:
+../Main.cpp:1711:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+../Main.cpp: In function ‘int main(int, char**)’:
+../Main.cpp:1887:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo" ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+12:10:04 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘void* Main_TagDownload_Thread(void*)’:
+../Main.cpp:354:108: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+  printf(" Main_TagDownload_Thread() Tag thread Number : %d , iTagthreadID: %lu \n",  id, (int)iTagthreadNum);
+                                                                                                            ^
+../Main.cpp:463:83: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+     printf("Tag thread Number : %d , iTagthreadID: %lu \n", id, (int)iTagthreadNum);
+                                                                                   ^
+../Main.cpp: In function ‘int UartToSocket_TagAssociation()’:
+../Main.cpp:1340:21: warning: unused variable ‘retval’ [-Wunused-variable]
+  int rc =0, status, retval;
+                     ^~~~~~
+../Main.cpp: In function ‘void* Socket_Reconnect_Thread(void*)’:
+../Main.cpp:1554:8: warning: unused variable ‘pu8data’ [-Wunused-variable]
+  BYTE* pu8data;
+        ^~~~~~~
+../Main.cpp: In function ‘void PrintfHello(int, siginfo_t*, void*)’:
+../Main.cpp:1713:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+../Main.cpp: In function ‘int main(int, char**)’:
+../Main.cpp:1889:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo" ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+12:10:31 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+make: 'all'을(를) 위해 할 일이 없습니다.
+12:10:48 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+make: 'all'을(를) 위해 할 일이 없습니다.
+13:42:18 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘void* Main_TagDownload_Thread(void*)’:
+../Main.cpp:354:108: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+  printf(" Main_TagDownload_Thread() Tag thread Number : %d , iTagthreadID: %lu \n",  id, (int)iTagthreadNum);
+                                                                                                            ^
+../Main.cpp:463:83: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+     printf("Tag thread Number : %d , iTagthreadID: %lu \n", id, (int)iTagthreadNum);
+                                                                                   ^
+../Main.cpp: In function ‘int UartToSocket_TagAssociation()’:
+../Main.cpp:1347:21: warning: unused variable ‘retval’ [-Wunused-variable]
+  int rc =0, status, retval;
+                     ^~~~~~
+../Main.cpp: In function ‘void* Socket_Reconnect_Thread(void*)’:
+../Main.cpp:1561:8: warning: unused variable ‘pu8data’ [-Wunused-variable]
+  BYTE* pu8data;
+        ^~~~~~~
+../Main.cpp: In function ‘void PrintfHello(int, siginfo_t*, void*)’:
+../Main.cpp:1720:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+../Main.cpp: In function ‘int main(int, char**)’:
+../Main.cpp:1896:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+Finished building: ../Main.cpp
+ 
+Building file: ../MsgQueue.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgQueue.d" -MT"MsgQueue.o" -o "MsgQueue.o" "../MsgQueue.cpp"
+Finished building: ../MsgQueue.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo" ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+14:07:01 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘void* Main_TagDownload_Thread(void*)’:
+../Main.cpp:354:108: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+  printf(" Main_TagDownload_Thread() Tag thread Number : %d , iTagthreadID: %lu \n",  id, (int)iTagthreadNum);
+                                                                                                            ^
+../Main.cpp:463:83: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+     printf("Tag thread Number : %d , iTagthreadID: %lu \n", id, (int)iTagthreadNum);
+                                                                                   ^
+../Main.cpp: In function ‘int UartToSocket_TagAssociation()’:
+../Main.cpp:1347:21: warning: unused variable ‘retval’ [-Wunused-variable]
+  int rc =0, status, retval;
+                     ^~~~~~
+../Main.cpp: In function ‘void* Socket_Reconnect_Thread(void*)’:
+../Main.cpp:1561:8: warning: unused variable ‘pu8data’ [-Wunused-variable]
+  BYTE* pu8data;
+        ^~~~~~~
+../Main.cpp: In function ‘void PrintfHello(int, siginfo_t*, void*)’:
+../Main.cpp:1720:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+../Main.cpp: In function ‘int main(int, char**)’:
+../Main.cpp:1896:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo" ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+14:07:36 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘void* Main_TagDownload_Thread(void*)’:
+../Main.cpp:354:108: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+  printf(" Main_TagDownload_Thread() Tag thread Number : %d , iTagthreadID: %lu \n",  id, (int)iTagthreadNum);
+                                                                                                            ^
+../Main.cpp:463:83: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+     printf("Tag thread Number : %d , iTagthreadID: %lu \n", id, (int)iTagthreadNum);
+                                                                                   ^
+../Main.cpp: In function ‘int UartToSocket_TagAssociation()’:
+../Main.cpp:1347:21: warning: unused variable ‘retval’ [-Wunused-variable]
+  int rc =0, status, retval;
+                     ^~~~~~
+../Main.cpp: In function ‘void* Socket_Reconnect_Thread(void*)’:
+../Main.cpp:1561:8: warning: unused variable ‘pu8data’ [-Wunused-variable]
+  BYTE* pu8data;
+        ^~~~~~~
+../Main.cpp: In function ‘void PrintfHello(int, siginfo_t*, void*)’:
+../Main.cpp:1720:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+../Main.cpp: In function ‘int main(int, char**)’:
+../Main.cpp:1896:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo" ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+14:09:55 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘void* Main_TagDownload_Thread(void*)’:
+../Main.cpp:354:108: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+  printf(" Main_TagDownload_Thread() Tag thread Number : %d , iTagthreadID: %lu \n",  id, (int)iTagthreadNum);
+                                                                                                            ^
+../Main.cpp:463:83: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+     printf("Tag thread Number : %d , iTagthreadID: %lu \n", id, (int)iTagthreadNum);
+                                                                                   ^
+../Main.cpp: In function ‘int UartToSocket_TagAssociation()’:
+../Main.cpp:1349:21: warning: unused variable ‘retval’ [-Wunused-variable]
+  int rc =0, status, retval;
+                     ^~~~~~
+../Main.cpp: In function ‘void* Socket_Reconnect_Thread(void*)’:
+../Main.cpp:1563:8: warning: unused variable ‘pu8data’ [-Wunused-variable]
+  BYTE* pu8data;
+        ^~~~~~~
+../Main.cpp: In function ‘void PrintfHello(int, siginfo_t*, void*)’:
+../Main.cpp:1722:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+../Main.cpp: In function ‘int main(int, char**)’:
+../Main.cpp:1898:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo" ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+14:11:09 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘void* Main_TagDownload_Thread(void*)’:
+../Main.cpp:354:108: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+  printf(" Main_TagDownload_Thread() Tag thread Number : %d , iTagthreadID: %lu \n",  id, (int)iTagthreadNum);
+                                                                                                            ^
+../Main.cpp:463:83: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+     printf("Tag thread Number : %d , iTagthreadID: %lu \n", id, (int)iTagthreadNum);
+                                                                                   ^
+../Main.cpp: In function ‘int UartToSocket_TagAssociation()’:
+../Main.cpp:1351:21: warning: unused variable ‘retval’ [-Wunused-variable]
+  int rc =0, status, retval;
+                     ^~~~~~
+../Main.cpp: In function ‘void* Socket_Reconnect_Thread(void*)’:
+../Main.cpp:1565:8: warning: unused variable ‘pu8data’ [-Wunused-variable]
+  BYTE* pu8data;
+        ^~~~~~~
+../Main.cpp: In function ‘void PrintfHello(int, siginfo_t*, void*)’:
+../Main.cpp:1724:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+../Main.cpp: In function ‘int main(int, char**)’:
+../Main.cpp:1900:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo" ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+14:12:35 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘void* Main_TagDownload_Thread(void*)’:
+../Main.cpp:354:108: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+  printf(" Main_TagDownload_Thread() Tag thread Number : %d , iTagthreadID: %lu \n",  id, (int)iTagthreadNum);
+                                                                                                            ^
+../Main.cpp:463:83: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+     printf("Tag thread Number : %d , iTagthreadID: %lu \n", id, (int)iTagthreadNum);
+                                                                                   ^
+../Main.cpp: In function ‘void PrintfHello(int, siginfo_t*, void*)’:
+../Main.cpp:1723:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+../Main.cpp: In function ‘int main(int, char**)’:
+../Main.cpp:1899:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo" ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+14:16:05 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+make: 'all'을(를) 위해 할 일이 없습니다.
+15:01:26 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/SocketHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
+Finished building: ../Socket/SocketHandler.cpp
+ 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘void* Main_TagDownload_Thread(void*)’:
+../Main.cpp:354:108: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+  printf(" Main_TagDownload_Thread() Tag thread Number : %d , iTagthreadID: %lu \n",  id, (int)iTagthreadNum);
+                                                                                                            ^
+../Main.cpp:463:83: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+     printf("Tag thread Number : %d , iTagthreadID: %lu \n", id, (int)iTagthreadNum);
+                                                                                   ^
+../Main.cpp: In function ‘void PrintfHello(int, siginfo_t*, void*)’:
+../Main.cpp:1729:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+../Main.cpp: In function ‘int main(int, char**)’:
+../Main.cpp:1905:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+Finished building: ../Main.cpp
+ 
+Building file: ../MsgQueue.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgQueue.d" -MT"MsgQueue.o" -o "MsgQueue.o" "../MsgQueue.cpp"
+Finished building: ../MsgQueue.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo" ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+15:02:20 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+make: 'all'을(를) 위해 할 일이 없습니다.
+15:04:16 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../MsgQueue.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgQueue.d" -MT"MsgQueue.o" -o "MsgQueue.o" "../MsgQueue.cpp"
+Finished building: ../MsgQueue.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo" ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+15:10:25 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘void* Main_TagDownload_Thread(void*)’:
+../Main.cpp:354:108: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+  printf(" Main_TagDownload_Thread() Tag thread Number : %d , iTagthreadID: %lu \n",  id, (int)iTagthreadNum);
+                                                                                                            ^
+../Main.cpp:463:83: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+     printf("Tag thread Number : %d , iTagthreadID: %lu \n", id, (int)iTagthreadNum);
+                                                                                   ^
+../Main.cpp: In function ‘void PrintfHello(int, siginfo_t*, void*)’:
+../Main.cpp:1731:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+../Main.cpp: In function ‘int main(int, char**)’:
+../Main.cpp:1907:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo" ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+15:11:03 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+make: 'all'을(를) 위해 할 일이 없습니다.
+15:19:37 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/SocketHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
+Finished building: ../Socket/SocketHandler.cpp
+ 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘void* Main_TagDownload_Thread(void*)’:
+../Main.cpp:354:108: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+  printf(" Main_TagDownload_Thread() Tag thread Number : %d , iTagthreadID: %lu \n",  id, (int)iTagthreadNum);
+                                                                                                            ^
+../Main.cpp:463:83: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+     printf("Tag thread Number : %d , iTagthreadID: %lu \n", id, (int)iTagthreadNum);
+                                                                                   ^
+../Main.cpp: In function ‘void PrintfHello(int, siginfo_t*, void*)’:
+../Main.cpp:1723:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+../Main.cpp: In function ‘int main(int, char**)’:
+../Main.cpp:1899:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo" ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+15:26:39 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../uart/uart.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"uart/uart.d" -MT"uart/uart.o" -o "uart/uart.o" "../uart/uart.cpp"
+../uart/uart.cpp: In function ‘void* uart_Rx_Thread(void*)’:
+../uart/uart.cpp:57:60: warning: format ‘%d’ expects a matching ‘int’ argument [-Wformat=]
+     printf("rx[%d] : %x, len : %d continue \n", rx2[0], len);
+                                                            ^
+../uart/uart.cpp: In member function ‘int UartComThread::Uart_Open(const char*, int)’:
+../uart/uart.cpp:248:29: warning: suggest parentheses around assignment used as truth value [-Wparentheses]
+    if(ctx->fd = Open_fd(dev))
+                             ^
+Finished building: ../uart/uart.cpp
+ 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘void* Main_TagDownload_Thread(void*)’:
+../Main.cpp:354:108: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+  printf(" Main_TagDownload_Thread() Tag thread Number : %d , iTagthreadID: %lu \n",  id, (int)iTagthreadNum);
+                                                                                                            ^
+../Main.cpp:463:83: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+     printf("Tag thread Number : %d , iTagthreadID: %lu \n", id, (int)iTagthreadNum);
+                                                                                   ^
+../Main.cpp: In function ‘void PrintfHello(int, siginfo_t*, void*)’:
+../Main.cpp:1719:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+../Main.cpp: In function ‘int main(int, char**)’:
+../Main.cpp:1895:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo" ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+16:20:14 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../uart/uart.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"uart/uart.d" -MT"uart/uart.o" -o "uart/uart.o" "../uart/uart.cpp"
+../uart/uart.cpp: In function ‘void* uart_Rx_Thread(void*)’:
+../uart/uart.cpp:57:60: warning: format ‘%d’ expects a matching ‘int’ argument [-Wformat=]
+     printf("rx[%d] : %x, len : %d continue \n", rx2[0], len);
+                                                            ^
+../uart/uart.cpp: In member function ‘int UartComThread::Uart_Open(const char*, int)’:
+../uart/uart.cpp:254:29: warning: suggest parentheses around assignment used as truth value [-Wparentheses]
+    if(ctx->fd = Open_fd(dev))
+                             ^
+Finished building: ../uart/uart.cpp
+ 
+Building file: ../MsgQueue.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgQueue.d" -MT"MsgQueue.o" -o "MsgQueue.o" "../MsgQueue.cpp"
+Finished building: ../MsgQueue.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo" ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+16:21:16 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘void* Main_TagDownload_Thread(void*)’:
+../Main.cpp:354:108: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+  printf(" Main_TagDownload_Thread() Tag thread Number : %d , iTagthreadID: %lu \n",  id, (int)iTagthreadNum);
+                                                                                                            ^
+../Main.cpp:463:83: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+     printf("Tag thread Number : %d , iTagthreadID: %lu \n", id, (int)iTagthreadNum);
+                                                                                   ^
+../Main.cpp: In function ‘void PrintfHello(int, siginfo_t*, void*)’:
+../Main.cpp:1722:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+../Main.cpp: In function ‘int main(int, char**)’:
+../Main.cpp:1898:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo" ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+18:16:07 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../uart/uart.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"uart/uart.d" -MT"uart/uart.o" -o "uart/uart.o" "../uart/uart.cpp"
+../uart/uart.cpp: In function ‘void* uart_Rx_Thread(void*)’:
+../uart/uart.cpp:57:60: warning: format ‘%d’ expects a matching ‘int’ argument [-Wformat=]
+     printf("rx[%d] : %x, len : %d continue \n", rx2[0], len);
+                                                            ^
+../uart/uart.cpp:86:10: warning: unused variable ‘iChecksumLength’ [-Wunused-variable]
+      int iChecksumLength =0;
+          ^~~~~~~~~~~~~~~
+../uart/uart.cpp: In member function ‘int UartComThread::Uart_Open(const char*, int)’:
+../uart/uart.cpp:264:29: warning: suggest parentheses around assignment used as truth value [-Wparentheses]
+    if(ctx->fd = Open_fd(dev))
+                             ^
+Finished building: ../uart/uart.cpp
+ 
+Building file: ../Socket/SocketHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
+Finished building: ../Socket/SocketHandler.cpp
+ 
+Building file: ../Socket/SocketMsgQueue.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/SocketMsgQueue.d" -MT"Socket/SocketMsgQueue.o" -o "Socket/SocketMsgQueue.o" "../Socket/SocketMsgQueue.cpp"
+Finished building: ../Socket/SocketMsgQueue.cpp
+ 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:78:10: warning: unused variable ‘fd2’ [-Wunused-variable]
+  int fd3,fd2, n;
+          ^~~
+../Socket/socket.cpp:82:7: warning: unused variable ‘buf’ [-Wunused-variable]
+  char buf[20];
+       ^~~
+Finished building: ../Socket/socket.cpp
+ 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘void* Main_TagDownload_Thread(void*)’:
+../Main.cpp:354:108: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+  printf(" Main_TagDownload_Thread() Tag thread Number : %d , iTagthreadID: %lu \n",  id, (int)iTagthreadNum);
+                                                                                                            ^
+../Main.cpp:463:83: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+     printf("Tag thread Number : %d , iTagthreadID: %lu \n", id, (int)iTagthreadNum);
+                                                                                   ^
+../Main.cpp: In function ‘void PrintfHello(int, siginfo_t*, void*)’:
+../Main.cpp:1722:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+../Main.cpp: In function ‘int main(int, char**)’:
+../Main.cpp:1898:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+Finished building: ../Main.cpp
+ 
+Building file: ../MsgHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgHandler.d" -MT"MsgHandler.o" -o "MsgHandler.o" "../MsgHandler.cpp"
+Finished building: ../MsgHandler.cpp
+ 
+Building file: ../MsgQueue.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgQueue.d" -MT"MsgQueue.o" -o "MsgQueue.o" "../MsgQueue.cpp"
+Finished building: ../MsgQueue.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo" ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+18:30:15 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../uart/uart.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"uart/uart.d" -MT"uart/uart.o" -o "uart/uart.o" "../uart/uart.cpp"
+../uart/uart.cpp: In function ‘void* uart_Rx_Thread(void*)’:
+../uart/uart.cpp:57:60: warning: format ‘%d’ expects a matching ‘int’ argument [-Wformat=]
+     printf("rx[%d] : %x, len : %d continue \n", rx2[0], len);
+                                                            ^
+../uart/uart.cpp:86:10: warning: unused variable ‘iChecksumLength’ [-Wunused-variable]
+      int iChecksumLength =0;
+          ^~~~~~~~~~~~~~~
+../uart/uart.cpp: In member function ‘int UartComThread::Uart_Open(const char*, int)’:
+../uart/uart.cpp:263:29: warning: suggest parentheses around assignment used as truth value [-Wparentheses]
+    if(ctx->fd = Open_fd(dev))
+                             ^
+Finished building: ../uart/uart.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo" ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+11:10:04 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+make: 'all'을(를) 위해 할 일이 없습니다.
+11:23:17 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../uart/uart.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"uart/uart.d" -MT"uart/uart.o" -o "uart/uart.o" "../uart/uart.cpp"
+../uart/uart.cpp: In function ‘void* uart_Rx_Thread(void*)’:
+../uart/uart.cpp:57:60: warning: format ‘%d’ expects a matching ‘int’ argument [-Wformat=]
+     printf("rx[%d] : %x, len : %d continue \n", rx2[0], len);
+                                                            ^
+../uart/uart.cpp:86:10: warning: unused variable ‘iChecksumLength’ [-Wunused-variable]
+      int iChecksumLength =0;
+          ^~~~~~~~~~~~~~~
+../uart/uart.cpp: In member function ‘int UartComThread::Uart_Open(const char*, int)’:
+../uart/uart.cpp:263:29: warning: suggest parentheses around assignment used as truth value [-Wparentheses]
+    if(ctx->fd = Open_fd(dev))
+                             ^
+Finished building: ../uart/uart.cpp
+ 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:78:10: warning: unused variable ‘fd2’ [-Wunused-variable]
+  int fd3,fd2, n;
+          ^~~
+../Socket/socket.cpp:82:7: warning: unused variable ‘buf’ [-Wunused-variable]
+  char buf[20];
+       ^~~
+Finished building: ../Socket/socket.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo" ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+11:26:21 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+make: 'all'을(를) 위해 할 일이 없습니다.
+11:49:27 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../uart/uart.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"uart/uart.d" -MT"uart/uart.o" -o "uart/uart.o" "../uart/uart.cpp"
+../uart/uart.cpp: In function ‘void* uart_Rx_Thread(void*)’:
+../uart/uart.cpp:57:60: warning: format ‘%d’ expects a matching ‘int’ argument [-Wformat=]
+     printf("rx[%d] : %x, len : %d continue \n", rx2[0], len);
+                                                            ^
+../uart/uart.cpp:86:10: warning: unused variable ‘iChecksumLength’ [-Wunused-variable]
+      int iChecksumLength =0;
+          ^~~~~~~~~~~~~~~
+../uart/uart.cpp: In member function ‘int UartComThread::Uart_Open(const char*, int)’:
+../uart/uart.cpp:263:29: warning: suggest parentheses around assignment used as truth value [-Wparentheses]
+    if(ctx->fd = Open_fd(dev))
+                             ^
+Finished building: ../uart/uart.cpp
+ 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘void* Main_TagDownload_Thread(void*)’:
+../Main.cpp:354:108: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+  printf(" Main_TagDownload_Thread() Tag thread Number : %d , iTagthreadID: %lu \n",  id, (int)iTagthreadNum);
+                                                                                                            ^
+../Main.cpp:463:83: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+     printf("Tag thread Number : %d , iTagthreadID: %lu \n", id, (int)iTagthreadNum);
+                                                                                   ^
+../Main.cpp: In function ‘void PrintfHello(int, siginfo_t*, void*)’:
+../Main.cpp:1728:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+../Main.cpp: In function ‘int main(int, char**)’:
+../Main.cpp:1904:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo" ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+12:08:13 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../uart/uart.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"uart/uart.d" -MT"uart/uart.o" -o "uart/uart.o" "../uart/uart.cpp"
+../uart/uart.cpp: In function ‘void* uart_Rx_Thread(void*)’:
+../uart/uart.cpp:57:60: warning: format ‘%d’ expects a matching ‘int’ argument [-Wformat=]
+     printf("rx[%d] : %x, len : %d continue \n", rx2[0], len);
+                                                            ^
+../uart/uart.cpp:86:10: warning: unused variable ‘iChecksumLength’ [-Wunused-variable]
+      int iChecksumLength =0;
+          ^~~~~~~~~~~~~~~
+../uart/uart.cpp: In member function ‘int UartComThread::Uart_Open(const char*, int)’:
+../uart/uart.cpp:263:29: warning: suggest parentheses around assignment used as truth value [-Wparentheses]
+    if(ctx->fd = Open_fd(dev))
+                             ^
+Finished building: ../uart/uart.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo" ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+12:13:44 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+make: 'all'을(를) 위해 할 일이 없습니다.
+12:15:01 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:78:10: warning: unused variable ‘fd2’ [-Wunused-variable]
+  int fd3,fd2, n;
+          ^~~
+../Socket/socket.cpp:82:7: warning: unused variable ‘buf’ [-Wunused-variable]
+  char buf[20];
+       ^~~
+Finished building: ../Socket/socket.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo" ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+12:15:31 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘void* Main_TagDownload_Thread(void*)’:
+../Main.cpp:354:108: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+  printf(" Main_TagDownload_Thread() Tag thread Number : %d , iTagthreadID: %lu \n",  id, (int)iTagthreadNum);
+                                                                                                            ^
+../Main.cpp:463:83: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+     printf("Tag thread Number : %d , iTagthreadID: %lu \n", id, (int)iTagthreadNum);
+                                                                                   ^
+../Main.cpp: In function ‘void PrintfHello(int, siginfo_t*, void*)’:
+../Main.cpp:1728:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+../Main.cpp: In function ‘int main(int, char**)’:
+../Main.cpp:1904:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+Finished building: ../Main.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo" ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+12:55:11 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+make: 'all'을(를) 위해 할 일이 없습니다.
+12:59:25 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+make: 'all'을(를) 위해 할 일이 없습니다.
+13:10:00 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+make: 'all'을(를) 위해 할 일이 없습니다.
+13:15:41 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../uart/uart.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"uart/uart.d" -MT"uart/uart.o" -o "uart/uart.o" "../uart/uart.cpp"
+../uart/uart.cpp: In function ‘void* uart_Rx_Thread(void*)’:
+../uart/uart.cpp:57:60: warning: format ‘%d’ expects a matching ‘int’ argument [-Wformat=]
+     printf("rx[%d] : %x, len : %d continue \n", rx2[0], len);
+                                                            ^
+../uart/uart.cpp:86:10: warning: unused variable ‘iChecksumLength’ [-Wunused-variable]
+      int iChecksumLength =0;
+          ^~~~~~~~~~~~~~~
+../uart/uart.cpp: In member function ‘int UartComThread::Uart_Open(const char*, int)’:
+../uart/uart.cpp:263:29: warning: suggest parentheses around assignment used as truth value [-Wparentheses]
+    if(ctx->fd = Open_fd(dev))
+                             ^
+Finished building: ../uart/uart.cpp
+ 
+Building file: ../Socket/SocketHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/SocketHandler.d" -MT"Socket/SocketHandler.o" -o "Socket/SocketHandler.o" "../Socket/SocketHandler.cpp"
+Finished building: ../Socket/SocketHandler.cpp
+ 
+Building file: ../Socket/SocketMsgQueue.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/SocketMsgQueue.d" -MT"Socket/SocketMsgQueue.o" -o "Socket/SocketMsgQueue.o" "../Socket/SocketMsgQueue.cpp"
+Finished building: ../Socket/SocketMsgQueue.cpp
+ 
+Building file: ../Socket/socket.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Socket/socket.d" -MT"Socket/socket.o" -o "Socket/socket.o" "../Socket/socket.cpp"
+../Socket/socket.cpp: In member function ‘int Socket::Socket_Init()’:
+../Socket/socket.cpp:78:10: warning: unused variable ‘fd2’ [-Wunused-variable]
+  int fd3,fd2, n;
+          ^~~
+../Socket/socket.cpp:82:7: warning: unused variable ‘buf’ [-Wunused-variable]
+  char buf[20];
+       ^~~
+Finished building: ../Socket/socket.cpp
+ 
+Building file: ../Main.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"Main.d" -MT"Main.o" -o "Main.o" "../Main.cpp"
+../Main.cpp: In function ‘void* Main_TagDownload_Thread(void*)’:
+../Main.cpp:354:108: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+  printf(" Main_TagDownload_Thread() Tag thread Number : %d , iTagthreadID: %lu \n",  id, (int)iTagthreadNum);
+                                                                                                            ^
+../Main.cpp:463:83: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 3 has type ‘int’ [-Wformat=]
+     printf("Tag thread Number : %d , iTagthreadID: %lu \n", id, (int)iTagthreadNum);
+                                                                                   ^
+../Main.cpp: In function ‘void PrintfHello(int, siginfo_t*, void*)’:
+../Main.cpp:1728:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+../Main.cpp: In function ‘int main(int, char**)’:
+../Main.cpp:1904:59: warning: statement has no effect [-Wunused-value]
+      ("The Socket_Reconnect_Thread joined successfully\n");
+                                                           ^
+Finished building: ../Main.cpp
+ 
+Building file: ../MsgHandler.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgHandler.d" -MT"MsgHandler.o" -o "MsgHandler.o" "../MsgHandler.cpp"
+Finished building: ../MsgHandler.cpp
+ 
+Building file: ../MsgQueue.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgQueue.d" -MT"MsgQueue.o" -o "MsgQueue.o" "../MsgQueue.cpp"
+../MsgQueue.cpp: In member function ‘bool MsgQueue::PutByte(uint8_t*, int)’:
+../MsgQueue.cpp:251:27: error: qualified-id in declaration before ‘(’ token
+ void MsgQueue::GetDataDown(int cnt, WORD* TagNumber)
+                           ^
+../MsgQueue.cpp:258:26: error: qualified-id in declaration before ‘(’ token
+ WORD MsgQueue::ByteToWord(BYTE puData, BYTE puData1)
+                          ^
+../MsgQueue.cpp:268:24: error: qualified-id in declaration before ‘(’ token
+ void MsgQueue::th_delay(int millsec)
+                        ^
+../MsgQueue.cpp:340:1: error: expected ‘}’ at end of input
+ }
+ ^
+../MsgQueue.cpp:340:1: warning: control reaches end of non-void function [-Wreturn-type]
+ }
+ ^
+make: *** [subdir.mk:26: MsgQueue.o] 오류 1
+"make all" terminated with exit code 2. Build might be incomplete.
+13:16:25 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../MsgQueue.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgQueue.d" -MT"MsgQueue.o" -o "MsgQueue.o" "../MsgQueue.cpp"
+Finished building: ../MsgQueue.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo" ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+13:17:25 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+Building file: ../MsgQueue.cpp
+Invoking: Cross G++ Compiler
+arm-linux-gnueabihf-g++ -rdynamic -O0 -g3 -Wall -c -rdynamic -fmessage-length=0 -MMD -MP -MF"MsgQueue.d" -MT"MsgQueue.o" -o "MsgQueue.o" "../MsgQueue.cpp"
+Finished building: ../MsgQueue.cpp
+ 
+Building target: Demo
+Invoking: Cross G++ Linker
+arm-linux-gnueabihf-g++ -rdynamic -export-dynamic -o "Demo" ./uart/uart.o  ./Socket/SocketHandler.o ./Socket/SocketMsgQueue.o ./Socket/socket.o  ./Main.o ./MsgHandler.o ./MsgQueue.o   -lpthread -lrt
+Finished building target: Demo
+ 
+15:52:58 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+make: 'all'을(를) 위해 할 일이 없습니다.
+18:12:13 **** Incremental Build of configuration Debug for project Demo ****
+make all 
+make: 'all'을(를) 위해 할 일이 없습니다.

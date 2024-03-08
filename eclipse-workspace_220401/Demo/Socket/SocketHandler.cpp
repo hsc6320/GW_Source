@@ -10,7 +10,6 @@
 Socket* pSocket;
 MsgQueue* pUartQueue;
 int nServiceStart_Confirm =0, beacon_count =0;
-std::queue<std::vector<BYTE>> vTagData;
 
 SocketHandler::SocketHandler()
 {
@@ -49,6 +48,10 @@ int SocketHandler::SendMessage(int msg, PRE_DEFINE::S_PACKET packet)
 	case SERVICESTART_CONFIRM:
 		printf("Socket SendMsg : SERVICESTART_CONFIRM\n");
 		SendSocket_Data(packet);
+		break;
+	case BSN_START_REQ:
+		printf("Socket SendMsg : BSN_START_REQ\n");
+		Server_BSN_Start_Req_Packet();
 		break;
 	default :
 		printf("Socket SendMsg : default : 0x%x\n", packet.header.type);
@@ -288,6 +291,7 @@ int SocketHandler::GateWay_Status_Check()
 }
 
 
+
 int SocketHandler::Server_BSN_Stop_Packet()
 {
 	BYTE pu8data[30];
@@ -307,7 +311,39 @@ int SocketHandler::Server_BSN_Stop_Packet()
 	pu8data[++iBufcnt] = 0;
 
 	u8Checksum = GetChecksum(pu8data, iBufcnt);
-	pu8data[++iBufcnt] = u8Checksum; //0x07;
+	pu8data[++iBufcnt] = u8Checksum; 
+
+	pu8data[++iBufcnt] = packet.ext[0];
+	pu8data[++iBufcnt] = packet.ext[1];
+	pu8data[++iBufcnt] = packet.ext[2];
+
+	pSocket->Send_Message(pu8data, iBufcnt+1);
+
+	return 1;
+}
+
+
+
+int SocketHandler::Server_BSN_Start_Req_Packet()
+{
+	BYTE pu8data[30];
+	BYTE u8Checksum;
+	int iBufcnt =0;
+	printf("Server_BSN_Start_Req_Packet()\n");
+	pu8data[iBufcnt] = STX;
+	pu8data[++iBufcnt] = (BYTE)packet.PanID;
+	pu8data[++iBufcnt] = packet.PanID>> 8;
+	pu8data[++iBufcnt] = (BYTE)packet.GateWayID << 8;		//gateway ID
+	pu8data[++iBufcnt] = packet.GateWayID >> 8;		//gateway ID
+	pu8data[++iBufcnt] = packet.ServerID;
+	pu8data[++iBufcnt] = packet.ServerID >> 8;
+	pu8data[++iBufcnt] = BSN_START_REQ;	//msg type
+	pu8data[++iBufcnt] = 0x01;
+	pu8data[++iBufcnt] = 0;
+	pu8data[++iBufcnt] = 0;
+
+	u8Checksum = GetChecksum(pu8data, iBufcnt);
+	pu8data[++iBufcnt] = u8Checksum; 
 
 	pu8data[++iBufcnt] = packet.ext[0];
 	pu8data[++iBufcnt] = packet.ext[1];
@@ -353,31 +389,34 @@ void SocketHandler::SetMsg_StartCfm_Remalloc(int OnOff)
 	}
 }
 
-void SocketHandler::TagData(std::queue<std::vector<BYTE>> que)
+std::vector<std::vector<BYTE>> SocketHandler::TagData(std::queue<std::vector<BYTE>> que)
 {
 	BYTE pu8data[1024];
 	int iBufcnt =0;
-	std::vector<std::vector<BYTE>> vec;
+	std::vector<std::vector<BYTE>> vec;	
 
-	vTagData = que;
-	vec.push_back(vTagData.front());
+	memset(pu8data, 0, 1024);
+
+	//vTagData = que;
+	vec.push_back(que.front());
 	for(int i=0; i<(int)vec.size(); i++) {
 		for(int k=0; k<(int)vec[i].size(); k++) {
-	//		printf("%x ", vec[i][k]);
 			pu8data[iBufcnt] = vec[i][k];
+		//	printf("%x ", pu8data[iBufcnt]);
+		//	printf("%x ", vec[i][k]);
 			iBufcnt++;
 		}
 	}
-	printf("\n");
-
-	if(pSocket->Send_Message(pu8data, iBufcnt) > 0 ) {	
-		vTagData.pop();
+//	printf("------%d---\n", iBufcnt);
+	if(pSocket->Send_Message(pu8data, iBufcnt) > 0 ) {
+		que.pop();
+		th_delay(50);
 	}
-	else
+	else {
 		printf("Socket Write Fail\n");
+	}
 
-	iBufcnt =0;
-	memset(pu8data, 0, 1024);
+	return vec;
 	
 }
 
@@ -392,6 +431,23 @@ BYTE SocketHandler::GetChecksum(BYTE* puData, int len)
 	printf("(check nsum : %x) ", sum);
 
 	return sum;
+}
+void SocketHandler::th_delay(int millsec)
+{
+	double time;
+	double timedelay = millsec;
+	struct timeval start1 = {};
+	struct timeval end1 = {};
+
+	clock_t end = timedelay* 1000;
+	clock_t start = clock();
+
+	//printf("th_dealy %.2f msec\n", timedelay*2);
+	gettimeofday(&start1 , NULL);
+	while(clock()-start < end) {;}
+	gettimeofday(&end1 , NULL);
+	time = end1.tv_sec + end1.tv_usec / 1000000.0 - start1.tv_sec - start1.tv_usec / 1000000.0;
+	printf("delay %.2f sec\n", time);
 }
 
 void SocketHandler::SetBeconCount(int* cnt)
